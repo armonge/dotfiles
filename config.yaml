@@ -1,0 +1,22 @@
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  link_by_default: false
+  longkey: false
+  showdiff: false
+  workdir: ~/.config/dotdrop
+dotfiles:
+  f_bashrc:
+    dst: ~/.bashrc
+    src: bashrc
+  f_init.vim:
+    dst: ~/.config/nvim/init.vim
+    src: config/nvim/init.vim
+profiles:
+  armonge-laptop:
+    dotfiles:
+    - f_bashrc
+    - f_init.vim
