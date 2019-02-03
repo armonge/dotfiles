@@ -3,17 +3,22 @@ config:
   banner: true
   create: true
   dotpath: dotfiles
+  ignoreempty: false
   keepdot: false
-  link_by_default: false
+  link_by_default: true
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
 dotfiles:
   f_bashrc:
     dst: ~/.bashrc
+    link: !!python/object/apply:dotdrop.linktypes.LinkTypes
+    - 1
     src: bashrc
   f_init.vim:
     dst: ~/.config/nvim/init.vim
+    link: !!python/object/apply:dotdrop.linktypes.LinkTypes
+    - 1
     src: config/nvim/init.vim
 profiles:
   armonge-laptop:

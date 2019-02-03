@@ -1,51 +1,59 @@
-"dein Scripts-----------------------------
-set nocompatible               " Be iMproved
-
-" Required:
-set runtimepath+=$HOME/.nvim.dein/repos/github.com/Shougo/dein.vim
 let g:python3_host_prog='/home/armonge/.pyenv/versions/neovim/bin/python'
 let g:python2_host_prog='/home/armonge/.pyenv/versions/neovim2/bin/python'
 let g:python_host_prog='/home/armonge/.pyenv/versions/neovim2/bin/python'
 
+"dein Scripts-----------------------------
+set nocompatible               " Be iMproved
+
+" Required:
+set runtimepath+=/home/armonge/.cache/dein/repos/github.com/Shougo/dein.vim
 let g:dein#install_process_timeout = 240
 
 " Required:
-if dein#load_state($HOME . '/.nvim.dein/')
-  call dein#begin($HOME . '/.nvim.dein/')
+if dein#load_state('/home/armonge/.cache/dein')
+  call dein#begin('/home/armonge/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add($HOME . '/.nvim.dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('/home/armonge/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
-  call dein#add('w0rp/ale')
   call dein#add('mattn/emmet-vim')
   call dein#add('editorconfig/editorconfig-vim')
-  call dein#add('scrooloose/nerdtree')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('Valloric/YouCompleteMe')
   call dein#add('lambdalisue/suda.vim')
-  call dein#add('nathanaelkane/vim-indent-guides')
-  call dein#add('mileszs/ack.vim')
-  call dein#add('wfleming/vim-codeclimate')
-  call dein#add('antoyo/vim-licenses')
-  call dein#add('ashisha/image.vim')
-
+  call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
 
+  " File explorer
+  call dein#add('scrooloose/nerdtree')
+
+  " Syntax checker and fixer
+  call dein#add('w0rp/ale')
+
+  " Show indent guides
+  call dein#add('nathanaelkane/vim-indent-guides')
+
+  " Search in your project <C-s>
+  call dein#add('mileszs/ack.vim')
+  " Add licenses to the top of your file
+  call dein#add('antoyo/vim-licenses')
+
+  " watch images in vim
+  call dein#add('ashisha/image.vim') 
+
+  " Search files
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
+  " Show which lines are covered
   call dein#add('ruanyl/coverage.vim')
-
   call dein#add('scrooloose/nerdcommenter')
 
-  " typescript
+  " completions
   call dein#add('sheerun/vim-polyglot')
-
-  " Sql
-  call dein#add('vim-scripts/SQLUtilities')
+  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --ts-completer' })
 
   " General Programming {
   call dein#add('vim-scripts/sessionman.vim')
@@ -172,23 +180,28 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
+let g:ale_python_auto_pipenv = 1
 let g:ale_sh_shfmt_options='-i 2'
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
-\   'htmldjango': ['htmlhint', 'proselint', 'trim_whitespace', 'remove_trailing_lines'],
-\   'rst': ['alex', 'proselint', 'redpen', 'rstcheck', 'vale', 'writegood', 'trim_whitespace', 'remove_trailing_lines'],
-\}
+      \   'go': ['gofmt'],
+      \   'xml': ['xmllint', 'remove_trailing_lines', 'trim_whitespace'],
+      \   'yaml': ['yamllint', 'remove_trailing_lines', 'trim_whitespace'],
+      \   'htmldjango': ['htmlhint', 'proselint', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'rst': ['alex', 'proselint', 'redpen', 'rstcheck', 'vale', 'writegood', 'trim_whitespace', 'remove_trailing_lines'],
+      \}
 
 let g:ale_fixers = {
-\   'javascript': ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace'],
-\   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
-\   'json': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
-\   'python': ['add_blank_lines_for_python_control_statements', 'black', 'trim_whitespace', 'remove_trailing_lines'],
-\   'html': ['tidy', 'trim_whitespace', 'remove_trailing_lines'],
-\   'htmldjango': ['trim_whitespace', 'remove_trailing_lines'],
-\   'rst': ['trim_whitespace', 'remove_trailing_lines'],
-\   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
-\}
+      \   'go': ['gofmt'],
+      \   'javascript': ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace'],
+      \   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
+      \   'json': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'python': ['black', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'html': ['tidy', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'htmldjango': ['trim_whitespace', 'remove_trailing_lines'],
+      \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
+      \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
+      \}
 
 " Set this setting in vimrc if you want to fix files automatically on save.
 " This is off by default.
@@ -227,6 +240,12 @@ let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
 
 nnoremap <Leader>rn :YcmCompleter RefactorRename 
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
+nnoremap <F9> :YcmCompleter FixIt<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+
+" Go
+autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename 
+autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
 
 " NerdTree {
 map <C-e> <plug>NERDTreeTabsToggle<CR>
@@ -252,12 +271,17 @@ let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
-" ack.vim
+" ack.vim {
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+let g:ack_autoclose = 1
 
-" coverage
+" Don't go directly to the file
+nnoremap <C-s> :Ack! 
+" }
+
+"  coverage
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 
 " licenses
