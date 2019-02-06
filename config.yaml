@@ -20,8 +20,14 @@ dotfiles:
     link: !!python/object/apply:dotdrop.linktypes.LinkTypes
     - 1
     src: config/nvim/init.vim
+  f_installer.sh:
+    dst: ~/.config/nvim/installer.sh
+    link: !!python/object/apply:dotdrop.linktypes.LinkTypes
+    - 1
+    src: config/nvim/installer.sh
 profiles:
   armonge-laptop:
     dotfiles:
     - f_bashrc
     - f_init.vim
+    - f_installer.sh
