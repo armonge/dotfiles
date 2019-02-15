@@ -1,3 +1,7 @@
+actions:
+  post:
+    dein: vim --cmd ':call dein#recache_runtimepath()'
+    dein_install: cd ~/.cofig/nvim/ && ./installer.sh
 config:
   backup: true
   banner: true
@@ -15,12 +19,21 @@ dotfiles:
     link: !!python/object/apply:dotdrop.linktypes.LinkTypes
     - 1
     src: bashrc
+  f_gitconfig:
+    dst: ~/.gitconfig
+    link: !!python/object/apply:dotdrop.linktypes.LinkTypes
+    - 1
+    src: gitconfig
   f_init.vim:
+    actions:
+    - dein
     dst: ~/.config/nvim/init.vim
     link: !!python/object/apply:dotdrop.linktypes.LinkTypes
     - 1
     src: config/nvim/init.vim
   f_installer.sh:
+    actions:
+    - dein_install
     dst: ~/.config/nvim/installer.sh
     link: !!python/object/apply:dotdrop.linktypes.LinkTypes
     - 1
@@ -31,3 +44,4 @@ profiles:
     - f_bashrc
     - f_init.vim
     - f_installer.sh
+    - f_gitconfig

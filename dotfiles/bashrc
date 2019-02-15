@@ -53,7 +53,7 @@ alias vim="nvim"
 alias ftp='lftp'
 alias wget='aria2c'
 alias java='drip'
-
+alias dmesg='dmesg -H'
 
 # Your dotdrop git repository location
 export DOTREPO="$HOME/dotfiles"
@@ -70,8 +70,8 @@ source /usr/share/bash-completion/completions/hub
 export BAT_THEME="Monokai Extended"
 
 # VIM
-export VISUAL=nvim
-export EDITOR=nvim
+export VISUAL="nvim -u NONE"
+export EDITOR="nvim -u NONE"
 
 # GO
 export GOPATH=$(go env GOPATH)
@@ -188,5 +188,4 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # AWS
-
 complete -C "$HOME/.local/bin/aws_completer" aws
