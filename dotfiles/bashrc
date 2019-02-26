@@ -189,3 +189,7 @@ fi
 
 # AWS
 complete -C "$HOME/.local/bin/aws_completer" aws
+
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[ -f /home/armonge/workspace/mediarain/nestle-voxa-starterkit/node_modules/tabtab/.completions/slss.bash ] && . /home/armonge/workspace/mediarain/nestle-voxa-starterkit/node_modules/tabtab/.completions/slss.bash

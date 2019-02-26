@@ -242,6 +242,7 @@ nnoremap <Leader>rn :YcmCompleter RefactorRename
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
 nnoremap <F9> :YcmCompleter FixIt<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F8> :YcmCompleter OrganizeImports<CR>
 
 " Go
 autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename 
