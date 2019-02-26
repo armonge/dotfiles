@@ -26,6 +26,8 @@ if dein#load_state('/home/armonge/.cache/dein')
   call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
 
+  call dein#add('majutsushi/tagbar')
+
   " File explorer
   call dein#add('scrooloose/nerdtree')
 
@@ -288,3 +290,33 @@ let g:coverage_json_report_path = 'coverage/coverage-final.json'
 " licenses
 let g:licenses_authors_name = 'Rain Agency <contact@rain.agency>'
 let g:licenses_copyright_holders_name = 'Rain Agency <contact@rain.agency>'
+
+" Tagbar
+nmap <Leader>t :TagbarToggle<CR>
+let g:tagbar_type_typescript = {                                                  
+  \ 'ctagsbin' : 'tstags',                                                        
+  \ 'ctagsargs' : '-f-',                                                           
+  \ 'kinds': [                                                                     
+    \ 'e:enums:0:1',                                                               
+    \ 'f:function:0:1',                                                            
+    \ 't:typealias:0:1',                                                           
+    \ 'M:Module:0:1',                                                              
+    \ 'I:import:0:1',                                                              
+    \ 'i:interface:0:1',                                                           
+    \ 'C:class:0:1',                                                               
+    \ 'm:method:0:1',                                                              
+    \ 'p:property:0:1',                                                            
+    \ 'v:variable:0:1',                                                            
+    \ 'c:const:0:1',                                                              
+  \ ],                                                                            
+  \ 'sort' : 0                                                                    
+\ }                                                                               
+
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }

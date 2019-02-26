@@ -14,6 +14,10 @@ config:
   showdiff: false
   workdir: ~/.config/dotdrop
 dotfiles:
+  f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
+    dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
+    link: true
+    src: local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
   f_bashrc:
     dst: ~/.bashrc
     link: true
@@ -41,3 +45,4 @@ profiles:
     - f_init.vim
     - f_installer.sh
     - f_gitconfig
+    - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
