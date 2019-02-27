@@ -18,7 +18,11 @@ if dein#load_state('/home/armonge/.cache/dein')
   call dein#add('/home/armonge/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
+
+  " Helps with writing HTML
+  " html <C-y><Leader>
   call dein#add('mattn/emmet-vim')
+
   call dein#add('editorconfig/editorconfig-vim')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -26,35 +30,53 @@ if dein#load_state('/home/armonge/.cache/dein')
   call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
 
+  " Tagbar starts with <Leader>t
   call dein#add('majutsushi/tagbar')
 
+  " encrypts files ending with .gpg
+  call dein#add('jamessan/vim-gnupg')
+
   " File explorer
+  " <C-e>
   call dein#add('scrooloose/nerdtree')
 
   " Syntax checker and fixer
   call dein#add('w0rp/ale')
 
   " Show indent guides
+  " <Leader>ig
   call dein#add('nathanaelkane/vim-indent-guides')
 
   " Search in your project <C-s>
   call dein#add('mileszs/ack.vim')
+
   " Add licenses to the top of your file
+  " :Mit :Apache :etc
   call dein#add('antoyo/vim-licenses')
 
   " watch images in vim
   call dein#add('ashisha/image.vim') 
 
   " Search files
+  " <C-p>
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
   " Show which lines are covered
   call dein#add('ruanyl/coverage.vim')
+
+  " Comments
+  " <C-c>n
   call dein#add('scrooloose/nerdcommenter')
 
-  " completions
+  " Notes
+  call dein#add('xolox/vim-misc')
+  call dein#add('xolox/vim-notes')
+
+  " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
+
+  " completions
   call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --ts-completer' })
 
   " General Programming {
@@ -191,6 +213,7 @@ let g:ale_linters = {
       \   'yaml': ['yamllint', 'remove_trailing_lines', 'trim_whitespace'],
       \   'htmldjango': ['htmlhint', 'proselint', 'trim_whitespace', 'remove_trailing_lines'],
       \   'rst': ['alex', 'proselint', 'redpen', 'rstcheck', 'vale', 'writegood', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'sh': ['shellcheck'],
       \}
 
 let g:ale_fixers = {
@@ -320,3 +343,6 @@ let g:tagbar_type_markdown = {
         \ 'k:Heading_L3'
     \ ]
 \ }
+
+" Notes
+let g:notes_directories = ['~/Notes']
