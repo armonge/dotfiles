@@ -54,6 +54,8 @@ alias ftp='lftp'
 alias wget='aria2c'
 alias java='drip'
 alias dmesg='dmesg -H'
+# Makes xclip work with vim
+alias xclip='xclip -selection c'
 
 # Your dotdrop git repository location
 export DOTREPO="$HOME/dotfiles"
@@ -154,7 +156,7 @@ if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then source 
 # FZF
 source /usr/share/fzf/key-bindings.bash
 source /usr/share/fzf/completion.bash
-export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern ""'
+export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*"'
 
 # Snap
 export PATH="$PATH:/var/lib/snapd/snap/bin"

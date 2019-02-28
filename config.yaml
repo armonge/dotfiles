@@ -22,6 +22,10 @@ dotfiles:
     dst: ~/.bashrc
     link: true
     src: bashrc
+  f_ctags:
+    dst: ~/.ctags
+    link: true
+    src: ctags
   f_gitconfig:
     dst: ~/.gitconfig
     link: true
@@ -46,3 +50,4 @@ profiles:
     - f_installer.sh
     - f_gitconfig
     - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
+    - f_ctags

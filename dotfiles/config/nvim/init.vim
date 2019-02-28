@@ -55,7 +55,7 @@ if dein#load_state('/home/armonge/.cache/dein')
   call dein#add('antoyo/vim-licenses')
 
   " watch images in vim
-  call dein#add('ashisha/image.vim') 
+  call dein#add('ashisha/image.vim')
 
   " Search files
   " <C-p>
@@ -156,8 +156,8 @@ syntax enable
 
 set termguicolors
 set background=dark
-colorscheme dracula
-let g:airline_theme='dracula'
+" colorscheme dracula
+" let g:airline_theme='dracula'
 
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
@@ -217,6 +217,7 @@ let g:ale_linters = {
       \}
 
 let g:ale_fixers = {
+      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'go': ['gofmt'],
       \   'javascript': ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace'],
       \   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
@@ -263,17 +264,20 @@ let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
 
-nnoremap <Leader>rn :YcmCompleter RefactorRename 
+nnoremap <Leader>rn :YcmCompleter RefactorRename
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
 nnoremap <F9> :YcmCompleter FixIt<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <F8> :YcmCompleter OrganizeImports<CR>
 
-" Go
-autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename 
+" Go {
+autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename
 autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
 
-" NerdTree {
+"}"
+
+
+"NerdTree {
 map <C-e> <plug>NERDTreeTabsToggle<CR>
 
 let NERDTreeShowBookmarks=1
@@ -304,7 +308,7 @@ endif
 let g:ack_autoclose = 1
 
 " Don't go directly to the file
-nnoremap <C-s> :Ack! 
+nnoremap <C-s> :Ack!
 " }
 
 "  coverage
@@ -316,24 +320,24 @@ let g:licenses_copyright_holders_name = 'Rain Agency <contact@rain.agency>'
 
 " Tagbar
 nmap <Leader>t :TagbarToggle<CR>
-let g:tagbar_type_typescript = {                                                  
-  \ 'ctagsbin' : 'tstags',                                                        
-  \ 'ctagsargs' : '-f-',                                                           
-  \ 'kinds': [                                                                     
-    \ 'e:enums:0:1',                                                               
-    \ 'f:function:0:1',                                                            
-    \ 't:typealias:0:1',                                                           
-    \ 'M:Module:0:1',                                                              
-    \ 'I:import:0:1',                                                              
-    \ 'i:interface:0:1',                                                           
-    \ 'C:class:0:1',                                                               
-    \ 'm:method:0:1',                                                              
-    \ 'p:property:0:1',                                                            
-    \ 'v:variable:0:1',                                                            
-    \ 'c:const:0:1',                                                              
-  \ ],                                                                            
-  \ 'sort' : 0                                                                    
-\ }                                                                               
+let g:tagbar_type_typescript = {
+  \ 'ctagsbin' : 'tstags',
+  \ 'ctagsargs' : '-f-',
+  \ 'kinds': [
+    \ 'e:enums:0:1',
+    \ 'f:function:0:1',
+    \ 't:typealias:0:1',
+    \ 'M:Module:0:1',
+    \ 'I:import:0:1',
+    \ 'i:interface:0:1',
+    \ 'C:class:0:1',
+    \ 'm:method:0:1',
+    \ 'p:property:0:1',
+    \ 'v:variable:0:1',
+    \ 'c:const:0:1',
+  \ ],
+  \ 'sort' : 0
+\ }
 
 let g:tagbar_type_markdown = {
     \ 'ctagstype' : 'markdown',
