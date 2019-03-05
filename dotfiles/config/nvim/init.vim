@@ -217,7 +217,6 @@ let g:ale_linters = {
       \}
 
 let g:ale_fixers = {
-      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
       \   'go': ['gofmt'],
       \   'javascript': ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace'],
       \   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
@@ -308,7 +307,7 @@ endif
 let g:ack_autoclose = 1
 
 " Don't go directly to the file
-nnoremap <C-s> :Ack!
+nnoremap <C-s> :Ack! 
 " }
 
 "  coverage
@@ -349,4 +348,5 @@ let g:tagbar_type_markdown = {
 \ }
 
 " Notes
-let g:notes_directories = ['~/Notes']
+let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
+nmap <Leader>nt :Note 

@@ -71,6 +71,9 @@ source /usr/share/bash-completion/completions/hub
 # bat cat replacement
 export BAT_THEME="Monokai Extended"
 
+# python
+export PATH=$PATH:$HOME/.local/bin
+
 # VIM
 export VISUAL="nvim -u NONE"
 export EDITOR="nvim -u NONE"
