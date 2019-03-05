@@ -6,16 +6,16 @@ let g:python_host_prog='/home/armonge/.pyenv/versions/neovim2/bin/python'
 set nocompatible               " Be iMproved
 
 " Required:
-set runtimepath+=/home/armonge/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=/home/armonge/.dein.cache/repos/github.com/Shougo/dein.vim
 let g:dein#install_process_timeout = 240
 
 " Required:
-if dein#load_state('/home/armonge/.cache/dein')
-  call dein#begin('/home/armonge/.cache/dein')
+if dein#load_state('/home/armonge/.dein.cache')
+  call dein#begin('/home/armonge/.dein.cache')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/home/armonge/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('/home/armonge/.dein.cache/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
 

@@ -26,6 +26,10 @@ dotfiles:
     dst: ~/.bashrc
     link: true
     src: bashrc
+  f_chromium-flags.conf:
+    dst: ~/.config/chromium-flags.conf
+    link: true
+    src: config/chromium-flags.conf
   f_ctags:
     dst: ~/.ctags
     link: true
@@ -56,3 +60,4 @@ profiles:
     - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
     - f_ctags
     - f_bash_profile
+    - f_chromium-flags.conf
