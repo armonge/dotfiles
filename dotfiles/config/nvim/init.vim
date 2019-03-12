@@ -84,7 +84,10 @@ if dein#load_state('/home/armonge/.dein.cache')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-surround')
+
+  " Snippets plugin
   call dein#add('SirVer/ultisnips')
+  " Actual snippet files
   call dein#add('honza/vim-snippets')
 
   " colorscheme
@@ -299,6 +302,7 @@ let g:fzf_buffers_jump = 1
 let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsSnippetsDir = '/home/armonge/.config/nvim/UltiSnips'
 
 " ack.vim {
 if executable('ag')

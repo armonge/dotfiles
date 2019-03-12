@@ -50,6 +50,10 @@ dotfiles:
     dst: ~/.config/nvim/installer.sh
     link: true
     src: config/nvim/installer.sh
+  f_typescript.snippets:
+    dst: ~/.config/nvim/UltiSnips/typescript.snippets
+    link: true
+    src: config/nvim/UltiSnips/typescript.snippets
 profiles:
   armonge-laptop:
     dotfiles:
@@ -61,3 +65,4 @@ profiles:
     - f_ctags
     - f_bash_profile
     - f_chromium-flags.conf
+    - f_typescript.snippets
