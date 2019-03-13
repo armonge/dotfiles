@@ -6,67 +6,37 @@
 [[ $- != *i* ]] && return
 
 # open new tabs in same directory
-source /etc/profile.d/vte.sh
+if [ -f /etc/profile.d/vte.sh ]; then
+  source /etc/profile.d/vte.sh
+fi
 
 # Clojure
-source /etc/profile.d/clojure.sh
-source /usr/share/bash-completion/completions/lein
-export LEIN_JAVA_CMD="$HOME/bin/drip"
+if [ -f /etc/profile.d/clojure.sh ]; then
+  source /etc/profile.d/clojure.sh
+  source /usr/share/bash-completion/completions/lein
+  export LEIN_JAVA_CMD="$HOME/bin/drip"
+fi
 
 # fuck
 eval $(thefuck --alias)
 
-# Anaconda
-#source /opt/anaconda/bin/activate root
 
 # history
 shopt -s histappend
 HISTSIZE=5000
 HISTFILESIZE=10000
 
-# fix issue on terminal resize
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # Language
 # I want some german, but my terminal needs english :P
 export LANG=en_US.UTF-8
 
-# Alias
-alias subdl='subdl --lang="spa"'
-alias ls='ls --color=auto'
-alias ll='exa -la'
-alias ls='exa'
-alias vi='nvim'
-alias grep='grep --color=auto'
-alias serve='python2 -m SimpleHTTPServer'
-alias open='xdg-open'
-alias dotnet='TERM=xterm dotnet'
-alias func="TERM=xterm func"
-alias pwsh="TERM=xterm pwsh"
-alias cat='bat'
-alias ping='prettyping --nolegend'
-alias help='tldr'
-alias df='pydf'
-alias pacman='pacman --color=always'
-alias less='less -R'
-alias vim="nvim"
-alias ftp='lftp'
-alias wget='aria2c'
-alias java='drip'
-alias dmesg='dmesg -H'
-# Makes xclip work with vim
-alias xclip='xclip -selection c'
-
-# Your dotdrop git repository location
-export DOTREPO="$HOME/dotfiles"
-
-alias dotdrop="$DOTREPO/dotdrop.sh"
-alias dotgit="git -C $DOTREPO"
-alias dotsync="dotgit pull && dotgit add -A && dotgit commit && dotgit push; dotdrop install"
 
 # This is github hub command
 eval "$(hub alias -s)"
-source /usr/share/bash-completion/completions/hub
 
 # bat cat replacement
 export BAT_THEME="Monokai Extended"
@@ -102,8 +72,10 @@ export PATH=$HOME/bin/android-studio/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
 # git
-source /usr/share/git/completion/git-completion.bash
-source /usr/share/git/completion/git-prompt.sh
+if [ -f /usr/share/git/completion/git-completion.bash ]; then
+  source /usr/share/git/completion/git-completion.bash
+  source /usr/share/git/completion/git-prompt.sh
+fi
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -134,9 +106,12 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@; }
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
+export PATH="$HOME/.gem/ruby/2.5.0/bin:$PATH"
 
 # Django
-source $HOME/bin/django_bash_completion
+if [ -f $HOME/bin/django_bash_completion ]; then
+  source $HOME/bin/django_bash_completion
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -156,10 +131,6 @@ if [ -f '/home/armonge/bin/google-cloud-sdk/path.bash.inc' ]; then source '/home
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then source '/home/armonge/bin/google-cloud-sdk/completion.bash.inc'; fi
 
-# FZF
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*"'
 
 # Snap
 export PATH="$PATH:/var/lib/snapd/snap/bin"
@@ -173,16 +144,13 @@ export PATH="$PATH:$HOME/bin/sqlops-linux-x64/"
 
 export PATH=$PATH:$HOME/bin
 
-source "$HOME/bin/azure-cli/az.completion"
+if [ -f "$HOME/bin/azure-cli/az.completion" ]; then
+  source "$HOME/bin/azure-cli/az.completion"
+fi
 
 # entr
 export PATH=$PATH:$HOME/bin/entr/bin:$PATH
 
-# code climate
-export PATH=$HOME/bin/usr/local/bin/:$PATH
-
-# intellij idea
-export PATH=$HOME/bin/idea-IU-182.4505.22/bin:$PATH
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -194,3 +162,51 @@ fi
 
 # AWS
 complete -C "$HOME/.local/bin/aws_completer" aws
+
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# FZF
+if [ -f /usr/share/fzf/key-bindings.bash ]; then
+  source /usr/share/fzf/key-bindings.bash
+  source /usr/share/fzf/completion.bash
+elif [ -f ~/.fzf.bash ]; then
+  source ~/.fzf.bash
+fi
+export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*"'
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

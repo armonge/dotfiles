@@ -1,21 +1,21 @@
-let g:python3_host_prog='/home/armonge/.pyenv/versions/neovim/bin/python'
-let g:python2_host_prog='/home/armonge/.pyenv/versions/neovim2/bin/python'
-let g:python_host_prog='/home/armonge/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python2_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
 
 "dein Scripts-----------------------------
 set nocompatible               " Be iMproved
 
 " Required:
-set runtimepath+=/home/armonge/.dein.cache/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.dein.cache/repos/github.com/Shougo/dein.vim
 let g:dein#install_process_timeout = 240
 
 " Required:
-if dein#load_state('/home/armonge/.dein.cache')
-  call dein#begin('/home/armonge/.dein.cache')
+if dein#load_state('~/.dein.cache')
+  call dein#begin('~/.dein.cache')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/home/armonge/.dein.cache/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.dein.cache/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
 
