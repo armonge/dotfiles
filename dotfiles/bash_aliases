@@ -1,0 +1,31 @@
+alias subdl='subdl --lang="spa"'
+alias ls='ls --color=auto'
+alias ll='exa -la'
+alias ls='exa'
+alias vi='nvim'
+alias grep='grep --color=auto'
+alias serve='python2 -m SimpleHTTPServer'
+alias open='xdg-open'
+alias dotnet='TERM=xterm dotnet'
+alias func="TERM=xterm func"
+alias pwsh="TERM=xterm pwsh"
+alias cat='bat'
+alias ping='prettyping --nolegend'
+alias help='tldr'
+alias df='pydf'
+alias pacman='pacman --color=always'
+alias less='less -R'
+alias vim="nvim"
+alias ftp='lftp'
+alias wget='aria2c'
+alias java='drip'
+alias dmesg='dmesg -H'
+# Makes xclip work with vim
+alias xclip='xclip -selection c'
+
+# Your dotdrop git repository location
+export DOTREPO="$HOME/dotfiles"
+
+alias dotdrop="$DOTREPO/dotdrop.sh"
+alias dotgit="git -C $DOTREPO"
+alias dotsync="dotgit pull && dotgit add -A && dotgit commit && dotgit push; dotdrop install"

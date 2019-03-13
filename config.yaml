@@ -18,6 +18,10 @@ dotfiles:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
     link: true
     src: local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
+  f_bash_aliases:
+    dst: ~/.bash_aliases
+    link: true
+    src: bash_aliases
   f_bash_profile:
     dst: ~/.bash_profile
     link: true
@@ -66,3 +70,4 @@ profiles:
     - f_bash_profile
     - f_chromium-flags.conf
     - f_typescript.snippets
+    - f_bash_aliases
