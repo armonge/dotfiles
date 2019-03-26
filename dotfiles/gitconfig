@@ -7,7 +7,7 @@
   signingkey = B6A45A727378564E
 [core]
   quotepath = false
-  editor = nvim
+  editor = nvim -u NONE
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [commit]
   gpgsign = true

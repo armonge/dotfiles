@@ -20,11 +20,11 @@ fi
 # fuck
 eval $(thefuck --alias)
 
-
 # history
 shopt -s histappend
-HISTSIZE=5000
-HISTFILESIZE=10000
+export HISTSIZE=5000
+export HISTFILESIZE=10000
+export HISTCONTROL=ignoreboth:erasedups
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -33,7 +33,6 @@ shopt -s checkwinsize
 # Language
 # I want some german, but my terminal needs english :P
 export LANG=en_US.UTF-8
-
 
 # This is github hub command
 eval "$(hub alias -s)"
@@ -113,8 +112,10 @@ if [ -f $HOME/bin/django_bash_completion ]; then
   source $HOME/bin/django_bash_completion
 fi
 
+# NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # jmeter
 export PATH=$HOME/bin/apache-jmeter-3.2/bin:$PATH
@@ -130,7 +131,6 @@ if [ -f '/home/armonge/bin/google-cloud-sdk/path.bash.inc' ]; then source '/home
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then source '/home/armonge/bin/google-cloud-sdk/completion.bash.inc'; fi
-
 
 # Snap
 export PATH="$PATH:/var/lib/snapd/snap/bin"
@@ -151,7 +151,6 @@ fi
 # entr
 export PATH=$PATH:$HOME/bin/entr/bin:$PATH
 
-
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
@@ -162,7 +161,6 @@ fi
 
 # AWS
 complete -C "$HOME/.local/bin/aws_completer" aws
-
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -192,21 +190,24 @@ elif [ -f ~/.fzf.bash ]; then
   source ~/.fzf.bash
 fi
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*"'
+export FZF_CTRL_R_OPTS
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# added by travis gem
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh

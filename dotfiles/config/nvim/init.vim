@@ -77,7 +77,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('sheerun/vim-polyglot')
 
   " completions
-  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --ts-completer' })
+  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
 
   " General Programming {
   call dein#add('vim-scripts/sessionman.vim')
@@ -207,6 +207,11 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
+" ALE
+
+autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
+autocmd FileType javascript nnoremap<buffer> <Leader>d :ALEDetail<CR>
+
 let g:ale_python_auto_pipenv = 1
 let g:ale_sh_shfmt_options='-i 2'
 let g:ale_sign_column_always = 1
@@ -239,6 +244,11 @@ let g:ale_fix_on_save = 1
 " linters when you leave insert mode.
 let g:ale_lint_on_insert_leave = 1
 let g:airline#extensions#ale#enabled = 1
+
+" :help ale-navigation-commands
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " AutoCloseTag {
 " Make it so AutoCloseTag works for xml and xhtml files as well
 au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
@@ -265,8 +275,9 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
+let g:ycm_always_populate_location_list = 1
 
-nnoremap <Leader>rn :YcmCompleter RefactorRename
+nnoremap <Leader>rn :YcmCompleter RefactorRename 
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
 nnoremap <F9> :YcmCompleter FixIt<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -275,7 +286,6 @@ nnoremap <F8> :YcmCompleter OrganizeImports<CR>
 " Go {
 autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename
 autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
-
 "}"
 
 
