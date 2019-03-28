@@ -328,8 +328,8 @@ nnoremap <C-s> :Ack!
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 
 " licenses
-let g:licenses_authors_name = 'Rain Agency <contact@rain.agency>'
-let g:licenses_copyright_holders_name = 'Rain Agency <contact@rain.agency>'
+let g:licenses_authors_name = 'Andrés Reyes Monge <armonge@gmail.com>'
+let g:licenses_copyright_holders_name = 'Andrés Reyes Monge <armonge@gmail.com>'
 
 " Tagbar
 nmap <Leader>t :TagbarToggle<CR>
