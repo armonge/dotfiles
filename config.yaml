@@ -1,7 +1,7 @@
 actions:
   post:
     dein: vim --cmd ':call dein#recache_runtimepath()'
-    dein_install: cd ~/.cofig/nvim/ && ./installer.sh
+    dein_install: cd ~/.config/nvim/ && ./installer.sh
 config:
   backup: true
   banner: true
@@ -9,54 +9,55 @@ config:
   dotpath: dotfiles
   ignoreempty: false
   keepdot: false
-  link_by_default: true
+  link_dotfile_default: nolink
+  link_on_import: link
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
 dotfiles:
   f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
-    link: true
+    link: link
     src: local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
   f_bash_aliases:
     dst: ~/.bash_aliases
-    link: true
+    link: link
     src: bash_aliases
   f_bash_profile:
     dst: ~/.bash_profile
-    link: true
+    link: link
     src: bash_profile
   f_bashrc:
     dst: ~/.bashrc
-    link: true
+    link: link
     src: bashrc
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
-    link: true
+    link: link
     src: config/chromium-flags.conf
   f_ctags:
     dst: ~/.ctags
-    link: true
+    link: link
     src: ctags
   f_gitconfig:
     dst: ~/.gitconfig
-    link: true
+    link: link
     src: gitconfig
   f_init.vim:
     actions:
     - dein
     dst: ~/.config/nvim/init.vim
-    link: true
+    link: link
     src: config/nvim/init.vim
   f_installer.sh:
     actions:
     - dein_install
     dst: ~/.config/nvim/installer.sh
-    link: true
+    link: link
     src: config/nvim/installer.sh
   f_typescript.snippets:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
-    link: true
+    link: link
     src: config/nvim/UltiSnips/typescript.snippets
 profiles:
   armonge-laptop:
