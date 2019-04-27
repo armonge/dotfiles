@@ -39,6 +39,7 @@ if dein#load_state('~/.dein.cache')
   " File explorer
   " <C-e>
   call dein#add('scrooloose/nerdtree')
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
 
   " Syntax checker and fixer
   call dein#add('w0rp/ale')
@@ -73,6 +74,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('xolox/vim-misc')
   call dein#add('xolox/vim-notes')
 
+  " todo.txt
+   call dein#add('freitass/todo.txt-vim')
+   
   " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
 
@@ -210,8 +214,12 @@ endfunction"}}}
 " ALE
 
 autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
+autocmd FileType html nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType javascript nnoremap<buffer> <Leader>d :ALEDetail<CR>
 
+" let g:ale_cursor_detail = 1
+" let g:ale_close_preview_on_insert = 1
+let g:ale_list_window_size = 5
 let g:ale_python_auto_pipenv = 1
 let g:ale_sh_shfmt_options='-i 2'
 let g:ale_sign_column_always = 1
@@ -230,7 +238,7 @@ let g:ale_fixers = {
       \   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
       \   'json': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
       \   'python': ['black', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'html': ['tidy', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'html': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
       \   'htmldjango': ['trim_whitespace', 'remove_trailing_lines'],
       \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
       \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
@@ -364,3 +372,8 @@ let g:tagbar_type_markdown = {
 " Notes
 let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
 nmap <Leader>nt :Note 
+
+" todo.txt
+autocmd FileType todo  nnoremap<buffer> <Leader>d :call todo#txt#replace_date()<CR>
+
+

@@ -1,6 +1,7 @@
 #
 # ~/.bashrc
 #
+# shellcheck disable=SC1090
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -18,7 +19,7 @@ if [ -f /etc/profile.d/clojure.sh ]; then
 fi
 
 # fuck
-eval $(thefuck --alias)
+eval "$(thefuck --alias)"
 
 # history
 shopt -s histappend
@@ -108,8 +109,8 @@ export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.5.0/bin:$PATH"
 
 # Django
-if [ -f $HOME/bin/django_bash_completion ]; then
-  source $HOME/bin/django_bash_completion
+if [ -f "$HOME/bin/django_bash_completion" ]; then
+  source "$HOME/bin/django_bash_completion"
 fi
 
 # NVM
@@ -159,6 +160,11 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
+# todo.txt
+export PATH="$HOME/bin/todo.txt:$PATH"
+source "$HOME/bin/todo.txt/todo_completion"
+complete -F _todo t
+
 # AWS
 complete -C "$HOME/.local/bin/aws_completer" aws
 
@@ -176,9 +182,9 @@ fi
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+    source /usr/share/bash-completion/bash_completion
   elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+    source /etc/bash_completion
   fi
 fi
 
@@ -210,6 +216,11 @@ fi
 unset color_prompt force_color_prompt
 
 # added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+[ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
 
+# Kubernetes
 source <(kubectl completion bash)
+
+# BEGIN SNIPPET: Platform.sh CLI configuration
+export PATH=$HOME/.platformsh/bin:$PATH
+if [ -f "$HOME/.platformsh/shell-config.rc" ]; then . "$HOME/.platformsh/shell-config.rc"; fi # END SNIPPET
