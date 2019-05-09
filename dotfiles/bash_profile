@@ -1,7 +1,9 @@
 #
 # ~/.bash_profile
 #
+# shellcheck disable=SC1090
 
+[[ -f ~/.profile ]] && . ~/.profile
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 if [ -n "$DESKTOP_SESSION" ]; then

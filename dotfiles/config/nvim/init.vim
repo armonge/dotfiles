@@ -104,6 +104,13 @@ if dein#load_state('~/.dein.cache')
   call dein#add('lambdalisue/vim-pyenv')
   call dein#add('tweekmonster/django-plus.vim')
 
+  " Shows git commit messages for some line
+  call dein#add('rhysd/git-messenger.vim', {
+        \   'lazy' : 1,
+        \   'on_cmd' : 'GitMessenger',
+        \   'on_map' : '<Plug>(git-messenger',
+        \ })
+
   " Required:
   call dein#end()
   call dein#save_state()
@@ -128,6 +135,7 @@ let mapleader = ','
 cmap w!! w suda://%
 set clipboard=unnamed,unnamedplus
 set foldlevel=9
+set foldmethod=syntax
 set relativenumber
 filetype plugin indent on   " Automatically detect file types.
 scriptencoding utf-8
@@ -277,13 +285,17 @@ function! StripTrailingWhitespace()
 endfunction
 " }
 
-" YouCompletMe
+" YouCompletMe {
 let g:ycm_autoclose_preview_window_after_insertin = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
 let g:ycm_always_populate_location_list = 1
+
+" disable for python because we're using kite
+let g:ycm_filetype_blacklist = { 'python': 1 }
+" }
 
 nnoremap <Leader>rn :YcmCompleter RefactorRename 
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
@@ -376,4 +388,7 @@ nmap <Leader>nt :Note
 " todo.txt
 autocmd FileType todo  nnoremap<buffer> <Leader>d :call todo#txt#replace_date()<CR>
 
-
+" Git Messenger {
+let g:git_messenger_no_default_mappings = v:true
+nmap <C-w>m <Plug>(git-messenger)
+"}
