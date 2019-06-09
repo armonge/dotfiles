@@ -382,7 +382,9 @@ let g:tagbar_type_markdown = {
 \ }
 
 " Notes
-let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
+if filereadable("~/TresoritDrive/Andres\'s tresor/Notes")
+  let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
+endif
 nmap <Leader>nt :Note 
 
 " todo.txt

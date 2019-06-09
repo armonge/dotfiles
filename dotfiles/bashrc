@@ -4,7 +4,7 @@
 # shellcheck disable=SC1090
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+[[ "$-" != *i* ]] && return
 
 # open new tabs in same directory
 if [ -f /etc/profile.d/vte.sh ]; then
@@ -58,9 +58,6 @@ export PATH=$HOME/bin/StorageExplorer:$PATH
 # Azure Functions Cli
 export PATH=$HOME/bin/azure-functions-cli:$PATH
 
-# Oni
-export PATH=$HOME/bin/Oni:$PATH
-
 # Android
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
@@ -82,19 +79,66 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 
-PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+fmt_time() { #format time just the way I likes it
+  if [[ "$(date +%p)" == "PM" ]]; then
+    meridiem="pm"
+  else
+    meridiem="am"
+  fi
+  date +"%l:%M:%S$meridiem" | sed 's/ //g'
+}
+
+pwdtail() { #returns the last 2 fields of the working directory
+  pwd | awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
+}
+
+chkload() { #gets the current 1m avg CPU load
+  local CURRLOAD=$(uptime | awk '{print $8}')
+  if [ "$CURRLOAD" ] >"1"; then
+    local OUTP="HIGH"
+  elif [ "$CURRLOAD" ] <"1"; then
+    local OUTP="NORMAL"
+  else
+    local OUTP="UNKNOWN"
+  fi
+  echo $CURRLOAD
+}
+
 enter_directory() {
-  if [ "$PWD" != "$PREV_PWD" ]; then
+  if [[ "$PWD" != "$PREV_PWD" ]]; then
     PREV_PWD="$PWD"
-    if [ -e ".nvmrc" ]; then
+    if [[ -e ".nvmrc" ]]; then
       nvm use
     fi
 
-    if [ -e ".bashenv" ]; then
+    if [[ -e ".bashenv" ]]; then
       source ".bashenv"
     fi
   fi
-  __git_ps1 "\\u@\\h:\\W" "\\\$ "
+  if [[ "$?" -eq 0 ]]; then # set an error string for the prompt, if applicable
+    ERRPROMPT=" "
+  else
+    ERRPROMPT='->($?) '
+  fi
+  if [[ "\$(type -t __git_ps1)" ]]; then # if we're in a Git repo, show current branch
+    BRANCH="\$(__git_ps1 '[ %s ] ')"
+  fi
+  local TIME=$(fmt_time) # format time for prompt string
+  local LOAD=$(uptime | awk '{min=NF-2;print $min}')
+  local GREEN="\[\033[0;32m\]"
+  local CYAN="\[\033[0;36m\]"
+  local BCYAN="\[\033[1;36m\]"
+  local BLUE="\[\033[0;34m\]"
+  local GRAY="\[\033[0;37m\]"
+  local DKGRAY="\[\033[1;30m\]"
+  local WHITE="\[\033[1;37m\]"
+  local RED="\[\033[0;31m\]"
+  # return color to Terminal setting for text color
+  local DEFAULT="\[\033[0;39m\]"
+  # set the titlebar to the last 2 fields of pwd
+  local TITLEBAR='\[\e]2;`pwdtail`\a'
+  export PS1="\[${TITLEBAR}\]${GREEN}[ ${GREEN}\u${GREEN}@${GREEN}\h  ${GREEN}]${RED}$ERRPROMPT${GRAY}\
+\w\n${GREEN}${BRANCH}${DEFAULT}$ "
 }
 
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} enter_directory"
@@ -104,7 +148,6 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@; }
 
 # ~/bin
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="$HOME/.gem/ruby/2.5.0/bin:$PATH"
 
@@ -120,18 +163,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # jmeter
 export PATH=$HOME/bin/apache-jmeter-3.2/bin:$PATH
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /home/armonge/.config/yarn/global/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash ] && . /home/armonge/.config/yarn/global/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /home/armonge/.config/yarn/global/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . /home/armonge/.config/yarn/global/node_modules/serverless/node_modules/tabtab/.completions/sls.bash
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/armonge/bin/google-cloud-sdk/path.bash.inc' ]; then source '/home/armonge/bin/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then source '/home/armonge/bin/google-cloud-sdk/completion.bash.inc'; fi
 
 # Snap
 export PATH="$PATH:/var/lib/snapd/snap/bin"
@@ -154,16 +185,21 @@ export PATH=$PATH:$HOME/bin/entr/bin:$PATH
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_VIRTUALENV_VERBOSE_ACTIVATE=true
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 # todo.txt
 export PATH="$HOME/bin/todo.txt:$PATH"
-source "$HOME/bin/todo.txt/todo_completion"
-complete -F _todo t
+
+if [ -f ~/bin/todo.txt ]; then
+  source "$HOME/bin/todo.txt/todo_completion"
+  complete -F _todo t
+fi
 
 # AWS
 complete -C "$HOME/.local/bin/aws_completer" aws
@@ -203,24 +239,20 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
-esac
-
-if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
 # added by travis gem
 [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
-
-# Kubernetes
-source <(kubectl completion bash)
 
 # BEGIN SNIPPET: Platform.sh CLI configuration
 export PATH=$HOME/.platformsh/bin:$PATH
 if [ -f "$HOME/.platformsh/shell-config.rc" ]; then . "$HOME/.platformsh/shell-config.rc"; fi # END SNIPPET
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/armonge/bin/google-cloud-sdk/path.bash.inc' ]; then . '/home/armonge/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/home/armonge/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+# Kubernetes
+source <(kubectl completion bash)
+
+export PS1="\e[0;31m[\u@\h \W]\$ \e[m"

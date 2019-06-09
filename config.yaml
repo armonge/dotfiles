@@ -1,6 +1,6 @@
 actions:
   post:
-    dein: vim --cmd ':call dein#recache_runtimepath()'
+    dein: nvim --cmd ':call dein#recache_runtimepath()'
     dein_install: cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/
 config:
   backup: true
@@ -61,6 +61,19 @@ dotfiles:
     src: config/nvim/UltiSnips/typescript.snippets
 profiles:
   armonge-laptop:
+    dotfiles:
+    - f_bashrc
+    - f_init.vim
+    - f_installer.sh
+    - f_gitconfig
+    - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
+    - f_ctags
+    - f_bash_profile
+    - f_chromium-flags.conf
+    - f_typescript.snippets
+    - f_bash_aliases
+  
+  armonge-vui-laptop:
     dotfiles:
     - f_bashrc
     - f_init.vim
