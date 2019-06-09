@@ -1,7 +1,7 @@
 actions:
   post:
     dein: nvim --cmd ':call dein#recache_runtimepath()'
-    dein_install: if [ ! -f "$HOME/.dein.cache/repos/github.com/Shougo/dein.vim" ]; then cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/ fi
+    dein_install: if [ ! -f "$HOME/.dein.cache/repos/github.com/Shougo/dein.vim" ]; then cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/; fi
 config:
   backup: true
   banner: true
