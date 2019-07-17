@@ -251,6 +251,9 @@ let g:ale_fixers = {
       \   'python': ['black'],
       \   'html': ['prettier'],
       \   'htmldjango': ['prettier'],
+      \   'css': ['prettier'],
+      \   'scss': ['prettier'],
+      \   'less': ['prettier'],
       \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
       \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
       \}
