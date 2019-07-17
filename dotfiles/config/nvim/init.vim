@@ -221,6 +221,7 @@ endfunction"}}}
 
 " ALE
 
+autocmd FileType python nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType html nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType javascript nnoremap<buffer> <Leader>d :ALEDetail<CR>
@@ -242,15 +243,23 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
       \   'go': ['gofmt'],
-      \   'javascript': ['prettier', 'eslint', 'remove_trailing_lines', 'trim_whitespace'],
-      \   'typescript': ['prettier', 'tslint', 'remove_trailing_lines', 'trim_whitespace'],
-      \   'json': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'python': ['black', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'html': ['prettier', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'htmldjango': ['trim_whitespace', 'remove_trailing_lines'],
+      \   'yaml': ['prettier'],
+      \   'markdown': ['prettier'],
+      \   'javascript': ['prettier'],
+      \   'typescript': ['prettier'],
+      \   'json': ['prettier'],
+      \   'python': ['black'],
+      \   'html': ['prettier'],
+      \   'htmldjango': ['prettier'],
       \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
       \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
       \}
+
+let g:ale_pattern_options = {
+      \'serverless-basic-authentication': {
+      \ 'ale_fixers': []
+      \}
+  \}
 
 " Set this setting in vimrc if you want to fix files automatically on save.
 " This is off by default.
@@ -295,6 +304,18 @@ let g:ycm_always_populate_location_list = 1
 
 " disable for python because we're using kite
 let g:ycm_filetype_blacklist = { 'python': 1 }
+
+" https://github.com/kiteco/plugins/tree/master/vim
+let g:kite_tab_complete=1
+
+autocmd FileType python set completeopt-=menu
+autocmd FileType python set completeopt+=menuone   " show the popup menu even when there is only 1 match
+autocmd FileType python set completeopt-=longest   " don't insert the longest common text
+autocmd FileType python set completeopt-=preview   " don't show preview window
+autocmd FileType python set completeopt+=noinsert  " don't insert any text until user chooses a match
+autocmd FileType python set completeopt-=noselect  " select first match
+
+autocmd CompleteDone * if !pumvisible() | pclose | endif
 " }
 
 nnoremap <Leader>rn :YcmCompleter RefactorRename 
