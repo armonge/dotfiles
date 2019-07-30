@@ -1,7 +1,8 @@
 actions:
   post:
     dein: nvim --cmd ':call dein#recache_runtimepath()'
-    dein_install: if [ ! -f "$HOME/.dein.cache/repos/github.com/Shougo/dein.vim" ]; then cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/; fi
+    dein_install: if [ ! -f "$HOME/.dein.cache/repos/github.com/Shougo/dein.vim" ];
+      then cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/; fi
 config:
   backup: true
   banner: true
@@ -59,6 +60,10 @@ dotfiles:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
     link: link
     src: config/nvim/UltiSnips/typescript.snippets
+  f_attributes:
+    src: config/git/attributes
+    dst: ~/.config/git/attributes
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -72,7 +77,7 @@ profiles:
     - f_chromium-flags.conf
     - f_typescript.snippets
     - f_bash_aliases
-  
+
   armonge-vui-laptop:
     dotfiles:
     - f_bashrc
@@ -85,3 +90,4 @@ profiles:
     - f_chromium-flags.conf
     - f_typescript.snippets
     - f_bash_aliases
+    - f_attributes

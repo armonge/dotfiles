@@ -71,8 +71,8 @@ if dein#load_state('~/.dein.cache')
   call dein#add('scrooloose/nerdcommenter')
 
   " Notes
-  call dein#add('xolox/vim-misc')
-  call dein#add('xolox/vim-notes')
+  " cal dein#add('xolox/vim-misc')
+  " call dein#add('xolox/vim-notes')
 
   " todo.txt
    call dein#add('freitass/todo.txt-vim')
@@ -103,6 +103,11 @@ if dein#load_state('~/.dein.cache')
   " python
   call dein#add('lambdalisue/vim-pyenv')
   call dein#add('tweekmonster/django-plus.vim')
+
+  " git
+  call dein#add('mhinz/vim-signify')
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
 
   " Shows git commit messages for some line
   call dein#add('rhysd/git-messenger.vim', {
@@ -188,7 +193,7 @@ set wildmenu                    " Show list instead of just completing
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-set foldenable                  " Auto fold code
+set nofoldenable                " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
@@ -220,7 +225,6 @@ function! s:check_back_space() abort "{{{
 endfunction"}}}
 
 " ALE
-
 autocmd FileType python nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType html nnoremap<buffer> <Leader>d :ALEDetail<CR>
@@ -304,12 +308,6 @@ let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
 let g:ycm_always_populate_location_list = 1
-
-" disable for python because we're using kite
-let g:ycm_filetype_blacklist = { 'python': 1 }
-
-" https://github.com/kiteco/plugins/tree/master/vim
-let g:kite_tab_complete=1
 
 autocmd FileType python set completeopt-=menu
 autocmd FileType python set completeopt+=menuone   " show the popup menu even when there is only 1 match
@@ -418,3 +416,7 @@ autocmd FileType todo  nnoremap<buffer> <Leader>d :call todo#txt#replace_date()<
 let g:git_messenger_no_default_mappings = v:true
 nmap <C-w>m <Plug>(git-messenger)
 "}
+"
+" Git Signify {
+let g:signify_vcs_list = ['git']
+" }

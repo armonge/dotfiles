@@ -6,11 +6,12 @@
   name = Andrés Reyes Monge
   signingkey = B6A45A727378564E
 [core]
-  quotepath = false
-  editor = nvim -u NONE
+	quotepath = false
+  editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [commit]
   gpgsign = true
+  verbose = true
 [instaweb]
   local = true
   httpd = httpd -f
@@ -28,3 +29,5 @@
 [credential]
 	; helper = /usr/lib/git-core/git-credential-libsecret
   helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+[diff "spaceman-diff"]
+  command = $HOME/bin/spaceman-diff

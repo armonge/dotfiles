@@ -265,3 +265,5 @@ export PATH="$PATH:$HOME/.rvm/bin"
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
 export NODE_OPTIONS=--max_old_space_size=4096
+
+[[ -s "/home/armonge/.gvm/scripts/gvm" ]] && source "/home/armonge/.gvm/scripts/gvm"
