@@ -75,7 +75,7 @@ if dein#load_state('~/.dein.cache')
   " call dein#add('xolox/vim-notes')
 
   " todo.txt
-   call dein#add('freitass/todo.txt-vim')
+  " call dein#add('freitass/todo.txt-vim')
    
   " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
@@ -95,10 +95,10 @@ if dein#load_state('~/.dein.cache')
   call dein#add('honza/vim-snippets')
 
   " colorscheme
-  call dein#add('iCyMind/NeoSolarized')
-  call dein#add('sickill/vim-monokai')
-  call dein#add('ErichDonGubler/vim-sublime-monokai')
-  call dein#add('dracula/vim')
+  " call dein#add('iCyMind/NeoSolarized')
+  " call dein#add('sickill/vim-monokai')
+  " call dein#add('ErichDonGubler/vim-sublime-monokai')
+  " call dein#add('dracula/vim')
 
   " python
   call dein#add('lambdalisue/vim-pyenv')
@@ -108,6 +108,10 @@ if dein#load_state('~/.dein.cache')
   call dein#add('mhinz/vim-signify')
   call dein#add('tpope/vim-fugitive')
   call dein#add('tpope/vim-rhubarb')
+
+  " clojure
+  call dein#add('tpope/vim-fireplace')
+  call dein#add('venantius/vim-cljfmt')
 
   " Shows git commit messages for some line
   call dein#add('rhysd/git-messenger.vim', {
@@ -258,6 +262,7 @@ let g:ale_fixers = {
       \   'css': ['prettier'],
       \   'scss': ['prettier'],
       \   'less': ['prettier'],
+      \   'clojure': ['trim_whitespace', 'remove_trailing_lines'],
       \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
       \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
       \}
