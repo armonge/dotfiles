@@ -372,7 +372,7 @@ nnoremap <C-s> :Ack!
 " }
 
 "  coverage
-let g:coverage_json_report_path = 'coverage/coverage-final.json'
+" let g:coverage_json_report_path = 'coverage/coverage-final.json'
 
 " licenses
 let g:licenses_authors_name = 'Andrés Reyes Monge <armonge@gmail.com>'
@@ -424,4 +424,10 @@ nmap <C-w>m <Plug>(git-messenger)
 "
 " Git Signify {
 let g:signify_vcs_list = ['git']
+" }
+"
+
+" Clojure {
+autocmd FileType clojure map <C-g> <Plug>FireplaceDjump
+autocmd FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
 " }
