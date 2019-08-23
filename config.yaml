@@ -64,6 +64,10 @@ dotfiles:
     src: config/git/attributes
     dst: ~/.config/git/attributes
     link: link
+  f_deps.edn:
+    src: clojure/deps.edn
+    dst: ~/.clojure/deps.edn
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -91,3 +95,4 @@ profiles:
     - f_typescript.snippets
     - f_bash_aliases
     - f_attributes
+    - f_deps.edn

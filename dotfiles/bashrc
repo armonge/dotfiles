@@ -15,6 +15,7 @@ fi
 if [ -f /etc/profile.d/clojure.sh ]; then
   source /etc/profile.d/clojure.sh
   source /usr/share/bash-completion/completions/lein
+  export LEIN_FAST_TRAMPOLINE=true
   export LEIN_JAVA_CMD="$HOME/bin/drip"
 fi
 
@@ -50,6 +51,7 @@ export EDITOR="nvim -u NONE"
 
 # GO
 export GOPATH=$(go env GOPATH)
+export PATH=$HOME/bin/go/bin:$PATH
 export PATH=$PATH:$(go env GOPATH)/bin
 
 # Azure Storage Explorer
@@ -265,5 +267,3 @@ export PATH="$PATH:$HOME/.rvm/bin"
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
 export NODE_OPTIONS=--max_old_space_size=4096
-
-[[ -s "/home/armonge/.gvm/scripts/gvm" ]] && source "/home/armonge/.gvm/scripts/gvm"

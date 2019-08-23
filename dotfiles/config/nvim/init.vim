@@ -30,6 +30,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
 
+  "json5
+  call dein#add('GutenYe/json5.vim')
+
   " Tagbar starts with <Leader>t
   call dein#add('majutsushi/tagbar')
 
@@ -112,6 +115,12 @@ if dein#load_state('~/.dein.cache')
   " clojure
   call dein#add('tpope/vim-fireplace')
   call dein#add('venantius/vim-cljfmt')
+  call dein#add('tpope/vim-salve')
+  call dein#add('tpope/vim-dispatch')
+  call dein#add('luochen1990/rainbow')
+
+  " SQL
+  call dein#add('vim-scripts/dbext.vim') 
 
   " Shows git commit messages for some line
   call dein#add('rhysd/git-messenger.vim', {
@@ -143,8 +152,16 @@ let mapleader = ','
 
 cmap w!! w suda://%
 set clipboard=unnamed,unnamedplus
+
+" Fold {
+set foldenable                " Auto fold code
 set foldlevel=9
 set foldmethod=syntax
+" set foldcolumn=1
+set foldnestmax=4
+set mouse=a
+" }
+
 set relativenumber
 filetype plugin indent on   " Automatically detect file types.
 scriptencoding utf-8
@@ -197,7 +214,6 @@ set wildmenu                    " Show list instead of just completing
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
-set nofoldenable                " Auto fold code
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
@@ -256,6 +272,7 @@ let g:ale_fixers = {
       \   'javascript': ['prettier'],
       \   'typescript': ['prettier'],
       \   'json': ['prettier'],
+      \   'json5': ['prettier'],
       \   'python': ['black'],
       \   'html': ['prettier'],
       \   'htmldjango': ['prettier'],
@@ -264,7 +281,8 @@ let g:ale_fixers = {
       \   'less': ['prettier'],
       \   'clojure': ['trim_whitespace', 'remove_trailing_lines'],
       \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
-      \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines']
+      \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'sql': ['sqlfmt', 'pgformatter']
       \}
 
 let g:ale_pattern_options = {
@@ -322,13 +340,24 @@ autocmd FileType python set completeopt+=noinsert  " don't insert any text until
 autocmd FileType python set completeopt-=noselect  " select first match
 
 autocmd CompleteDone * if !pumvisible() | pclose | endif
-" }
 
 nnoremap <Leader>rn :YcmCompleter RefactorRename 
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
 nnoremap <F9> :YcmCompleter FixIt<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <F8> :YcmCompleter OrganizeImports<CR>
+
+" disable it on sql files
+let g:ycm_filetype_triggers = { 'sql': [] }
+" let g:ycm_filetype_specific_completion_to_disable = {
+      " \ 'sql': 1
+      " \}
+
+" }
+
+" sql {
+let g:sql_type_default = "sql.vim"
+" }
 
 " Go {
 autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename
@@ -409,10 +438,10 @@ let g:tagbar_type_markdown = {
 \ }
 
 " Notes
-if filereadable("~/TresoritDrive/Andres\'s tresor/Notes")
-  let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
-endif
-nmap <Leader>nt :Note 
+" if filereadable("~/TresoritDrive/Andres\'s tresor/Notes")
+  " let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
+" endif
+" nmap <Leader>nt :Note 
 
 " todo.txt
 autocmd FileType todo  nnoremap<buffer> <Leader>d :call todo#txt#replace_date()<CR>
@@ -429,5 +458,8 @@ let g:signify_vcs_list = ['git']
 
 " Clojure {
 autocmd FileType clojure map <C-g> <Plug>FireplaceDjump
-autocmd FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
+autocmd FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '```':'```', '"""':'"""', "'''":"'''"}
+autocmd FileType clojure nnoremap<buffer> <F5> :make uberjar<CR>
+let g:salve_auto_start_repl = 1
+let g:rainbow_active = 1
 " }

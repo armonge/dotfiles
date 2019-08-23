@@ -31,3 +31,4 @@ alias dotgit="git -C $DOTREPO"
 alias dotsync="dotgit pull && dotgit add -A && dotgit commit && dotgit push; dotdrop install"
 
 alias t="todo.sh -d $HOME/bin/todo.tx/todo.cfg"
+alias cljfmt="lein cljfmt"
