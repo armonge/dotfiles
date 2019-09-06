@@ -70,16 +70,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('ruanyl/coverage.vim')
 
   " Comments
-  " <C-c>n
+  " <Leader>c<Space>
   call dein#add('scrooloose/nerdcommenter')
 
-  " Notes
-  " cal dein#add('xolox/vim-misc')
-  " call dein#add('xolox/vim-notes')
-
-  " todo.txt
-  " call dein#add('freitass/todo.txt-vim')
-   
   " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
 
@@ -97,12 +90,6 @@ if dein#load_state('~/.dein.cache')
   " Actual snippet files
   call dein#add('honza/vim-snippets')
 
-  " colorscheme
-  " call dein#add('iCyMind/NeoSolarized')
-  " call dein#add('sickill/vim-monokai')
-  " call dein#add('ErichDonGubler/vim-sublime-monokai')
-  " call dein#add('dracula/vim')
-
   " python
   call dein#add('lambdalisue/vim-pyenv')
   call dein#add('tweekmonster/django-plus.vim')
@@ -117,10 +104,15 @@ if dein#load_state('~/.dein.cache')
   call dein#add('venantius/vim-cljfmt')
   call dein#add('tpope/vim-salve')
   call dein#add('tpope/vim-dispatch')
+  call dein#add('vim-scripts/paredit.vim')
   call dein#add('luochen1990/rainbow')
 
   " SQL
   call dein#add('vim-scripts/dbext.vim') 
+
+  " Writing prose in vim
+  " <Leader>V
+  call dein#add('mikewest/vimroom')
 
   " Shows git commit messages for some line
   call dein#add('rhysd/git-messenger.vim', {
@@ -134,7 +126,6 @@ if dein#load_state('~/.dein.cache')
   call dein#save_state()
 endif
 
-" Required:
 filetype plugin indent on
 syntax enable
 
@@ -249,6 +240,7 @@ autocmd FileType python nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType html nnoremap<buffer> <Leader>d :ALEDetail<CR>
 autocmd FileType javascript nnoremap<buffer> <Leader>d :ALEDetail<CR>
+autocmd FileType clojure nnoremap<buffer> <Leader>d :ALEDetail<CR>
 
 " let g:ale_cursor_detail = 1
 " let g:ale_close_preview_on_insert = 1
@@ -341,7 +333,7 @@ autocmd FileType python set completeopt-=noselect  " select first match
 
 autocmd CompleteDone * if !pumvisible() | pclose | endif
 
-nnoremap <Leader>rn :YcmCompleter RefactorRename 
+nnoremap <Leader>rn :YcmCompleter RefactorRename<Space>
 nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
 nnoremap <F9> :YcmCompleter FixIt<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -360,8 +352,9 @@ let g:sql_type_default = "sql.vim"
 " }
 
 " Go {
-autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename
+autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename<Space>
 autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
+autocmd FileType go nnoremap<buffer> <F6> :GoRun<CR>
 "}"
 
 
@@ -369,7 +362,7 @@ autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
 map <C-e> <plug>NERDTreeTabsToggle<CR>
 
 let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=1
 let NERDTreeMouseMode=2
@@ -379,9 +372,10 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 nnoremap <C-e> :NERDTreeToggle<CR>
 " }
 
-" FZF
+" FZF {
 nnoremap <C-p> :FZF<CR>
 let g:fzf_buffers_jump = 1
+" }
 
 
 " UltiSnips triggering
@@ -437,14 +431,6 @@ let g:tagbar_type_markdown = {
     \ ]
 \ }
 
-" Notes
-" if filereadable("~/TresoritDrive/Andres\'s tresor/Notes")
-  " let g:notes_directories = ["~/TresoritDrive/Andres\'s tresor/Notes"]
-" endif
-" nmap <Leader>nt :Note 
-
-" todo.txt
-autocmd FileType todo  nnoremap<buffer> <Leader>d :call todo#txt#replace_date()<CR>
 
 " Git Messenger {
 let g:git_messenger_no_default_mappings = v:true
@@ -462,4 +448,9 @@ autocmd FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '
 autocmd FileType clojure nnoremap<buffer> <F5> :make uberjar<CR>
 let g:salve_auto_start_repl = 1
 let g:rainbow_active = 1
+" }
+"
+" Vimroom {
+let g:vimroom_ctermbackground="none"
+let g:vimroom_navigation_keys = 1
 " }
