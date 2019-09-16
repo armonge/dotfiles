@@ -77,7 +77,8 @@ if dein#load_state('~/.dein.cache')
   call dein#add('sheerun/vim-polyglot')
 
   " completions
-  call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
+  " call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
+  call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
 
   " General Programming {
   call dein#add('vim-scripts/sessionman.vim')
@@ -317,34 +318,48 @@ endfunction
 " }
 
 " YouCompletMe {
-let g:ycm_autoclose_preview_window_after_insertin = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_server_keep_logfiles = 1
-let g:ycm_server_log_level = 'debug'
-let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
-let g:ycm_always_populate_location_list = 1
+" let g:ycm_autoclose_preview_window_after_insertin = 1
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_server_keep_logfiles = 1
+" let g:ycm_server_log_level = 'debug'
+" let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
+" let g:ycm_always_populate_location_list = 1
 
-autocmd FileType python set completeopt-=menu
-autocmd FileType python set completeopt+=menuone   " show the popup menu even when there is only 1 match
-autocmd FileType python set completeopt-=longest   " don't insert the longest common text
-autocmd FileType python set completeopt-=preview   " don't show preview window
-autocmd FileType python set completeopt+=noinsert  " don't insert any text until user chooses a match
-autocmd FileType python set completeopt-=noselect  " select first match
+" autocmd FileType python set completeopt-=menu
+" autocmd FileType python set completeopt+=menuone   " show the popup menu even when there is only 1 match
+" autocmd FileType python set completeopt-=longest   " don't insert the longest common text
+" autocmd FileType python set completeopt-=preview   " don't show preview window
+" autocmd FileType python set completeopt+=noinsert  " don't insert any text until user chooses a match
+" autocmd FileType python set completeopt-=noselect  " select first match
 
-autocmd CompleteDone * if !pumvisible() | pclose | endif
+" autocmd CompleteDone * if !pumvisible() | pclose | endif
 
-nnoremap <Leader>rn :YcmCompleter RefactorRename<Space>
-nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
-nnoremap <F9> :YcmCompleter FixIt<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <F8> :YcmCompleter OrganizeImports<CR>
+" nnoremap <Leader>rn :YcmCompleter RefactorRename<Space>
+" nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
+" nnoremap <F9> :YcmCompleter FixIt<CR>
+" nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+" nnoremap <F8> :YcmCompleter OrganizeImports<CR>
 
-" disable it on sql files
-let g:ycm_filetype_triggers = { 'sql': [] }
-" let g:ycm_filetype_specific_completion_to_disable = {
-      " \ 'sql': 1
-      " \}
+" }
+"
+" coc.nvim {
 
+function! SetupCommandAbbrs(from, to)
+  exec 'cnoreabbrev <expr> '.a:from
+        \ .' ((getcmdtype() ==# ":" && getcmdline() ==# "'.a:from.'")'
+        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+endfunction
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use C to open coc config
+call SetupCommandAbbrs('C', 'CocConfig')
 " }
 
 " sql {

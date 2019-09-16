@@ -68,6 +68,10 @@ dotfiles:
     src: clojure/deps.edn
     dst: ~/.clojure/deps.edn
     link: link
+  f_coc-settings.json:
+    src: config/nvim/coc-settings.json
+    dst: ~/.config/nvim/coc-settings.json
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -96,3 +100,4 @@ profiles:
     - f_bash_aliases
     - f_attributes
     - f_deps.edn
+    - f_coc-settings.json
