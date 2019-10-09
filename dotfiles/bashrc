@@ -44,6 +44,7 @@ export BAT_THEME="Monokai Extended"
 
 # python
 export PATH=$PATH:$HOME/.local/bin
+export PATH="$HOME/.poetry/bin:$PATH"
 
 # VIM
 export VISUAL="nvim -u NONE"
@@ -107,16 +108,6 @@ chkload() { #gets the current 1m avg CPU load
 }
 
 enter_directory() {
-  if [[ "$PWD" != "$PREV_PWD" ]]; then
-    PREV_PWD="$PWD"
-    if [[ -e ".nvmrc" ]]; then
-      nvm use
-    fi
-
-    if [[ -e ".bashenv" ]]; then
-      source ".bashenv"
-    fi
-  fi
   if [[ "$?" -eq 0 ]]; then # set an error string for the prompt, if applicable
     ERRPROMPT=" "
   else
@@ -267,3 +258,14 @@ export PATH="$PATH:$HOME/.rvm/bin"
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
 export NODE_OPTIONS=--max_old_space_size=4096
+
+_direnv_hook() {
+  local previous_exit_status=$?
+  eval "$("/usr/bin/direnv" export bash)"
+  return $previous_exit_status
+}
+if ! [[ "$PROMPT_COMMAND" =~ _direnv_hook ]]; then
+  PROMPT_COMMAND="_direnv_hook;$PROMPT_COMMAND"
+fi
+
+export PATH="$(composer config -g home)/vendor/bin:$PATH"

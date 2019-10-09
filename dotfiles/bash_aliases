@@ -4,7 +4,7 @@ alias ll='exa -la'
 alias ls='exa'
 alias vi='nvim'
 alias grep='grep --color=auto'
-alias serve='python2 -m SimpleHTTPServer'
+alias serve='python3 -m http.server'
 alias open='xdg-open'
 alias dotnet='TERM=xterm dotnet'
 alias func="TERM=xterm func"

@@ -1,3 +1,18 @@
 {
-  "java.home": "/usr/lib/jvm/java-13-openjdk-amd64/"
+  "java.home": "/usr/lib/jvm/java-13-openjdk-amd64/",
+
+  // Require .prettierrc
+  "prettier.requireConfig": true,
+
+  // Run prettier (and others)
+  "formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "Markdown",
+    "javascript",
+    "typescript"
+  ],
+
+  "diagnostic.displayByAle": true,
+  "yaml.custom.tags": ["!GetAtt"]
 }
