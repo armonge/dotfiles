@@ -254,6 +254,7 @@ let g:ale_linters = {
       \   'yaml': ['yamllint', 'remove_trailing_lines', 'trim_whitespace'],
       \   'htmldjango': ['htmlhint', 'proselint', 'trim_whitespace', 'remove_trailing_lines'],
       \   'rst': ['alex', 'proselint', 'redpen', 'rstcheck', 'vale', 'writegood', 'trim_whitespace', 'remove_trailing_lines'],
+      \   'python': ['flake8'],
       \   'sh': ['shellcheck'],
       \}
 
