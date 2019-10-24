@@ -229,6 +229,7 @@ let g:NERDSpaceDelims = 1
 autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd BufNewFile,BufRead *.js set filetype=javascript
 autocmd BufNewFile,BufRead .bashenv set filetype=sh
+autocmd BufNewFile,BufRead .envrc set filetype=sh
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
@@ -260,6 +261,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
       \   'go': ['gofmt'],
+      \   'php': ['php_cs_fixer'],
       \   'yaml': ['prettier'],
       \   'markdown': ['prettier'],
       \   'javascript': ['prettier'],

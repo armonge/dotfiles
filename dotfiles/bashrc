@@ -36,9 +36,6 @@ shopt -s checkwinsize
 # I want some german, but my terminal needs english :P
 export LANG=en_US.UTF-8
 
-# This is github hub command
-eval "$(hub alias -s)"
-
 # bat cat replacement
 export BAT_THEME="Monokai Extended"
 
