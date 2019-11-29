@@ -44,7 +44,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
 
   " Syntax checker and fixer
-  call dein#add('w0rp/ale')
+  " call dein#add('w0rp/ale')
 
   " Show indent guides
   " <Leader>ig
@@ -236,70 +236,6 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
-" ALE
-autocmd FileType python nnoremap<buffer> <Leader>d :ALEDetail<CR>
-autocmd FileType sh nnoremap<buffer> <Leader>d :ALEDetail<CR>
-autocmd FileType html nnoremap<buffer> <Leader>d :ALEDetail<CR>
-autocmd FileType javascript nnoremap<buffer> <Leader>d :ALEDetail<CR>
-autocmd FileType clojure nnoremap<buffer> <Leader>d :ALEDetail<CR>
-
-" let g:ale_cursor_detail = 1
-" let g:ale_close_preview_on_insert = 1
-let g:ale_list_window_size = 5
-let g:ale_python_auto_pipenv = 1
-let g:ale_sh_shfmt_options='-i 2'
-let g:ale_sign_column_always = 1
-let g:ale_linters = {
-      \   'go': ['gofmt'],
-      \   'xml': ['xmllint', 'remove_trailing_lines', 'trim_whitespace'],
-      \   'yaml': ['yamllint', 'remove_trailing_lines', 'trim_whitespace'],
-      \   'htmldjango': ['htmlhint', 'proselint', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'rst': ['alex', 'proselint', 'redpen', 'rstcheck', 'vale', 'writegood', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'python': ['flake8'],
-      \   'sh': ['shellcheck'],
-      \}
-
-let g:ale_fixers = {
-      \   'go': ['gofmt'],
-      \   'php': ['php_cs_fixer'],
-      \   'yaml': ['prettier'],
-      \   'markdown': ['prettier'],
-      \   'javascript': ['prettier'],
-      \   'typescript': ['prettier'],
-      \   'json': ['prettier'],
-      \   'json5': ['prettier'],
-      \   'python': ['black'],
-      \   'html': ['prettier'],
-      \   'htmldjango': ['prettier'],
-      \   'css': ['prettier'],
-      \   'scss': ['prettier'],
-      \   'less': ['prettier'],
-      \   'clojure': ['trim_whitespace', 'remove_trailing_lines'],
-      \   'rst': ['trim_whitespace', 'remove_trailing_lines'],
-      \   'sh': ['shfmt', 'trim_whitespace', 'remove_trailing_lines'],
-      \   'sql': ['sqlfmt', 'pgformatter']
-      \}
-
-let g:ale_pattern_options = {
-      \'serverless-basic-authentication': {
-      \ 'ale_fixers': []
-      \}
-  \}
-
-let g:ale_python_black_options = '--skip-string-normalization'
-
-" Set this setting in vimrc if you want to fix files automatically on save.
-" This is off by default.
-let g:ale_fix_on_save = 1
-
-" When set to `1` in your vimrc file, this option will cause ALE to run
-" linters when you leave insert mode.
-let g:ale_lint_on_insert_leave = 1
-let g:airline#extensions#ale#enabled = 1
-
-" :help ale-navigation-commands
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " AutoCloseTag {
 " Make it so AutoCloseTag works for xml and xhtml files as well
@@ -321,30 +257,6 @@ function! StripTrailingWhitespace()
 endfunction
 " }
 
-" YouCompletMe {
-" let g:ycm_autoclose_preview_window_after_insertin = 1
-" let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_server_keep_logfiles = 1
-" let g:ycm_server_log_level = 'debug'
-" let g:ycm_python_binary_path = "/home/armonge/.pyenv/shims/python"
-" let g:ycm_always_populate_location_list = 1
-
-" autocmd FileType python set completeopt-=menu
-" autocmd FileType python set completeopt+=menuone   " show the popup menu even when there is only 1 match
-" autocmd FileType python set completeopt-=longest   " don't insert the longest common text
-" autocmd FileType python set completeopt-=preview   " don't show preview window
-" autocmd FileType python set completeopt+=noinsert  " don't insert any text until user chooses a match
-" autocmd FileType python set completeopt-=noselect  " select first match
-
-" autocmd CompleteDone * if !pumvisible() | pclose | endif
-
-" nnoremap <Leader>rn :YcmCompleter RefactorRename<Space>
-" nnoremap <C-g> :YcmCompleter GoToDefinition<CR>
-" nnoremap <F9> :YcmCompleter FixIt<CR>
-" nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-" nnoremap <F8> :YcmCompleter OrganizeImports<CR>
-
-" }
 "
 " coc.nvim {
 
@@ -390,8 +302,8 @@ endfunction
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -411,7 +323,10 @@ function! s:show_documentation()
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Change floating window background
+highlight CocFloating ctermfg=Blue
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -449,7 +364,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " xmap <silent> <C-d> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
-" command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer
 " command! -nargs=? Fold :call     CocAction('fold', <f-args>)
@@ -460,23 +375,26 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+
+
+
 " Using CocList
 " Show all diagnostics
-" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
-" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
-" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }
 
 " sql {

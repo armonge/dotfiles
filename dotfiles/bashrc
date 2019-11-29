@@ -1,3 +1,5 @@
+
+
 #
 # ~/.bashrc
 #
@@ -223,7 +225,7 @@ if [ -f /usr/share/fzf/key-bindings.bash ]; then
 elif [ -f ~/.fzf.bash ]; then
   source ~/.fzf.bash
 fi
-export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*"'
+export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --depth=-1'
 export FZF_CTRL_R_OPTS
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -254,15 +256,38 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
-export NODE_OPTIONS=--max_old_space_size=4096
+export NODE_OPTIONS="--max_old_space_size=4096"
+export NODE_NO_WARNINGS=1
 
-_direnv_hook() {
-  local previous_exit_status=$?
-  eval "$("/usr/bin/direnv" export bash)"
-  return $previous_exit_status
-}
-if ! [[ "$PROMPT_COMMAND" =~ _direnv_hook ]]; then
-  PROMPT_COMMAND="_direnv_hook;$PROMPT_COMMAND"
-fi
 
 export PATH="$(composer config -g home)/vendor/bin:$PATH"
+
+# Include Drush bash customizations.
+if [ -f "/home/armonge/.drush/drush.bashrc" ] ; then
+  source /home/armonge/.drush/drush.bashrc
+fi
+
+
+# Include Drush completion.
+
+if [ -f "/home/armonge/.drush/drush.complete.sh" ] ; then
+  source /home/armonge/.drush/drush.complete.sh
+fi
+
+
+# Include Drush prompt customizations.
+
+if [ -f "/home/armonge/.drush/drush.prompt.sh" ] ; then
+  source /home/armonge/.drush/drush.prompt.sh
+fi
+
+_direnv_hook() {
+  local previous_exit_status=$?;
+  eval "$("/usr/bin/direnv" export bash)";
+  return $previous_exit_status;
+};
+if ! [[ "${PROMPT_COMMAND:-}" =~ _direnv_hook ]]; then
+  PROMPT_COMMAND="_direnv_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+fi
+# Add .NET Core SDK tools
+export PATH="$PATH:/home/armonge/.dotnet/tools"
