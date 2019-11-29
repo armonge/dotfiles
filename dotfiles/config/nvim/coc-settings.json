@@ -1,15 +1,12 @@
 {
-  "java.home": "/usr/lib/jvm/java-13-openjdk-amd64/",
-  "formatOnSaveFiletypes": [
-    "css",
-    "markdown",
-    "javascript",
+  "python.formatting.provider":"black",
+  "prettier.formatterPriority": 1000,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
     "typescript",
-    "json",
-    "yaml",
-    "html"
-  ],
-  "prettier.formatterPriority":1000,
-  "diagnostic.displayByAle": true,
-  "yaml.customTags": ["!GetAtt", "!Ref"]
+    "javascript",
+    "css",
+    "html",
+    "json"
+  ]
 }
