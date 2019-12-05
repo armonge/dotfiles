@@ -293,13 +293,16 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-" inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -326,7 +329,10 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Change floating window background
-highlight CocFloating ctermfg=Blue
+highlight CocErrorFloat ctermfg=Blue
+highlight CocWarningFlow ctermfg=Blue
+highlight CocInfoFloat ctermfg=Blue
+
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)

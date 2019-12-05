@@ -7,6 +7,34 @@
     "javascript",
     "css",
     "html",
-    "json"
-  ]
+    "json",
+    "sh"
+  ],
+  "yaml.schemas":{
+    "https://raw.githubusercontent.com/armonge/serverless-yml-schema/master/serverless-schema.json": "/serverless.yml"
+  },
+  "yaml.customTags": [
+    "!Ref Scalar",
+    "!GetAtt Scalar"
+  ],
+  "languageserver":{
+    "bash": {
+      "command": "bash-language-server",
+      "args" : ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths":["~"]
+    }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt"
+  },
+  "diagnostic-languageserver.formatters": {
+    "shfmt": {
+      "command": "shfmt",
+      "args": []
+    }
+  }
 }

@@ -196,7 +196,7 @@ if [ -f ~/bin/todo.txt ]; then
 fi
 
 # AWS
-complete -C "$HOME/.local/bin/aws_completer" aws
+complete -C "$HOME/.pyenv/shims/aws_completer" aws
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
