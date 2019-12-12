@@ -17,10 +17,6 @@ if dein#load_state('~/.dein.cache')
   " Required:
   call dein#add('~/.dein.cache/repos/github.com/Shougo/dein.vim')
 
-  " custom local
-  call dein#add('/home/armonge/workspace/vim/rmc.vim')
-  call dein#add('/home/armonge/workspace/vim/convo.txt.vim')
-
   " Add or remove your plugins here:
   call dein#add('editorconfig/editorconfig-vim')
   call dein#add('vim-airline/vim-airline')
@@ -29,12 +25,6 @@ if dein#load_state('~/.dein.cache')
   " call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
 
-  "json5
-  call dein#add('GutenYe/json5.vim')
-
-  " Tagbar starts with <Leader>t
-  call dein#add('majutsushi/tagbar')
-
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
 
@@ -42,9 +32,6 @@ if dein#load_state('~/.dein.cache')
   " <C-e>
   call dein#add('scrooloose/nerdtree')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
-
-  " Syntax checker and fixer
-  " call dein#add('w0rp/ale')
 
   " Show indent guides
   " <Leader>ig
@@ -65,9 +52,6 @@ if dein#load_state('~/.dein.cache')
   call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
-  " Show which lines are covered
-  call dein#add('ruanyl/coverage.vim')
-
   " Comments
   " <Leader>c<Space>
   call dein#add('scrooloose/nerdcommenter')
@@ -76,7 +60,6 @@ if dein#load_state('~/.dein.cache')
   call dein#add('sheerun/vim-polyglot')
 
   " completions
-  " call dein#add('Valloric/YouCompleteMe', { 'build': './install.py --all' })
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
 
   " General Programming {
@@ -85,31 +68,6 @@ if dein#load_state('~/.dein.cache')
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-surround')
 
-  " Snippets plugin
-  " call dein#add('SirVer/ultisnips')
-  " Actual snippet files
-  " call dein#add('honza/vim-snippets')
-
-  " python
-  call dein#add('lambdalisue/vim-pyenv')
-  call dein#add('tweekmonster/django-plus.vim')
-
-  " git
-  call dein#add('mhinz/vim-signify')
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-rhubarb')
-  call dein#add('tpope/vim-git')
-
-  " clojure
-  call dein#add('tpope/vim-fireplace')
-  call dein#add('venantius/vim-cljfmt')
-  call dein#add('tpope/vim-salve')
-  call dein#add('tpope/vim-dispatch')
-  call dein#add('vim-scripts/paredit.vim')
-  " call dein#add('luochen1990/rainbow')
-
-  " SQL
-  " call dein#add('vim-scripts/dbext.vim') 
 
   " Writing prose in vim
   " <Leader>V
@@ -127,8 +85,6 @@ if dein#load_state('~/.dein.cache')
   call dein#save_state()
 endif
 
-filetype plugin indent on
-syntax enable
 
 
 " If you want to install not installed plugins on startup.
@@ -137,7 +93,10 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
-syntax on
+
+filetype plugin indent on
+syntax enable
+
 
 " The default leader is '\', but many people prefer ',' as it's in a standard
 let mapleader = ','
@@ -187,9 +146,8 @@ endif
 
 syntax enable
 
-set termguicolors
+set notermguicolors
 set background=dark
-" colorscheme dracula
 
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
@@ -243,20 +201,6 @@ au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 " }
 
-" Strip whitespace {
-function! StripTrailingWhitespace()
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " do the business:
-  %s/\s\+$//e
-  " clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-" }
-
 "
 " coc.nvim {
 
@@ -297,7 +241,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -329,17 +273,14 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Change floating window background
-highlight CocErrorFloat ctermfg=Blue
-highlight CocWarningFlow ctermfg=Blue
-highlight CocInfoFloat ctermfg=Blue
-
+highlight CocFloating ctermfg=Blue guifg=Blue
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 " augroup mygroup
   " autocmd!
@@ -350,13 +291,13 @@ nmap <leader>rn <Plug>(coc-rename)
 " augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 
@@ -366,8 +307,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " omap af <Plug>(coc-funcobj-a)
 
 " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-" nmap <silent> <C-d> <Plug>(coc-range-select)
-" xmap <silent> <C-d> <Plug>(coc-range-select)
+nmap <silent> <C-d> <Plug>(coc-range-select)
+xmap <silent> <C-d> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -380,9 +321,6 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-
-
 
 " Using CocList
 " Show all diagnostics
@@ -407,12 +345,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 let g:sql_type_default = "sql.vim"
 " }
 
-" Go {
-autocmd FileType go nnoremap<buffer> <Leader>rn :GoRename<Space>
-autocmd FileType go nnoremap<buffer> <F5> :GoBuild<CR>
-autocmd FileType go nnoremap<buffer> <F6> :GoRun<CR>
-"}"
-
 
 "NerdTree {
 map <C-e> <plug>NERDTreeTabsToggle<CR>
@@ -433,14 +365,6 @@ nnoremap <C-p> :FZF<CR>
 let g:fzf_buffers_jump = 1
 " }
 
-
-" UltiSnips triggering {
-" let g:UltiSnipsExpandTrigger = '<C-j>'
-" let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-" let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-" let g:UltiSnipsSnippetsDir = '/home/armonge/.config/nvim/UltiSnips'
-" }
-
 " ack.vim {
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
@@ -451,62 +375,16 @@ let g:ack_autoclose = 1
 nnoremap <C-s> :Ack! 
 " }
 
-"  coverage
-" let g:coverage_json_report_path = 'coverage/coverage-final.json'
-
 " licenses
 let g:licenses_authors_name = 'Andrés Reyes Monge <armonge@gmail.com>'
 let g:licenses_copyright_holders_name = 'Andrés Reyes Monge <armonge@gmail.com>'
-
-" Tagbar
-nmap <Leader>t :TagbarToggle<CR>
-let g:tagbar_type_typescript = {
-  \ 'ctagsbin' : 'tstags',
-  \ 'ctagsargs' : '-f-',
-  \ 'kinds': [
-    \ 'e:enums:0:1',
-    \ 'f:function:0:1',
-    \ 't:typealias:0:1',
-    \ 'M:Module:0:1',
-    \ 'I:import:0:1',
-    \ 'i:interface:0:1',
-    \ 'C:class:0:1',
-    \ 'm:method:0:1',
-    \ 'p:property:0:1',
-    \ 'v:variable:0:1',
-    \ 'c:const:0:1',
-  \ ],
-  \ 'sort' : 0
-\ }
-
-let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
-\ }
-
 
 " Git Messenger {
 let g:git_messenger_no_default_mappings = v:true
 nmap <C-w>m <Plug>(git-messenger)
 "}
 "
-" Git Signify {
-let g:signify_vcs_list = ['git']
-" }
-"
 
-" Clojure {
-autocmd FileType clojure map <C-g> <Plug>FireplaceDjump
-autocmd FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"', '```':'```', '"""':'"""', "'''":"'''"}
-autocmd FileType clojure nnoremap<buffer> <F5> :make uberjar<CR>
-let g:salve_auto_start_repl = 1
-let g:rainbow_active = 1
-" }
-"
 " Vimroom {
 let g:vimroom_ctermbackground="none"
 let g:vimroom_navigation_keys = 1

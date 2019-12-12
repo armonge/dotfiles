@@ -34,7 +34,7 @@
   "diagnostic-languageserver.formatters": {
     "shfmt": {
       "command": "shfmt",
-      "args": []
+      "args": ["-s"]
     }
   }
 }
