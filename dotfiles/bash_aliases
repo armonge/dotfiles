@@ -19,7 +19,6 @@ alias less='less -R'
 alias vim="nvim"
 alias ftp='lftp'
 alias wget='aria2c'
-alias java='drip'
 alias dmesg='dmesg -H'
 # Makes xclip work with vim
 alias xclip='xclip -selection c'

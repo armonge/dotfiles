@@ -61,6 +61,7 @@ if dein#load_state('~/.dein.cache')
 
   " completions
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
+  call dein#add("honza/vim-snippets")
 
   " General Programming {
   call dein#add('vim-scripts/sessionman.vim')
@@ -203,6 +204,7 @@ nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 
 "
 " coc.nvim {
+
 
 " if hidden is not set, TextEdit might fail.
 set hidden

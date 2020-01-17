@@ -1,14 +1,25 @@
 {
+  "html.filetypes":[
+    "html",
+    "htmldjango"
+  ],
+  "go.enable":true,
+  "go.goplsOptions":{
+    "completeUnimported":true
+  },
   "python.formatting.provider":"black",
   "prettier.formatterPriority": 1000,
   "coc.preferences.formatOnSaveFiletypes": [
+    "xml",
     "python",
     "typescript",
     "javascript",
     "css",
     "html",
+    "htmldjango",
     "json",
-    "sh"
+    "sh",
+    "go"
   ],
   "yaml.schemas":{
     "https://raw.githubusercontent.com/armonge/serverless-yml-schema/master/serverless-schema.json": "/serverless.yml"
@@ -36,5 +47,8 @@
       "command": "shfmt",
       "args": ["-s"]
     }
-  }
+  },
+  "xml.java.home": "/usr/lib/jvm/default-java/",
+  "eslint.enable": false,
+  "eslint.autoFixOnSave": false
 }
