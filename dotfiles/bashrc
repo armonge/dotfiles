@@ -242,7 +242,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
-export NODE_OPTIONS="--max_old_space_size=4096"
+export NODE_OPTIONS="--max_old_space_size=8096"
 export NODE_NO_WARNINGS=1
 
 export PATH="$(composer config -g home)/vendor/bin:$PATH"

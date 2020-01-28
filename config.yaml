@@ -72,6 +72,10 @@ dotfiles:
     src: config/nvim/coc-settings.json
     dst: ~/.config/nvim/coc-settings.json
     link: link
+  f_config.toml:
+    src: config/pypoetry/config.toml
+    dst: ~/.config/pypoetry/config.toml
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -101,3 +105,4 @@ profiles:
     - f_attributes
     - f_deps.edn
     - f_coc-settings.json
+    - f_config.toml

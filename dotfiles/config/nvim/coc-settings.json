@@ -10,6 +10,7 @@
   "python.formatting.provider":"black",
   "prettier.formatterPriority": 1000,
   "coc.preferences.formatOnSaveFiletypes": [
+    "php",
     "xml",
     "python",
     "typescript",
