@@ -1,8 +1,3 @@
-actions:
-  post:
-    dein: nvim --cmd ':call dein#recache_runtimepath()'
-    dein_install: if [ ! -f "$HOME/.dein.cache/repos/github.com/Shougo/dein.vim" ];
-      then cd ~/.config/nvim/ && ./installer.sh ~/.dein.cache/; fi
 config:
   backup: true
   banner: true
@@ -45,14 +40,10 @@ dotfiles:
     link: link
     src: gitconfig
   f_init.vim:
-    actions:
-    - dein
     dst: ~/.config/nvim/init.vim
     link: link
     src: config/nvim/init.vim
   f_installer.sh:
-    actions:
-    - dein_install
     dst: ~/.config/nvim/installer.sh
     link: link
     src: config/nvim/installer.sh
