@@ -31,3 +31,5 @@
   helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [diff "spaceman-diff"]
   command = $HOME/bin/spaceman-diff
+[push]
+	default = current

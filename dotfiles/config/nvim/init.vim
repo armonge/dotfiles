@@ -63,6 +63,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
   call dein#add("honza/vim-snippets")
 
+  " <C-y),
+  call dein#add("mattn/emmet-vim")
+
   " General Programming {
   call dein#add('vim-scripts/sessionman.vim')
   call dein#add('jiangmiao/auto-pairs')
@@ -361,6 +364,10 @@ let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
 let g:nerdtree_tabs_open_on_gui_startup=0
+
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 nnoremap <C-e> :NERDTreeToggle<CR>
 " }
 
@@ -392,4 +399,8 @@ nmap <C-w>m <Plug>(git-messenger)
 " Vimroom {
 let g:vimroom_ctermbackground="none"
 let g:vimroom_navigation_keys = 1
+" }
+
+" Airline {
+let g:airline#extensions#coc#enabled = 1
 " }

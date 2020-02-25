@@ -278,3 +278,6 @@ export PATH="$PATH:/home/armonge/.dotnet/tools"
 
 export PATH="$PATH:$HOME/.bash-my-aws/bin"
 source ~/.bash-my-aws/aliases
+
+export BROWSER=chromium-browser
+

@@ -16,6 +16,7 @@
     "typescript",
     "javascript",
     "css",
+    "scss",
     "html",
     "htmldjango",
     "json",
@@ -37,6 +38,7 @@
       "ignoredRootPaths":["~"]
     }
   },
+  "python.jediEnabled":false,
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
   },
@@ -51,5 +53,8 @@
   },
   "xml.java.home": "/usr/lib/jvm/default-java/",
   "eslint.enable": false,
-  "eslint.autoFixOnSave": false
+  "eslint.autoFixOnSave": false,
+  "intelephense.files.exclude": [
+		"**/vendor/**"
+  ]
 }
