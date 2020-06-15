@@ -3,7 +3,7 @@
   git = !exec git
 [user]
   email = armonge@gmail.com
-  name = Andrés Reyes Monge
+	name = Andres Reyes Monge
   signingkey = B6A45A727378564E
 [core]
 	quotepath = false

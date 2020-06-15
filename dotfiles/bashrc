@@ -24,8 +24,8 @@ eval "$(thefuck --alias)"
 
 # history
 shopt -s histappend
-export HISTSIZE=5000
-export HISTFILESIZE=10000
+export HISTSIZE=1000
+export HISTFILESIZE=200000
 export HISTCONTROL=ignoreboth:erasedups
 
 # check the window size after each command and, if necessary,
@@ -220,7 +220,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # added by travis gem
-[ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
+# [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
 
 # BEGIN SNIPPET: Platform.sh CLI configuration
 HOME=${HOME:-'/home/armonge'}
@@ -234,7 +234,7 @@ if [ -f '/home/armonge/bin/google-cloud-sdk/path.bash.inc' ]; then . '/home/armo
 if [ -f '/home/armonge/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/home/armonge/bin/google-cloud-sdk/completion.bash.inc'; fi
 
 # Kubernetes
-source <(kubectl completion bash)
+# source <(kubectl completion bash)
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -279,5 +279,4 @@ export PATH="$PATH:/home/armonge/.dotnet/tools"
 export PATH="$PATH:$HOME/.bash-my-aws/bin"
 source ~/.bash-my-aws/aliases
 
-export BROWSER=chromium-browser
-
+export BROWSER=firefox

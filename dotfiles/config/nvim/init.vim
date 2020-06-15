@@ -8,6 +8,8 @@ set nocompatible               " Be iMproved
 " Required:
 set runtimepath+=~/.dein.cache/repos/github.com/Shougo/dein.vim
 let g:dein#install_process_timeout = 240
+let g:dein#enable_notification = 1
+let g:dein#auto_recache = 1
 
 " Required:
 if dein#load_state('~/.dein.cache')
