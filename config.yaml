@@ -67,6 +67,10 @@ dotfiles:
     src: config/pypoetry/config.toml
     dst: ~/.config/pypoetry/config.toml
     link: link
+  f_ideavimrc:
+    src: ideavimrc
+    dst: ~/.ideavimrc
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -97,3 +101,4 @@ profiles:
     - f_deps.edn
     - f_coc-settings.json
     - f_config.toml
+    - f_ideavimrc
