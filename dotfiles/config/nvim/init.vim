@@ -47,11 +47,11 @@ if dein#load_state('~/.dein.cache')
   call dein#add('antoyo/vim-licenses')
 
   " watch images in vim
-  call dein#add('ashisha/image.vim')
+  call dein#add('ashisha/image.vim', { 'build': 'pip install Pillow' })
 
   " Search files
   " <C-p>
-  call dein#add('junegunn/fzf', { 'build': './install', 'merged': 0 })
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
   " Comments
@@ -124,6 +124,7 @@ filetype plugin indent on   " Automatically detect file types.
 scriptencoding utf-8
 set fileencoding=utf-8
 set nobomb
+set autoread " Automatically reload file on external changes
 
 " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
 " Restore cursor to file position in previous editing session
@@ -209,9 +210,44 @@ au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 " }
 
-"
+if executable('intelephense')
+  augroup LspPHPIntelephense
+    au!
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'intelephense',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'intelephense --stdio']},
+        \ 'whitelist': ['php'],
+        \ 'initialization_options': {'storagePath': '/tmp/intelephense'},
+        \ 'workspace_config': {
+        \   'intelephense': {
+        \     'files': {
+        \       'maxSize': 1000000,
+        \       'associations': ['*.php', '*.phtml', '*.module'],
+        \       'exclude': [],
+        \     },
+        \     'completion': {
+        \       'insertUseDeclaration': v:true,
+        \       'fullyQualifyGlobalConstantsAndFunctions': v:false,
+        \       'triggerParameterHints': v:true,
+        \       'maxItems': 100,
+        \     },
+        \     'format': {
+        \       'enable': v:true
+        \     },
+        \   },
+        \ }
+        \})
+  augroup END
+endif
+
+
+
+
+
 " coc.nvim {
 
+
+let g:coc_global_extensions=[ 'coc-omnisharp', 'coc-snippets', 'coc-python', 'coc-prettier', 'coc-diagnostic', 'coc-tsserver', 'coc-phpls', 'coc-json', 'coc-html' ]
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -248,14 +284,29 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -356,26 +407,28 @@ let g:sql_type_default = "sql.vim"
 
 
 "NerdTree {
-map <C-e> <plug>NERDTreeTabsToggle<CR>
+" map <C-e> <plug>NERDTreeTabsToggle<CR>
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$']
-let NERDTreeChDirMode=0
+let NERDTreeChDirMode=3
 let NERDTreeQuitOnOpen=1
 let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=0
 let NERDTreeKeepTreeInNewTab=1
-let g:nerdtree_tabs_open_on_gui_startup=0
 
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+
+" nnoremap <C-e> :NERDTreeFind<CR>
 nnoremap <C-e> :NERDTreeToggle<CR>
 " }
 
 " FZF {
 nnoremap <C-p> :FZF<CR>
 let g:fzf_buffers_jump = 1
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 " }
 
 " ack.vim {
@@ -406,3 +459,4 @@ let g:vimroom_navigation_keys = 1
 " Airline {
 let g:airline#extensions#coc#enabled = 1
 " }
+

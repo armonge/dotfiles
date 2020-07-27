@@ -19,7 +19,7 @@
   browser = chromium
   modulePath = /usr/lib/apache2/modules
 [pager]
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  ; diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -33,3 +33,7 @@
   command = $HOME/bin/spaceman-diff
 [push]
 	default = current
+[diff "json"]
+	textconv = python -m json.tool
+  algorithm=patience
+  command = $HOME/bin/gitjsondiff.sh

@@ -9,6 +9,8 @@
   },
   "prettier.formatterPriority": 1000,
   "coc.preferences.formatOnSaveFiletypes": [
+    "cs",
+    "cpp",
     "yaml",
     "php",
     "xml",
@@ -28,6 +30,19 @@
   },
   "yaml.customTags": ["!Ref scalar", "!GetAtt scalar", "!If sequence"],
   "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
@@ -38,6 +53,10 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
+    },
+    "kotlin": {
+      "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
+      "filetypes": ["kotlin"]
     }
   },
   "python.formatting.provider": "black",
@@ -66,9 +85,13 @@
       "args": ["-s"]
     }
   },
-  "intelephense.files.exclude": ["**/vendor/**"],
-  "intelephense.files.associations": ["*.php", "*.phtml", "*.module"],
   "tsserver.log": "verbose",
   "tsserver.implicitProjectConfig.checkJs": true,
-  "xml.java.home": "/usr/lib/jvm/default-java/"
+  "xml.java.home": "/usr/lib/jvm/default-java/",
+  "json.schemas": [
+    {
+      "fileMatch": ["/models/en-US.json"],
+      "url": "schema.json"
+    }
+  ]
 }

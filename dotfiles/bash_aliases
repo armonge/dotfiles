@@ -34,3 +34,6 @@ alias cljfmt="lein cljfmt"
 
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+
+alias norg="gron --ungron"
+alias ungron="gron --ungron"

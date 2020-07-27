@@ -79,50 +79,8 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 
-fmt_time() { #format time just the way I likes it
-	if [[ "$(date +%p)" == "PM" ]]; then
-		meridiem="pm"
-	else
-		meridiem="am"
-	fi
-	date +"%l:%M:%S$meridiem" | sed 's/ //g'
-}
-
-pwdtail() { #returns the last 2 fields of the working directory
-	pwd | awk -F/ '{nlast = NF -1;print $nlast"/"$NF}'
-}
-
-enter_directory() {
-	if [[ $? -eq 0 ]]; then # set an error string for the prompt, if applicable
-		ERRPROMPT=" "
-	else
-		ERRPROMPT='->($?) '
-	fi
-	if [[ '$(type -t __git_ps1)' ]]; then # if we're in a Git repo, show current branch
-		BRANCH="\$(__git_ps1 '[ %s ] ')"
-	fi
-	local TIME=$(fmt_time) # format time for prompt string
-	local LOAD=$(uptime | awk '{min=NF-2;print $min}')
-	local GREEN="\[\033[0;32m\]"
-	local CYAN="\[\033[0;36m\]"
-	local BCYAN="\[\033[1;36m\]"
-	local BLUE="\[\033[0;34m\]"
-	local GRAY="\[\033[0;37m\]"
-	local DKGRAY="\[\033[1;30m\]"
-	local WHITE="\[\033[1;37m\]"
-	local RED="\[\033[0;31m\]"
-	# return color to Terminal setting for text color
-	local DEFAULT="\[\033[0;39m\]"
-	# set the titlebar to the last 2 fields of pwd
-	local TITLEBAR="\[\e]2;$(pwdtail)\a"
-	export PS1="\[${TITLEBAR}\]${GREEN}[ ${GREEN}\u${GREEN}@${GREEN}\h  ${GREEN}]${RED}$ERRPROMPT${GRAY}\
-\w\n${GREEN}${BRANCH}${DEFAULT}$ "
-}
-
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} enter_directory"
-
 # gitignore.io
-function gi() { curl -L -s "https://www.gitignore.io/api/$@"; }
+function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
 
 # ~/bin
 export PATH="$HOME/bin:$PATH"
@@ -212,6 +170,7 @@ elif [ -f ~/.fzf.bash ]; then
 	source ~/.fzf.bash
 fi
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --depth=-1'
+export FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 export FZF_CTRL_R_OPTS
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -242,7 +201,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
 
-export NODE_OPTIONS="--max_old_space_size=8096"
+export NODE_OPTIONS="--max_old_space_size=16384"
 export NODE_NO_WARNINGS=1
 
 export PATH="$(composer config -g home)/vendor/bin:$PATH"
@@ -264,19 +223,19 @@ if [ -f "$HOME/.drush/drush.prompt.sh" ]; then
 	source "$HOME/.drush/drush.prompt.sh"
 fi
 
-_direnv_hook() {
-	local previous_exit_status=$?
-	eval "$("/usr/bin/direnv" export bash)"
-	return $previous_exit_status
-}
-if ! [[ ${PROMPT_COMMAND:-} =~ _direnv_hook ]]; then
-	PROMPT_COMMAND="_direnv_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
-fi
+eval "$(direnv hook bash)"
 
 # Add .NET Core SDK tools
 export PATH="$PATH:/home/armonge/.dotnet/tools"
+export FrameworkPathOverride=/etc/mono/4.5
 
 export PATH="$PATH:$HOME/.bash-my-aws/bin"
 source ~/.bash-my-aws/aliases
 
 export BROWSER=firefox
+export PATH="$PATH:$HOME/bin/VSCode-linux-x64/bin"
+export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/armonge/.sdkman"
+[[ -s "/home/armonge/.sdkman/bin/sdkman-init.sh" ]] && source "/home/armonge/.sdkman/bin/sdkman-init.sh"
