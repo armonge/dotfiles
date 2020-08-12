@@ -15,7 +15,7 @@ alias ping='prettyping --nolegend'
 alias help='tldr'
 alias df='pydf'
 alias pacman='pacman --color=always'
-alias less='less -R'
+# alias less='less -R'
 alias vim="nvim"
 alias ftp='lftp'
 alias wget='aria2c'

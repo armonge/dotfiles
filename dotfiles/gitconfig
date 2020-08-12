@@ -2,13 +2,26 @@
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   git = !exec git
 [user]
-  email = armonge@gmail.com
-	name = Andres Reyes Monge
+  email = andres.reyes@vui.agency
+  name = Andres Reyes Monge
   signingkey = B6A45A727378564E
 [core]
-	quotepath = false
+  quotepath = false
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  plus-color = "#012800"
+  minus-color = "#340001"
+  syntax-theme = "Monokai Extended"
+  line-numbers = true
+  side-by-side = true
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
 [commit]
   gpgsign = true
   verbose = true
@@ -18,22 +31,22 @@
   port = 4321
   browser = chromium
   modulePath = /usr/lib/apache2/modules
-[pager]
+; [pager]
   ; diff = diff-so-fancy | less --tabs=1,5 -RFX
-  show = diff-so-fancy | less --tabs=1,5 -RFX
+  ; show = diff-so-fancy | less --tabs=1,5 -RFX
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [credential]
-	; helper = /usr/lib/git-core/git-credential-libsecret
+  ; helper = /usr/lib/git-core/git-credential-libsecret
   helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [diff "spaceman-diff"]
   command = $HOME/bin/spaceman-diff
 [push]
-	default = current
+  default = current
 [diff "json"]
-	textconv = python -m json.tool
-  algorithm=patience
-  command = $HOME/bin/gitjsondiff.sh
+	command = "json-diff $LOCAL $REMOTE"
+[diff]
+	algorithm = patience
