@@ -24,8 +24,14 @@ if dein#load_state('~/.dein.cache')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('lambdalisue/suda.vim')
+
   " call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
+
+  " Colors
+  call dein#add('tomasr/molokai')
+  call dein#add('dracula/vim')
+  call dein#add('altercation/vim-colors-solarized')
 
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
@@ -73,6 +79,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-surround')
+  call dein#add('embear/vim-uncrustify')
 
 
   " Writing prose in vim
@@ -155,7 +162,7 @@ endif
 
 syntax enable
 
-set notermguicolors
+set termguicolors
 set background=dark
 
 set backspace=indent,eol,start  " Backspace for dummies
@@ -246,9 +253,6 @@ endif
 
 " coc.nvim {
 
-
-let g:coc_global_extensions=[ 'coc-omnisharp', 'coc-snippets', 'coc-python', 'coc-prettier', 'coc-diagnostic', 'coc-tsserver', 'coc-phpls', 'coc-json', 'coc-html' ]
-
 " if hidden is not set, TextEdit might fail.
 set hidden
 
@@ -266,7 +270,7 @@ set updatetime=300
 set shortmess+=c
 
 " always show signcolumns
-set signcolumn=yes
+set signcolumn=auto
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -460,3 +464,14 @@ let g:vimroom_navigation_keys = 1
 let g:airline#extensions#coc#enabled = 1
 " }
 
+let g:uncrustify_language_mapping = {
+      \   "c"      : "c",
+      \   "cpp"    : "cpp",
+      \   "objc"   : "oc",
+      \   "objcpp" : "oc+",
+      \   "cs"     : "cs",
+      \   "java"   : "java",
+      \   "vala"   : "vala"
+      \ }
+
+autocmd BufWritePre *.vala | call Uncrustify()

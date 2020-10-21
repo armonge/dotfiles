@@ -7,28 +7,45 @@
   "go.goplsOptions": {
     "completeUnimported": true
   },
+
   "prettier.formatterPriority": 1000,
   "coc.preferences.formatOnSaveFiletypes": [
     "cs",
     "cpp",
     "yaml",
+    "rust",
     "php",
     "xml",
     "python",
     "typescript",
+    "typescriptreact",
     "javascript",
+    "javascript.jsx",
     "css",
     "scss",
     "html",
     "htmldjango",
     "json",
     "sh",
-    "go"
+    "go",
+    "vala"
   ],
+
   "yaml.schemas": {
     "https://raw.githubusercontent.com/armonge/serverless-yml-schema/master/serverless-schema.json": "/serverless.yml"
   },
-  "yaml.customTags": ["!Ref scalar", "!GetAtt scalar", "!If sequence"],
+  "yaml.customTags": [
+    "!Ref scalar",
+    "!GetAtt scalar",
+    "!GetAtt sequence",
+    "!If sequence",
+    "!Equals sequence",
+    "!Select sequence",
+    "!Join sequence",
+    "!Split sequence",
+    "!Sub sequence"
+  ],
+
   "languageserver": {
     "ccls": {
       "command": "ccls",
@@ -57,11 +74,28 @@
     "kotlin": {
       "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
       "filetypes": ["kotlin"]
+    },
+    "vala": {
+      "command": "org.gnome.gvls.stdio.Server",
+      "filetypes": ["vala", "genie"]
     }
   },
+
   "python.formatting.provider": "black",
   "python.jediEnabled": false,
+  "python.autoComplete.extraPaths": [
+    "/home/armonge/workspace/telekom/smarthub_sdk-1.5.4/"
+  ],
+
+  "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
+  "python.linting.pydocstyleEnabled": true,
+
+  "python.linting.prospectorEnabled": false,
+  "python.linting.mypyEnabled": false,
+  "python.linting.pep8Enabled": false,
+  "python.linting.banditEnabled": false,
+  "python.linting.pylamaEnabled": false,
   "python.linting.flake8Args": [
     "--ignore=E501, E203, W503, E123, E126, E128",
     "max-line-length = 88",
@@ -76,17 +110,23 @@
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
   },
+  "diagnostic-languageserver.debug": true,
+
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt"
   },
+
+  "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.formatters": {
     "shfmt": {
       "command": "shfmt",
       "args": ["-s"]
     }
   },
+
   "tsserver.log": "verbose",
   "tsserver.implicitProjectConfig.checkJs": true,
+
   "xml.java.home": "/usr/lib/jvm/default-java/",
   "json.schemas": [
     {

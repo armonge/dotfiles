@@ -13,11 +13,9 @@
 [interactive]
   diffFilter = delta --color-only
 [delta]
-  plus-color = "#012800"
-  minus-color = "#340001"
   syntax-theme = "Monokai Extended"
   line-numbers = true
-  side-by-side = true
+  ; side-by-side = true
 [delta "decorations"]
   commit-decoration-style = bold yellow box ul
   file-style = bold yellow ul
@@ -47,6 +45,8 @@
 [push]
   default = current
 [diff "json"]
-	command = "json-diff $LOCAL $REMOTE"
+	command = "json-diff $REMOTE $LOCAL"
 [diff]
 	algorithm = patience
+[pull]
+	rebase = false
