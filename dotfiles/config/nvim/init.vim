@@ -24,6 +24,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('lambdalisue/suda.vim')
+  call dein#add('mhinz/vim-startify')
 
   " call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
@@ -38,8 +39,11 @@ if dein#load_state('~/.dein.cache')
 
   " File explorer
   " <C-e>
-  call dein#add('scrooloose/nerdtree')
+  call dein#add('preservim/nerdtree')
   call dein#add('Xuyuanp/nerdtree-git-plugin')
+
+  " Icons in file explorer, requires https://github.com/ryanoasis/nerd-fonts
+  call dein#add('ryanoasis/vim-devicons')
 
   " Show indent guides
   " <Leader>ig
