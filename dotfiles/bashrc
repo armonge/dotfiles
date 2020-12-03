@@ -43,7 +43,6 @@ export BAT_PAGER="less --RAW-CONTROL-CHARS --quit-if-one-screen"
 # python
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
-export PIPENV_VENV_IN_PROJECT=1
 
 # VIM
 export VISUAL="nvim -u NONE"
@@ -142,7 +141,7 @@ if [ -f ~/bin/todo.txt ]; then
 fi
 
 # AWS
-complete -C "$HOME/.pyenv/shims/aws_completer" aws
+complete -C "$HOME/.local/bin/aws_completer" aws
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

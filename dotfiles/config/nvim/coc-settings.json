@@ -10,6 +10,8 @@
 
   "prettier.formatterPriority": 1000,
   "coc.preferences.formatOnSaveFiletypes": [
+    "markdown",
+    "graphql",
     "cs",
     "cpp",
     "yaml",
@@ -83,16 +85,13 @@
 
   "python.formatting.provider": "black",
   "python.jediEnabled": false,
-  "python.autoComplete.extraPaths": [
-    "/home/armonge/workspace/telekom/smarthub_sdk-1.5.4/"
-  ],
 
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
-  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pydocstyleEnabled": false,
+  "python.linting.mypyEnabled": true,
 
   "python.linting.prospectorEnabled": false,
-  "python.linting.mypyEnabled": false,
   "python.linting.pep8Enabled": false,
   "python.linting.banditEnabled": false,
   "python.linting.pylamaEnabled": false,

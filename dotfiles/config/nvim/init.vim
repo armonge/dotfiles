@@ -1,4 +1,4 @@
-let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
 let g:python2_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
 
@@ -57,7 +57,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('antoyo/vim-licenses')
 
   " watch images in vim
-  call dein#add('ashisha/image.vim', { 'build': 'pip install Pillow' })
+  call dein#add('cxwx/image.vim', { 'build': 'pip install Pillow' })
 
   " Search files
   " <C-p>
@@ -419,7 +419,7 @@ let g:sql_type_default = "sql.vim"
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$']
-let NERDTreeChDirMode=3
+let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=1
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=0
@@ -466,6 +466,14 @@ let g:vimroom_navigation_keys = 1
 
 " Airline {
 let g:airline#extensions#coc#enabled = 1
+
+function! s:update_git_status()
+  let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
+endfunction
+
+let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
+
+autocmd User CocGitStatusChange call s:update_git_status()
 " }
 
 let g:uncrustify_language_mapping = {

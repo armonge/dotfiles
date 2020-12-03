@@ -71,6 +71,22 @@ dotfiles:
     src: ideavimrc
     dst: ~/.ideavimrc
     link: link
+  f_audio.vim:
+    src: config/nvim/ftdetect/audio.vim
+    dst: ~/.config/nvim/ftdetect/audio.vim
+    link: link
+  f_video.vim:
+    src: config/nvim/ftdetect/video.vim
+    dst: ~/.config/nvim/ftdetect/video.vim
+    link: link
+  f_ftplugin_audio.vim:
+    src: config/nvim/after/ftplugin/audio.vim
+    dst: ~/.config/nvim/after/ftplugin/audio.vim
+    link: link
+  f_ftplugin_video.vim:
+    src: config/nvim/after/ftplugin/video.vim
+    dst: ~/.config/nvim/after/ftplugin/video.vim
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -102,3 +118,9 @@ profiles:
     - f_coc-settings.json
     - f_config.toml
     - f_ideavimrc
+  armonge-laptop-vui:
+    dotfiles:
+    - f_audio.vim
+    - f_video.vim
+    - f_ftplugin_audio.vim
+    - f_ftplugin_video.vim
