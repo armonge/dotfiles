@@ -87,6 +87,10 @@ dotfiles:
     src: config/nvim/after/ftplugin/video.vim
     dst: ~/.config/nvim/after/ftplugin/video.vim
     link: link
+  f_dircolors:
+    src: dir_colors/dircolors
+    dst: ~/.dir_colors/dircolors
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -124,3 +128,4 @@ profiles:
     - f_video.vim
     - f_ftplugin_audio.vim
     - f_ftplugin_video.vim
+    - f_dircolors

@@ -30,9 +30,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('wakatime/vim-wakatime')
 
   " Colors
-  call dein#add('tomasr/molokai')
-  call dein#add('dracula/vim')
-  call dein#add('altercation/vim-colors-solarized')
+  call dein#add('altercation/solarized',  {'rtp': 'vim-colors-solarized'})
 
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
@@ -114,6 +112,12 @@ endif
 filetype plugin indent on
 syntax enable
 
+set background=dark
+colorscheme solarized
+
+highlight Pmenu guibg=#002b36 guifg=#268bd2
+highlight PmenuSel guibg=#586e75 guifg=#859900
+
 
 " The default leader is '\', but many people prefer ',' as it's in a standard
 let mapleader = ','
@@ -163,11 +167,6 @@ if has('persistent_undo')
   set undolevels=1000         " Maximum number of changes that can be undone
   set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
-
-syntax enable
-
-set termguicolors
-set background=dark
 
 set backspace=indent,eol,start  " Backspace for dummies
 set linespace=0                 " No extra spaces between rows
@@ -341,7 +340,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Change floating window background
-highlight CocFloating ctermfg=Blue guifg=Blue
+" highlight CocFloating ctermfg=Blue guifg=Blue
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
