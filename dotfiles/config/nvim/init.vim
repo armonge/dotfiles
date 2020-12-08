@@ -112,11 +112,12 @@ endif
 filetype plugin indent on
 syntax enable
 
+" Solarized {
 set background=dark
 colorscheme solarized
-
-highlight Pmenu guibg=#002b36 guifg=#268bd2
-highlight PmenuSel guibg=#586e75 guifg=#859900
+highlight Pmenu guibg=base03 guifg=blue
+highlight PmenuSel guibg=base01 guifg=green
+" }
 
 
 " The default leader is '\', but many people prefer ',' as it's in a standard

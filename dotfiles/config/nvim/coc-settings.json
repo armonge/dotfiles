@@ -112,7 +112,8 @@
   "diagnostic-languageserver.debug": true,
 
   "diagnostic-languageserver.formatFiletypes": {
-    "sh": "shfmt"
+    "sh": "shfmt",
+    "htmldjango": "js-beautify"
   },
 
   "diagnostic-languageserver.trace.server": "verbose",
