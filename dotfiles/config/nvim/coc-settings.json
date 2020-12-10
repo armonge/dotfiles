@@ -70,8 +70,7 @@
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
+      "filetypes": ["sh"]
     },
     "kotlin": {
       "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",

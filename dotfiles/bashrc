@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 # ~/.bashrc
 #
 # shellcheck disable=SC1090
@@ -49,9 +50,9 @@ export VISUAL="nvim -u NONE"
 export EDITOR="nvim -u NONE"
 
 # GO
-export GOPATH=$(go env GOPATH)
-export PATH=$HOME/bin/go/bin:$PATH
-export PATH=$PATH:$(go env GOPATH)/bin
+GOPATH=$(go env GOPATH)
+export GOPATH
+export PATH=$PATH:$GOPATH/bin
 
 # Azure Storage Explorer
 export PATH=$HOME/bin/StorageExplorer:$PATH
