@@ -45,3 +45,5 @@
 	algorithm = patience
 [pull]
 	rebase = false
+[advice]
+	addEmptyPathspec = false
