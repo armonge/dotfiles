@@ -112,7 +112,7 @@
 
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
-    "htmldjango": "js-beautify"
+    "htmldjango": "js-beautify:htmldjango"
   },
 
   "diagnostic-languageserver.trace.server": "verbose",
@@ -120,6 +120,15 @@
     "shfmt": {
       "command": "shfmt",
       "args": ["-s"]
+    },
+    "js-beautify:htmldjango": {
+      "command": "js-beautify",
+      "args": [
+        "--editorconfig",
+        "--templating=django",
+        "--type=html",
+        "--good-stuff"
+      ]
     }
   },
 

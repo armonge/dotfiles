@@ -91,6 +91,11 @@ dotfiles:
     src: dir_colors/dircolors
     dst: ~/.dir_colors/dircolors
     link: link
+  f_solarize_terminal.sh:
+    src: bin/solarize_terminal.sh
+    dst: ~/bin/solarize_terminal.sh
+    link: link
+    chmod: '775'
 profiles:
   armonge-laptop:
     dotfiles:
@@ -129,3 +134,4 @@ profiles:
     - f_ftplugin_audio.vim
     - f_ftplugin_video.vim
     - f_dircolors
+    - f_solarize_terminal.sh

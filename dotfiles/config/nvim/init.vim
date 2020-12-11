@@ -30,7 +30,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('wakatime/vim-wakatime')
 
   " Colors
-  call dein#add('altercation/solarized',  {'rtp': 'vim-colors-solarized'})
+  call dein#add('frankier/neovim-colors-solarized-truecolor-only')
 
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
@@ -113,10 +113,9 @@ filetype plugin indent on
 syntax enable
 
 " Solarized {
+set termguicolors 
 set background=dark
 colorscheme solarized
-highlight Pmenu guibg=base03 guifg=blue
-highlight PmenuSel guibg=base01 guifg=green
 " }
 
 
