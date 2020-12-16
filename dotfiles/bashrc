@@ -203,8 +203,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
 
-export NODE_OPTIONS="--max_old_space_size=16384"
+export NODE_OPTIONS="--max_old_space_size=16384 --experimental-repl-await"
 export NODE_NO_WARNINGS=1
+source <(npm completion)
 
 PATH="$(composer config -g home)/vendor/bin:$PATH"
 export PATH

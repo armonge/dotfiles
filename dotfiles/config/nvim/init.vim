@@ -68,6 +68,7 @@ if dein#load_state('~/.dein.cache')
 
   " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
+  call dein#add('mboughaba/i3config.vim')
 
   " completions
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
