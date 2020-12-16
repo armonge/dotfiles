@@ -249,3 +249,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # source "$HOME/bin/emsdk/emsdk_env.sh" 2>/dev/null
 eval "$(dircolors ~/.dir_colors/dircolors)"
+
+if [ "$DESKTOP_SESSION" = "i3" ]; then
+	export "$(gnome-keyring-daemon -s)"
+fi

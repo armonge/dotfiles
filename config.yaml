@@ -96,6 +96,22 @@ dotfiles:
     dst: ~/bin/solarize_terminal.sh
     link: link
     chmod: '775'
+  f_xresources:
+    src: Xresources
+    dst: ~/.Xresources
+    link: link
+  f_config:
+    src: config/i3/config
+    dst: ~/.config/i3/config
+    link: link
+  f_i3blocks_config:
+    src: config/i3blocks/config
+    dst: ~/.config/i3blocks/config
+    link: link
+  d_i3blocks-modules:
+    src: config/i3blocks-modules
+    dst: ~/.config/i3blocks-modules
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -135,3 +151,7 @@ profiles:
     - f_ftplugin_video.vim
     - f_dircolors
     - f_solarize_terminal.sh
+    - f_xresources
+    - f_config
+    - f_i3blocks_config
+    - d_i3blocks-modules
