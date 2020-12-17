@@ -2,6 +2,6 @@
 	path = dotdrop
 	url = https://github.com/deadc0de6/dotdrop.git
 
-[submodule "dotdrop"]
+[submodule "i3blocks-modules"]
 	path = dotfiles/config/i3blocks-modules
 	url = git@github.com:armonge/i3blocks-modules.git
