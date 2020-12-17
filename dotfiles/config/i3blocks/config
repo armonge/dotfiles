@@ -64,9 +64,13 @@ markup=pango
 
 
 # output:  14:36
-[time]
+[keyboard]
 command=i3-keyboard-layout.sh get
 interval=5
 markup=pango
 signal=11
 
+[weather]
+instance=Munich
+interval=60
+command=/home/$USER/bin/weather.sh

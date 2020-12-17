@@ -112,6 +112,11 @@ dotfiles:
     src: config/i3blocks-modules
     dst: ~/.config/i3blocks-modules
     link: link
+  f_weather.sh:
+    src: bin/weather.sh
+    dst: ~/bin/weather.sh
+    link: link
+    chmod: "775"
 profiles:
   armonge-laptop:
     dotfiles:
@@ -138,3 +143,4 @@ profiles:
       - f_ftplugin_audio.vim
       - f_video.vim
       - f_audio.vim
+      - f_weather.sh
