@@ -3,20 +3,6 @@
 Xcursor.theme: Bibata_Ice
 Xcursor.size: 18
 
-urxvt.termName: rxvt-unicode-256color 
-xterm*termName: xterm-256color
-
-!! Appearance
-!!urxvt.termName: rxvt-unicode 
-urxvt.scrollBar: false
-
-!!! Font prefferenes
-!!urxvt.font: xft:DejaVu Sans Mono:pixelsize=13
-urxvt.font: xft:monaco:pixelsize=14
-
-!!! Larger history limit
-urxvt.saveLines: 1000000
-
 ! Solarized color scheme for the X Window System
 
 ! Common
@@ -84,10 +70,3 @@ urxvt.saveLines: 1000000
 *color13:                 S_violet
 *color14:                 S_base1
 *color15:                 S_base3
-
-
-
-
-!! for fake transparent (no need to compositor)
-!!urxvt*transparent: true
-!!urxvt*shading: 25
