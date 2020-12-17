@@ -62,3 +62,11 @@ command=~/.config/i3blocks-modules/modules/date -f " {time}" -t "%H:%M"
 interval=5
 markup=pango
 
+
+# output:  14:36
+[time]
+command=i3-keyboard-layout.sh get
+interval=5
+markup=pango
+signal=11
+
