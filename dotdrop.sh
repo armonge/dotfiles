@@ -7,11 +7,11 @@
 rl="readlink -f"
 
 if ! ${rl} "${0}" >/dev/null 2>&1; then
-  rl="realpath"
+	rl="realpath"
 
-  if ! hash ${rl}; then
-    echo "\"${rl}\" not found !" && exit 1
-  fi
+	if ! hash ${rl}; then
+		echo "\"${rl}\" not found !" && exit 1
+	fi
 fi
 
 # setup variables
@@ -27,7 +27,7 @@ cd "${cur}" || { echo "Directory \"${cur}\" doesn't exist, aborting." && exit 1;
 git submodule update --init --recursive
 git submodule update --remote dotdrop
 # launch dotdrop
-PYTHONPATH=dotdrop python3 -m dotdrop.dotdrop "${args[@]}"
+PYTHONPATH=dotdrop python3 -m dotdrop.dotdrop --profile armonge-laptop "${args[@]}"
 ret="$?"
 # pivot back
 cd "${opwd}" || { echo "Directory \"${opwd}\" doesn't exist, aborting." && exit 1; }
