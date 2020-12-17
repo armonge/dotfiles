@@ -141,7 +141,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # Lock on windows
-bindsym Mod4+l exec i3lock
+bindsym Mod4+l exec betterlockscreen -l
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -242,11 +242,13 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id xinput set-prop 12 325 1
 
 # Lock
-exec --no-startup-id xautolock -time 10 -locker 'i3lock --nofork' &
+exec --no-startup-id xautolock -time 10 -locker 'betterlockscreen -l --nofork' &
 
 # Clipboard manager
 exec --no-startup-id parcellite
 
+# Screenshot
+exec --no-startup-id flameshot
 
 exec firefox
 exec slack
