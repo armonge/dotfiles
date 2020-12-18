@@ -208,6 +208,7 @@ autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd BufNewFile,BufRead *.js set filetype=javascript
 autocmd BufNewFile,BufRead .bashenv set filetype=sh
 autocmd BufNewFile,BufRead .envrc set filetype=sh
+autocmd BufNewFile,BufRead ~/.config/regolith/i3/config set filetype=i3config
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
