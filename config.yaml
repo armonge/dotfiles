@@ -95,38 +95,28 @@ dotfiles:
     src: bin/solarize_terminal.sh
     dst: ~/bin/solarize_terminal.sh
     link: link
-    chmod: '775'
-  f_xresources-regolith:
-    src: Xresources-regolith
-    dst: ~/.Xresources-regolith
-    link: link
-  f_config:
-    src: config/regolith/i3/config
-    dst: ~/.config/regolith/i3/config
-    link: link
-    chmod: '644'
+    chmod: "775"
 profiles:
   armonge-laptop:
     dotfiles:
-    - f_bashrc
-    - f_init.vim
-    - f_installer.sh
-    - f_gitconfig
-    - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
-    - f_ctags
-    - f_bash_profile
-    - f_chromium-flags.conf
-    - f_typescript.snippets
-    - f_bash_aliases
-    - f_attributes
-    - f_deps.edn
-    - f_coc-settings.json
-    - f_config.toml
-    - f_ideavimrc
-    - f_solarize_terminal.sh
-    - f_dircolors
-    - f_ftplugin_audio.vim
-    - f_video.vim
-    - f_audio.vim
-    - f_xresources-regolith
-    - f_config
+      - f_bashrc
+      - f_init.vim
+      - f_installer.sh
+      - f_gitconfig
+      - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
+      - f_ctags
+      - f_bash_profile
+      - f_chromium-flags.conf
+      - f_typescript.snippets
+      - f_bash_aliases
+      - f_attributes
+      - f_deps.edn
+      - f_coc-settings.json
+      - f_config.toml
+      - f_ideavimrc
+      - f_solarize_terminal.sh
+      - f_dircolors
+      - f_ftplugin_audio.vim
+      - f_video.vim
+      - f_audio.vim
+      - f_config
