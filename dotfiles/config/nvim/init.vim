@@ -87,7 +87,7 @@ if dein#load_state('~/.dein.cache')
 
   " Writing prose in vim
   " <Leader>V
-  call dein#add('mikewest/vimroom')
+  " call dein#add('mikewest/vimroom')
 
   " Shows git commit messages for some line
   call dein#add('rhysd/git-messenger.vim', {
@@ -418,17 +418,17 @@ let g:sql_type_default = "sql.vim"
 "NerdTree {
 " map <C-e> <plug>NERDTreeTabsToggle<CR>
 
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$']
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=1
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=0
-let NERDTreeKeepTreeInNewTab=1
+let g:NERDTreeShowBookmarks=1
+let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '__pycache__']
+let g:NERDTreeChDirMode=3
+let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeMouseMode=2
+let g:NERDTreeShowHidden=0
+let g:NERDTreeKeepTreeInNewTab=1
 
 
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrows = 1
 
 " nnoremap <C-e> :NERDTreeFind<CR>
 nnoremap <C-e> :NERDTreeToggle<CR>
@@ -437,7 +437,8 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 " FZF {
 nnoremap <C-p> :FZF<CR>
 let g:fzf_buffers_jump = 1
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'  "
+let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
 " }
 
 " ack.vim {
@@ -461,8 +462,8 @@ nmap <C-w>m <Plug>(git-messenger)
 "
 
 " Vimroom {
-let g:vimroom_ctermbackground="none"
-let g:vimroom_navigation_keys = 1
+" let g:vimroom_ctermbackground="none"
+" let g:vimroom_navigation_keys = 1
 " }
 
 " Airline {

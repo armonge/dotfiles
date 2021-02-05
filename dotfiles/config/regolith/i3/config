@@ -663,5 +663,11 @@ set_from_resource $i3-wm.program.3 i3-wm.program.3 :
 exec --no-startup-id $i3-wm.program.3
 
 # Custom
-no_focus [title="Microsoft Teams Notification"]
 for_window [title="Microsoft Teams Notification"] floating enable
+no_focus [title="Microsoft Teams Notification"]
+
+# Take out of scratchpad
+bindsym $mod+x floating disable
+
+# Change bluetooth mode
+bindsym $mod+u exec --no-startup-id /home/armonge/bin/change-bluetooth-profile.sh
