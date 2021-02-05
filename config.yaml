@@ -119,4 +119,3 @@ profiles:
       - f_ftplugin_audio.vim
       - f_video.vim
       - f_audio.vim
-      - f_config
