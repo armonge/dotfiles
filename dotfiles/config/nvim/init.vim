@@ -31,6 +31,7 @@ if dein#load_state('~/.dein.cache')
 
   " Colors
   call dein#add('frankier/neovim-colors-solarized-truecolor-only')
+  call dein#add('overcache/NeoSolarized')
 
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
@@ -74,6 +75,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
   call dein#add("honza/vim-snippets")
 
+  " Tagbar
+  call dein#add('liuchengxu/vista.vim')
+
   " <C-y),
   call dein#add("mattn/emmet-vim")
 
@@ -113,10 +117,16 @@ endif
 filetype plugin indent on
 syntax enable
 
+let gtkTheme = system('gsettings get org.gnome.desktop.interface gtk-theme')
+
 " Solarized {
 set termguicolors 
-set background=dark
-colorscheme solarized
+if stridx(gtkTheme, 'light') >= 0
+  set background=light
+else
+  set background=dark
+endif
+colorscheme NeoSolarized
 " }
 
 
@@ -435,10 +445,20 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 " }
 
 " FZF {
-nnoremap <C-p> :FZF<CR>
 let g:fzf_buffers_jump = 1
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'  "
+
+if stridx(gtkTheme, 'light') >= 0
+  let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Solarized (light)' --color=always --style=header,grid --line-range :300 {}'  "
+else
+  let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Solarized (dark)' --color=always --style=header,grid --line-range :300 {}'  "
+endif
+colorscheme NeoSolarized
+" }
 let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
+let g:vista_fzf_preview = ['right:60%']
+
+nmap <C-]> :Vista!!<CR>
+nnoremap <C-p> :Files<CR>
 " }
 
 " ack.vim {

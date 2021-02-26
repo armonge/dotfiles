@@ -30,7 +30,8 @@
     "json",
     "sh",
     "go",
-    "vala"
+    "vala",
+    "dockerfile"
   ],
 
   "yaml.schemas": {

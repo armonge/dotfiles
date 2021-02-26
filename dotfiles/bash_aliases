@@ -17,6 +17,7 @@ alias df='pydf'
 alias pacman='pacman --color=always'
 # alias less='less -R'
 alias vim="nvim"
+alias nvim='nvim.appimage'
 alias ftp='lftp'
 alias wget='aria2c'
 alias dmesg='dmesg -H'

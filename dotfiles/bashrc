@@ -44,6 +44,7 @@ export BAT_PAGER="less --RAW-CONTROL-CHARS --quit-if-one-screen"
 # python
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
+export PIPENV_VENV_IN_PROJECT="enabled"
 
 # VIM
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -205,6 +206,9 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export NODE_OPTIONS="--max_old_space_size=16384 --experimental-repl-await"
 export NODE_NO_WARNINGS=1
+NODE_ICU_DATA="$(node-full-icu-path)"
+export NODE_ICU_DATA
+
 source <(npm completion)
 
 PATH="$(composer config -g home)/vendor/bin:$PATH"
