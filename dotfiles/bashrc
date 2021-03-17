@@ -206,8 +206,8 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export NODE_OPTIONS="--max_old_space_size=16384 --experimental-repl-await"
 export NODE_NO_WARNINGS=1
-NODE_ICU_DATA="$(node-full-icu-path)"
-export NODE_ICU_DATA
+# NODE_ICU_DATA="$(node-full-icu-path)"
+# export NODE_ICU_DATA
 
 source <(npm completion)
 
@@ -244,7 +244,10 @@ export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
 # https://cloud.google.com/sdk/gcloud/reference/topic/startup
 export CLOUDSDK_PYTHON=python3
 
-export PATH="$HOME/bin/SweetHome3D-6.4.2/:$PATH"
+# Flutter and dart
+FLUTTER_SDK_PATH=$(flutter sdk-path)
+export PATH="$PATH:$HOME/.pub-cache/bin"
+export PATH="$PATH:$FLUTTER_SDK_PATH/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

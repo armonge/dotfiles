@@ -9,11 +9,22 @@
   },
 
   "prettier.formatterPriority": 1000,
+  "flutter.provider.enableSnippet":true,
+
+  "snippets.extends":{
+    "dart": ["dart-flutter"]
+  },
+
+  // Fix on save
+  "java.saveActions.organizeImports":true,
+  "eslint.codeActionsOnSave.mode":"all",
+  "eslint.autoFixOnSave":true,
+
   "coc.preferences.formatOnSaveFiletypes": [
     "markdown",
+    "dart",
     "graphql",
     "cs",
-    "cpp",
     "yaml",
     "rust",
     "php",
@@ -38,6 +49,7 @@
     "https://raw.githubusercontent.com/armonge/serverless-yml-schema/master/serverless-schema.json": "/serverless.yml"
   },
   "yaml.customTags": [
+    "!FindInMap sequence",
     "!Ref scalar",
     "!GetAtt scalar",
     "!GetAtt sequence",
@@ -84,7 +96,8 @@
   },
 
   "python.formatting.provider": "black",
-  "python.jediEnabled": false,
+  "python.linting.lintOnSave":true,
+  "python.sortImports.path":"/home/armonge/.pyenv/versions/3.8.5/envs/neovim/bin/isort",
 
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
@@ -92,7 +105,6 @@
   "python.linting.mypyEnabled": true,
 
   "python.linting.prospectorEnabled": false,
-  "python.linting.pep8Enabled": false,
   "python.linting.banditEnabled": false,
   "python.linting.pylamaEnabled": false,
   "python.linting.flake8Args": [

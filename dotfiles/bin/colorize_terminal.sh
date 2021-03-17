@@ -40,15 +40,6 @@ case "$1" in
 	;;
 esac
 
-# This works for Ubuntu 14.04
-gconftool-2 --set "/apps/gnome-terminal/profiles/Default/use_theme_background" --type bool false
-gconftool-2 --set "/apps/gnome-terminal/profiles/Default/use_theme_colors" --type bool false
-gconftool-2 --set "/apps/gnome-terminal/profiles/Default/palette" --type string "$PALETTE"
-gconftool-2 --set "/apps/gnome-terminal/profiles/Default/background_color" --type string "$BG_COLOR"
-gconftool-2 --set "/apps/gnome-terminal/profiles/Default/foreground_color" --type string "$FG_COLOR"
-
-# But in 16.04 terminal uses Gnome3 settings:
-
 # Get default profile ID
 GT_PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default | tail -c +2 | head -c -2)
 SCHEMA="org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${GT_PROFILE_ID}/"

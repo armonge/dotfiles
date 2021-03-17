@@ -1,5 +1,5 @@
-let g:python_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
-let g:python2_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
 
 "dein Scripts-----------------------------
@@ -58,6 +58,9 @@ if dein#load_state('~/.dein.cache')
   " watch images in vim
   call dein#add('cxwx/image.vim', { 'build': 'pip install Pillow' })
 
+  " Show import cost of javascript requires
+  call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
+
   " Search files
   " <C-p>
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
@@ -70,6 +73,7 @@ if dein#load_state('~/.dein.cache')
   " Support for syntax hightlighting of many languages
   call dein#add('sheerun/vim-polyglot')
   call dein#add('mboughaba/i3config.vim')
+  call dein#add('dart-lang/dart-vim-plugin')
 
   " completions
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
@@ -266,8 +270,6 @@ endif
 
 
 
-" coc.nvim {
-
 " if hidden is not set, TextEdit might fail.
 set hidden
 
@@ -286,6 +288,10 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=auto
+
+
+" coc.nvim {
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-prettier', 'coc-yaml', 'coc-html', 'coc-css', 'coc-eslint']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -402,6 +408,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
+nnoremap <silent> <space>l  :<C-u>CocList<cr>
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
@@ -417,6 +424,7 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }
 
@@ -500,7 +508,6 @@ autocmd User CocGitStatusChange call s:update_git_status()
 
 let g:uncrustify_language_mapping = {
       \   "c"      : "c",
-      \   "cpp"    : "cpp",
       \   "objc"   : "oc",
       \   "objcpp" : "oc+",
       \   "cs"     : "cs",
@@ -509,3 +516,13 @@ let g:uncrustify_language_mapping = {
       \ }
 
 autocmd BufWritePre *.vala | call Uncrustify()
+
+
+" Import cost{
+augroup import_cost_auto_run
+  autocmd!
+  autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
+  autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
+  autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
+augroup END
+" }
