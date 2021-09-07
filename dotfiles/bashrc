@@ -21,7 +21,7 @@ if [ -f /etc/profile.d/clojure.sh ]; then
 fi
 
 # fuck
-eval "$(thefuck --alias)"
+# eval "$(thefuck --alias)"
 
 # history
 shopt -s histappend
@@ -48,10 +48,11 @@ export PIPENV_VENV_IN_PROJECT="enabled"
 
 # VIM
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
-export VISUAL="nvim -u NONE"
-export EDITOR="nvim -u NONE"
+export VISUAL="nvim.appimage -u NONE"
+export EDITOR="nvim.appimage -u NONE"
 
 # GO
+[[ -s "/home/armonge/.gvm/scripts/gvm" ]] && source "/home/armonge/.gvm/scripts/gvm"
 GOPATH=$(go env GOPATH)
 export GOPATH
 export PATH=$PATH:$GOPATH/bin
@@ -77,11 +78,16 @@ if [ -f /usr/share/git/completion/git-completion.bash ]; then
 	source /usr/share/git/completion/git-completion.bash
 	source /usr/share/git/completion/git-prompt.sh
 fi
+
+if [ -f /etc/bash_completion.d/git-prompt ]; then
+	source /etc/bash_completion.d/git-prompt
+fi
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWDIRTYSTATE=1
+export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
 # gitignore.io
 function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
@@ -129,7 +135,7 @@ export PATH=$PATH:$HOME/bin/entr/bin:$PATH
 export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_VIRTUALENV_VERBOSE_ACTIVATE=true
 export PYTHON_CONFIGURE_OPTS="--enable-shared --with-tcltk-includes --with-tcltk-libs"
-export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
@@ -144,7 +150,7 @@ if [ -f ~/bin/todo.txt ]; then
 fi
 
 # AWS
-complete -C "$HOME/.local/bin/aws_completer" aws
+complete -C "$(which aws_completer)" aws
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -245,9 +251,9 @@ export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
 export CLOUDSDK_PYTHON=python3
 
 # Flutter and dart
-FLUTTER_SDK_PATH=$(flutter sdk-path)
-export PATH="$PATH:$HOME/.pub-cache/bin"
-export PATH="$PATH:$FLUTTER_SDK_PATH/bin"
+# FLUTTER_SDK_PATH=$(flutter sdk-path)
+# export PATH="$PATH:$HOME/.pub-cache/bin"
+# export PATH="$PATH:$FLUTTER_SDK_PATH/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
@@ -260,3 +266,8 @@ eval "$(dircolors ~/.dir_colors/dircolors)"
 if [ "$DESKTOP_SESSION" = "i3" ]; then
 	export "$(gnome-keyring-daemon -s)"
 fi
+
+# Balena
+export PATH="$HOME/bin/balena-cli:$PATH"
+
+source /home/armonge/.config/broot/launcher/bash/br

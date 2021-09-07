@@ -1,5 +1,4 @@
 #!/bin/bash
-alias subdl='subdl --lang="spa"'
 alias ls='ls --color=auto'
 alias ll='exa -la'
 alias ls='exa'
@@ -39,3 +38,4 @@ alias pbpaste='xclip -selection clipboard -o'
 
 alias norg="gron --ungron"
 alias ungron="gron --ungron"
+alias voiceflow="voiceflow.AppImage"

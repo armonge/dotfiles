@@ -3,22 +3,14 @@
   "html.format.enable": true,
   "html.filetypes": ["html", "handlebars", "htmldjango"],
 
-  "go.enable": true,
-  "go.goplsOptions": {
-    "completeUnimported": true
-  },
-
   "prettier.formatterPriority": 1000,
-  "flutter.provider.enableSnippet":true,
-
-  "snippets.extends":{
+  "snippets.extends": {
     "dart": ["dart-flutter"]
   },
 
   // Fix on save
-  "java.saveActions.organizeImports":true,
-  "eslint.codeActionsOnSave.mode":"all",
-  "eslint.autoFixOnSave":true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.autoFixOnSave": true,
 
   "coc.preferences.formatOnSaveFiletypes": [
     "markdown",
@@ -39,6 +31,7 @@
     "html",
     "htmldjango",
     "json",
+    "jsonc",
     "sh",
     "go",
     "vala",
@@ -62,42 +55,49 @@
   ],
 
   "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json"],
-      "initializationOptions": {
-        "cache": {
-          "directory": ".ccls-cache"
-        },
-        "client": {
-          "snippetSupport": true
-        }
-      }
-    },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
-    },
+    // "graphql": {
+    // "command": "graphql-lsp",
+    // "args": ["server", "-m", "stream"],
+    // // customize filetypes to your needs
+    // "filetypes": ["typescript", "typescriptreact", "graphql"]
+    // },
+    // "ccls": {
+    // "command": "ccls",
+    // "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+    // "rootPatterns": [".ccls-root", "compile_commands.json"],
+    // "initializationOptions": {
+    // "cache": {
+    // "directory": ".ccls-cache"
+    // },
+    // "client": {
+    // "snippetSupport": true
+    // }
+    // }
+    // },
+    // "dockerfile": {
+    // "command": "docker-langserver",
+    // "filetypes": ["dockerfile"],
+    // "args": ["--stdio"]
+    // },
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
-      "filetypes": ["sh"]
-    },
-    "kotlin": {
-      "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
-      "filetypes": ["kotlin"]
-    },
-    "vala": {
-      "command": "org.gnome.gvls.stdio.Server",
-      "filetypes": ["vala", "genie"]
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     }
+    // "kotlin": {
+    // "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
+    // "filetypes": ["kotlin"]
+    // },
+    // "vala": {
+    // "command": "org.gnome.gvls.stdio.Server",
+    // "filetypes": ["vala", "genie"]
+    // }
   },
 
   "python.formatting.provider": "black",
-  "python.linting.lintOnSave":true,
-  "python.sortImports.path":"/home/armonge/.pyenv/versions/3.8.5/envs/neovim/bin/isort",
+  "python.linting.lintOnSave": true,
+  "python.sortImports.path": "/home/armonge/.pyenv/versions/3.8.5/envs/neovim/bin/isort",
 
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
@@ -118,8 +118,33 @@
   "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "i",
   "diagnostic.hintSign": "➤",
+  "diagnostic-languageserver.enable": true,
   "diagnostic-languageserver.filetypes": {
-    "sh": "shellcheck"
+    "sh": "shellcheck",
+    "dockerfile": "hadolint"
+  },
+  "diagnostic-languageserver.linters": {
+    "shellcheck": {
+      "args": ["-x", "-"]
+    },
+    "hadolint": {
+      "command": "hadolint",
+      "sourceName": "hadolint",
+      "args": ["-f", "json", "-"],
+      "rootPatterns": [".hadolint.yaml"],
+      "parseJson": {
+        "line": "line",
+        "column": "column",
+        "security": "level",
+        "message": "${message} [${code}]"
+      },
+      "securities": {
+        "error": "error",
+        "warning": "warning",
+        "info": "info",
+        "style": "hint"
+      }
+    }
   },
   "diagnostic-languageserver.debug": true,
 

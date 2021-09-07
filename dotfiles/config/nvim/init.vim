@@ -1,6 +1,6 @@
-let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
-let g:python_host_prog=$HOME . '/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog=$HOME . '/.pyenv/versions/neovim/bin/python'
+let g:python_host_prog=expand('~/.pyenv/versions/neovim2/bin/python')
+let g:python2_host_prog=expand('~/.pyenv/versions/neovim2/bin/python')
+let g:python3_host_prog=expand('~/.pyenv/versions/neovim/bin/python')
 
 "dein Scripts-----------------------------
 set nocompatible               " Be iMproved
@@ -21,10 +21,18 @@ if dein#load_state('~/.dein.cache')
 
   " Add or remove your plugins here:
   call dein#add('editorconfig/editorconfig-vim')
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
+
+  " Wiki and project management
+  " call dein#add('vimwiki/vimwiki', { 'rev': 'dev' })
+  " call dein#add('tools-life/taskwiki')
+  
+
+  " statusline
+  call dein#add('liuchengxu/eleline.vim')
+  " call dein#add('vim-airline/vim-airline')
+  " call dein#add('vim-airline/vim-airline-themes')
   call dein#add('lambdalisue/suda.vim')
-  call dein#add('mhinz/vim-startify')
+  " call dein#add('mhinz/vim-startify')
 
   " call dein#add('fatih/vim-go')
   call dein#add('wakatime/vim-wakatime')
@@ -38,15 +46,21 @@ if dein#load_state('~/.dein.cache')
 
   " File explorer
   " <C-e>
-  call dein#add('preservim/nerdtree')
-  call dein#add('Xuyuanp/nerdtree-git-plugin')
+  " call dein#add('preservim/nerdtree')
+  " call dein#add('Xuyuanp/nerdtree-git-plugin')
+  call dein#add('kevinhwang91/rnvimr')
+  " call dein#add('kyazdani42/nvim-tree.lua')
+  " call dein#add('kyazdani42/nvim-web-devicons') " for file icons
 
   " Icons in file explorer, requires https://github.com/ryanoasis/nerd-fonts
   call dein#add('ryanoasis/vim-devicons')
 
   " Show indent guides
   " <Leader>ig
-  call dein#add('nathanaelkane/vim-indent-guides')
+  " call dein#add('nathanaelkane/vim-indent-guides')
+  " call dein#add('Yggdroot/indentLine')
+  call dein#add('lukas-reineke/indent-blankline.nvim')
+  " call dein#add('lukas-reineke/indent-blankline.nvim')
 
   " Search in your project <C-s>
   call dein#add('mileszs/ack.vim')
@@ -59,7 +73,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('cxwx/image.vim', { 'build': 'pip install Pillow' })
 
   " Show import cost of javascript requires
-  call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
+  " call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
 
   " Search files
   " <C-p>
@@ -71,9 +85,10 @@ if dein#load_state('~/.dein.cache')
   call dein#add('scrooloose/nerdcommenter')
 
   " Support for syntax hightlighting of many languages
+  " call dein#add('tpope/vim-sleuth')
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('mboughaba/i3config.vim')
-  call dein#add('dart-lang/dart-vim-plugin')
+  " call dein#add('mboughaba/i3config.vim')
+  " call dein#add('dart-lang/dart-vim-plugin')
 
   " completions
   call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
@@ -125,10 +140,10 @@ let gtkTheme = system('gsettings get org.gnome.desktop.interface gtk-theme')
 
 " Solarized {
 set termguicolors 
-if stridx(gtkTheme, 'light') >= 0
-  set background=light
-else
+if stridx(gtkTheme, 'dark') >= 0
   set background=dark
+else
+  set background=light
 endif
 colorscheme NeoSolarized
 " }
@@ -222,7 +237,9 @@ autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 autocmd BufNewFile,BufRead *.js set filetype=javascript
 autocmd BufNewFile,BufRead .bashenv set filetype=sh
 autocmd BufNewFile,BufRead .envrc set filetype=sh
+autocmd BufNewFile,BufRead .eslintrc set filetype=json
 autocmd BufNewFile,BufRead ~/.config/regolith/i3/config set filetype=i3config
+autocmd BufNewFile,BufRead ~/.ask/cli_config set filetype=json
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
@@ -291,7 +308,7 @@ set signcolumn=auto
 
 
 " coc.nvim {
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-prettier', 'coc-yaml', 'coc-html', 'coc-css', 'coc-eslint']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-prettier', 'coc-yaml', 'coc-html', 'coc-css', 'coc-eslint', 'coc-tsserver', 'coc-diagnostic', 'coc-pyright']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -436,21 +453,28 @@ let g:sql_type_default = "sql.vim"
 "NerdTree {
 " map <C-e> <plug>NERDTreeTabsToggle<CR>
 
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '__pycache__']
-let g:NERDTreeChDirMode=3
-let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeMouseMode=2
-let g:NERDTreeShowHidden=0
-let g:NERDTreeKeepTreeInNewTab=1
+" let g:NERDTreeShowBookmarks=1
+" let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '__pycache__']
+" let g:NERDTreeChDirMode=3
+" let g:NERDTreeQuitOnOpen=1
+" let g:NERDTreeMouseMode=2
+" let g:NERDTreeShowHidden=0
+" let g:NERDTreeKeepTreeInNewTab=1
 
 
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeDirArrows = 1
+" let g:NERDTreeMinimalUI = 1
+" let g:NERDTreeDirArrows = 1
 
 " nnoremap <C-e> :NERDTreeFind<CR>
-nnoremap <C-e> :NERDTreeToggle<CR>
+" nnoremap <C-e> :NERDTreeToggle<CR>
 " }
+
+
+"rnvimr {
+tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
+nnoremap <silent> <C-e> :RnvimrToggle<CR>
+tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
+"}
 
 " FZF {
 let g:fzf_buffers_jump = 1
@@ -494,14 +518,18 @@ nmap <C-w>m <Plug>(git-messenger)
 " let g:vimroom_navigation_keys = 1
 " }
 
+" Eleline {
+let g:eleline_powerline_fonts = 1
+" }
+
 " Airline {
-let g:airline#extensions#coc#enabled = 1
+" let g:airline#extensions#coc#enabled = 1
 
-function! s:update_git_status()
-  let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
-endfunction
+" function! s:update_git_status()
+  " let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
+" endfunction
 
-let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
+" let g:airline_section_b = "%{get(g:,'coc_git_status','')}"
 
 autocmd User CocGitStatusChange call s:update_git_status()
 " }
@@ -519,10 +547,13 @@ autocmd BufWritePre *.vala | call Uncrustify()
 
 
 " Import cost{
-augroup import_cost_auto_run
-  autocmd!
-  autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
-  autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
-  autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
-augroup END
+" augroup import_cost_auto_run
+  " autocmd!
+  " autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
+  " autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
+  " autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
+" augroup END
 " }
+"
+"
+let g:node_client_debug = 1
