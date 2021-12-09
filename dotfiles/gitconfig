@@ -24,9 +24,9 @@
 ; [pager]
   ; diff = diff-so-fancy | less --tabs=1,5 -RFX
   ; show = diff-so-fancy | less --tabs=1,5 -RFX
-[credential]
+;[credential]
   ; helper = /usr/lib/git-core/git-credential-libsecret
-  helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+  ;helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 [diff "spaceman-diff"]
   command = $HOME/bin/spaceman-diff
 [push]
