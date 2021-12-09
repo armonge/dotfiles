@@ -18,7 +18,6 @@
     "graphql",
     "cs",
     "yaml",
-    "rust",
     "php",
     "xml",
     "python",
@@ -35,7 +34,8 @@
     "sh",
     "go",
     "vala",
-    "dockerfile"
+    "dockerfile",
+    "rust"
   ],
 
   "yaml.schemas": {
@@ -61,38 +61,38 @@
     // // customize filetypes to your needs
     // "filetypes": ["typescript", "typescriptreact", "graphql"]
     // },
-    // "ccls": {
-    // "command": "ccls",
-    // "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-    // "rootPatterns": [".ccls-root", "compile_commands.json"],
-    // "initializationOptions": {
-    // "cache": {
-    // "directory": ".ccls-cache"
-    // },
-    // "client": {
-    // "snippetSupport": true
-    // }
-    // }
-    // },
-    // "dockerfile": {
-    // "command": "docker-langserver",
-    // "filetypes": ["dockerfile"],
-    // "args": ["--stdio"]
-    // },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
-    }
+    },
     // "kotlin": {
     // "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
     // "filetypes": ["kotlin"]
     // },
-    // "vala": {
-    // "command": "org.gnome.gvls.stdio.Server",
-    // "filetypes": ["vala", "genie"]
-    // }
+    "vala": {
+      "command": "vala-language-server",
+      "filetypes": ["vala", "genie"]
+    }
   },
 
   "python.formatting.provider": "black",

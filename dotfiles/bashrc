@@ -243,7 +243,6 @@ eval "$(direnv hook bash)"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export FrameworkPathOverride=/etc/mono/4.5
 
-export BROWSER=firefox
 export PATH="$PATH:$HOME/bin/VSCode-linux-x64/bin"
 export PATH="$HOME/.ebcli-virtual-env/executables:$PATH"
 
@@ -271,3 +270,10 @@ fi
 export PATH="$HOME/bin/balena-cli:$PATH"
 
 source /home/armonge/.config/broot/launcher/bash/br
+. "$HOME/.cargo/env"
+
+PATH="/home/armonge/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/armonge/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/armonge/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/armonge/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/armonge/perl5"; export PERL_MM_OPT;
