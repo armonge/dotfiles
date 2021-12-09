@@ -38,8 +38,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add('wakatime/vim-wakatime')
 
   " Colors
-  call dein#add('frankier/neovim-colors-solarized-truecolor-only')
-  call dein#add('overcache/NeoSolarized')
+  call dein#add('arcticicestudio/nord-vim')
 
   " encrypts files ending with .gpg
   call dein#add('jamessan/vim-gnupg')
@@ -138,14 +137,14 @@ syntax enable
 
 let gtkTheme = system('gsettings get org.gnome.desktop.interface gtk-theme')
 
-" Solarized {
+" Nord {
 set termguicolors 
 if stridx(gtkTheme, 'dark') >= 0
   set background=dark
 else
   set background=light
 endif
-colorscheme NeoSolarized
+colorscheme nord
 " }
 
 
@@ -478,13 +477,8 @@ tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
 
 " FZF {
 let g:fzf_buffers_jump = 1
-
-if stridx(gtkTheme, 'light') >= 0
-  let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Solarized (light)' --color=always --style=header,grid --line-range :300 {}'  "
-else
-  let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Solarized (dark)' --color=always --style=header,grid --line-range :300 {}'  "
-endif
-colorscheme NeoSolarized
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+colorscheme nord
 " }
 let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
 let g:vista_fzf_preview = ['right:60%']
