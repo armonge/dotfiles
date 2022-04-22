@@ -4,21 +4,12 @@
 #
 # shellcheck disable=SC1090
 
-[[ -f ~/.profile ]] && . ~/.profile
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-if [ -n "$DESKTOP_SESSION" ]; then
-	eval "$(gnome-keyring-daemon --start)"
-	export SSH_AUTH_SOCK
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
 fi
 
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-
-[ -s "/home/armonge/.jabba/jabba.sh" ] && source "/home/armonge/.jabba/jabba.sh"
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-source /home/armonge/.config/broot/launcher/bash/br
+export PATH="$HOME/.poetry/bin:$PATH"
 . "$HOME/.cargo/env"
 
-export PATH="$HOME/.poetry/bin:$PATH"
+source /var/home/armonge/.config/broot/launcher/bash/br

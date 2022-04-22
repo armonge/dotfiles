@@ -13,6 +13,7 @@
   "eslint.autoFixOnSave": true,
 
   "coc.preferences.formatOnSaveFiletypes": [
+    "lua",
     "markdown",
     "dart",
     "graphql",
@@ -35,7 +36,9 @@
     "go",
     "vala",
     "dockerfile",
-    "rust"
+    "rust",
+    "sql",
+    "sqlite3"
   ],
 
   "yaml.schemas": {
@@ -55,12 +58,6 @@
   ],
 
   "languageserver": {
-    // "graphql": {
-    // "command": "graphql-lsp",
-    // "args": ["server", "-m", "stream"],
-    // // customize filetypes to your needs
-    // "filetypes": ["typescript", "typescriptreact", "graphql"]
-    // },
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
@@ -150,11 +147,17 @@
 
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
+    "sql": "sqlformat",
+    "sqlite3": "sqlformat",
     "htmldjango": "js-beautify:htmldjango"
   },
 
   "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.formatters": {
+    "sqlformat": {
+      "command": "~/.pyenv/shims/sqlformat",
+      "args": ["--reindent"]
+    },
     "shfmt": {
       "command": "shfmt",
       "args": ["-s"]
@@ -173,7 +176,7 @@
   "tsserver.log": "verbose",
   "tsserver.implicitProjectConfig.checkJs": true,
 
-  "xml.java.home": "/usr/lib/jvm/default-java/",
+  // "xml.java.home": "/usr/lib/jvm/default-java/",
   "json.schemas": [
     {
       "fileMatch": ["/models/en-US.json"],

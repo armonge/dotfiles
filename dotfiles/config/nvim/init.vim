@@ -1,6 +1,14 @@
-let g:python_host_prog=expand('~/.pyenv/versions/neovim2/bin/python')
-let g:python2_host_prog=expand('~/.pyenv/versions/neovim2/bin/python')
-let g:python3_host_prog=expand('~/.pyenv/versions/neovim/bin/python')
+" Python2 for neovim
+if filereadable($HOME.'/.pyenv/versions/nvim2/bin/python')
+    let g:python_host_prog=$HOME.'/.pyenv/versions/nvim2/bin/python'
+    let g:python2_host_prog=$HOME.'/.pyenv/versions/nvim2/bin/python'
+endif
+
+" Python3 for neovim
+if filereadable($HOME.'/.pyenv/versions/nvim3/bin/python')
+    let g:python3_host_prog=$HOME.'/.pyenv/versions/nvim3/bin/python'
+endif
+
 
 "dein Scripts-----------------------------
 set nocompatible               " Be iMproved
@@ -22,15 +30,9 @@ if dein#load_state('~/.dein.cache')
   " Add or remove your plugins here:
   call dein#add('editorconfig/editorconfig-vim')
 
-  " Wiki and project management
-  " call dein#add('vimwiki/vimwiki', { 'rev': 'dev' })
-  " call dein#add('tools-life/taskwiki')
-  
-
   " statusline
   call dein#add('liuchengxu/eleline.vim')
-  " call dein#add('vim-airline/vim-airline')
-  " call dein#add('vim-airline/vim-airline-themes')
+  
   call dein#add('lambdalisue/suda.vim')
   " call dein#add('mhinz/vim-startify')
 
@@ -45,20 +47,16 @@ if dein#load_state('~/.dein.cache')
 
   " File explorer
   " <C-e>
-  " call dein#add('preservim/nerdtree')
-  " call dein#add('Xuyuanp/nerdtree-git-plugin')
   call dein#add('kevinhwang91/rnvimr')
-  " call dein#add('kyazdani42/nvim-tree.lua')
-  " call dein#add('kyazdani42/nvim-web-devicons') " for file icons
 
   " Icons in file explorer, requires https://github.com/ryanoasis/nerd-fonts
-  call dein#add('ryanoasis/vim-devicons')
+  " call dein#add('ryanoasis/vim-devicons')
 
   " Show indent guides
   " <Leader>ig
   " call dein#add('nathanaelkane/vim-indent-guides')
   " call dein#add('Yggdroot/indentLine')
-  call dein#add('lukas-reineke/indent-blankline.nvim')
+  " call dein#add('lukas-reineke/indent-blankline.nvim')
   " call dein#add('lukas-reineke/indent-blankline.nvim')
 
   " Search in your project <C-s>
@@ -79,6 +77,9 @@ if dein#load_state('~/.dein.cache')
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
+  " lua format
+  call dein#add('andrejlevkovitch/vim-lua-format')
+
   " Comments
   " <Leader>c<Space>
   call dein#add('scrooloose/nerdcommenter')
@@ -94,7 +95,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add("honza/vim-snippets")
 
   " Tagbar
-  call dein#add('liuchengxu/vista.vim')
+  " call dein#add('liuchengxu/vista.vim')
 
   " <C-y),
   call dein#add("mattn/emmet-vim")
@@ -448,27 +449,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 let g:sql_type_default = "sql.vim"
 " }
 
-
-"NerdTree {
-" map <C-e> <plug>NERDTreeTabsToggle<CR>
-
-" let g:NERDTreeShowBookmarks=1
-" let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '__pycache__']
-" let g:NERDTreeChDirMode=3
-" let g:NERDTreeQuitOnOpen=1
-" let g:NERDTreeMouseMode=2
-" let g:NERDTreeShowHidden=0
-" let g:NERDTreeKeepTreeInNewTab=1
-
-
-" let g:NERDTreeMinimalUI = 1
-" let g:NERDTreeDirArrows = 1
-
-" nnoremap <C-e> :NERDTreeFind<CR>
-" nnoremap <C-e> :NERDTreeToggle<CR>
-" }
-
-
 "rnvimr {
 tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> <C-e> :RnvimrToggle<CR>
@@ -550,4 +530,13 @@ autocmd BufWritePre *.vala | call Uncrustify()
 " }
 "
 "
-let g:node_client_debug = 1
+" let g:node_client_debug = 1
+nmap gx :silent execute "!xdg-open " . shellescape("<cWORD>")<CR>
+let g:rnvimr_ranger_cmd=$HOME.'/.pyenv/versions/nvim3/bin/ranger' 
+
+" Lua
+  autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
+  autocmd BufWrite *.lua call LuaFormat()
+
+  " SQL
+  autocmd BufWritePre   *.sql call CocAction('format')
