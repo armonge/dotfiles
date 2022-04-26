@@ -107,6 +107,13 @@ if dein#load_state('~/.dein.cache')
   call dein#add('tpope/vim-surround')
   call dein#add('embear/vim-uncrustify')
 
+  " Clojure
+  call dein#add('Olical/conjure')
+  call dein#add('luochen1990/rainbow')
+  call dein#add('tpope/vim-dispatch')
+  call dein#add('clojure-vim/vim-jack-in')
+  call dein#add('radenling/vim-dispatch-neovim')
+  call dein#add('eraserhd/parinfer-rust', { 'build': 'cargo build --release' })
 
   " Writing prose in vim
   " <Leader>V
@@ -150,7 +157,8 @@ colorscheme nord
 
 
 " The default leader is '\', but many people prefer ',' as it's in a standard
-let mapleader = ','
+let mapleader=","
+let maplocalleader=","
 
 cmap w!! w suda://%
 set clipboard=unnamed,unnamedplus
@@ -540,3 +548,7 @@ let g:rnvimr_ranger_cmd=$HOME.'/.pyenv/versions/nvim3/bin/ranger'
 
   " SQL
   autocmd BufWritePre   *.sql call CocAction('format')
+
+
+  " Clojure
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
