@@ -320,7 +320,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # source "$HOME/bin/emsdk/emsdk_env.sh" 2>/dev/null
-eval "$(dircolors ~/.dir_colors)"
+if [ -f $HOME/.dir_colors ]; then
+	eval "$(dircolors ~/.dir_colors)"
+fi
 
 if [ "$DESKTOP_SESSION" = "i3" ]; then
 	export "$(gnome-keyring-daemon -s)"
@@ -343,4 +345,4 @@ export PERL_MB_OPT
 PERL_MM_OPT="INSTALL_BASE=/home/armonge/perl5"
 export PERL_MM_OPT
 
-source /var/home/armonge/.config/broot/launcher/bash/br
+source $HOME/.config/broot/launcher/bash/br

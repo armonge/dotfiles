@@ -10,6 +10,7 @@ alias dotnet='TERM=xterm dotnet'
 alias func="TERM=xterm func"
 alias pwsh="TERM=xterm pwsh"
 alias cat='bat'
+alias bat='batcat'
 alias ping='prettyping --nolegend'
 alias help='tldr'
 alias df='pydf'
