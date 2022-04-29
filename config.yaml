@@ -15,7 +15,7 @@ actions:
   pre:
     install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
   post:
-    install_nvm: nvm install lts/gallium lts/erbium lts/fermium lts/gallium
+    install_nvm: bash -c "nvm install lts/gallium lts/erbium lts/fermium lts/gallium"
 dotfiles:
   f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
