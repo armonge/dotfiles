@@ -1,3 +1,7 @@
+	if has('pythonx')
+    set pyx=3
+	endif
+
 " Python2 for neovim
 if filereadable($HOME.'/.pyenv/versions/nvim2/bin/python')
     let g:python_host_prog=$HOME.'/.pyenv/versions/nvim2/bin/python'

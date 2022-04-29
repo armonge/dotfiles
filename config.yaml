@@ -10,6 +10,12 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
+actions:
+  dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
+  pre:
+    install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  post:
+    install_nvm: nvm install lts/gallium lts/erbium lts/fermium lts/gallium
 dotfiles:
   f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
@@ -27,7 +33,7 @@ dotfiles:
     dst: ~/.bashrc
     link: link
     src: bashrc
-    chmod: '644'
+    chmod: "644"
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
     link: link
@@ -48,6 +54,8 @@ dotfiles:
     dst: ~/.config/nvim/installer.sh
     link: link
     src: config/nvim/installer.sh
+    actions:
+      - dein_init
   f_typescript.snippets:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
     link: link
@@ -88,42 +96,53 @@ dotfiles:
     src: config/nvim/after/ftplugin/video.vim
     dst: ~/.config/nvim/after/ftplugin/video.vim
     link: link
-  f_colorize_terminal.sh:
-    src: bin/colorize_terminal.sh
-    dst: ~/bin/colorize_terminal.sh
-    link: link
-    chmod: '775'
   f_delta.sh:
     src: bin/delta.sh
     dst: ~/bin/delta.sh
     link: link
-    chmod: '775'
+    chmod: "775"
   f_rifle.conf:
     src: config/ranger/rifle.conf
     dst: ~/.config/ranger/rifle.conf
     link: link
-    chmod: '644'
+    chmod: "644"
+  f_version:
+    src: pyenv/version
+    dst: ~/.pyenv/version
+    link: link
+  f_default:
+    src: nvm/alias/default
+    dst: ~/.nvm/alias/default
+    link: link
+    actions:
+      - install_nvm
+  f_*:
+    src: nvm/alias/lts/*
+    dst: ~/.nvm/alias/lts/*
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
-    - f_bashrc
-    - f_init.vim
-    - f_installer.sh
-    - f_gitconfig
-    - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
-    - f_ctags
-    - f_bash_profile
-    - f_chromium-flags.conf
-    - f_typescript.snippets
-    - f_bash_aliases
-    - f_attributes
-    - f_deps.edn
-    - f_coc-settings.json
-    - f_config.toml
-    - f_ideavimrc
-    - f_ftplugin_audio.vim
-    - f_video.vim
-    - f_audio.vim
-    - f_colorize_terminal.sh
-    - f_delta.sh
-    - f_rifle.conf
+      - f_bashrc
+      - f_init.vim
+      - f_installer.sh
+      - f_gitconfig
+      - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
+      - f_ctags
+      - f_bash_profile
+      - f_chromium-flags.conf
+      - f_typescript.snippets
+      - f_bash_aliases
+      - f_attributes
+      - f_deps.edn
+      - f_coc-settings.json
+      - f_config.toml
+      - f_ideavimrc
+      - f_ftplugin_audio.vim
+      - f_video.vim
+      - f_audio.vim
+      - f_delta.sh
+      - f_rifle.conf
+      - f_version
+      - f_default
+      - f_*
