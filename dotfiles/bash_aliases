@@ -10,7 +10,11 @@ alias dotnet='TERM=xterm dotnet'
 alias func="TERM=xterm func"
 alias pwsh="TERM=xterm pwsh"
 alias cat='bat'
-alias bat='batcat'
+
+if command -v batcat &>/dev/null; then
+	alias bat='batcat'
+fi
+
 alias ping='prettyping --nolegend'
 alias help='tldr'
 alias df='pydf'
@@ -40,3 +44,4 @@ alias pbpaste='xclip -selection clipboard -o'
 alias norg="gron --ungron"
 alias ungron="gron --ungron"
 alias voiceflow="voiceflow.AppImage"
+alias istoolbx='[ -f "/run/.toolboxenv" ] && grep -oP "(?<=name=\")[^\";]+" /run/.containerenv'
