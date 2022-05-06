@@ -31,8 +31,6 @@
   command = $HOME/bin/spaceman-diff
 [push]
   default = current
-[diff "json"]
-	command = "json-diff $REMOTE $LOCAL"
 [diff]
 	algorithm = patience
 [pull]
