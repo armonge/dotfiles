@@ -9,6 +9,17 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+	for rc in ~/.bashrc.d/*; do
+		if [ -f "$rc" ]; then
+			. "$rc"
+		fi
+	done
+fi
+
+unset rc
+
 # User specific environment
 if ! [[ $PATH =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 	PATH="$HOME/.local/bin:$HOME/bin:$PATH"
@@ -16,6 +27,7 @@ fi
 export PATH
 
 # Clojure
+export XDG_CONFIG_HOME=$HOME/.config
 if [ -f /etc/profile.d/clojure.sh ]; then
 	source /etc/profile.d/clojure.sh
 	source /usr/share/bash-completion/completions/lein
@@ -335,9 +347,13 @@ fi
 # Balena
 export PATH="$HOME/bin/balena-cli:$PATH"
 
-source $HOME/.config/broot/launcher/bash/br
+if [ -f $HOME/.config/broot/launcher/bash/br ]; then
+	source $HOME/.config/broot/launcher/bash/br
+fi
 
-. "$HOME/.cargo/env"
+if [ -f $HOME/.cargo/env ]; then
+	source "$HOME/.cargo/env"
+fi
 
 if [ -f $HOME/dotfiles ]; then
 	source $HOME/dotfiles/dotdrop/completion/dotdrop-completion.bash

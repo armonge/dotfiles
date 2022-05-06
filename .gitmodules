@@ -4,3 +4,6 @@
 [submodule "nord-gnome-terminal"]
 	path = nord-gnome-terminal
 	url = https://github.com/arcticicestudio/nord-gnome-terminal.git
+[submodule "clojure-deps-edn"]
+	path = clojure-deps-edn
+	url = git@github.com:armonge/clojure-deps-edn.git

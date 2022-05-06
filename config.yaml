@@ -13,23 +13,7 @@ config:
 actions:
   dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
   pre:
-    install_pyenv_dependencies: ./scripts/install-pyenv-deps.sh
-    install_pyenv: curl https://pyenv.run | bash
-    install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
-      | bash
-    install_nvm_versions: bash -i -c "nvm install lts/gallium lts/erbium lts/fermium
-      lts/gallium"
-    install_python2: bash -i -c "pyenv install --skip-existing 2.7.18"
-    install_python3: bash -i -c "pyenv install --skip-existing 3.10.4"
-    install_nvim: ./scripts/install-neovim.sh
-    install_python_nvim2: bash -i -c "pyenv install --skip-existing 2.7.18 && pyenv
-      virtualenv --force 2.7.18 nvim2 && python -m pip install --upgrade pip pynvim
-      ranger-fm pillow"
-    install_python_nvim3: bash -i -c "pyenv install --skip-existing 3.10.4 && pyenv
-      virtualenv --force 3.10.4 nvim3 && python -m pip install --upgrade pip pynvim
-      ranger-fm pillow ueberzug"
-    install_node_neovim: bash -i -c "npm install --global neovim"
-    install_bash_language_server: bash -i -c "npm install --global bash-language-server"
+    install_deps: ./scripts/install-deps.sh
 dotfiles:
   f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
@@ -65,10 +49,7 @@ dotfiles:
     link: link
     src: config/nvim/init.vim
     actions:
-    - install_nvim
-    - install_python_nvim2
-    - install_python_nvim3
-    - install_bash_language_server
+    - install_deps
   f_installer.sh:
     dst: ~/.config/nvim/installer.sh
     link: link
@@ -129,18 +110,10 @@ dotfiles:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: link
-    actions:
-    - install_pyenv_dependencies
-    - install_pyenv
   f_default:
     src: nvm/alias/default
     dst: ~/.nvm/alias/default
     link: link
-    actions:
-    - install_nvm
-    - install_nvm_versions
-    - install_python2
-    - install_python3
   f_*:
     src: nvm/alias/lts/*
     dst: ~/.nvm/alias/lts/*
@@ -150,6 +123,22 @@ dotfiles:
     dst: ~/.local/bin/shfmt
     link: link
     chmod: '755'
+  f_clojure_deps.edn:
+    src: config/clojure/deps.edn
+    dst: ~/.config/clojure/deps.edn
+    link: link
+  f_rebel_readline.edn:
+    src: config/clojure/rebel_readline.edn
+    dst: ~/.config/clojure/rebel_readline.edn
+    link: link
+  f_practicalli-custom-dictionary.txt:
+    src: config/clojure/.cspell/practicalli-custom-dictionary.txt
+    dst: ~/.config/clojure/.cspell/practicalli-custom-dictionary.txt
+    link: link
+  f_cspell.json:
+    src: config/clojure/.cspell.json
+    dst: ~/.config/clojure/.cspell.json
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -177,3 +166,7 @@ profiles:
     - f_default
     - f_*
     - f_shfmt
+    - f_clojure_deps.edn
+    - f_rebel_readline.edn
+    - f_practicalli-custom-dictionary.txt
+    - f_cspell.json
