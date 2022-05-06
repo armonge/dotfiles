@@ -13,15 +13,21 @@ config:
 actions:
   dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
   pre:
-    install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    install_nvm_versions: bash -i -c "nvm install lts/gallium lts/erbium lts/fermium lts/gallium"
-
+    install_pyenv_dependencies: ./scripts/install-pyenv-deps.sh
+    install_pyenv: curl https://pyenv.run | bash
+    install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
+      | bash
+    install_nvm_versions: bash -i -c "nvm install lts/gallium lts/erbium lts/fermium
+      lts/gallium"
     install_python2: bash -i -c "pyenv install --skip-existing 2.7.18"
     install_python3: bash -i -c "pyenv install --skip-existing 3.10.4"
-
     install_nvim: ./scripts/install-neovim.sh
-    install_python_nvim2: bash -i -c "pyenv install --skip-existing 2.7.18 && pyenv virtualenv --force 2.7.18 nvim2 && python -m pip install --upgrade pip pynvim ranger-fm pillow"
-    install_python_nvim3: bash -i -c "pyenv install --skip-existing 3.10.4 && pyenv virtualenv --force 3.10.4 nvim3 && python -m pip install --upgrade pip pynvim ranger-fm pillow ueberzug"
+    install_python_nvim2: bash -i -c "pyenv install --skip-existing 2.7.18 && pyenv
+      virtualenv --force 2.7.18 nvim2 && python -m pip install --upgrade pip pynvim
+      ranger-fm pillow"
+    install_python_nvim3: bash -i -c "pyenv install --skip-existing 3.10.4 && pyenv
+      virtualenv --force 3.10.4 nvim3 && python -m pip install --upgrade pip pynvim
+      ranger-fm pillow ueberzug"
     install_node_neovim: bash -i -c "npm install --global neovim"
     install_bash_language_server: bash -i -c "npm install --global bash-language-server"
 dotfiles:
@@ -41,7 +47,7 @@ dotfiles:
     dst: ~/.bashrc
     link: link
     src: bashrc
-    chmod: "644"
+    chmod: '644'
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
     link: link
@@ -59,16 +65,16 @@ dotfiles:
     link: link
     src: config/nvim/init.vim
     actions:
-      - install_nvim
-      - install_python_nvim2
-      - install_python_nvim3
-      - install_bash_language_server
+    - install_nvim
+    - install_python_nvim2
+    - install_python_nvim3
+    - install_bash_language_server
   f_installer.sh:
     dst: ~/.config/nvim/installer.sh
     link: link
     src: config/nvim/installer.sh
     actions:
-      - dein_init
+    - dein_init
   f_typescript.snippets:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
     link: link
@@ -113,52 +119,61 @@ dotfiles:
     src: bin/delta.sh
     dst: ~/bin/delta.sh
     link: link
-    chmod: "775"
+    chmod: '775'
   f_rifle.conf:
     src: config/ranger/rifle.conf
     dst: ~/.config/ranger/rifle.conf
     link: link
-    chmod: "644"
+    chmod: '644'
   f_version:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: link
+    actions:
+    - install_pyenv_dependencies
+    - install_pyenv
   f_default:
     src: nvm/alias/default
     dst: ~/.nvm/alias/default
     link: link
     actions:
-      - install_nvm
-      - install_nvm_versions
-      - install_python2
-      - install_python3
+    - install_nvm
+    - install_nvm_versions
+    - install_python2
+    - install_python3
   f_*:
     src: nvm/alias/lts/*
     dst: ~/.nvm/alias/lts/*
     link: link
+  f_shfmt:
+    src: local/bin/shfmt
+    dst: ~/.local/bin/shfmt
+    link: link
+    chmod: '755'
 profiles:
   armonge-laptop:
     dotfiles:
-      - f_bashrc
-      - f_init.vim
-      - f_installer.sh
-      - f_gitconfig
-      - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
-      - f_ctags
-      - f_bash_profile
-      - f_chromium-flags.conf
-      - f_typescript.snippets
-      - f_bash_aliases
-      - f_attributes
-      - f_deps.edn
-      - f_coc-settings.json
-      - f_config.toml
-      - f_ideavimrc
-      - f_ftplugin_audio.vim
-      - f_video.vim
-      - f_audio.vim
-      - f_delta.sh
-      - f_rifle.conf
-      - f_version
-      - f_default
-      - f_*
+    - f_bashrc
+    - f_init.vim
+    - f_installer.sh
+    - f_gitconfig
+    - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
+    - f_ctags
+    - f_bash_profile
+    - f_chromium-flags.conf
+    - f_typescript.snippets
+    - f_bash_aliases
+    - f_attributes
+    - f_deps.edn
+    - f_coc-settings.json
+    - f_config.toml
+    - f_ideavimrc
+    - f_ftplugin_audio.vim
+    - f_video.vim
+    - f_audio.vim
+    - f_delta.sh
+    - f_rifle.conf
+    - f_version
+    - f_default
+    - f_*
+    - f_shfmt
