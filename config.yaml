@@ -13,16 +13,17 @@ config:
 actions:
   dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
   pre:
-    install_nvim: sudo apt install neovim
     install_nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
     install_nvm_versions: bash -i -c "nvm install lts/gallium lts/erbium lts/fermium lts/gallium"
 
     install_python2: bash -i -c "pyenv install --skip-existing 2.7.18"
     install_python3: bash -i -c "pyenv install --skip-existing 3.10.4"
 
+    install_nvim: ./scripts/install-neovim.sh
     install_python_nvim2: bash -i -c "pyenv install --skip-existing 2.7.18 && pyenv virtualenv --force 2.7.18 nvim2 && python -m pip install --upgrade pip pynvim ranger-fm pillow"
     install_python_nvim3: bash -i -c "pyenv install --skip-existing 3.10.4 && pyenv virtualenv --force 3.10.4 nvim3 && python -m pip install --upgrade pip pynvim ranger-fm pillow ueberzug"
     install_node_neovim: bash -i -c "npm install --global neovim"
+    install_bash_language_server: bash -i -c "npm install --global bash-language-server"
 dotfiles:
   f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
     dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
@@ -61,6 +62,7 @@ dotfiles:
       - install_nvim
       - install_python_nvim2
       - install_python_nvim3
+      - install_bash_language_server
   f_installer.sh:
     dst: ~/.config/nvim/installer.sh
     link: link
