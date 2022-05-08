@@ -59,6 +59,26 @@
   ],
 
   "languageserver": {
+    "clojure-lsp": {
+      // "command": "bash",
+      // "args": ["-c", "cd /Users/case/dev/lsp && clojure -J-Duser.dir=$PWD -Scp $(clj -Spath) -m clojure-lsp.main"],
+      // "args": ["-c", "export LEIN_JVM_OPTS=\"-Duser.dir=$cwd\" && cd /Users/case/dev/lsp/ && lein run"],
+      //"command": "bash",
+      //"args": ["-c", "cd /Users/case/dev/lsp/cli && clj -M:run"],
+      //"command": "clojure-lsp",
+      "command": "clojure-lsp",
+      "filetypes": ["clojure"],
+      "rootPatterns": ["project.clj", "deps.edn"],
+      "additionalSchemes": ["jar", "zipfile"],
+      "trace.server": "verbose",
+      "diagnostic.showUnused": true,
+      "diagnostic.showDeprecated": true,
+      "diagnostic.highlightPriority": 1000000,
+      "initializationOptions": {
+        "log-path": "/tmp/lsp.out",
+        "ignore-classpath-directories": true
+      }
+    },
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],

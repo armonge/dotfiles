@@ -139,6 +139,11 @@ dotfiles:
     src: config/clojure/.cspell.json
     dst: ~/.config/clojure/.cspell.json
     link: link
+  f_clojure-lsp:
+    src: local/bin/clojure-lsp
+    dst: ~/.local/bin/clojure-lsp
+    link: link
+    chmod: '755'
 profiles:
   armonge-laptop:
     dotfiles:
@@ -170,3 +175,4 @@ profiles:
     - f_rebel_readline.edn
     - f_practicalli-custom-dictionary.txt
     - f_cspell.json
+    - f_clojure-lsp

@@ -547,11 +547,11 @@ nmap gx :silent execute "!xdg-open " . shellescape("<cWORD>")<CR>
 let g:rnvimr_ranger_cmd=$HOME.'/.pyenv/versions/nvim3/bin/ranger' 
 
 " Lua
-  autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
-  autocmd BufWrite *.lua call LuaFormat()
+autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
+autocmd BufWrite *.lua call LuaFormat()
 
-  " SQL
-  autocmd BufWritePre   *.sql call CocAction('format')
+" SQL
+autocmd BufWritePre   *.sql call CocAction('format')
 
 
   " Clojure
