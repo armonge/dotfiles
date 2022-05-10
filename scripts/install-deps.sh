@@ -26,12 +26,12 @@ pyenv install --skip-existing 3.10.4
 pyenv install --skip-existing 2.7.18
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
-python -m pip install --upgrade pip wheel pynvim ranger-fm pillow
+python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments
 
 pyenv install --skip-existing 3.10.4
 pyenv virtualenv --force 3.10.4 nvim3
 pyenv shell nvim3
-python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug
+python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug pygments nord-pygments
 
 # Install and activate NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash

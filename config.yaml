@@ -144,6 +144,11 @@ dotfiles:
     dst: ~/.local/bin/clojure-lsp
     link: link
     chmod: '755'
+  f_scope.sh:
+    src: config/ranger/scope.sh
+    dst: ~/.config/ranger/scope.sh
+    link: link
+    chmod: '755'
 profiles:
   armonge-laptop:
     dotfiles:
@@ -176,3 +181,4 @@ profiles:
     - f_practicalli-custom-dictionary.txt
     - f_cspell.json
     - f_clojure-lsp
+    - f_scope.sh
