@@ -45,3 +45,6 @@ alias norg="gron --ungron"
 alias ungron="gron --ungron"
 alias voiceflow="voiceflow.AppImage"
 alias istoolbx='[ -f "/run/.toolboxenv" ] && grep -oP "(?<=name=\")[^\";]+" /run/.containerenv'
+
+alias cdk1="npx aws-cdk@1.x"
+alias cdk="npx aws-cdk@2.x"
