@@ -210,7 +210,12 @@ elif [ -f ~/.fzf.bash ] && [ -d $HOME/.dein.cache/repos/github.com/junegunn/fzf/
 fi
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --depth=-1'
-export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+
+if command -v batcat &>/dev/null; then
+	export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'batcat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+else
+	export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then

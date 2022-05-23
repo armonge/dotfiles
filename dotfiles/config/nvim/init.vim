@@ -256,6 +256,7 @@ autocmd BufNewFile,BufRead .eslintrc set filetype=json
 autocmd BufNewFile,BufRead *.json set filetype=jsonc
 autocmd BufNewFile,BufRead ~/.config/regolith/i3/config set filetype=i3config
 autocmd BufNewFile,BufRead ~/.ask/cli_config set filetype=json
+autocmd BufNewFile,BufRead *.code-workspace set filetype=jsonc
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
