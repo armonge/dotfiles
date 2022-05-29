@@ -149,6 +149,10 @@ dotfiles:
     dst: ~/.config/ranger/scope.sh
     link: link
     chmod: '755'
+  f_inputrc:
+    src: inputrc
+    dst: ~/.inputrc
+    link: link
 profiles:
   armonge-laptop:
     dotfiles:
@@ -182,3 +186,4 @@ profiles:
     - f_cspell.json
     - f_clojure-lsp
     - f_scope.sh
+    - f_inputrc
