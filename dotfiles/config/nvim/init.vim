@@ -99,7 +99,7 @@ if dein#load_state('~/.dein.cache')
   call dein#add("honza/vim-snippets")
 
   " Tagbar
-  " call dein#add('liuchengxu/vista.vim')
+  call dein#add('liuchengxu/vista.vim')
 
   " <C-y),
   call dein#add("mattn/emmet-vim")
