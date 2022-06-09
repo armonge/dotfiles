@@ -59,6 +59,35 @@
   ],
 
   "languageserver": {
+    "lua": {
+      "cwd": "~/lua",
+      "command": "~/lua/bin/lua-language-server",
+      "filetypes": ["lua"],
+      "rootPatterns": [".git/"],
+      "settings": {
+        "Lua": {
+          "workspace": {},
+          "runtime": {
+            "version": "Lua 5.1"
+          },
+          "diagnostics": {
+            "enable": true,
+            "globals": [
+              "hs",
+              "vim",
+              "it",
+              "describe",
+              "before_each",
+              "after_each"
+            ],
+            "disable": ["lowercase-global"]
+          },
+          "completion": {
+            "keywordSnippet": "Disable"
+          }
+        }
+      }
+    },
     "clojure-lsp": {
       // "command": "bash",
       // "args": ["-c", "cd /Users/case/dev/lsp && clojure -J-Duser.dir=$PWD -Scp $(clj -Spath) -m clojure-lsp.main"],

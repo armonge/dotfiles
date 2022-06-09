@@ -330,6 +330,7 @@ fi
 
 # If on WSL we need to activate the GPG and SSH agents
 if grep -q microsoft /proc/version; then
+	eval $(keychain --quick --quiet --gpg2 --nogui --ignore-missing --eval --agents ssh,gpg id_rsa)
 	export GPG_TTY=$(tty)
-	eval "$(ssh-agent)"
+
 fi

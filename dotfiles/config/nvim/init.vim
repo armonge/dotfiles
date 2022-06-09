@@ -31,104 +31,7 @@ if dein#load_state('~/.dein.cache')
   " Required:
   call dein#add('~/.dein.cache/repos/github.com/Shougo/dein.vim')
 
-  " Add or remove your plugins here:
-  call dein#add('editorconfig/editorconfig-vim')
-
-  " statusline
-  call dein#add('liuchengxu/eleline.vim')
-  
-  call dein#add('lambdalisue/suda.vim')
-  " call dein#add('mhinz/vim-startify')
-
-  " call dein#add('fatih/vim-go')
-  call dein#add('wakatime/vim-wakatime')
-
-  " Colors
-  call dein#add('arcticicestudio/nord-vim')
-
-  " encrypts files ending with .gpg
-  call dein#add('jamessan/vim-gnupg')
-
-  " File explorer
-  " <C-e>
-  call dein#add('kevinhwang91/rnvimr')
-
-  " Icons in file explorer, requires https://github.com/ryanoasis/nerd-fonts
-  " call dein#add('ryanoasis/vim-devicons')
-
-  " Show indent guides
-  " <Leader>ig
-  " call dein#add('nathanaelkane/vim-indent-guides')
-  " call dein#add('Yggdroot/indentLine')
-  " call dein#add('lukas-reineke/indent-blankline.nvim')
-  " call dein#add('lukas-reineke/indent-blankline.nvim')
-
-  " Search in your project <C-s>
-  call dein#add('mileszs/ack.vim')
-
-  " Add licenses to the top of your file
-  " :Mit :Apache :etc
-  call dein#add('antoyo/vim-licenses')
-
-  " watch images in vim
-  call dein#add('cxwx/image.vim', { 'build': 'pip install Pillow' })
-
-  " Show import cost of javascript requires
-  " call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
-
-  " Search files
-  " <C-p>
-  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-
-  " lua format
-  call dein#add('andrejlevkovitch/vim-lua-format')
-
-  " Comments
-  " <Leader>c<Space>
-  call dein#add('scrooloose/nerdcommenter')
-
-  " Support for syntax hightlighting of many languages
-  " call dein#add('tpope/vim-sleuth')
-  call dein#add('sheerun/vim-polyglot')
-  " call dein#add('mboughaba/i3config.vim')
-  " call dein#add('dart-lang/dart-vim-plugin')
-
-  " completions
-  call dein#add('neoclide/coc.nvim', {'merge':0, 'rev': 'release'})
-  call dein#add("honza/vim-snippets")
-
-  " Tagbar
-  call dein#add('liuchengxu/vista.vim')
-
-  " <C-y),
-  call dein#add("mattn/emmet-vim")
-
-  " General Programming {
-  call dein#add('vim-scripts/sessionman.vim')
-  call dein#add('jiangmiao/auto-pairs')
-  call dein#add('tpope/vim-repeat')
-  call dein#add('tpope/vim-surround')
-  call dein#add('embear/vim-uncrustify')
-
-  " Clojure
-  call dein#add('Olical/conjure')
-  call dein#add('luochen1990/rainbow')
-  call dein#add('tpope/vim-dispatch')
-  call dein#add('clojure-vim/vim-jack-in')
-  call dein#add('radenling/vim-dispatch-neovim')
-  call dein#add('eraserhd/parinfer-rust', { 'build': 'cargo build --release' })
-
-  " Writing prose in vim
-  " <Leader>V
-  " call dein#add('mikewest/vimroom')
-
-  " Shows git commit messages for some line
-  call dein#add('rhysd/git-messenger.vim', {
-        \   'lazy' : 1,
-        \   'on_cmd' : 'GitMessenger',
-        \   'on_map' : '<Plug>(git-messenger',
-        \ })
+  call dein#load_toml('~/.config/nvim/dein.toml')
 
   " Required:
   call dein#end()
@@ -467,6 +370,7 @@ let g:sql_type_default = "sql.vim"
 " }
 
 "rnvimr {
+let g:rnvimr_ranger_cmd=[$HOME.'/.pyenv/versions/nvim3/bin/ranger'] 
 tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> <C-e> :RnvimrToggle<CR>
 tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
@@ -549,7 +453,6 @@ autocmd BufWritePre *.vala | call Uncrustify()
 "
 " let g:node_client_debug = 1
 nmap gx :silent execute "!xdg-open " . shellescape("<cWORD>")<CR>
-let g:rnvimr_ranger_cmd=$HOME.'/.pyenv/versions/nvim3/bin/ranger' 
 
 " Lua
 autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
