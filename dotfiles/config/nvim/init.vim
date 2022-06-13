@@ -29,9 +29,14 @@ if dein#load_state('~/.dein.cache')
 
   " Let dein manage dein
   " Required:
-  call dein#add('~/.dein.cache/repos/github.com/Shougo/dein.vim')
+  call dein#add($HOME.'/.dein.cache/repos/github.com/Shougo/dein.vim')
 
-  call dein#load_toml('~/.config/nvim/dein.toml')
+  " Search files
+  " <C-p>
+  call dein#add('junegunn/fzf', { 'build': 'install --all', 'merged': 0 })
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+
+  call dein#load_toml($HOME.'/.config/nvim/dein.toml')
 
   " Required:
   call dein#end()
