@@ -7,7 +7,7 @@
   signingkey = B6A45A727378564E
 [core]
   quotepath = false
-  editor = nvim
+  editor = giteditor.sh
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   pager = delta.sh
 [interactive]

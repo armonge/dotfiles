@@ -328,6 +328,10 @@ if [ -f $HOME/perl5 ]; then
 	export PERL_MM_OPT
 fi
 
+# https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119
+# Intel Graphics - Best practices and settings for hardware acceleration?
+export LIBVA_DRIVER_NAME=iHD
+
 # If on WSL we need to activate the GPG and SSH agents
 if grep -q microsoft /proc/version; then
 	export GPG_TTY=$(tty)
