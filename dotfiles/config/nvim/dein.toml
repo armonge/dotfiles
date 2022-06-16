@@ -1,0 +1,150 @@
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+
+# statusline
+[[plugins]]
+repo = 'liuchengxu/eleline.vim'
+
+  
+[[plugins]]
+repo = 'lambdalisue/suda.vim'
+
+# call dein#add('mhinz/vim-startify')
+
+# call dein#add('fatih/vim-go')
+[[plugins]]
+repo = 'wakatime/vim-wakatime'
+
+
+# Colors
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+
+
+# encrypts files ending with .gpg
+[[plugins]]
+repo = 'jamessan/vim-gnupg'
+
+
+# File explorer
+# <C-e>
+[[plugins]]
+repo = 'kevinhwang91/rnvimr'
+
+
+# Icons in file explorer, requires https://github.com/ryanoasis/nerd-fonts
+# call dein#add('ryanoasis/vim-devicons')
+
+# callShow indent guides
+# <Leader>ig
+# call dein#add('nathanaelkane/vim-indent-guides')
+# call dein#add('Yggdroot/indentLine')
+# call dein#add('lukas-reineke/indent-blankline.nvim')
+# call dein#add('lukas-reineke/indent-blankline.nvim')
+
+# Search in your project <C-s>
+[[plugins]]
+repo = 'mileszs/ack.vim'
+
+
+# Add licenses to the top of your file
+# :Mit :Apache :etc
+[[plugins]]
+repo = 'antoyo/vim-licenses'
+
+
+# watch images in vim
+[[plugins]]
+repo = 'cxwx/image.vim'
+build= 'pip install Pillow'
+
+# Show import cost of javascript requires
+# call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
+
+
+
+# lua format
+[[plugins]]
+repo = 'andrejlevkovitch/vim-lua-format'
+
+
+# Comments
+# <Leader>c<Space>
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+
+
+# Support for syntax hightlighting of many languages
+# call dein#add('tpope/vim-sleuth')
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
+
+# call dein#add('mboughaba/i3config.vim')
+# call dein#add('dart-lang/dart-vim-plugin')
+
+# completions
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merge=0
+rev= 'release'
+
+[[plugins]]
+repo = "honza/vim-snippets"
+
+# Tagbar
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
+
+
+# <C-y),
+[[plugins]]
+repo ="mattn/emmet-vim"
+
+# General Programming {
+[[plugins]]
+repo = 'vim-scripts/sessionman.vim'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'embear/vim-uncrustify'
+
+
+# Clojure
+[[plugins]]
+repo = 'Olical/conjure'
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+
+[[plugins]]
+repo = 'clojure-vim/vim-jack-in'
+
+[[plugins]]
+repo = 'radenling/vim-dispatch-neovim'
+
+[[plugins]]
+repo ='eraserhd/parinfer-rust'
+build = 'cargo build#release'
+
+# Writing prose in vim
+# <Leader>V
+# call dein#add('mikewest/vimroom')
+
+# Shows git commit messages for some line
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+lazy = 1
+on_cmd = 'GitMessenger'
+on_map = '<Plug>(git-messenger'
