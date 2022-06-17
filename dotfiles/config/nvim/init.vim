@@ -74,7 +74,9 @@ let maplocalleader=","
 
 cmap w!! w suda://%
 
-" set clipboard=unnamedplus
+if !has('wsl')
+  set clipboard=unnamedplus
+endif
 
 
 
