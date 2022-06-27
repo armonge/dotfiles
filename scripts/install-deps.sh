@@ -5,7 +5,9 @@ if command apt &>/dev/null; then
 	sudo apt-get install make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-		neovim
+		neovim \
+		exa \
+		dbus-glib-devel
 fi
 
 if command dnf &>/dev/null; then
@@ -13,7 +15,8 @@ if command dnf &>/dev/null; then
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
 		neovim \
-		bat
+		bat \
+		exa
 fi
 
 curl https://pyenv.run | bash
@@ -23,7 +26,13 @@ eval "$(pyenv init -)"
 
 pyenv install --skip-existing 2.7.18
 pyenv install --skip-existing 3.10.4
-pyenv install --skip-existing 2.7.18
+
+pyenv shell 3.10.4
+python -m pip install --upgrade pip wheel dbus-python
+
+pyenv shell 2.7.18
+python -m pip install --upgrade pip wheel
+
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
 python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments
