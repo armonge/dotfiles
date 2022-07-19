@@ -235,7 +235,7 @@ set signcolumn=auto
 
 
 " coc.nvim {
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-prettier', 'coc-yaml', 'coc-html', 'coc-css', 'coc-eslint', 'coc-tsserver', 'coc-diagnostic', 'coc-pyright']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-prettier', 'coc-yaml', 'coc-html', 'coc-css', 'coc-eslint', 'coc-tsserver', 'coc-diagnostic', 'coc-pyright', 'coc-rust-analyzer']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.

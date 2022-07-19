@@ -7,7 +7,15 @@ if command apt &>/dev/null; then
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
 		neovim \
 		exa \
-		dbus-glib-devel
+		dbus-glib-devel \
+		libglib2.0-dev \
+		libcairo2-dev \
+		libpango1.0-dev \
+		libgdk-pixbuf-2.0-dev \
+		libgraphene-1.0-dev \
+		libgtk-4-dev \
+		libadwaita-1-dev \
+		duf
 fi
 
 if command dnf &>/dev/null; then

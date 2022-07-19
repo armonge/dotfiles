@@ -338,3 +338,4 @@ if grep -q microsoft /proc/version; then
 	export GPG_TTY=$(tty)
 
 fi
+. "$HOME/.cargo/env"
