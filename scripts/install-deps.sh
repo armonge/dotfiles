@@ -27,6 +27,8 @@ if command dnf &>/dev/null; then
 		exa
 fi
 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 curl https://pyenv.run | bash
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
