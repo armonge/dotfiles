@@ -1,13 +1,13 @@
 #!/bin/bash
 set -euo pipefail
-if command apt &>/dev/null; then
-	sudo apt-get update
-	sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+if command -v apt &>/dev/null; then
+	sudo apt-get update --quiet --quiet
+	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
 		neovim \
 		exa \
-		dbus-glib-devel \
+		libdbus-glib-1-dev \
 		libglib2.0-dev \
 		libcairo2-dev \
 		libpango1.0-dev \
@@ -15,7 +15,10 @@ if command apt &>/dev/null; then
 		libgraphene-1.0-dev \
 		libgtk-4-dev \
 		libadwaita-1-dev \
-		duf
+		libssl-dev \
+		duf \
+		bat \
+		silversearcher-ag
 fi
 
 if command dnf &>/dev/null; then
@@ -27,9 +30,14 @@ if command dnf &>/dev/null; then
 		exa
 fi
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+if [ ! -d "$HOME/.cargo" ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 
-curl https://pyenv.run | bash
+if [ ! -d "$HOME/.pyenv" ]; then
+	curl https://pyenv.run | bash
+fi
+
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -41,11 +49,11 @@ pyenv shell 3.10.4
 python -m pip install --upgrade pip wheel dbus-python devtools[pygments]
 
 pyenv shell 2.7.18
-python -m pip install --upgrade pip wheel devtools[pygments]
+python -m pip install --upgrade pip wheel
 
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
-python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments devtools[pygments]
+python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments
 
 pyenv install --skip-existing 3.10.4
 pyenv virtualenv --force 3.10.4 nvim3
@@ -53,7 +61,11 @@ pyenv shell nvim3
 python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments]
 
 # Install and activate NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+if [ ! -d "$HOME/.nvm/versions" ]; then
+	unset NVM_DIR
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

@@ -13,8 +13,8 @@ repo = 'lambdalisue/suda.vim'
 # call dein#add('mhinz/vim-startify')
 
 # call dein#add('fatih/vim-go')
-[[plugins]]
-repo = 'wakatime/vim-wakatime'
+# [[plugins]]
+# repo = 'wakatime/vim-wakatime'
 
 
 # Colors
