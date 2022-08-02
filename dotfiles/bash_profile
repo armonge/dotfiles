@@ -11,3 +11,5 @@ fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
 . "$HOME/.cargo/env"
+
+source /home/andresmonge/.config/broot/launcher/bash/br

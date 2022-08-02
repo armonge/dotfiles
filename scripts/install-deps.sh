@@ -18,7 +18,8 @@ if command -v apt &>/dev/null; then
 		libssl-dev \
 		duf \
 		bat \
-		silversearcher-ag
+		silversearcher-ag \
+		fzf
 fi
 
 if command dnf &>/dev/null; then
@@ -33,6 +34,8 @@ fi
 if [ ! -d "$HOME/.cargo" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
+
+cargo install git-delta
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash

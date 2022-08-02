@@ -207,6 +207,10 @@ fi
 if [ -f /usr/share/fzf/key-bindings.bash ]; then
 	source /usr/share/fzf/key-bindings.bash
 	source /usr/share/fzf/completion.bash
+elif [ -f /usr/share/bash-completion/completions/fzf ]; then
+	source /usr/share/bash-completion/completions/fzf
+	source /usr/share/doc/fzf/examples/key-bindings.bash
+
 elif [ -f ~/.fzf.bash ] && [ -d $HOME/.dein.cache/repos/github.com/junegunn/fzf/bin ]; then
 	source ~/.fzf.bash
 fi
@@ -339,3 +343,5 @@ if grep -q microsoft /proc/version; then
 
 fi
 . "$HOME/.cargo/env"
+
+source /home/andresmonge/.config/broot/launcher/bash/br
