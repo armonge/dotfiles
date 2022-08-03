@@ -19,7 +19,11 @@ if command -v apt &>/dev/null; then
 		duf \
 		bat \
 		silversearcher-ag \
-		fzf
+		fzf \
+		exuberant-ctags \
+		net-tools \
+		aria2 \
+		direnv
 fi
 
 if command dnf &>/dev/null; then
@@ -74,4 +78,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
-npm install --global --upgrade npm neovim bash-language-server
+npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs

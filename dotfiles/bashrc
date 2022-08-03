@@ -311,6 +311,10 @@ if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
 	source $HOME/.config/broot/launcher/bash/br
 fi
 
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 if [ -f "$HOME/.cargo/env" ]; then
 	source "$HOME/.cargo/env"
 fi
@@ -342,6 +346,3 @@ if grep -q microsoft /proc/version; then
 	export GPG_TTY=$(tty)
 
 fi
-. "$HOME/.cargo/env"
-
-source /home/andresmonge/.config/broot/launcher/bash/br
