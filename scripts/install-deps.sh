@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+set -x
 if command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
@@ -23,7 +24,10 @@ if command -v apt &>/dev/null; then
 		exuberant-ctags \
 		net-tools \
 		aria2 \
-		direnv
+		direnv \
+		prettyping \
+		traceroute \
+		ldnsutils
 fi
 
 if command dnf &>/dev/null; then
@@ -68,12 +72,12 @@ pyenv shell nvim3
 python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments]
 
 # Install and activate NVM
-
-if [ ! -d "$HOME/.nvm/versions" ]; then
+if [ ! -d "$HOME/.config/nvm" ]; then
 	unset NVM_DIR
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 fi
-export NVM_DIR="$HOME/.nvm"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 

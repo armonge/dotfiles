@@ -111,14 +111,6 @@ dotfiles:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: absolute
-  f_default:
-    src: nvm/alias/default
-    dst: ~/.nvm/alias/default
-    link: absolute
-  f_*:
-    src: nvm/alias/lts/*
-    dst: ~/.nvm/alias/lts/*
-    link: absolute
   f_shfmt:
     src: local/bin/shfmt
     dst: ~/.local/bin/shfmt

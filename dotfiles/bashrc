@@ -109,8 +109,9 @@ export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
 
 # NVM
-if [ -d $HOME/.nvm ]; then
-	export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -d "$NVM_DIR" ]; then
+	export NVM_DIR="$HOME/.config/nvm"
 	export NVM_SYMLINK_CURRENT=true
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
@@ -176,6 +177,11 @@ if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv init -)"
 	eval "$(pyenv init --path)"
 	eval "$(pyenv virtualenv-init -)"
+
+	if pyenv which inv &>/dev/null; then
+		source <(inv --print-completion-script bash)
+	fi
+
 fi
 
 # AWS
@@ -309,10 +315,6 @@ fi
 
 if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
 	source $HOME/.config/broot/launcher/bash/br
-fi
-
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then

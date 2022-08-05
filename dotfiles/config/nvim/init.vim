@@ -13,8 +13,8 @@ if filereadable($HOME.'/.pyenv/versions/nvim3/bin/python')
     let g:python3_host_prog=$HOME.'/.pyenv/versions/nvim3/bin/python'
 endif
 
-let g:coc_node_path=$HOME . '/.nvm/versions/node/v16.16.0/bin/node'
-let g:node_host_prog = $HOME . '/.nvm/versions/node/v16.16.0/bin/neovim-node-host'
+let g:coc_node_path=$HOME . '/.config/nvm/versions/node/v16.16.0/bin/node'
+let g:node_host_prog = $HOME . '/config/.nvm/versions/node/v16.16.0/bin/neovim-node-host'
 
 
 "dein Scripts-----------------------------
