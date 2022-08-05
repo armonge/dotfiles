@@ -2,7 +2,7 @@
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   git = !exec git
 [user]
-  email = andres.reyes@vui.agency
+  email = andres.monge@stylight.com
   name = Andres Reyes Monge
   signingkey = B6A45A727378564E
 [core]
