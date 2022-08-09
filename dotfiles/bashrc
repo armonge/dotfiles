@@ -50,7 +50,7 @@ shopt -s checkwinsize
 
 # Language
 # I want some german, but my terminal needs english :P
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # bat cat replacement
 export BAT_THEME="Nord"
@@ -338,3 +338,4 @@ if grep -q microsoft /proc/version; then
 	export GPG_TTY=$(tty)
 
 fi
+. "$HOME/.cargo/env"
