@@ -162,7 +162,7 @@ if [ -d "$NVM_DIR" ]; then
 	export PATH="$PATH:$NVM_DIR/current/bin"
 fi
 
-# python
+# python {
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
@@ -183,6 +183,20 @@ if command -v pyenv 1>/dev/null 2>&1; then
 	fi
 
 fi
+
+# https://vi.stackexchange.com/a/34996
+function nvimvenv() {
+	if [[ -e $VIRTUAL_ENV && -f "$VIRTUAL_ENV/bin/activate" ]]; then
+		source "$VIRTUAL_ENV/bin/activate"
+		command nvim $@
+		deactivate
+	else
+		command nvim $@
+	fi
+}
+
+alias nvim=nvimvenv
+# }
 
 # AWS
 if command -v aws &>/dev/null; then
@@ -256,7 +270,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
 
-export NODE_OPTIONS="--max_old_space_size=16384 --experimental-repl-await"
+export NODE_OPTIONS="--max_old_space_size=16384 "
 export NODE_NO_WARNINGS=1
 # NODE_ICU_DATA="$(node-full-icu-path)"
 # export NODE_ICU_DATA
