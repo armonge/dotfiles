@@ -384,7 +384,7 @@ let g:sql_type_default = "sql.vim"
 " }
 
 "rnvimr {
-let g:rnvimr_ranger_cmd=[$HOME.'/.pyenv/versions/nvim3/bin/ranger'] 
+let g:rnvimr_ranger_cmd=['env','PYENV_VERSION=nvim3','pyenv', 'exec', 'ranger']
 tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> <C-e> :RnvimrToggle<CR>
 tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
