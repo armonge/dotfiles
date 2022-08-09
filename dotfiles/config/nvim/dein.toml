@@ -54,11 +54,6 @@ repo = 'mileszs/ack.vim'
 repo = 'antoyo/vim-licenses'
 
 
-# watch images in vim
-[[plugins]]
-repo = 'cxwx/image.vim'
-build= 'pip install Pillow'
-
 # Show import cost of javascript requires
 # call dein#add('yardnsm/vim-import-cost', { 'build': 'npm install' })
 

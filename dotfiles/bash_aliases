@@ -49,3 +49,13 @@ alias istoolbx='[ -f "/run/.toolboxenv" ] && grep -oP "(?<=name=\")[^\";]+" /run
 alias cdk1="npx aws-cdk@1.x"
 alias cdk="npx aws-cdk@2.x"
 alias aws_cf_stacks='aws cloudformation list-stacks --output table --query "StackSummaries[?StackStatus!=\`DELETE_COMPLETE\`].StackName"'
+
+function man-http() {
+	code="$1"
+	if [[ -z $code ]]; then
+		echo "Usage: man-http <status code>"
+		exit 0
+	fi
+
+	xdg-open "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/$code"
+}

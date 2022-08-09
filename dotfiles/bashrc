@@ -109,8 +109,9 @@ export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
 
 # NVM
-if [ -d $HOME/.nvm ]; then
-	export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -d "$NVM_DIR" ]; then
+	export NVM_DIR="$HOME/.config/nvm"
 	export NVM_SYMLINK_CURRENT=true
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
@@ -161,7 +162,7 @@ if [ -d $HOME/.nvm ]; then
 	export PATH="$PATH:$NVM_DIR/current/bin"
 fi
 
-# python
+# python {
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
 export PIPENV_VENV_IN_PROJECT=1
@@ -176,7 +177,26 @@ if command -v pyenv 1>/dev/null 2>&1; then
 	eval "$(pyenv init -)"
 	eval "$(pyenv init --path)"
 	eval "$(pyenv virtualenv-init -)"
+
+	if pyenv which inv &>/dev/null; then
+		source <(inv --print-completion-script bash)
+	fi
+
 fi
+
+# https://vi.stackexchange.com/a/34996
+function nvimvenv() {
+	if [[ -e $VIRTUAL_ENV && -f "$VIRTUAL_ENV/bin/activate" ]]; then
+		source "$VIRTUAL_ENV/bin/activate"
+		command nvim $@
+		deactivate
+	else
+		command nvim $@
+	fi
+}
+
+alias nvim=nvimvenv
+# }
 
 # AWS
 if command -v aws &>/dev/null; then
@@ -207,6 +227,10 @@ fi
 if [ -f /usr/share/fzf/key-bindings.bash ]; then
 	source /usr/share/fzf/key-bindings.bash
 	source /usr/share/fzf/completion.bash
+elif [ -f /usr/share/bash-completion/completions/fzf ]; then
+	source /usr/share/bash-completion/completions/fzf
+	source /usr/share/doc/fzf/examples/key-bindings.bash
+
 elif [ -f ~/.fzf.bash ] && [ -d $HOME/.dein.cache/repos/github.com/junegunn/fzf/bin ]; then
 	source ~/.fzf.bash
 fi
@@ -246,7 +270,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 [ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
 
-export NODE_OPTIONS="--max_old_space_size=16384 --experimental-repl-await"
+export NODE_OPTIONS="--max_old_space_size=16384 "
 export NODE_NO_WARNINGS=1
 # NODE_ICU_DATA="$(node-full-icu-path)"
 # export NODE_ICU_DATA
