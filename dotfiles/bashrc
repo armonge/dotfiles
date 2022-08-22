@@ -255,12 +255,6 @@ fi
 export PATH="$HOME/.platformsh/bin:$PATH"
 if [ -f "$HOME/.platformsh/shell-config.rc" ]; then . "$HOME/.platformsh/shell-config.rc"; fi # END SNIPPET
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]; then . "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/bin/google-cloud-sdk/completion.bash.inc" ]; then . "$HOME/bin/google-cloud-sdk/completion.bash.inc"; fi
-
 # Kubernetes
 # source <(kubectl completion bash)
 
@@ -306,8 +300,8 @@ if command -v direnv &>/dev/null; then
 fi
 
 # Add .NET Core SDK tools
-export PATH="$PATH:$HOME/.dotnet/tools"
-export FrameworkPathOverride=/etc/mono/4.5
+# export PATH="$PATH:$HOME/.dotnet/tools"
+# export FrameworkPathOverride=/etc/mono/4.5
 
 # https://cloud.google.com/sdk/gcloud/reference/topic/startup
 export CLOUDSDK_PYTHON=python3
@@ -362,3 +356,9 @@ if grep -q microsoft /proc/version; then
 	export GPG_TTY=$(tty)
 
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]; then . "$HOME/bin/google-cloud-sdk/path.bash.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/bin/google-cloud-sdk/completion.bash.inc" ]; then . "$HOME/bin/google-cloud-sdk/completion.bash.inc"; fi
