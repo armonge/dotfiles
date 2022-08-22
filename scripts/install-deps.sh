@@ -27,7 +27,8 @@ if command -v apt &>/dev/null; then
 		direnv \
 		prettyping \
 		traceroute \
-		ldnsutils
+		ldnsutils \
+		jq
 fi
 
 if command dnf &>/dev/null; then
