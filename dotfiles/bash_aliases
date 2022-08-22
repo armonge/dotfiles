@@ -50,6 +50,8 @@ alias cdk1="npx aws-cdk@1.x"
 alias cdk="npx aws-cdk@2.x"
 alias aws_cf_stacks='aws cloudformation list-stacks --output table --query "StackSummaries[?StackStatus!=\`DELETE_COMPLETE\`].StackName"'
 
+alias minikubectl="minikube kubectl --"
+
 function man-http() {
 	code="$1"
 	if [[ -z $code ]]; then
