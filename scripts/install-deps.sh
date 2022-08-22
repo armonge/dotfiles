@@ -58,19 +58,19 @@ pyenv install --skip-existing 2.7.18
 pyenv install --skip-existing 3.10.4
 
 pyenv shell 3.10.4
-python -m pip install --upgrade pip wheel dbus-python devtools[pygments]
+python -m pip install --upgrade pip wheel dbus-python devtools[pygments] build
 
 pyenv shell 2.7.18
-python -m pip install --upgrade pip wheel
+python -m pip install --upgrade pip wheel build
 
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
-python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments
+python -m pip install --upgrade pip wheel pynvim ranger-fm pillow pygments nord-pygments build
 
 pyenv install --skip-existing 3.10.4
 pyenv virtualenv --force 3.10.4 nvim3
 pyenv shell nvim3
-python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments]
+python -m pip install --upgrade pip wheel pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
