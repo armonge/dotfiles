@@ -1,1 +1,3 @@
-Control-e: "ranger\n"
+Control-e: "env PYENV_VERSION=nvim3 pyenv exec ranger\n"
+
+
