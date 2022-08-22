@@ -255,12 +255,6 @@ fi
 export PATH="$HOME/.platformsh/bin:$PATH"
 if [ -f "$HOME/.platformsh/shell-config.rc" ]; then . "$HOME/.platformsh/shell-config.rc"; fi # END SNIPPET
 
-<<<<<<< HEAD
-# Kubernetes
-# source <(kubectl completion bash)
-
-=======
->>>>>>> 7b9661c0438a95038ced811550623ebbe9661269
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH="$PATH:$HOME/.rvm/bin"
