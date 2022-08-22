@@ -87,10 +87,6 @@ rev= 'release'
 [[plugins]]
 repo = "honza/vim-snippets"
 
-# Tagbar
-[[plugins]]
-repo = 'liuchengxu/vista.vim'
-
 
 # <C-y),
 [[plugins]]

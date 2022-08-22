@@ -26,6 +26,20 @@ let g:dein#install_process_timeout = 240
 let g:dein#enable_notification = 1
 let g:dein#auto_recache = 1
 
+let g:coc_global_extensions = [
+\ 'coc-ultisnips',
+\ 'coc-json',
+\ 'coc-tsserver',
+\ 'coc-html',
+\ 'coc-css',
+\ 'coc-yaml',
+\ 'coc-highlight',
+\ 'coc-lists',
+\ 'coc-rust-analyzer',
+\ 'coc-pyright',
+\ 'coc-pydocstring'
+\ ]
+
 " Required:
 if dein#load_state('~/.dein.cache')
   call dein#begin('~/.dein.cache')
@@ -377,6 +391,9 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+nnoremap <silent><nowait> <space>l  :<C-u>CocList<CR>
+nnoremap <silent><nowait> <space>b  :<C-u>CocList buffers<CR>
+
 " } coc.vim
 
 " sql {
@@ -396,10 +413,7 @@ let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --ma
 colorscheme nord
 " }
 let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
-let g:vista_fzf_preview = ['right:60%']
 
-nmap <C-]> :Vista!!<CR>
-nnoremap <C-p> :Files<CR>
 " }
 
 " ack.vim {
@@ -412,7 +426,7 @@ let g:ack_autoclose = 1
 nnoremap <C-s> :Ack! 
 " }
 
-" licenses
+" license
 let g:licenses_authors_name = 'Andrés Reyes Monge <armonge@gmail.com>'
 let g:licenses_copyright_holders_name = 'Andrés Reyes Monge <armonge@gmail.com>'
 
@@ -443,28 +457,6 @@ let g:eleline_powerline_fonts = 1
 autocmd User CocGitStatusChange call s:update_git_status()
 " }
 
-let g:uncrustify_language_mapping = {
-      \   "c"      : "c",
-      \   "objc"   : "oc",
-      \   "objcpp" : "oc+",
-      \   "cs"     : "cs",
-      \   "java"   : "java",
-      \   "vala"   : "vala"
-      \ }
-
-autocmd BufWritePre *.vala | call Uncrustify()
-
-
-" Import cost{
-" augroup import_cost_auto_run
-  " autocmd!
-  " autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
-  " autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
-  " autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
-" augroup END
-" }
-"
-"
 " let g:node_client_debug = 1
 nmap gx :silent execute "!xdg-open " . shellescape("<cWORD>")<CR>
 
