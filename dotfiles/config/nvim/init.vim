@@ -413,7 +413,7 @@ let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --ma
 colorscheme nord
 " }
 let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
-
+nnoremap <C-p> :Files<CR>
 " }
 
 " ack.vim {
