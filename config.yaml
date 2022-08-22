@@ -150,11 +150,6 @@ dotfiles:
     src: config/nvim/dein.toml
     dst: ~/.config/nvim/dein.toml
     link: absolute
-  f_giteditor.sh:
-    src: local/bin/giteditor.sh
-    dst: ~/.local/bin/giteditor.sh
-    link: absolute
-    chmod: "775"
   f_mirror.sh:
     src: local/bin/mirror.sh
     dst: ~/.local/bin/mirror.sh
@@ -197,6 +192,5 @@ profiles:
       - f_scope.sh
       - f_inputrc
       - f_dein.toml
-      - f_giteditor.sh
       - f_mirror.sh
       - f_sitecustomize.py
