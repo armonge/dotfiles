@@ -1,7 +1,7 @@
 {
   "html.enable": true,
   "html.format.enable": true,
-  "html.filetypes": ["html", "handlebars", "htmldjango"],
+  "html.filetypes": ["html"],
 
   "prettier.formatterPriority": 1000,
   "snippets.extends": {
@@ -38,114 +38,23 @@
     "dockerfile",
     "rust",
     "sql",
-    "sqlite3",
     "clojure"
   ],
   "pydocstring.formatter": "google",
 
-  "yaml.schemas": {
-    "https://raw.githubusercontent.com/armonge/serverless-yml-schema/master/serverless-schema.json": "/serverless.yml"
-  },
-  "yaml.customTags": [
-    "!FindInMap sequence",
-    "!Ref scalar",
-    "!GetAtt scalar",
-    "!GetAtt sequence",
-    "!If sequence",
-    "!Equals sequence",
-    "!Select sequence",
-    "!Join sequence",
-    "!Split sequence",
-    "!Sub sequence"
-  ],
 
   "languageserver": {
-    "lua": {
-      "cwd": "~/lua",
-      "command": "~/lua/bin/lua-language-server",
-      "filetypes": ["lua"],
-      "rootPatterns": [".git/"],
-      "settings": {
-        "Lua": {
-          "workspace": {},
-          "runtime": {
-            "version": "Lua 5.1"
-          },
-          "diagnostics": {
-            "enable": true,
-            "globals": [
-              "hs",
-              "vim",
-              "it",
-              "describe",
-              "before_each",
-              "after_each"
-            ],
-            "disable": ["lowercase-global"]
-          },
-          "completion": {
-            "keywordSnippet": "Disable"
-          }
-        }
-      }
-    },
-    "clojure-lsp": {
-      // "command": "bash",
-      // "args": ["-c", "cd /Users/case/dev/lsp && clojure -J-Duser.dir=$PWD -Scp $(clj -Spath) -m clojure-lsp.main"],
-      // "args": ["-c", "export LEIN_JVM_OPTS=\"-Duser.dir=$cwd\" && cd /Users/case/dev/lsp/ && lein run"],
-      //"command": "bash",
-      //"args": ["-c", "cd /Users/case/dev/lsp/cli && clj -M:run"],
-      //"command": "clojure-lsp",
-      "command": "clojure-lsp",
-      "filetypes": ["clojure"],
-      "rootPatterns": ["project.clj", "deps.edn"],
-      "additionalSchemes": ["jar", "zipfile"],
-      "trace.server": "verbose",
-      "diagnostic.showUnused": true,
-      "diagnostic.showDeprecated": true,
-      "diagnostic.highlightPriority": 1000000,
-      "initializationOptions": {
-        "log-path": "/tmp/lsp.out",
-        "ignore-classpath-directories": true
-      }
-    },
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls-root", "compile_commands.json"],
-      "initializationOptions": {
-        "cache": {
-          "directory": ".ccls-cache"
-        },
-        "client": {
-          "snippetSupport": true
-        }
-      }
-    },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
-    },
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
-    },
-    // "kotlin": {
-    // "command": "/home/armonge/bin/kotlin-language-server/server/build/install/server/bin/kotlin-language-server",
-    // "filetypes": ["kotlin"]
-    // },
-    "vala": {
-      "command": "vala-language-server",
-      "filetypes": ["vala", "genie"]
     }
   },
 
   "python.formatting.provider": "black",
   "python.linting.lintOnSave": true,
-  "python.sortImports.path": "/home/armonge/.pyenv/versions/3.8.5/envs/neovim/bin/isort",
+  "python.sortImports.path": "/home/andresmonge/.pyenv/shims/isort",
 
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
@@ -168,70 +77,35 @@
   "diagnostic.hintSign": "➤",
   "diagnostic-languageserver.enable": true,
   "diagnostic-languageserver.filetypes": {
-    "sh": "shellcheck",
-    "dockerfile": "hadolint"
+    "sh": "shellcheck"
   },
   "diagnostic-languageserver.linters": {
     "shellcheck": {
       "args": ["-x", "-"]
-    },
-    "hadolint": {
-      "command": "hadolint",
-      "sourceName": "hadolint",
-      "args": ["-f", "json", "-"],
-      "rootPatterns": [".hadolint.yaml"],
-      "parseJson": {
-        "line": "line",
-        "column": "column",
-        "security": "level",
-        "message": "${message} [${code}]"
-      },
-      "securities": {
-        "error": "error",
-        "warning": "warning",
-        "info": "info",
-        "style": "hint"
-      }
     }
   },
   "diagnostic-languageserver.debug": true,
 
   "diagnostic-languageserver.formatFiletypes": {
-    "sh": "shfmt",
-    "sql": "sqlformat",
-    "sqlite3": "sqlformat",
-    "htmldjango": "js-beautify:htmldjango"
+    "sh": "shfmt"
   },
 
   "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.formatters": {
-    "sqlformat": {
-      "command": "~/.pyenv/shims/sqlformat",
-      "args": ["--reindent"]
-    },
     "shfmt": {
       "command": "shfmt",
       "args": ["-s"]
-    },
-    "js-beautify:htmldjango": {
-      "command": "js-beautify",
-      "args": [
-        "--editorconfig",
-        "--templating=django",
-        "--type=html",
-        "--good-stuff"
-      ]
     }
   },
 
   "tsserver.log": "verbose",
   "tsserver.implicitProjectConfig.checkJs": true,
 
-  // "xml.java.home": "/usr/lib/jvm/default-java/",
-  "json.schemas": [
-    {
-      "fileMatch": ["/models/en-US.json"],
-      "url": "schema.json"
-    }
-  ]
+  "sql.formatOptions": {
+    "keywordCase": "upper",
+    "tabWidth": "4",
+    "indentStyle": "tabularLeft",
+    "tabulateAlias": true,
+    "linesBetweenQueries": 2
+  }
 }
