@@ -13,7 +13,6 @@
   "eslint.autoFixOnSave": true,
 
   "coc.preferences.formatOnSaveFiletypes": [
-    "lua",
     "markdown",
     "dart",
     "graphql",
@@ -29,12 +28,10 @@
     "css",
     "scss",
     "html",
-    "htmldjango",
     "json",
     "jsonc",
     "sh",
     "go",
-    "vala",
     "dockerfile",
     "rust",
     "sql",
@@ -64,11 +61,6 @@
   "python.linting.prospectorEnabled": false,
   "python.linting.banditEnabled": false,
   "python.linting.pylamaEnabled": false,
-  "python.linting.flake8Args": [
-    "--ignore=E501, E203, W503, E123, E126, E128",
-    "max-line-length = 88",
-    "select = C,E,F,W,B,B950"
-  ],
 
   "diagnostic.virtualText": true,
   "diagnostic.errorSign": "✘",
