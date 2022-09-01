@@ -1,5 +1,7 @@
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  f = fetch --all --append --prune --prune-tags
+  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
 [user]
   email = andres.monge@stylight.com
