@@ -27,7 +27,8 @@ cd "${cur}" || { echo "Directory \"${cur}\" doesn't exist, aborting." && exit 1;
 git submodule update --init --recursive
 git submodule update --remote dotdrop
 # launch dotdrop
-PYTHONPATH=dotdrop python3 -m dotdrop.dotdrop -p armonge-laptop "${args[@]}"
+
+env PYENV_VERSION=3.10.4 PYTHONPATH=dotdrop pyenv exec python -m dotdrop.dotdrop -p armonge-laptop "${args[@]}"
 ret="$?"
 # pivot back
 cd "${opwd}" || { echo "Directory \"${opwd}\" doesn't exist, aborting." && exit 1; }
