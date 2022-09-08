@@ -151,10 +151,6 @@ dotfiles:
     dst: ~/.local/bin/mirror.sh
     link: absolute
     chmod: "775"
-  f_sitecustomize.py:
-    src: pyenv/versions/3.10.4/lib/python3.10/sitecustomize.py
-    dst: ~/.pyenv/versions/3.10.4/lib/python3.10/sitecustomize.py
-    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -188,4 +184,3 @@ profiles:
       - f_inputrc
       - f_dein.toml
       - f_mirror.sh
-      - f_sitecustomize.py
