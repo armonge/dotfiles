@@ -16,10 +16,6 @@ actions:
   pre:
     install_deps: ./scripts/install-deps.sh
 dotfiles:
-  f_asus_zenbook3_deluxe_auo_b140han03_8.icm:
-    dst: ~/.local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
-    link: absolute
-    src: local/share/icc/Asus_Zenbook3_Deluxe_AUO_B140HAN03_8.icm
   f_bash_aliases:
     dst: ~/.bash_aliases
     link: absolute
@@ -166,7 +162,6 @@ profiles:
       - f_init.vim
       - f_installer.sh
       - f_gitconfig
-      - f_asus_zenbook3_deluxe_auo_b140han03_8.icm
       - f_ctags
       - f_bash_profile
       - f_chromium-flags.conf
