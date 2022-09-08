@@ -8,7 +8,6 @@ if command -v apt &>/dev/null; then
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
 		neovim \
 		exa \
-		libdbus-glib-1-dev \
 		libglib2.0-dev \
 		libcairo2-dev \
 		libpango1.0-dev \
@@ -58,7 +57,7 @@ pyenv install --skip-existing 2.7.18
 pyenv install --skip-existing 3.10.4
 
 pyenv shell 3.10.4
-python -m pip install --upgrade pip wheel dbus-python devtools[pygments] build
+python -m pip install --upgrade pip wheel devtools[pygments] build
 
 pyenv shell 2.7.18
 python -m pip install --upgrade pip wheel build
