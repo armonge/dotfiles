@@ -83,3 +83,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
+
+if [ ! -f "$HOME/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+fi
