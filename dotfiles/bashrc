@@ -66,7 +66,6 @@ export EDITOR="vim -u NONE"
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then
 	source "$HOME/.gvm/scripts/gvm"
-	export GOPATH
 fi
 
 if command -v go &>/dev/null; then
