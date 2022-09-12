@@ -3,47 +3,54 @@
   f = fetch --all --append --prune --prune-tags
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
+  dft = difftool
+
 [user]
   email = andres.monge@stylight.com
   name = Andres Reyes Monge
   signingkey = B6A45A727378564E
+
 [core]
   quotepath = false
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  pager = delta.sh
-[interactive]
-  diffFilter = delta.sh
+
 [commit]
   gpgsign = true
 	verbose = 1
-	cleanup = scissors
-[instaweb]
-  local = true
-  httpd = httpd -f
-  port = 4321
-  browser = chromium
-  modulePath = /usr/lib/apache2/modules
-[diff "spaceman-diff"]
-  command = $HOME/bin/spaceman-diff
+
 [push]
   default = current
+
 [diff]
-	algorithm = patience
+  tool = difftastic
+
+[difftool]
+  prompt = false
+
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+  difftool = true
+
 [pull]
 	rebase = false
+
 [advice]
 	addEmptyPathspec = false
+
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+
 [init]
 	defaultBranch = main
+
 [credential "https://github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
