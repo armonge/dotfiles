@@ -161,6 +161,8 @@ if [ -d "$NVM_DIR" ]; then
 	export PATH="$PATH:$NVM_DIR/current/bin"
 fi
 
+export PROMPT_COMMAND='echo -en "\033]0;$(whoami)@$(hostname)|$(pwd|cut -d "/" -f 4-100)\a"'
+
 # python {
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
