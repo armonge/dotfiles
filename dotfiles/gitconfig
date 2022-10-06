@@ -1,6 +1,5 @@
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  f = fetch --all --append --prune --prune-tags
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
   dft = difftool
@@ -14,6 +13,7 @@
   quotepath = false
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = /home/andresmonge/.gitignore_global
 
 [commit]
   gpgsign = true
@@ -54,3 +54,9 @@
 
 [credential "https://gist.github.com"]
 	helper = !/usr/bin/gh auth git-credential
+[rebase]
+	autoStash = true
+[fetch]
+	prune = true
+	pruneTags = true
+	recurseSubmodules = true
