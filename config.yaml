@@ -155,6 +155,11 @@ dotfiles:
     src: gitignore_global
     dst: ~/.gitignore_global
     link: absolute
+  f_dsq:
+    src: local/bin/dsq
+    dst: ~/.local/bin/dsq
+    link: absolute
+    chmod: '755'
 profiles:
   armonge-laptop:
     dotfiles:
@@ -189,3 +194,4 @@ profiles:
     - f_dein.toml
     - f_mirror.sh
     - f_gitignore_global
+    - f_dsq
