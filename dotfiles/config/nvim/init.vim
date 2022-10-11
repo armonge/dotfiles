@@ -77,12 +77,8 @@ let gtkTheme = system('gsettings get org.gnome.desktop.interface gtk-theme')
 
 " Nord {
 set termguicolors 
-if stridx(gtkTheme, 'dark') >= 0
-  set background=dark
-else
-  set background=light
-endif
 colorscheme nord
+set background=dark
 " }
 
 

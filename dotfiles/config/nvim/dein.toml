@@ -1,4 +1,9 @@
 [[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_post_update = 'TSUpdate'
+
+
+[[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
 
@@ -19,7 +24,7 @@ repo = 'wakatime/vim-wakatime'
 
 # Colors
 [[plugins]]
-repo = 'arcticicestudio/nord-vim'
+repo = 'shaunsingh/nord.nvim'
 
 
 # encrypts files ending with .gpg
@@ -72,8 +77,8 @@ repo = 'scrooloose/nerdcommenter'
 
 # Support for syntax hightlighting of many languages
 # call dein#add('tpope/vim-sleuth')
-[[plugins]]
-repo = 'sheerun/vim-polyglot'
+# [[plugins]]
+# repo = 'sheerun/vim-polyglot'
 
 # call dein#add('mboughaba/i3config.vim')
 # call dein#add('dart-lang/dart-vim-plugin')
