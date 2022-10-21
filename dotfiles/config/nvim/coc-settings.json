@@ -39,7 +39,6 @@
   ],
   "pydocstring.formatter": "google",
 
-
   "languageserver": {
     "bash": {
       "command": "bash-language-server",

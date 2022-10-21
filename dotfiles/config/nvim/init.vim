@@ -470,3 +470,10 @@ autocmd BufWritePre   *.sql call CocAction('format')
 
   " Clojure
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" vim-doge {
+let g:doge_javascript_settings = {
+\  'destructuring_props': 1,
+\  'omit_redundant_param_types': 1,
+\}
+" }

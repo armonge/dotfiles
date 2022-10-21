@@ -144,3 +144,7 @@ repo = 'rhysd/git-messenger.vim'
 lazy = 1
 on_cmd = 'GitMessenger'
 on_map = '<Plug>(git-messenger'
+
+[[plugins]]
+repo = 'kkoomen/vim-doge'
+hook_post_update = ":call doge#install()"
