@@ -28,7 +28,8 @@ if command -v apt &>/dev/null; then
 		traceroute \
 		ldnsutils \
 		jq gojq \
-		miller
+		miller \
+		caca-utils libimage-exiftool-perl catdoc mediainfo calibre fontforge # scope.sh visualization
 fi
 
 if command dnf &>/dev/null; then
