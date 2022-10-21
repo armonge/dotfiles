@@ -98,5 +98,6 @@
     "indentStyle": "tabularLeft",
     "tabulateAlias": true,
     "linesBetweenQueries": 2
-  }
+  },
+  "python.formatting.blackPath": "black"
 }
