@@ -49,8 +49,8 @@ repo = 'kevinhwang91/rnvimr'
 # call dein#add('lukas-reineke/indent-blankline.nvim')
 
 # Search in your project <C-s>
-[[plugins]]
-repo = 'mileszs/ack.vim'
+# [[plugins]]
+# repo = 'mileszs/ack.vim'
 
 
 # Add licenses to the top of your file

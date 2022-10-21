@@ -393,6 +393,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent><nowait> <space>l  :<C-u>CocList<CR>
 nnoremap <silent><nowait> <space>b  :<C-u>CocList buffers<CR>
+nnoremap <silent><nowait> <C-s> :CocSearch 
 
 " } coc.vim
 
@@ -417,13 +418,14 @@ nnoremap <C-p> :Files<CR>
 " }
 
 " ack.vim {
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-let g:ack_autoclose = 1
+" if executable('ag')
+  " let g:ackprg = 'ag --vimgrep'
+" endif
+" let g:ack_autoclose = 1
 
 " Don't go directly to the file
-nnoremap <C-s> :Ack! 
+" nnoremap <C-s> :Ack! 
+" nnoremap <C-s> :CocSearch 
 " }
 
 " license
