@@ -235,6 +235,7 @@ elif [ -f /usr/share/bash-completion/completions/fzf ]; then
 elif [ -f ~/.fzf.bash ] && [ -d $HOME/.dein.cache/repos/github.com/junegunn/fzf/bin ]; then
 	source ~/.fzf.bash
 fi
+
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --depth=-1'
 
@@ -249,71 +250,24 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# added by travis gem
-# [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
-
-# BEGIN SNIPPET: Platform.sh CLI configuration
-export PATH="$HOME/.platformsh/bin:$PATH"
-if [ -f "$HOME/.platformsh/shell-config.rc" ]; then . "$HOME/.platformsh/shell-config.rc"; fi # END SNIPPET
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export PATH="$PATH:$HOME/.rvm/bin"
 
-[ -s "$HOME/.jabba/jabba.sh" ] && source "$HOME/.jabba/jabba.sh"
-
 export NODE_OPTIONS="--max_old_space_size=16384 "
 export NODE_NO_WARNINGS=1
-# NODE_ICU_DATA="$(node-full-icu-path)"
-# export NODE_ICU_DATA
 
 if command -v npm &>/dev/null; then
 	source <(npm completion)
-fi
-
-if [ -x "$(command -v composer)" ]; then
-	PATH="$(composer config -g home)/vendor/bin:$PATH"
-	export PATH
-fi
-
-# Include Drush bash customizations.
-if [ -f "$HOME/.drush/drush.bashrc" ]; then
-	source "$HOME/.drush/drush.bashrc"
-fi
-
-# Include Drush completion.
-
-if [ -f "$HOME/.drush/drush.complete.sh" ]; then
-	source "$HOME/.drush/drush.complete.sh"
-fi
-
-# Include Drush prompt customizations.
-
-if [ -f "$HOME/.drush/drush.prompt.sh" ]; then
-	source "$HOME/.drush/drush.prompt.sh"
 fi
 
 if command -v direnv &>/dev/null; then
 	eval "$(direnv hook bash)"
 fi
 
-# Add .NET Core SDK tools
-# export PATH="$PATH:$HOME/.dotnet/tools"
-# export FrameworkPathOverride=/etc/mono/4.5
-
 # https://cloud.google.com/sdk/gcloud/reference/topic/startup
 export CLOUDSDK_PYTHON=python3
 
-# Flutter and dart
-# FLUTTER_SDK_PATH=$(flutter sdk-path)
-# export PATH="$PATH:$HOME/.pub-cache/bin"
-# export PATH="$PATH:$FLUTTER_SDK_PATH/bin"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME.sdkman/bin/sdkman-init.sh" ]] && source "$HOME.sdkman/bin/sdkman-init.sh"
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # source "$HOME/bin/emsdk/emsdk_env.sh" 2>/dev/null
 if [ -f $HOME/.dir_colors ]; then
 	eval "$(dircolors ~/.dir_colors)"
@@ -347,13 +301,6 @@ fi
 # https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119
 # Intel Graphics - Best practices and settings for hardware acceleration?
 export LIBVA_DRIVER_NAME=iHD
-
-# If on WSL we need to activate the GPG and SSH agents
-if grep -q microsoft /proc/version; then
-	eval $(keychain --quick --quiet --gpg2 --nogui --ignore-missing --eval --agents ssh,gpg id_rsa)
-	export GPG_TTY=$(tty)
-
-fi
 
 if command -v helm &>/dev/null; then
 	source <(helm completion bash)
