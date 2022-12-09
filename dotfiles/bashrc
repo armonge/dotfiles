@@ -186,17 +186,17 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # https://vi.stackexchange.com/a/34996
-function nvimvenv() {
-	if [[ -e $VIRTUAL_ENV && -f "$VIRTUAL_ENV/bin/activate" ]]; then
-		source "$VIRTUAL_ENV/bin/activate"
-		command nvim $@
-		deactivate
-	else
-		command nvim $@
-	fi
-}
+# function nvimvenv() {
+# if [[ -e $VIRTUAL_ENV && -f "$VIRTUAL_ENV/bin/activate" ]]; then
+# source "$VIRTUAL_ENV/bin/activate"
+# command nvim $@
+# deactivate
+# else
+# command nvim $@
+# fi
+# }
 
-alias nvim=nvimvenv
+# alias nvim=nvimvenv
 # }
 
 # AWS

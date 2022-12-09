@@ -48,9 +48,6 @@ repo = 'kevinhwang91/rnvimr'
 # call dein#add('lukas-reineke/indent-blankline.nvim')
 # call dein#add('lukas-reineke/indent-blankline.nvim')
 
-# Search in your project <C-s>
-# [[plugins]]
-# repo = 'mileszs/ack.vim'
 
 
 # Add licenses to the top of your file
@@ -71,8 +68,11 @@ repo = 'andrejlevkovitch/vim-lua-format'
 
 # Comments
 # <Leader>c<Space>
+# [[plugins]]
+# repo = 'scrooloose/nerdcommenter'
+
 [[plugins]]
-repo = 'scrooloose/nerdcommenter'
+repo = 'numToStr/Comment.nvim'
 
 
 # Support for syntax hightlighting of many languages
@@ -115,24 +115,24 @@ repo = 'embear/vim-uncrustify'
 
 
 # Clojure
-[[plugins]]
-repo = 'Olical/conjure'
+# [[plugins]]
+# repo = 'Olical/conjure'
 
-[[plugins]]
-repo = 'luochen1990/rainbow'
+# [[plugins]]
+# repo = 'luochen1990/rainbow'
 
-[[plugins]]
-repo = 'tpope/vim-dispatch'
+# [[plugins]]
+# repo = 'tpope/vim-dispatch'
 
-[[plugins]]
-repo = 'clojure-vim/vim-jack-in'
+# [[plugins]]
+# repo = 'clojure-vim/vim-jack-in'
 
-[[plugins]]
-repo = 'radenling/vim-dispatch-neovim'
+# [[plugins]]
+# repo = 'radenling/vim-dispatch-neovim'
 
-[[plugins]]
-repo ='eraserhd/parinfer-rust'
-build = 'cargo build#release'
+# [[plugins]]
+# repo ='eraserhd/parinfer-rust'
+# build = 'cargo build#release'
 
 # Writing prose in vim
 # <Leader>V
@@ -146,5 +146,7 @@ on_cmd = 'GitMessenger'
 on_map = '<Plug>(git-messenger'
 
 [[plugins]]
-repo = 'kkoomen/vim-doge'
-hook_post_update = ":call doge#install()"
+repo = 'vim-scripts/LargeFile'
+
+[[plugins]]
+repo = 'lukas-reineke/indent-blankline.nvim'

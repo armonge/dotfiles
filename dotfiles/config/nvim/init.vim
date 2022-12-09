@@ -73,7 +73,7 @@ endif
 filetype plugin indent on
 syntax enable
 
-let gtkTheme = system('gsettings get org.gnome.desktop.interface gtk-theme')
+set clipboard+=unnamedplus
 
 " Nord {
 set termguicolors 
@@ -87,11 +87,6 @@ let mapleader=","
 let maplocalleader=","
 
 cmap w!! w suda://%
-
-if !has('wsl')
-  set clipboard=unnamedplus
-endif
-
 
 
 " Fold {
@@ -169,7 +164,7 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 
 
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+lua require('Comment').setup()
 
 "autocmd FileType go autocmd BufWritePre <buffer> Fmt
 autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -292,11 +287,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+  call CocActionAsync('doHover')
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
@@ -393,16 +384,11 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent><nowait> <space>l  :<C-u>CocList<CR>
 nnoremap <silent><nowait> <space>b  :<C-u>CocList buffers<CR>
-nnoremap <silent><nowait> <C-s> :CocSearch 
-
-" } coc.vim
-
-" sql {
-let g:sql_type_default = "sql.vim"
-" }
+nnoremap <silent><nowait> <C-s> :CocSearch<space>
+nnoremap <silent><nowait> <C-o> :CocOutline<CR> 
 
 "rnvimr {
-let g:rnvimr_ranger_cmd=['env','PYENV_VERSION=nvim3','pyenv', 'exec', 'ranger']
+let g:rnvimr_ranger_cmd=['env','PYENV_VERSION=nvim3','PYTHONDEVMODE=0', 'PYTHONWARNINGS=ignore', 'pyenv', 'exec', 'ranger']
 tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> <C-e> :RnvimrToggle<CR>
 tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
@@ -410,23 +396,12 @@ tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
 
 " FZF {
 let g:fzf_buffers_jump = 1
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
 colorscheme nord
-" }
-let $FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore "node_modules/*" --depth=-1'
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.dein.cache/repos/github.com/junegunn/fzf.vim/bin/preview.sh {}']}, <bang>0)
 nnoremap <C-p> :Files<CR>
 " }
 
-" ack.vim {
-" if executable('ag')
-  " let g:ackprg = 'ag --vimgrep'
-" endif
-" let g:ack_autoclose = 1
-
-" Don't go directly to the file
-" nnoremap <C-s> :Ack! 
-" nnoremap <C-s> :CocSearch 
-" }
 
 " license
 let g:licenses_authors_name = 'Andrés Reyes Monge <armonge@gmail.com>'
@@ -466,16 +441,11 @@ nmap gx :silent execute "!xdg-open " . shellescape("<cWORD>")<CR>
 autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
 autocmd BufWrite *.lua call LuaFormat()
 
-" SQL
+" sql {
+let g:sql_type_default = "sql.vim"
 autocmd BufWritePre   *.sql call CocAction('format')
+" }
 
 
   " Clojure
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-
-" vim-doge {
-let g:doge_javascript_settings = {
-\  'destructuring_props': 1,
-\  'omit_redundant_param_types': 1,
-\}
-" }

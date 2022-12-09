@@ -49,17 +49,8 @@
   },
 
   "python.formatting.provider": "black",
-  "python.linting.lintOnSave": true,
-  "python.sortImports.path": "/home/andresmonge/.pyenv/shims/isort",
-
+  "python.linting.ruffEnabled": true,
   "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.pydocstyleEnabled": false,
-  "python.linting.mypyEnabled": true,
-
-  "python.linting.prospectorEnabled": false,
-  "python.linting.banditEnabled": false,
-  "python.linting.pylamaEnabled": false,
 
   "diagnostic.virtualText": true,
   "diagnostic.errorSign": "✘",

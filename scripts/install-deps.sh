@@ -29,6 +29,7 @@ if command -v apt &>/dev/null; then
 		ldnsutils \
 		jq gojq \
 		miller \
+		shellcheck \
 		caca-utils libimage-exiftool-perl catdoc mediainfo calibre fontforge # scope.sh visualization
 fi
 

@@ -3,6 +3,7 @@
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
   dft = difftool
+	enforce = push --force-with-lease
 
 [user]
   email = andres.monge@stylight.com
@@ -56,7 +57,10 @@
 	helper = !/usr/bin/gh auth git-credential
 [rebase]
 	autoStash = true
+	autosquash = true
 [fetch]
 	prune = true
 	pruneTags = true
 	recurseSubmodules = true
+[branch]
+	autoSetupMerge = true
