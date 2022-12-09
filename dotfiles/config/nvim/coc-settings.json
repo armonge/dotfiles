@@ -1,4 +1,6 @@
 {
+  "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
+  "xml.server.vmargs": "-Xmx2048m",
   "html.enable": true,
   "html.format.enable": true,
   "html.filetypes": ["html"],
@@ -13,6 +15,7 @@
   "eslint.autoFixOnSave": true,
 
   "coc.preferences.formatOnSaveFiletypes": [
+    "c",
     "markdown",
     "dart",
     "graphql",
@@ -90,5 +93,5 @@
     "tabulateAlias": true,
     "linesBetweenQueries": 2
   },
-  "python.formatting.blackPath": "black"
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
 }
