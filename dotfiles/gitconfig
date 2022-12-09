@@ -14,7 +14,7 @@
   quotepath = false
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = /home/andresmonge/.gitignore_global
+	excludesfile = $HOME/.gitignore_global
 
 [commit]
   gpgsign = true
