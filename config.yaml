@@ -12,7 +12,6 @@ config:
   workdir: ~/.config/dotdrop
   minversion: 1.11.0
 actions:
-  dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
   pre:
     install_deps: ./scripts/install-deps.sh
 dotfiles:
@@ -28,7 +27,7 @@ dotfiles:
     dst: ~/.bashrc
     link: absolute
     src: bashrc
-    chmod: '644'
+    chmod: "644"
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
     link: absolute
@@ -46,13 +45,7 @@ dotfiles:
     link: absolute
     src: config/nvim/init.vim
     actions:
-    - install_deps
-  f_installer.sh:
-    dst: ~/.config/nvim/installer.sh
-    link: absolute
-    src: config/nvim/installer.sh
-    actions:
-    - dein_init
+      - install_deps
   f_typescript.snippets:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
     link: absolute
@@ -97,12 +90,12 @@ dotfiles:
     src: bin/delta.sh
     dst: ~/bin/delta.sh
     link: absolute
-    chmod: '775'
+    chmod: "775"
   f_rifle.conf:
     src: config/ranger/rifle.conf
     dst: ~/.config/ranger/rifle.conf
     link: absolute
-    chmod: '644'
+    chmod: "644"
   f_version:
     src: pyenv/version
     dst: ~/.pyenv/version
@@ -111,7 +104,7 @@ dotfiles:
     src: local/bin/shfmt
     dst: ~/.local/bin/shfmt
     link: absolute
-    chmod: '755'
+    chmod: "755"
   f_clojure_deps.edn:
     src: config/clojure/deps.edn
     dst: ~/.config/clojure/deps.edn
@@ -132,25 +125,21 @@ dotfiles:
     src: local/bin/clojure-lsp
     dst: ~/.local/bin/clojure-lsp
     link: absolute
-    chmod: '755'
+    chmod: "755"
   f_scope.sh:
     src: config/ranger/scope.sh
     dst: ~/.config/ranger/scope.sh
     link: absolute
-    chmod: '755'
+    chmod: "755"
   f_inputrc:
     src: inputrc
     dst: ~/.inputrc
-    link: absolute
-  f_dein.toml:
-    src: config/nvim/dein.toml
-    dst: ~/.config/nvim/dein.toml
     link: absolute
   f_mirror.sh:
     src: local/bin/mirror.sh
     dst: ~/.local/bin/mirror.sh
     link: absolute
-    chmod: '775'
+    chmod: "775"
   f_gitignore_global:
     src: gitignore_global
     dst: ~/.gitignore_global
@@ -159,39 +148,37 @@ dotfiles:
     src: local/bin/dsq
     dst: ~/.local/bin/dsq
     link: absolute
-    chmod: '755'
+    chmod: "755"
 profiles:
   armonge-laptop:
     dotfiles:
-    - f_bashrc
-    - f_init.vim
-    - f_installer.sh
-    - f_gitconfig
-    - f_ctags
-    - f_bash_profile
-    - f_chromium-flags.conf
-    - f_typescript.snippets
-    - f_bash_aliases
-    - f_attributes
-    - f_deps.edn
-    - f_coc-settings.json
-    - f_config.toml
-    - f_ideavimrc
-    - f_ftplugin_audio.vim
-    - f_video.vim
-    - f_audio.vim
-    - f_delta.sh
-    - f_rifle.conf
-    - f_version
-    - f_shfmt
-    - f_clojure_deps.edn
-    - f_rebel_readline.edn
-    - f_practicalli-custom-dictionary.txt
-    - f_cspell.json
-    - f_clojure-lsp
-    - f_scope.sh
-    - f_inputrc
-    - f_dein.toml
-    - f_mirror.sh
-    - f_gitignore_global
-    - f_dsq
+      - f_bashrc
+      - f_init.vim
+      - f_gitconfig
+      - f_ctags
+      - f_bash_profile
+      - f_chromium-flags.conf
+      - f_typescript.snippets
+      - f_bash_aliases
+      - f_attributes
+      - f_deps.edn
+      - f_coc-settings.json
+      - f_config.toml
+      - f_ideavimrc
+      - f_ftplugin_audio.vim
+      - f_video.vim
+      - f_audio.vim
+      - f_delta.sh
+      - f_rifle.conf
+      - f_version
+      - f_shfmt
+      - f_clojure_deps.edn
+      - f_rebel_readline.edn
+      - f_practicalli-custom-dictionary.txt
+      - f_cspell.json
+      - f_clojure-lsp
+      - f_scope.sh
+      - f_inputrc
+      - f_mirror.sh
+      - f_gitignore_global
+      - f_dsq

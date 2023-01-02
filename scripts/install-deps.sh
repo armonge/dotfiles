@@ -15,7 +15,6 @@ if command -v apt &>/dev/null; then
 		libgraphene-1.0-dev \
 		libgtk-4-dev \
 		libadwaita-1-dev \
-		libssl-dev \
 		duf \
 		bat \
 		silversearcher-ag \
@@ -30,7 +29,12 @@ if command -v apt &>/dev/null; then
 		jq gojq \
 		miller \
 		shellcheck \
-		caca-utils libimage-exiftool-perl catdoc mediainfo calibre fontforge # scope.sh visualization
+		caca-utils libimage-exiftool-perl catdoc mediainfo calibre fontforge \
+		gnupg ca-certificates git \
+		gcc-multilib g++-multilib cmake pkg-config \
+		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
+		libsndio-dev freeglut3-dev libxmu-dev libxi-dev libfontconfig1-dev \
+		libxcursor-dev
 fi
 
 if command dnf &>/dev/null; then
@@ -47,6 +51,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 cargo install git-delta difftastic
+cargo install --git https://github.com/neovide/neovide
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash

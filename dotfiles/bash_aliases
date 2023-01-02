@@ -18,7 +18,7 @@ fi
 alias ping='prettyping --nolegend'
 alias help='tldr'
 alias df='pydf'
-alias pacman='pacman --color=always'
+
 # alias less='less -R'
 alias vim="nvim"
 alias ftp='lftp'
@@ -33,21 +33,6 @@ export DOTREPO="$HOME/dotfiles"
 alias dotdrop='$DOTREPO/dotdrop.sh'
 alias dotgit='git -C $DOTREPO'
 alias dotsync="dotgit pull && dotgit add -A && dotgit commit && dotgit push; dotdrop install"
-
-alias cljfmt="lein cljfmt"
-alias cljrepl="clj -M:nREPL -m nrepl.cmdline"
-
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-
-alias norg="gron --ungron"
-alias ungron="gron --ungron"
-alias voiceflow="voiceflow.AppImage"
-alias istoolbx='[ -f "/run/.toolboxenv" ] && grep -oP "(?<=name=\")[^\";]+" /run/.containerenv'
-
-alias cdk1="npx aws-cdk@1.x"
-alias cdk="npx aws-cdk@2.x"
-alias aws_cf_stacks='aws cloudformation list-stacks --output table --query "StackSummaries[?StackStatus!=\`DELETE_COMPLETE\`].StackName"'
 
 alias minikubectl="minikube kubectl --"
 function jsonv() {
@@ -64,4 +49,3 @@ function man-http() {
 
 	xdg-open "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/$code"
 }
-alias jq="gojq"

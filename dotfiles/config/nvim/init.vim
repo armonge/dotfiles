@@ -33,41 +33,51 @@ let g:coc_global_extensions = [
 \ 'coc-html',
 \ 'coc-css',
 \ 'coc-yaml',
-\ 'coc-highlight',
 \ 'coc-lists',
 \ 'coc-rust-analyzer',
 \ 'coc-pyright',
-\ 'coc-pydocstring',
 \ 'coc-sql',
 \ ]
 
 " Required:
-if dein#load_state('~/.dein.cache')
-  call dein#begin('~/.dein.cache')
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-  " Let dein manage dein
-  " Required:
-  call dein#add($HOME.'/.dein.cache/repos/github.com/Shougo/dein.vim')
+" Make sure you use single quotes
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'liuchengxu/eleline.vim'
+Plug 'lambdalisue/suda.vim'
+Plug 'wakatime/vim-wakatime'
+Plug 'shaunsingh/nord.nvim'
+Plug 'jamessan/vim-gnupg'
+Plug 'kevinhwang91/rnvimr'
+Plug 'antoyo/vim-licenses'
+Plug 'numToStr/Comment.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'honza/vim-snippets'
+Plug 'mattn/emmet-vim'
+Plug 'vim-scripts/sessionman.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'rhysd/git-messenger.vim'
+Plug 'vim-scripts/LargeFile'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-  " Search files
-  " <C-p>
-  call dein#add('junegunn/fzf', { 'build': 'install --all', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-
-  call dein#load_toml($HOME.'/.config/nvim/dein.toml')
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
-
-
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
 "End dein Scripts-------------------------
 
 filetype plugin indent on
@@ -389,6 +399,9 @@ nnoremap <silent><nowait> <C-o> :CocOutline<CR>
 
 "rnvimr {
 let g:rnvimr_ranger_cmd=['env','PYENV_VERSION=nvim3','PYTHONDEVMODE=0', 'PYTHONWARNINGS=ignore', 'pyenv', 'exec', 'ranger']
+let g:rnvimr_enable_ex = 1
+let g:rnvimr_enable_picker = 1
+let g:rnvimr_enable_bw = 1
 tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 nnoremap <silent> <C-e> :RnvimrToggle<CR>
 tnoremap <silent> <C-e> <C-\><C-n>:RnvimrToggle<CR>
