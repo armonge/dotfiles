@@ -10,9 +10,8 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.11.0
+  minversion: 1.12.9
 actions:
-  dein_init: ~/.config/nvim/installer.sh ~/.dein.cache
   pre:
     install_deps: ./scripts/install-deps.sh
 dotfiles:
@@ -47,12 +46,6 @@ dotfiles:
     src: config/nvim/init.vim
     actions:
     - install_deps
-  f_installer.sh:
-    dst: ~/.config/nvim/installer.sh
-    link: absolute
-    src: config/nvim/installer.sh
-    actions:
-    - dein_init
   f_typescript.snippets:
     dst: ~/.config/nvim/UltiSnips/typescript.snippets
     link: absolute
@@ -142,10 +135,6 @@ dotfiles:
     src: inputrc
     dst: ~/.inputrc
     link: absolute
-  f_dein.toml:
-    src: config/nvim/dein.toml
-    dst: ~/.config/nvim/dein.toml
-    link: absolute
   f_mirror.sh:
     src: local/bin/mirror.sh
     dst: ~/.local/bin/mirror.sh
@@ -160,12 +149,19 @@ dotfiles:
     dst: ~/.local/bin/dsq
     link: absolute
     chmod: '755'
+  f_init.lua:
+    src: config/nvim/lua/luaconfig/init.lua
+    dst: ~/.config/nvim/lua/luaconfig/init.lua
+    link: absolute
+  f_ignore:
+    src: config/nvim/.ignore
+    dst: ~/.config/nvim/.ignore
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
     - f_bashrc
     - f_init.vim
-    - f_installer.sh
     - f_gitconfig
     - f_ctags
     - f_bash_profile
@@ -191,7 +187,8 @@ profiles:
     - f_clojure-lsp
     - f_scope.sh
     - f_inputrc
-    - f_dein.toml
     - f_mirror.sh
     - f_gitignore_global
     - f_dsq
+    - f_init.lua
+    - f_ignore
