@@ -39,7 +39,8 @@ if command dnf &>/dev/null; then
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
 		neovim \
 		bat \
-		exa
+		exa \
+		ShellCheck
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
