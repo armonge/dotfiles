@@ -1,4 +1,10 @@
 {
+  "Lua.workspace.library": [
+    "/usr/share/nvim/runtime/lua",
+    "/usr/share/nvim/runtime/lua/vim",
+    "/usr/share/nvim/runtime/lua/vim/lsp"
+  ],
+  "Lua.diagnostics.globals": ["vim"],
   "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
   "xml.server.vmargs": "-Xmx2048m",
   "html.enable": true,
@@ -16,29 +22,29 @@
 
   "coc.preferences.formatOnSaveFiletypes": [
     "c",
-    "markdown",
-    "dart",
-    "graphql",
+    "clojure",
     "cs",
-    "yaml",
-    "php",
-    "xml",
-    "python",
-    "typescript",
-    "typescriptreact",
+    "css",
+    // "markdown",
+    "dart",
+    "elm",
+    "go",
+    "graphql",
     "javascript",
     "javascript.jsx",
-    "css",
-    "scss",
     "html",
     "json",
     "jsonc",
-    "sh",
-    "go",
-    "dockerfile",
+    "php",
     "rust",
+    "scss",
+    "sh",
     "sql",
-    "clojure"
+    "typescript",
+    "typescriptreact",
+    // "python",
+    "xml",
+    "yaml"
   ],
   "pydocstring.formatter": "google",
 
@@ -48,12 +54,22 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"]
     }
   },
+  // If you use neovim you can enable codelenses with this
+  "codeLens.enable": true,
 
+  "python.formatting.blackPath": "~/.pyenv/versions/3.10.4/bin/black",
+  "python.formatting.blackArgs": ["--line-length", "80"],
   "python.formatting.provider": "black",
   "python.linting.ruffEnabled": true,
   "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
 
   "diagnostic.virtualText": true,
   "diagnostic.errorSign": "✘",
@@ -93,5 +109,6 @@
     "tabulateAlias": true,
     "linesBetweenQueries": 2
   },
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd",
+  "snippets.ultisnips.pythonPrompt": false
 }

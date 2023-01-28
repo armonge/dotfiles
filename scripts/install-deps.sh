@@ -75,13 +75,13 @@ python -m pip install --upgrade build
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
 python -m pip install --upgrade pip wheel
-python -m pip install --upgrade pynvim ranger-fm pillow pygments nord-pygments build
+python -m pip install --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort
 
 pyenv install --skip-existing 3.10.4
 pyenv virtualenv --force 3.10.4 nvim3
 pyenv shell nvim3
 python -m pip install --upgrade pip wheel
-python -m pip install --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer
+python -m pip install --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
