@@ -56,6 +56,10 @@ vim.call("plug#end")
 -- }
 
 -- My Editing Defaults {
+vim.opt.formatoptions:remove({ "t" })
+vim.opt.hidden = true -- if hidden is not set, TextEdit might fail.
+vim.opt.cmdheight = 2 -- Better display for messages
+-- vim.opt.shortmess:append({ "c" }) -- don't give |ins-completion-menu| messages.
 vim.opt.linespace = 0 -- No extra spaces between rows
 vim.opt.number = true -- Line numbers on
 vim.opt.showmatch = true -- Show matching brackets/parenthesis
@@ -137,7 +141,7 @@ vim.opt.relativenumber = true
 -- }
 
 -- Clipboard {
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard:append({ "unnamedplus" })
 -- }
 
 -- sql {
@@ -212,6 +216,19 @@ vim.g.coc_global_extensions = {
 	"coc-stylua",
 }
 
+-- https://github.com/neoclide/coc.nvim#example-vim-configuration
+-- Some servers have issues with backup files, see #649.
+vim.opt.backup = false
+vim.opt.writebackup = false
+
+-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+-- delays and poor user experience.
+vim.opt.updatetime = 300
+
+-- Always show the signcolumn, otherwise it would shift the text each time
+-- diagnostics appear/become resolved.
+vim.opt.signcolumn = "yes"
+
 --  Mappings for coc-vim {
 -- Show all diagnostics.
 vim.keymap.set("n", "<space>a", ":<C-u>CocList diagnostics<cr>", { silent = true, nowait = true })
@@ -280,3 +297,16 @@ vim.keymap.set({ "x", "n" }, "<C-s>", "<Plug>(coc-range-select)")
 -- Add spaces after comment delimiters by default
 require("Comment").setup()
 -- }
+--
+
+-- AutoCloseTag {
+-- Make it so AutoCloseTag works for xml and xhtml files as well
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "xhtml,xml",
+	command = "runtime ftplugin/html/autoclosetag.vim",
+})
+vim.keymap.set("n", "<Leader>ac", "<Plug>ToggleAutoCloseMappings")
+-- }
+--editorconfig/editorconfig-vim {
+ vim.g.EditorConfig_preserve_formatoptions = 1
+--}

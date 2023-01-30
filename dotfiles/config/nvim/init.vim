@@ -17,13 +17,6 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
-
-" AutoCloseTag {
-" Make it so AutoCloseTag works for xml and xhtml files as well
-au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-" }
-
 if executable('intelephense')
   augroup LspPHPIntelephense
     au!
@@ -54,28 +47,10 @@ if executable('intelephense')
   augroup END
 endif
 
-" if hidden is not set, TextEdit might fail.
-set hidden
 
-" Better display for messages
-set cmdheight=2
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
 
 " coc.vim { 
-" https://github.com/neoclide/coc.nvim#example-vim-configuration
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
