@@ -7,7 +7,6 @@
   "Lua.diagnostics.globals": ["vim"],
   "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
   "xml.server.vmargs": "-Xmx2048m",
-  "html.enable": true,
   "html.format.enable": true,
   "html.filetypes": ["html"],
 
@@ -20,32 +19,12 @@
   "eslint.codeActionsOnSave.mode": "all",
   "eslint.autoFixOnSave": true,
 
-  "coc.preferences.formatOnSaveFiletypes": [
-    "c",
-    "clojure",
-    "cs",
-    "css",
-    // "markdown",
-    "dart",
-    "elm",
-    "go",
-    "graphql",
-    "javascript",
-    "javascript.jsx",
-    "html",
-    "json",
-    "jsonc",
-    "php",
-    "rust",
-    "scss",
-    "sh",
-    "sql",
-    "typescript",
-    "typescriptreact",
-    // "python",
-    "xml",
-    "yaml"
-  ],
+  "coc.preferences.formatOnSave": true,
+
+  "[python]": {
+    "coc.preferences.formatOnSave": false
+  },
+
   "pydocstring.formatter": "google",
 
   "languageserver": {
@@ -64,7 +43,7 @@
   // If you use neovim you can enable codelenses with this
   "codeLens.enable": true,
 
-  "python.formatting.blackPath": "~/.pyenv/versions/3.10.4/bin/black",
+  "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
   "python.formatting.blackArgs": ["--line-length", "80"],
   "python.formatting.provider": "black",
   "python.linting.ruffEnabled": true,
