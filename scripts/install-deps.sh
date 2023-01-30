@@ -44,7 +44,8 @@ if command dnf &>/dev/null; then
 		neovim \
 		bat \
 		exa \
-		ShellCheck
+		ShellCheck \
+		fzf ripgrep
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then

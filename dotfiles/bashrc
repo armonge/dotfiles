@@ -225,19 +225,15 @@ if ! shopt -oq posix; then
 fi
 
 # FZF
-if [ -f /usr/share/fzf/key-bindings.bash ]; then
-	source /usr/share/fzf/key-bindings.bash
-	source /usr/share/fzf/completion.bash
-elif [ -f /usr/share/bash-completion/completions/fzf ]; then
-	source /usr/share/bash-completion/completions/fzf
-	source /usr/share/doc/fzf/examples/key-bindings.bash
-
-elif [ -f ~/.fzf.bash ] && [ -d $HOME/.dein.cache/repos/github.com/junegunn/fzf/bin ]; then
-	source ~/.fzf.bash
-fi
+[ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
+[ -f /usr/share/bash-completion/completions/fzf ] && s ource /usr/share/bash-completion/completions/fzf
+[ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
 
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore ".direnv/*" --depth=-1'
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 
 if command -v batcat &>/dev/null; then
 	export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'batcat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
