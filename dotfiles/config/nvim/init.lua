@@ -1,0 +1,8 @@
+require("armonge/environment")
+require("armonge/defaults")
+require("armonge/plugins")
+require("armonge/coc")
+require("armonge/theme")
+require("armonge/filetypes")
+require("armonge/filebrowser")
+require("armonge")

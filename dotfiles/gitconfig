@@ -64,3 +64,6 @@
 	recurseSubmodules = true
 [branch]
 	autoSetupMerge = true
+[committer]
+	email = andres.monge@stylight.com
+	name = Andres Reyes Monge
