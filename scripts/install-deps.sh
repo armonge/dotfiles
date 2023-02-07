@@ -52,7 +52,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
-cargo install git-delta difftastic
+cargo install git-delta difftastic tree-sitter-cli
 cargo install --git https://github.com/neovide/neovide
 
 if [ ! -d "$HOME/.pyenv" ]; then
@@ -91,13 +91,15 @@ if [ ! -d "$HOME/.config/nvm" ]; then
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 fi
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+export NVM_DIR
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
+nvm install --lts
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
 
-if [ ! -f "$HOME/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
+if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
 fi

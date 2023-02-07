@@ -1,6 +1,6 @@
 -- neoclide/coc.nvim {
 
-vim.g.coc_node_path = os.getenv("HOME") .. "/.config/nvm/versions/node/v16.16.0/bin/node"
+vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*.sql" },
@@ -80,8 +80,8 @@ vim.api.nvim_create_autocmd("CursorHold", {
 keyset("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
 
 -- Formatting selected code
-keyset("x", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
-keyset("n", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
+keyset({ "x", "n" }, "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
+keyset({ "x", "n" }, "<leader>F", "<Plug>(coc-format)", { silent = true })
 
 -- Setup formatexpr specified filetype(s)
 vim.api.nvim_create_autocmd("FileType", {

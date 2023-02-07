@@ -3,7 +3,6 @@
 # ~/.bashrc
 #
 # shellcheck disable=SC1090
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -228,7 +227,7 @@ fi
 [ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
-[ -f /usr/share/bash-completion/completions/fzf ] && s ource /usr/share/bash-completion/completions/fzf
+[ -f /usr/share/bash-completion/completions/fzf ] && source /usr/share/bash-completion/completions/fzf
 [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
 
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "
