@@ -16,4 +16,6 @@ vim.keymap.set("t", "<M-y>", "<C-\\><C-n>:RnvimrResize 2<CR>", { silent = true }
 vim.keymap.set("n", "<C-e>", ":RnvimrToggle<CR>", { silent = true })
 vim.keymap.set("t", "<C-e>", "<C-\\><C-n>:RnvimrToggle<CR>", { silent = true })
 -- }
---
+-- utilyre/barbecue.nvim{
+require("barbecue").setup()
+-- }

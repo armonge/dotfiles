@@ -21,8 +21,17 @@
 
   "coc.preferences.formatOnSave": true,
 
+  "[markdown]": {
+    "coc.preferences.formatOnSave": false
+  },
   "[python]": {
     "coc.preferences.formatOnSave": false
+  },
+  "[yaml]": {
+    "coc.preferences.formatOnSave": false
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/circleciconfig.json": "**/.circleci/config.yml.*"
   },
 
   "pydocstring.formatter": "google",
@@ -35,9 +44,18 @@
       "ignoredRootPaths": ["~"]
     },
     "elmLS": {
-      "command": "elm-language-server",
+      "trace.server": "verbose",
+      "trace.server.format": "text",
+      "trace.server.verbosity": "verbose",
+      "command": "~/.config/nvm/versions/node/v16.19.0/bin/elm-language-server",
       "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"]
+      "rootPatterns": ["elm.json"],
+      "initializationOptions": {
+        "elmPath": "elm", // optional
+        "elmFormatPath": "elm-format", // optional
+        "elmTestPath": "elm-test", // optional
+        "elmAnalyseTrigger": "change" // optional
+      }
     },
     "intelephense": {
       "command": "intelephense",
@@ -51,12 +69,34 @@
   // If you use neovim you can enable codelenses with this
   "codeLens.enable": true,
 
+  "pyright.organizeimports.provider": "pyright",
   "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
+  "python.formatting.blackdPath": "~/.pyenv/versions/nvim3/bin/blackd",
+  "python.formatting.darkerPath": "~/.pyenv/versions/nvim3/bin/darker",
+  "python.formatting.autopep8Path": "~/.pyenv/versions/nvim3/bin/autopep8",
+  "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "80",
+    "--aggresive",
+    "--experimental"
+  ],
+  "python.formatting.yapfPath": "~/.pyenv/versions/nvim3/bin/yapf",
   "python.formatting.blackArgs": ["--line-length", "80"],
-  "python.formatting.provider": "black",
+  "python.formatting.darkerArgs": [
+    "--skip-string-normalization",
+    "--no-skip-magic-trailing-comma",
+    "--line-length",
+    "80"
+  ],
+  "python.formatting.provider": "yapf",
+  "python.formatting.blackdHTTPHeaders": {
+    "X-Line-Length": "80"
+  },
   "python.linting.ruffEnabled": true,
+  "python.linting.ruffArgs": [],
   "python.linting.enabled": true,
-  "python.linting.pylintEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.mypyEnabled": false,
 
   "diagnostic.virtualText": true,
   "diagnostic.errorSign": "✘",

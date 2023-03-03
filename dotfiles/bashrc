@@ -20,7 +20,7 @@ fi
 unset rc
 
 # User specific environment
-if ! [[ $PATH =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+if ! [[ $PATH =~ "${HOME}/.local/bin:${HOME}/bin:" ]]; then
 	PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
@@ -61,6 +61,8 @@ export PYGMENTIZE_STYLE='nord'
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export VISUAL="vim -u NONE"
 export EDITOR="vim -u NONE"
+# Bash vi mode!
+set -o vi
 
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then

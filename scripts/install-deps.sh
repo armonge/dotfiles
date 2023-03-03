@@ -68,7 +68,7 @@ pyenv install --skip-existing 3.10.4
 
 pyenv shell 3.10.4
 python -m pip install --upgrade pip wheel
-python -m pip install --upgrade devtools[pygments] build black
+python -m pip install --upgrade devtools[pygments] build black[d]
 
 pyenv shell 2.7.18
 python -m pip install --upgrade pip wheel
