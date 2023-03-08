@@ -1,5 +1,5 @@
 -- FileTypes {
-function set_filetype(extensions, filetype)
+local function set_filetype(extensions, filetype)
 	vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 		pattern = extensions,
 		callback = function()

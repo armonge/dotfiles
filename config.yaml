@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.12.9
+  minversion: 1.12.13
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -140,10 +140,6 @@ dotfiles:
     dst: ~/.local/bin/mirror.sh
     link: absolute
     chmod: '775'
-  f_gitignore_global:
-    src: gitignore_global
-    dst: ~/.gitignore_global
-    link: absolute
   f_dsq:
     src: local/bin/dsq
     dst: ~/.local/bin/dsq
@@ -189,6 +185,10 @@ dotfiles:
     src: config/nvim/.python-version
     dst: ~/.config/nvim/.python-version
     link: absolute
+  f_git_ignore:
+    src: config/git/ignore
+    dst: ~/.config/git/ignore
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -219,7 +219,6 @@ profiles:
     - f_scope.sh
     - f_inputrc
     - f_mirror.sh
-    - f_gitignore_global
     - f_dsq
     - f_init.lua
     - f_ignore
@@ -232,3 +231,4 @@ profiles:
     - f_plugins.lua
     - f_theme.lua
     - f_python-version
+    - f_git_ignore

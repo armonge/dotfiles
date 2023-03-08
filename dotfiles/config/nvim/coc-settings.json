@@ -67,7 +67,7 @@
     }
   },
   // If you use neovim you can enable codelenses with this
-  "codeLens.enable": true,
+  // "codeLens.enable": true,
 
   "pyright.organizeimports.provider": "pyright",
   "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
@@ -88,7 +88,7 @@
     "--line-length",
     "80"
   ],
-  "python.formatting.provider": "yapf",
+  "python.formatting.provider": "blackd",
   "python.formatting.blackdHTTPHeaders": {
     "X-Line-Length": "80"
   },

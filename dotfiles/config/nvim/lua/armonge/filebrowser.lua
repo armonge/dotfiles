@@ -18,4 +18,5 @@ vim.keymap.set("t", "<C-e>", "<C-\\><C-n>:RnvimrToggle<CR>", { silent = true })
 -- }
 -- utilyre/barbecue.nvim{
 require("barbecue").setup()
+require("barbecue.ui").toggle(true)
 -- }
