@@ -18,7 +18,7 @@ require("lazy").setup({
 	"folke/which-key.nvim",
 	"folke/neodev.nvim",
 	"tpope/vim-sensible",
-	{ "nvim-treesitter/nvim-treesitter", ["do"] = "TSUpdate" },
+	{ "nvim-treesitter/nvim-treesitter", ["build"] = "TSUpdate" },
 	"editorconfig/editorconfig-vim",
 	"liuchengxu/eleline.vim",
 	"lambdalisue/suda.vim",
@@ -39,8 +39,13 @@ require("lazy").setup({
 	"vim-scripts/LargeFile",
 	"lukas-reineke/indent-blankline.nvim",
 
-	{ "junegunn/fzf", ["do"] = vim.fn["fzf#install"] },
-	"junegunn/fzf.vim",
+	-- { "junegunn/fzf", ["do"] = vim.fn["fzf#install"] },
+	-- "junegunn/fzf.vim",
+	{
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
 
 	{
 		"utilyre/barbecue.nvim",

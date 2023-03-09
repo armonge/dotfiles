@@ -86,3 +86,10 @@ vim.opt.relativenumber = true
 -- Clipboard {
 vim.opt.clipboard:append({ "unnamedplus" })
 -- }
+--
+-- Ruby  {
+vim.g.loaded_ruby_provider = 0
+-- }
+-- Perl {
+vim.g.loaded_perl_provider = 0
+-- }

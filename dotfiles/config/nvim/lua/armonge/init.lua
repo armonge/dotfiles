@@ -16,10 +16,8 @@ vim.g.licenses_copyright_holders_name = "Andrés Reyes Monge <armonge@gmail.com>
 -- }
 
 -- junegunn/fzf {
-vim.g.fzf_buffers_jump = 1
--- " nnoremap <C-p> <cmd>Telescope find_files<cr>
--- " nnoremap <C-p> <cmd>Telescope live_grep<cr>
-vim.keymap.set("n", "<C-p>", ":Files<CR>")
+-- vim.g.fzf_buffers_jump = 1
+-- vim.keymap.set("n", "<C-p>", ":Files<CR>")
 -- }
 
 -- numToStr/Comment.nvim {

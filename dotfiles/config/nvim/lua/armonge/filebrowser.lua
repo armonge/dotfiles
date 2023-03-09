@@ -20,3 +20,10 @@ vim.keymap.set("t", "<C-e>", "<C-\\><C-n>:RnvimrToggle<CR>", { silent = true })
 require("barbecue").setup()
 require("barbecue.ui").toggle(true)
 -- }
+-- nvim-telescope/telescope.nvim {
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fn", builtin.help_tags, {})
+-- }
