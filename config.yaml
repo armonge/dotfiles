@@ -189,6 +189,10 @@ dotfiles:
     src: config/git/ignore
     dst: ~/.config/git/ignore
     link: absolute
+  f_treesitter.lua:
+    src: config/nvim/lua/armonge/treesitter.lua
+    dst: ~/.config/nvim/lua/armonge/treesitter.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -232,3 +236,4 @@ profiles:
     - f_theme.lua
     - f_python-version
     - f_git_ignore
+    - f_treesitter.lua
