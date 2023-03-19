@@ -251,7 +251,7 @@ vim.keymap.set("n", "<space>l", ":<C-u>CocList<CR>", { silent = true, nowait = t
 --  Show buffers.
 vim.keymap.set("n", "<space>b", ":<C-u>CocList buffers<CR>", { silent = true, nowait = true })
 -- Search
-vim.keymap.set("n", "<C-f>", ":CocSearch<space>", { silent = true, nowait = true })
+vim.keymap.set("n", "<C-s>", ":CocSearch<space>", { silent = true, nowait = true })
 -- Open outline
 vim.keymap.set("n", "<C-o>", ":CocOutline<CR>", { silent = true, nowait = true })
 
@@ -288,7 +288,7 @@ vim.keymap.set("n", "<Leader>cl", "<Plug>(coc-codelens-action)")
 
 -- Use CTRL-S for selections ranges.
 -- Requires 'textDocument/selectionRange' support of language server.
-vim.keymap.set({ "x", "n" }, "<C-s>", "<Plug>(coc-range-select)")
+-- vim.keymap.set({ "x", "n" }, "<C-s>", "<Plug>(coc-range-select)")
 
 --  }
 -- }
@@ -308,5 +308,5 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.keymap.set("n", "<Leader>ac", "<Plug>ToggleAutoCloseMappings")
 -- }
 --editorconfig/editorconfig-vim {
- vim.g.EditorConfig_preserve_formatoptions = 1
+vim.g.EditorConfig_preserve_formatoptions = 1
 --}
