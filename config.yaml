@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.12.9
+  minversion: 1.12.13
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -40,10 +40,10 @@ dotfiles:
     dst: ~/.gitconfig
     link: absolute
     src: gitconfig
-  f_init.vim:
-    dst: ~/.config/nvim/init.vim
+  f_init.lua:
+    dst: ~/.config/nvim/init.lua
     link: absolute
-    src: config/nvim/init.vim
+    src: config/nvim/init.lua
     actions:
     - install_deps
   f_typescript.snippets:
@@ -140,28 +140,63 @@ dotfiles:
     dst: ~/.local/bin/mirror.sh
     link: absolute
     chmod: '775'
-  f_gitignore_global:
-    src: gitignore_global
-    dst: ~/.gitignore_global
-    link: absolute
   f_dsq:
     src: local/bin/dsq
     dst: ~/.local/bin/dsq
     link: absolute
     chmod: '755'
-  f_init.lua:
-    src: config/nvim/lua/luaconfig/init.lua
-    dst: ~/.config/nvim/lua/luaconfig/init.lua
-    link: absolute
   f_ignore:
     src: config/nvim/.ignore
     dst: ~/.config/nvim/.ignore
+    link: absolute
+  f_armonge_init.lua:
+    src: config/nvim/lua/armonge/init.lua
+    dst: ~/.config/nvim/lua/armonge/init.lua
+    link: absolute
+  f_coc.lua:
+    src: config/nvim/lua/armonge/coc.lua
+    dst: ~/.config/nvim/lua/armonge/coc.lua
+    link: absolute
+  f_defaults.lua:
+    src: config/nvim/lua/armonge/defaults.lua
+    dst: ~/.config/nvim/lua/armonge/defaults.lua
+    link: absolute
+  f_environment.lua:
+    src: config/nvim/lua/armonge/environment.lua
+    dst: ~/.config/nvim/lua/armonge/environment.lua
+    link: absolute
+  f_filebrowser.lua:
+    src: config/nvim/lua/armonge/filebrowser.lua
+    dst: ~/.config/nvim/lua/armonge/filebrowser.lua
+    link: absolute
+  f_filetypes.lua:
+    src: config/nvim/lua/armonge/filetypes.lua
+    dst: ~/.config/nvim/lua/armonge/filetypes.lua
+    link: absolute
+  f_plugins.lua:
+    src: config/nvim/lua/armonge/plugins.lua
+    dst: ~/.config/nvim/lua/armonge/plugins.lua
+    link: absolute
+  f_theme.lua:
+    src: config/nvim/lua/armonge/theme.lua
+    dst: ~/.config/nvim/lua/armonge/theme.lua
+    link: absolute
+  f_python-version:
+    src: config/nvim/.python-version
+    dst: ~/.config/nvim/.python-version
+    link: absolute
+  f_git_ignore:
+    src: config/git/ignore
+    dst: ~/.config/git/ignore
+    link: absolute
+  f_treesitter.lua:
+    src: config/nvim/lua/armonge/treesitter.lua
+    dst: ~/.config/nvim/lua/armonge/treesitter.lua
     link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
     - f_bashrc
-    - f_init.vim
     - f_gitconfig
     - f_ctags
     - f_bash_profile
@@ -188,7 +223,17 @@ profiles:
     - f_scope.sh
     - f_inputrc
     - f_mirror.sh
-    - f_gitignore_global
     - f_dsq
     - f_init.lua
     - f_ignore
+    - f_armonge_init.lua
+    - f_coc.lua
+    - f_defaults.lua
+    - f_environment.lua
+    - f_filebrowser.lua
+    - f_filetypes.lua
+    - f_plugins.lua
+    - f_theme.lua
+    - f_python-version
+    - f_git_ignore
+    - f_treesitter.lua

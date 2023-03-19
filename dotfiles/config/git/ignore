@@ -1,9 +1,10 @@
-.vim
+.vim/
 *~
 .*.swp
 .DS_Store
-venv
+venv/
 .venv
 
 
 .direnv/*
+.envrc

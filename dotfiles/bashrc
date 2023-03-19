@@ -3,7 +3,6 @@
 # ~/.bashrc
 #
 # shellcheck disable=SC1090
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -21,7 +20,7 @@ fi
 unset rc
 
 # User specific environment
-if ! [[ $PATH == "$HOME/.local/bin:$HOME/bin:" ]]; then
+if ! [[ $PATH =~ "${HOME}/.local/bin:${HOME}/bin:" ]]; then
 	PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
@@ -62,6 +61,8 @@ export PYGMENTIZE_STYLE='nord'
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export VISUAL="vim -u NONE"
 export EDITOR="vim -u NONE"
+# Bash vi mode!
+set -o vi
 
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then
@@ -228,7 +229,7 @@ fi
 [ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
-[ -f /usr/share/bash-completion/completions/fzf ] && s ource /usr/share/bash-completion/completions/fzf
+[ -f /usr/share/bash-completion/completions/fzf ] && source /usr/share/bash-completion/completions/fzf
 [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash
 
 export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "

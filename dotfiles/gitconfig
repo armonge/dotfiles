@@ -14,7 +14,6 @@
   quotepath = false
   editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	excludesfile = $HOME/.gitignore_global
 
 [commit]
   gpgsign = true
@@ -64,3 +63,6 @@
 	recurseSubmodules = true
 [branch]
 	autoSetupMerge = true
+[committer]
+	email = andres.monge@stylight.com
+	name = Andres Reyes Monge
