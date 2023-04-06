@@ -193,9 +193,9 @@ dotfiles:
     src: config/nvim/lua/armonge/treesitter.lua
     dst: ~/.config/nvim/lua/armonge/treesitter.lua
     link: absolute
-  f_liquidpromptrc:
-    src: config/liquidpromptrc
-    dst: ~/.config/liquidpromptrc
+  f_starship.toml:
+    src: config/starship.toml
+    dst: ~/.config/starship.toml
     link: absolute
 profiles:
   armonge-laptop:
@@ -241,4 +241,4 @@ profiles:
     - f_python-version
     - f_git_ignore
     - f_treesitter.lua
-    - f_liquidpromptrc
+    - f_starship.toml

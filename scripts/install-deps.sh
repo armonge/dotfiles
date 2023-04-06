@@ -53,7 +53,6 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 cargo install git-delta difftastic tree-sitter-cli
-cargo install --git https://github.com/neovide/neovide
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
@@ -102,4 +101,8 @@ npm install --global --upgrade npm neovim bash-language-server dockerfile-langua
 
 if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+fi
+
+if ! [ -x "$(command -v starship)" ]; then
+	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
 fi

@@ -7,7 +7,3 @@
 [submodule "clojure-deps-edn"]
 	path = clojure-deps-edn
 	url = git@github.com:armonge/clojure-deps-edn.git
-[submodule "liquidprompt"]
-	path = liquidprompt
-	url = https://github.com/nojhan/liquidprompt.git
-	branch = stable
