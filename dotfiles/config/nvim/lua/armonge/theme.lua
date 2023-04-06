@@ -4,6 +4,18 @@ vim.opt.background = "dark"
 vim.cmd.colorscheme("nordic")
 -- }
 
--- liuchengxu/eleline.vim {
-vim.g.eleline_powerline_fonts = 1
--- }
+-- nvim-lualine/lualine.nvim {
+
+require("lualine").setup({
+	theme = "nord",
+	sections = {
+
+		lualine_c = {
+			{
+
+				"filename",
+				path = 1,
+			},
+		},
+	},
+})

@@ -98,12 +98,8 @@ if [ -f /etc/bash_completion.d/git-prompt ]; then
 	source /etc/bash_completion.d/git-prompt
 fi
 
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWUPSTREAM="auto"
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWDIRTYSTATE=1
-export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+# Only load Liquidprompt in interactive shells, not from a script or from scp
+[[ $- == *i* ]] && source ~/dotfiles/liquidprompt/liquidprompt
 
 # gitignore.io
 function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
@@ -161,8 +157,6 @@ if [ -d "$NVM_DIR" ]; then
 	cd "$PWD"
 	export PATH="$PATH:$NVM_DIR/current/bin"
 fi
-
-export PROMPT_COMMAND='echo -en "\033]0;$(whoami)@$(hostname)|$(pwd|cut -d "/" -f 4-100)\a"'
 
 # python {
 export PATH=$PATH:$HOME/.local/bin

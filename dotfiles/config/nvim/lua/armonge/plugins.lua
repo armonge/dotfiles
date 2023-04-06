@@ -20,7 +20,12 @@ require("lazy").setup({
 	"tpope/vim-sensible",
 	{ "nvim-treesitter/nvim-treesitter", ["build"] = "TSUpdate" },
 	"editorconfig/editorconfig-vim",
-	"liuchengxu/eleline.vim",
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
 	"lambdalisue/suda.vim",
 	"wakatime/vim-wakatime",
 
@@ -45,19 +50,6 @@ require("lazy").setup({
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
 		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-
-	{
-		"utilyre/barbecue.nvim",
-		name = "barbecue",
-		version = "*",
-		dependencies = {
-			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
-		},
-		opts = {
-			-- configurations go here
-		},
 	},
 })
 -- }
