@@ -195,12 +195,10 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
-		source /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
-		source /etc/bash_completion
-	fi
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	source /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion
 fi
 
 # FZF
@@ -244,33 +242,20 @@ fi
 export CLOUDSDK_PYTHON=python3
 
 # source "$HOME/bin/emsdk/emsdk_env.sh" 2>/dev/null
-if [ -f $HOME/.dir_colors ]; then
+if [ -f "${HOME}/.dir_colors" ]; then
 	eval "$(dircolors ~/.dir_colors)"
 fi
 
-if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
-	source $HOME/.config/broot/launcher/bash/br
+if [ -f "${HOME}/.config/broot/launcher/bash/br" ]; then
+	source "${HOME}/.config/broot/launcher/bash/br"
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then
 	source "$HOME/.cargo/env"
 fi
 
-if [ -f $HOME/dotfiles ]; then
-	source $HOME/dotfiles/dotdrop/completion/dotdrop-completion.bash
-fi
-
-if [ -f $HOME/perl5 ]; then
-	PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
-	export PATH
-	PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-	export PERL5LIB
-	PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-	export PERL_LOCAL_LIB_ROOT
-	PERL_MB_OPT='--install_base "$HOME/perl5"'
-	export PERL_MB_OPT
-	PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-	export PERL_MM_OPT
+if [ -f "${HOME}/dotfiles" ]; then
+	source "${HOME}/dotfiles/dotdrop/completion/dotdrop-completion.bash"
 fi
 
 # https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119
