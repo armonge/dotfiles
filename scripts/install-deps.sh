@@ -1,12 +1,11 @@
 #!/bin/bash
 set -euo pipefail
-set -x
+# set -x
 if command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-		neovim \
 		exa \
 		libglib2.0-dev \
 		libcairo2-dev \
@@ -41,7 +40,6 @@ if command dnf &>/dev/null; then
 	sudo dnf install --assumeyes make gcc zlib-devel bzip2 bzip2-devel \
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
-		neovim \
 		bat \
 		exa \
 		ShellCheck \
@@ -53,7 +51,6 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 cargo install git-delta difftastic tree-sitter-cli
-cargo install --git https://github.com/neovide/neovide
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
@@ -67,23 +64,23 @@ pyenv install --skip-existing 2.7.18
 pyenv install --skip-existing 3.10.4
 
 pyenv shell 3.10.4
-python -m pip install --upgrade pip wheel
-python -m pip install --upgrade devtools[pygments] build black[d]
+python -m pip install -qq --upgrade pip wheel
+python -m pip install -qq --upgrade devtools[pygments] build black[d]
 
 pyenv shell 2.7.18
-python -m pip install --upgrade pip wheel
-python -m pip install --upgrade build
+python -m pip install -qq --upgrade pip wheel
+python -m pip install -qq --upgrade build
 
 pyenv virtualenv --force 2.7.18 nvim2
 pyenv shell nvim2
-python -m pip install --upgrade pip wheel
-python -m pip install --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort
+python -m pip install -qq --upgrade pip wheel
+python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort
 
 pyenv install --skip-existing 3.10.4
 pyenv virtualenv --force 3.10.4 nvim3
 pyenv shell nvim3
-python -m pip install --upgrade pip wheel
-python -m pip install --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker
+python -m pip install -qq --upgrade pip wheel
+python -m pip install -qq --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
@@ -97,9 +94,23 @@ export NVM_DIR
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
+nvm use lts/gallium
+npm install --global --upgrade npm @elm-tooling/elm-language-server
+
 nvm install --lts
+nvm alias default lts/*
+nvm use lts/*
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
 
 if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+fi
+
+if ! [ -x "$(command -v starship)" ]; then
+	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
+fi
+
+if ! [ -x "$(command -v nvim)" ]; then
+	curl --location https://github.com/neovim/neovim/releases/download/stable/nvim.appimage --output "${HOME}/.local/bin/nvim"
+	chmod +x "${HOME}/.local/bin/nvim"
 fi

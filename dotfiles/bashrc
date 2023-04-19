@@ -61,8 +61,6 @@ export PYGMENTIZE_STYLE='nord'
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export VISUAL="vim -u NONE"
 export EDITOR="vim -u NONE"
-# Bash vi mode!
-set -o vi
 
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then
@@ -98,12 +96,8 @@ if [ -f /etc/bash_completion.d/git-prompt ]; then
 	source /etc/bash_completion.d/git-prompt
 fi
 
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWUPSTREAM="auto"
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWDIRTYSTATE=1
-export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+# Only load starship in interactive shells, not from a script or from scp
+[[ $- == *i* ]] && eval "$(starship init bash)"
 
 # gitignore.io
 function gi() { curl -L -s "https://www.gitignore.io/api/${*}"; }
@@ -162,8 +156,6 @@ if [ -d "$NVM_DIR" ]; then
 	export PATH="$PATH:$NVM_DIR/current/bin"
 fi
 
-export PROMPT_COMMAND='echo -en "\033]0;$(whoami)@$(hostname)|$(pwd|cut -d "/" -f 4-100)\a"'
-
 # python {
 export PATH=$PATH:$HOME/.local/bin
 export PATH="$HOME/.poetry/bin:$PATH"
@@ -186,20 +178,6 @@ if command -v pyenv 1>/dev/null 2>&1; then
 
 fi
 
-# https://vi.stackexchange.com/a/34996
-# function nvimvenv() {
-# if [[ -e $VIRTUAL_ENV && -f "$VIRTUAL_ENV/bin/activate" ]]; then
-# source "$VIRTUAL_ENV/bin/activate"
-# command nvim $@
-# deactivate
-# else
-# command nvim $@
-# fi
-# }
-
-# alias nvim=nvimvenv
-# }
-
 # AWS
 if command -v aws &>/dev/null; then
 	complete -C "$(which aws_completer)" aws
@@ -217,12 +195,10 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
-		source /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
-		source /etc/bash_completion
-	fi
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	source /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion
 fi
 
 # FZF
@@ -266,33 +242,20 @@ fi
 export CLOUDSDK_PYTHON=python3
 
 # source "$HOME/bin/emsdk/emsdk_env.sh" 2>/dev/null
-if [ -f $HOME/.dir_colors ]; then
+if [ -f "${HOME}/.dir_colors" ]; then
 	eval "$(dircolors ~/.dir_colors)"
 fi
 
-if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
-	source $HOME/.config/broot/launcher/bash/br
+if [ -f "${HOME}/.config/broot/launcher/bash/br" ]; then
+	source "${HOME}/.config/broot/launcher/bash/br"
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then
 	source "$HOME/.cargo/env"
 fi
 
-if [ -f $HOME/dotfiles ]; then
-	source $HOME/dotfiles/dotdrop/completion/dotdrop-completion.bash
-fi
-
-if [ -f $HOME/perl5 ]; then
-	PATH="$HOME/perl5/bin${PATH:+:${PATH}}"
-	export PATH
-	PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
-	export PERL5LIB
-	PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
-	export PERL_LOCAL_LIB_ROOT
-	PERL_MB_OPT='--install_base "$HOME/perl5"'
-	export PERL_MB_OPT
-	PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-	export PERL_MM_OPT
+if [ -f "${HOME}/dotfiles" ]; then
+	source "${HOME}/dotfiles/dotdrop/completion/dotdrop-completion.bash"
 fi
 
 # https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119

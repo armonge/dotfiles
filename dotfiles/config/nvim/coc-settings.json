@@ -34,8 +34,6 @@
     "https://json.schemastore.org/circleciconfig.json": "**/.circleci/config.yml.*"
   },
 
-  "pydocstring.formatter": "google",
-
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
@@ -47,15 +45,9 @@
       "trace.server": "verbose",
       "trace.server.format": "text",
       "trace.server.verbosity": "verbose",
-      "command": "~/.config/nvm/versions/node/v16.19.0/bin/elm-language-server",
+      "command": "elm-language-server",
       "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"],
-      "initializationOptions": {
-        "elmPath": "elm", // optional
-        "elmFormatPath": "elm-format", // optional
-        "elmTestPath": "elm-test", // optional
-        "elmAnalyseTrigger": "change" // optional
-      }
+      "rootPatterns": ["elm.json"]
     },
     "intelephense": {
       "command": "intelephense",
@@ -99,10 +91,6 @@
   "python.linting.mypyEnabled": false,
 
   "diagnostic.virtualText": true,
-  "diagnostic.errorSign": "✘",
-  "diagnostic.warningSign": "⚠",
-  "diagnostic.infoSign": "i",
-  "diagnostic.hintSign": "➤",
   "diagnostic-languageserver.enable": true,
   "diagnostic-languageserver.filetypes": {
     "sh": "shellcheck"
@@ -126,7 +114,6 @@
     }
   },
 
-  "tsserver.log": "verbose",
   "tsserver.implicitProjectConfig.checkJs": true,
 
   "sql.formatOptions": {
