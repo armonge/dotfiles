@@ -20,6 +20,7 @@ vim.opt.updatetime = 300
 vim.opt.signcolumn = "yes"
 
 local keyset = vim.keymap.set
+
 -- Autocomplete
 function _G.check_back_space()
 	local col = vim.fn.col(".") - 1

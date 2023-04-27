@@ -43,6 +43,13 @@ require("lazy").setup({
 	"tpope/vim-rhubarb",
 	"vim-scripts/LargeFile",
 	"lukas-reineke/indent-blankline.nvim",
+	{
+		"gregorias/nvim-mapper",
+		dependencies = "nvim-telescope/telescope.nvim",
+		config = function()
+			require("nvim-mapper").setup({})
+		end,
+	},
 
 	{
 		"nvim-telescope/telescope.nvim",
