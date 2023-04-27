@@ -50,6 +50,10 @@ require("lazy").setup({
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 	{
+		"fannheyward/telescope-coc.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+	},
+	{
 		"sindrets/diffview.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
