@@ -1,3 +1,7 @@
+Mapper = require("nvim-mapper")
+local keyset = Mapper.map
+local opts = { silent = true, noremap = true }
+
 -- kevinhwang91/rnvimr {
 vim.g.rnvimr_ranger_cmd = {
 	"env",
@@ -15,15 +19,27 @@ vim.g.rnvimr_hide_gitignore = 1
 vim.g.rnvimr_enable_bw = 1
 
 -- Resize floating window by all preset layouts
-vim.keymap.set("t", "<M-i>", "<C-\\><C-n>:RnvimrResize<CR>", { silent = true })
+keyset(
+	"t",
+	"<M-i>",
+	"<C-\\><C-n>:RnvimrResize<CR>",
+	opts,
+	"Ranger",
+	"resize_default",
+	"Resizes ranger to the default layout"
+)
 -- Resize floating window by single preset layout
-vim.keymap.set("t", "<M-y>", "<C-\\><C-n>:RnvimrResize 2<CR>", { silent = true })
+keyset(
+	"t",
+	"<M-y>",
+	"<C-\\><C-n>:RnvimrResize 2<CR>",
+	opts,
+	"Ranger",
+	"resize_layout_2",
+	"Resizes ranger to second layout"
+)
 
 -- Toggle
-vim.keymap.set("n", "<C-e>", ":RnvimrToggle<CR>", { silent = true })
-vim.keymap.set("t", "<C-e>", "<C-\\><C-n>:RnvimrToggle<CR>", { silent = true })
--- }
--- utilyre/barbecue.nvim{
--- require("barbecue").setup()
--- require("barbecue.ui").toggle(true)
+keyset("n", "<C-e>", ":RnvimrToggle<CR>", opts, "Ranger", "toggle_n", "Toggles Ranger")
+keyset("t", "<C-e>", "<C-\\><C-n>:RnvimrToggle<CR>", opts, "Ranger", "toggle_t", "Toggles Ranger")
 -- }

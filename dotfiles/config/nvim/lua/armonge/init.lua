@@ -1,9 +1,20 @@
+Mapper = require("nvim-mapper")
+local keyset = Mapper.map
+
 -- sql {
 vim.g.sql_type_default = "sql.vim"
 -- }
 
 --  Open files with gx {
-vim.keymap.set("n", "gx", "!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>")
+keyset(
+	"n",
+	"gx",
+	"!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>",
+	{},
+	"General",
+	"open_with",
+	"Opens a <WORD> with the default browser"
+)
 --  }
 
 -- vim-licenses {
@@ -14,15 +25,6 @@ vim.g.licenses_copyright_holders_name = "Andrés Reyes Monge <armonge@gmail.com>
 -- numToStr/Comment.nvim {
 -- Add spaces after comment delimiters by default
 require("Comment").setup()
--- }
-
--- AutoCloseTag {
--- Make it so AutoCloseTag works for xml and xhtml files as well
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "xhtml,xml",
-	command = "runtime ftplugin/html/autoclosetag.vim",
-})
-vim.keymap.set("n", "<Leader>ac", "<Plug>ToggleAutoCloseMappings")
 -- }
 
 --editorconfig/editorconfig-vim {

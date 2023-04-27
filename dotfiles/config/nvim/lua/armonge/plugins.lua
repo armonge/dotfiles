@@ -47,7 +47,9 @@ require("lazy").setup({
 		"gregorias/nvim-mapper",
 		dependencies = "nvim-telescope/telescope.nvim",
 		config = function()
-			require("nvim-mapper").setup({})
+			require("nvim-mapper").setup({
+				no_map = false,
+			})
 		end,
 	},
 
