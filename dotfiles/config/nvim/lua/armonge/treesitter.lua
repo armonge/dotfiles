@@ -10,5 +10,10 @@ require("nvim-treesitter.configs").setup({
 		"typescript",
 		"help",
 		"cmake",
+		"vim",
+		"regex",
+		"bash",
+		"markdown",
+		"markdown_inline",
 	},
 })

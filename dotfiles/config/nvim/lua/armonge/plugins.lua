@@ -19,7 +19,6 @@ require("lazy").setup({
 	"folke/neodev.nvim",
 	"tpope/vim-sensible",
 	{ "nvim-treesitter/nvim-treesitter", ["build"] = "TSUpdate" },
-	"editorconfig/editorconfig-vim",
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
@@ -39,7 +38,6 @@ require("lazy").setup({
 	"jiangmiao/auto-pairs",
 	"tpope/vim-surround",
 	"tpope/vim-eunuch",
-	"tpope/vim-fugitive",
 	"tpope/vim-rhubarb",
 	"vim-scripts/LargeFile",
 	"lukas-reineke/indent-blankline.nvim",
@@ -65,6 +63,39 @@ require("lazy").setup({
 	{
 		"sindrets/diffview.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{
+		"ellisonleao/glow.nvim",
+		config = function()
+			require("glow").setup()
+		end,
+	},
+	{
+		"folke/noice.nvim",
+		config = function()
+			require("noice").setup({
+				lsp = {
+					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+				},
+				-- you can enable a preset for easier configuration
+				presets = {
+					bottom_search = true, -- use a classic bottom cmdline for search
+					command_palette = true, -- position the cmdline and popupmenu together
+					long_message_to_split = true, -- long messages will be sent to a split
+					inc_rename = false, -- enables an input dialog for inc-rename.nvim
+					lsp_doc_border = false, -- add a border to hover docs and signature help
+				},
+			})
+		end,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
 	},
 })
 -- }

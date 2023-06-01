@@ -26,7 +26,3 @@ vim.g.licenses_copyright_holders_name = "Andrés Reyes Monge <armonge@gmail.com>
 -- Add spaces after comment delimiters by default
 require("Comment").setup()
 -- }
-
---editorconfig/editorconfig-vim {
-vim.g.EditorConfig_preserve_formatoptions = 1
---}

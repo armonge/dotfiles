@@ -1,5 +1,9 @@
 -- neoclide/coc.nvim {
 
+vim.g.coc_global_extensions = {
+	"coc-pyright",
+	"coc-git",
+}
 vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {

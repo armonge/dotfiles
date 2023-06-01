@@ -50,3 +50,5 @@ function man-http() {
 
 	xdg-open "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/$code"
 }
+
+alias wezterm='flatpak run org.wezfurlong.wezterm'

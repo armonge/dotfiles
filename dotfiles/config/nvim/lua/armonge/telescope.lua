@@ -41,7 +41,7 @@ keyset(
 	"Searches coc diagnostics with Telescope"
 )
 keyset(
-	"n",
+	{ "n", "v" },
 	"<space>c",
 	"<cmd>Telescope coc commands<CR>",
 	opts,
