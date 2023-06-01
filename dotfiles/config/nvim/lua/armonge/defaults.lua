@@ -21,6 +21,7 @@ vim.opt.joinspaces = false -- Prevents inserting two spaces after punctuation on
 vim.opt.splitright = true -- Puts new vsplit windows to the right of the current
 vim.opt.splitbelow = true -- Puts new split windows to the bottom of the current
 vim.opt.pastetoggle = "<F12>" -- pastetoggle (sane indentation on pastes)
+vim.opt.colorcolumn = "+1"
 -- }
 --
 -- <Leader> {

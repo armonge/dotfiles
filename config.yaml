@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.12.13
+  minversion: 1.13.0
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -197,6 +197,10 @@ dotfiles:
     src: config/starship.toml
     dst: ~/.config/starship.toml
     link: absolute
+  f_telescope.lua:
+    src: config/nvim/lua/armonge/telescope.lua
+    dst: ~/.config/nvim/lua/armonge/telescope.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -242,3 +246,4 @@ profiles:
     - f_git_ignore
     - f_treesitter.lua
     - f_starship.toml
+    - f_telescope.lua

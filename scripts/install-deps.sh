@@ -93,14 +93,11 @@ export NVM_DIR
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-nvm install --latest-npm lts/gallium lts/erbium lts/fermium lts/gallium
-nvm use lts/gallium
-npm install --global --upgrade npm @elm-tooling/elm-language-server
-
-nvm install --latest-npm stable
-nvm alias default stable
-nvm use stable
-npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
+nvm install lts/gallium lts/erbium lts/fermium lts/gallium
+nvm install --lts
+nvm alias default lts/*
+nvm use lts/*
+npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
 
 if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
 	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
