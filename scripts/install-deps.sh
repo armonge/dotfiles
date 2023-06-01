@@ -93,13 +93,13 @@ export NVM_DIR
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-nvm install lts/gallium lts/erbium lts/fermium lts/gallium
+nvm install --latest-npm lts/gallium lts/erbium lts/fermium lts/gallium
 nvm use lts/gallium
 npm install --global --upgrade npm @elm-tooling/elm-language-server
 
-nvm install --lts
-nvm alias default lts/*
-nvm use lts/*
+nvm install --latest-npm stable
+nvm alias default stable
+nvm use stable
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
 
 if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
