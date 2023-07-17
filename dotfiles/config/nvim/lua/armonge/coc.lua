@@ -1,14 +1,14 @@
 -- neoclide/coc.nvim {
 
 vim.g.coc_global_extensions = {
-	"coc-pyright",
-	"coc-git",
+    "coc-pyright",
+    "coc-git",
 }
 vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*.sql" },
-	command = "call CocAction('format')",
+    pattern = { "*.sql" },
+    command = "call CocAction('format')",
 })
 
 -- Some servers have issues with backup files, see #649
@@ -27,8 +27,8 @@ local keyset = vim.keymap.set
 
 -- Autocomplete
 function _G.check_back_space()
-	local col = vim.fn.col(".") - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+    local col = vim.fn.col(".") - 1
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
 end
 
 -- Use Tab for trigger completion with characters ahead and navigate
@@ -62,23 +62,23 @@ keyset("n", "gr", "<Plug>(coc-references)", { silent = true })
 
 -- Use K to show documentation in preview window
 function _G.show_docs()
-	local cw = vim.fn.expand("<cword>")
-	if vim.fn.index({ "vim", "help" }, vim.bo.filetype) >= 0 then
-		vim.api.nvim_command("h " .. cw)
-	elseif vim.api.nvim_eval("coc#rpc#ready()") then
-		vim.fn.CocActionAsync("doHover")
-	else
-		vim.api.nvim_command("!" .. vim.o.keywordprg .. " " .. cw)
-	end
+    local cw = vim.fn.expand("<cword>")
+    if vim.fn.index({ "vim", "help" }, vim.bo.filetype) >= 0 then
+        vim.api.nvim_command("h " .. cw)
+    elseif vim.api.nvim_eval("coc#rpc#ready()") then
+        vim.fn.CocActionAsync("doHover")
+    else
+        vim.api.nvim_command("!" .. vim.o.keywordprg .. " " .. cw)
+    end
 end
 keyset("n", "K", "<CMD>lua _G.show_docs()<CR>", { silent = true })
 
 -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
 vim.api.nvim_create_augroup("CocGroup", {})
 vim.api.nvim_create_autocmd("CursorHold", {
-	group = "CocGroup",
-	command = "silent call CocActionAsync('highlight')",
-	desc = "Highlight symbol under cursor on CursorHold",
+    group = "CocGroup",
+    command = "silent call CocActionAsync('highlight')",
+    desc = "Highlight symbol under cursor on CursorHold",
 })
 
 -- Symbol renaming
@@ -90,18 +90,18 @@ keyset({ "x", "n" }, "<leader>F", "<Plug>(coc-format)", { silent = true })
 
 -- Setup formatexpr specified filetype(s)
 vim.api.nvim_create_autocmd("FileType", {
-	group = "CocGroup",
-	pattern = "typescript,json",
-	command = "setl formatexpr=CocAction('formatSelected')",
-	desc = "Setup formatexpr specified filetype(s).",
+    group = "CocGroup",
+    pattern = "typescript,json",
+    command = "setl formatexpr=CocAction('formatSelected')",
+    desc = "Setup formatexpr specified filetype(s).",
 })
 
 -- Update signature help on jump placeholder
 vim.api.nvim_create_autocmd("User", {
-	group = "CocGroup",
-	pattern = "CocJumpPlaceholder",
-	command = "call CocActionAsync('showSignatureHelp')",
-	desc = "Update signature help on jump placeholder",
+    group = "CocGroup",
+    pattern = "CocJumpPlaceholder",
+    command = "call CocActionAsync('showSignatureHelp')",
+    desc = "Update signature help on jump placeholder",
 })
 
 -- Apply codeAction to the selected region
@@ -167,7 +167,6 @@ vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'edito
 -- provide custom statusline: lightline.vim, vim-airline
 vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
--- Mappings for CoCList
 -- code actions and coc stuff
 ---@diagnostic disable-next-line: redefined-local
 local opts = { silent = true, nowait = true }
@@ -179,12 +178,11 @@ keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
 keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
 -- Do default action for previous item
 keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
--- Resume latest coc list
-keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
--- Show all lists
-keyset("n", "<space>l", ":<C-u>CocList<CR>", { silent = true, nowait = true })
--- Search
-keyset("n", "<C-s>", ":CocSearch<space>", { silent = true, nowait = true })
 -- Open outline
 keyset("n", "<C-o>", ":CocOutline<CR>", { silent = true, nowait = true })
 --}
+vim.api.nvim_create_autocmd({ "VimLeave" }, {
+    callback = function()
+        vim.cmd("sleep 50m")
+    end,
+})

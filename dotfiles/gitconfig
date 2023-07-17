@@ -48,6 +48,7 @@
 
 [init]
 	defaultBranch = main
+	templatedir = ~/.git-templates
 
 [credential "https://github.com"]
 	helper = !/usr/bin/gh auth git-credential
@@ -66,3 +67,5 @@
 [committer]
 	email = andres.monge@stylight.com
 	name = Andres Reyes Monge
+[blame]
+	ignoreRevsFile = .git-blame-ignore-revs
