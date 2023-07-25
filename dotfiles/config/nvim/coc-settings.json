@@ -61,33 +61,38 @@
   // If you use neovim you can enable codelenses with this
   // "codeLens.enable": true,
 
-  "pyright.organizeimports.provider": "pyright",
+  "pyright.organizeimports.provider": "isort",
+
+  "python.sortImports.path": "~/.pyenv/versions/nvim3/bin/isort",
+  "python.sortImports.args": ["--profile", "black", "--line-length", "78"],
+
   "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
+  "python.formatting.blackArgs": ["--line-length", "78"],
+
   "python.formatting.blackdPath": "~/.pyenv/versions/nvim3/bin/blackd",
+  "python.formatting.blackdHTTPHeaders": {
+    "X-Line-Length": "78"
+  },
+
   "python.formatting.darkerPath": "~/.pyenv/versions/nvim3/bin/darker",
+
   "python.formatting.autopep8Path": "~/.pyenv/versions/nvim3/bin/autopep8",
   "python.formatting.autopep8Args": [
     "--max-line-length",
-    "80",
+    "78",
     "--aggresive",
     "--experimental"
   ],
+
   "python.formatting.yapfPath": "~/.pyenv/versions/nvim3/bin/yapf",
-  "python.formatting.blackArgs": ["--line-length", "80"],
-  "python.formatting.darkerArgs": [
-    "--skip-string-normalization",
-    "--no-skip-magic-trailing-comma",
-    "--line-length",
-    "80"
-  ],
   "python.formatting.provider": "blackd",
-  "python.formatting.blackdHTTPHeaders": {
-    "X-Line-Length": "80"
-  },
+
   "python.linting.ruffEnabled": true,
   "python.linting.ruffArgs": [],
+
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
+
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": false,
 
