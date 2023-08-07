@@ -40,6 +40,8 @@ require("lazy").setup({
 	"tpope/vim-eunuch",
 	"tpope/vim-rhubarb",
 	"vim-scripts/LargeFile",
+	"junegunn/goyo.vim",
+	"junegunn/limelight.vim",
 	"lukas-reineke/indent-blankline.nvim",
 	{
 		"gregorias/nvim-mapper",

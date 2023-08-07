@@ -19,3 +19,8 @@ set_filetype("~/.ask/cli_config", "json")
 set_filetype("*.code-workspace", "jsonc")
 
 -- }
+--
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = "*.md",
+	command = "Goyo",
+})
