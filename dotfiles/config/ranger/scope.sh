@@ -31,9 +31,10 @@ IFS=$'\n'
 FILE_PATH="${1}" # Full path of the highlighted file
 PV_WIDTH="${2}"  # Width of the preview pane (number of fitting characters)
 ## shellcheck disable=SC2034 # PV_HEIGHT is provided for convenience and unused
-PV_HEIGHT="${3}"        # Height of the preview pane (number of fitting characters)
+# PV_HEIGHT="${3}"        # Height of the preview pane (number of fitting characters)
 IMAGE_CACHE_PATH="${4}" # Full path that should be used to cache image preview
 PV_IMAGE_ENABLED="${5}" # 'True' if image previews are enabled, 'False' otherwise.
+echo "${PV_IMAGE_ENABLED}"
 
 FILE_EXTENSION="${FILE_PATH##*.}"
 FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lower:]')"
@@ -43,9 +44,9 @@ HIGHLIGHT_SIZE_MAX=262143 # 256KiB
 HIGHLIGHT_TABWIDTH=${HIGHLIGHT_TABWIDTH:-8}
 HIGHLIGHT_STYLE=${HIGHLIGHT_STYLE:-pablo}
 HIGHLIGHT_OPTIONS="--replace-tabs=${HIGHLIGHT_TABWIDTH} --style=${HIGHLIGHT_STYLE} ${HIGHLIGHT_OPTIONS:-}"
-PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE}
-OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
-OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
+# PYGMENTIZE_STYLE=${PYGMENTIZE_STYLE}
+# OPENSCAD_IMGSIZE=${RNGR_OPENSCAD_IMGSIZE:-1000,1000}
+# OPENSCAD_COLORSCHEME=${RNGR_OPENSCAD_COLORSCHEME:-Tomorrow Night}
 
 handle_extension() {
 	case "${FILE_EXTENSION_LOWER}" in
@@ -139,7 +140,6 @@ handle_extension() {
 		mediainfo "${FILE_PATH}" && exit 5
 		exiftool "${FILE_PATH}" && exit 5
 		;; # Continue with next handler on failure
-
 	esac
 }
 
@@ -325,7 +325,7 @@ handle_mime() {
 		;;
 
 	## Text
-	text/* | */xml)
+	text/* | */xml | application/javascript)
 		## Syntax highlight
 		if [[ "$(stat --printf='%s' -- "${FILE_PATH}")" -gt ${HIGHLIGHT_SIZE_MAX} ]]; then
 			exit 2

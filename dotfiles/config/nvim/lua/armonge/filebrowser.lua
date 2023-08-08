@@ -12,11 +12,11 @@ vim.g.rnvimr_ranger_cmd = {
 	"exec",
 	"ranger",
 }
-vim.g.rnvimr_enable_ex = 1
-vim.g.rnvimr_enable_picker = 1
-vim.g.rnvimr_enable_bw = 1
-vim.g.rnvimr_hide_gitignore = 1
-vim.g.rnvimr_enable_bw = 1
+vim.g.rnvimr_enable_ex = true
+vim.g.rnvimr_enable_picker = true
+vim.g.rnvimr_enable_bw = true
+vim.g.rnvimr_hide_gitignore = true
+vim.g.rnvimr_enable_bw = true
 
 -- Resize floating window by all preset layouts
 keyset(

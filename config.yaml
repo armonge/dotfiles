@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.13.0
+  minversion: 1.13.2
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -209,6 +209,10 @@ dotfiles:
     src: ipython/profile_default/startup/00-logging.py
     dst: ~/.ipython/profile_default/startup/00-logging.py
     link: absolute
+  f_rc.conf:
+    src: config/ranger/rc.conf
+    dst: ~/.config/ranger/rc.conf
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -257,3 +261,4 @@ profiles:
     - f_telescope.lua
     - f_01-nord.py
     - f_00-logging.py
+    - f_rc.conf
