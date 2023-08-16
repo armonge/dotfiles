@@ -11,9 +11,7 @@
   "html.filetypes": ["html"],
 
   "prettier.formatterPriority": 1000,
-  "snippets.extends": {
-    "dart": ["dart-flutter"]
-  },
+  "snippets.ultisnips.enable": false,
 
   // Fix on save
   "eslint.codeActionsOnSave.mode": "all",
@@ -129,6 +127,6 @@
     "tabulateAlias": true,
     "linesBetweenQueries": 2
   },
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd",
-  "snippets.ultisnips.pythonPrompt": false
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
+  // "snippets.ultisnips.pythonPrompt": false
 }

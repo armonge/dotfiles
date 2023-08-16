@@ -33,12 +33,19 @@ require("lazy").setup({
 	"antoyo/vim-licenses",
 	"numToStr/Comment.nvim",
 	{ "neoclide/coc.nvim", branch = "release" },
-	"honza/vim-snippets",
+	-- "honza/vim-snippets",
+	{
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		version = "2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets", "molleweide/LuaSnip-snippets.nvim" },
+	},
+	"molleweide/LuaSnip-snippets.nvim",
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",
 	"tpope/vim-surround",
-	"tpope/vim-eunuch",
-	"tpope/vim-rhubarb",
 	"vim-scripts/LargeFile",
 	"junegunn/goyo.vim",
 	"junegunn/limelight.vim",
@@ -66,16 +73,6 @@ require("lazy").setup({
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		dependencies = { "nvim-telescope/telescope.nvim" },
-	},
-	{
-		"sindrets/diffview.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-	{
-		"ellisonleao/glow.nvim",
-		config = function()
-			require("glow").setup()
-		end,
 	},
 	{
 		"folke/noice.nvim",
