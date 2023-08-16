@@ -1,5 +1,5 @@
 -- nvim-telescope/telescope.nvim {
-local builtin = require("telescope.builtin")
+local ts_builtin = require("telescope.builtin")
 
 Mapper = require("nvim-mapper")
 local keyset = Mapper.map
@@ -25,9 +25,11 @@ telescope.setup({
 telescope.load_extension("coc")
 telescope.load_extension("mapper")
 telescope.load_extension("fzf")
-
-keyset("n", "<C-p>", builtin.find_files, opts, "Telescope", "find_files", "Searches filenames with Telescope")
-keyset("n", "<leader>fn", builtin.help_tags, opts, "Telescope", "help_tags", "Searches on help_tags with Telescope")
+local find_files = function()
+	return ts_builtin.find_files({ follow = true })
+end
+keyset("n", "<C-p>", find_files, opts, "Telescope", "find_files", "Searches filenames with Telescope")
+keyset("n", "<leader>fn", ts_builtin.help_tags, opts, "Telescope", "help_tags", "Searches on help_tags with Telescope")
 keyset(
 	"n",
 	"<space>m",
@@ -85,6 +87,6 @@ keyset(
 	"Searches registers with Telescope"
 )
 
-keyset("n", "<C-s>", builtin.live_grep, opts, "Telescope", "live_grep", "Searches file with grep and Telescope")
+keyset("n", "<C-s>", ts_builtin.live_grep, opts, "Telescope", "live_grep", "Searches file with grep and Telescope")
 keyset("n", "<space>l", "<cmd>Telescope<CR>", opts, "Telescope", "list", "Shows all telescope lists")
 -- }
