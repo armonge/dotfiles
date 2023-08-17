@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-# set -x
+set -x
 if command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
@@ -33,7 +33,8 @@ if command -v apt &>/dev/null; then
 		gcc-multilib g++-multilib cmake pkg-config \
 		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
 		libsndio-dev freeglut3-dev libxmu-dev libxi-dev libfontconfig1-dev \
-		libxcursor-dev
+		libxcursor-dev \
+		visidata
 fi
 
 if command dnf &>/dev/null; then
@@ -50,6 +51,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
+rustup update
 cargo install git-delta difftastic tree-sitter-cli
 
 if [ ! -d "$HOME/.pyenv" ]; then
@@ -60,27 +62,27 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-pyenv install --skip-existing 2.7.18
-pyenv install --skip-existing 3.10.4
+pyenv install --skip-existing 2.7:latest
+pyenv install --skip-existing 3.10:latest
 
-pyenv shell 3.10.4
+pyenv shell 3.10
 python -m pip install -qq --upgrade pip wheel
 python -m pip install -qq --upgrade devtools[pygments] build black[d]
 
-pyenv shell 2.7.18
+pyenv shell 2.7
 python -m pip install -qq --upgrade pip wheel
 python -m pip install -qq --upgrade build
 
-pyenv virtualenv --force 2.7.18 nvim2
+pyenv virtualenv --force 2.7 nvim2
 pyenv shell nvim2
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort
+python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort rope
 
-pyenv install --skip-existing 3.10.4
-pyenv virtualenv --force 3.10.4 nvim3
+pyenv install --skip-existing 3.10
+pyenv virtualenv --force 3.10 nvim3
 pyenv shell nvim3
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker
+python -m pip install -qq --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then

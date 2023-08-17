@@ -34,15 +34,6 @@ require("lazy").setup({
 	"numToStr/Comment.nvim",
 	{ "neoclide/coc.nvim", branch = "release" },
 	-- "honza/vim-snippets",
-	{
-		"L3MON4D3/LuaSnip",
-		-- follow latest release.
-		version = "2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		-- install jsregexp (optional!).
-		build = "make install_jsregexp",
-		dependencies = { "rafamadriz/friendly-snippets", "molleweide/LuaSnip-snippets.nvim" },
-	},
-	"molleweide/LuaSnip-snippets.nvim",
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",
 	"tpope/vim-surround",
@@ -51,13 +42,17 @@ require("lazy").setup({
 	"junegunn/limelight.vim",
 	"lukas-reineke/indent-blankline.nvim",
 	{
-		"gregorias/nvim-mapper",
-		dependencies = "nvim-telescope/telescope.nvim",
-		config = function()
-			require("nvim-mapper").setup({
-				no_map = false,
-			})
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
 		end,
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
 	},
 
 	{

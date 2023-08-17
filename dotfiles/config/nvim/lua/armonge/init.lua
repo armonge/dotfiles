@@ -1,20 +1,12 @@
-Mapper = require("nvim-mapper")
-local keyset = Mapper.map
-
 -- sql {
 vim.g.sql_type_default = "sql.vim"
 -- }
 
 --  Open files with gx {
-keyset(
-	"n",
-	"gx",
-	"!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>",
-	{},
-	"General",
-	"open_with",
-	"Opens a <WORD> with the default browser"
-)
+local wk = require("which-key")
+wk.register({
+	["gx"] = { "!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>", "Opens a <WORD> with the default browser" },
+})
 --  }
 
 -- vim-licenses {
