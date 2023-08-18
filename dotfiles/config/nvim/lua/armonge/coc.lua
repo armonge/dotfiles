@@ -121,6 +121,18 @@ wk.register({
 	["<leader>qf"] = { "<Plug>(coc-fix-current)", "Apply quickfix" },
 	-- Run the Code Lens actions on the current line
 	["<leader>cl"] = { "<Plug>(coc-codelens-action)", "Run Code Lens on current line" },
+
+	-- Manage extensions
+	["<space>e"] = { ":<C-u>CocList extensions<cr>", "List extensions" },
+
+	-- Find symbol of current document
+	["<C-o>"] = { ":CocOutline<CR>", "Show outline" },
+
+	-- Do default action for next item
+	["<space>j"] = { ":<C-u>CocNext<cr>", "Next item" },
+
+	-- Do default action for previous item
+	["<space>k"] = { ":<C-u>CocPrev<cr>", "Previous item" },
 }, {
 	mode = "n",
 	silent = true,
@@ -138,7 +150,7 @@ wk.register({
 	-- Remap keys for apply refactor code actions.
 	["<leader>re"] = { "<Plug>(coc-codeaction-refactor)", "Refactor" },
 	["<leader>r"] = { "<Plug>(coc-codeaction-refactor-selected)", "Refactor selected" },
-}, { mode = { "x", "n" } })
+}, { mode = { "x", "n" }, silent = true })
 
 wk.register({
 	name = "coc",
@@ -152,86 +164,32 @@ wk.register({
 	mode = { "x", "o" },
 })
 
-
 -- -- Remap <C-f> and <C-b> to scroll float windows/popups
--- ---@diagnostic disable-next-line: redefined-local
--- local opts = { silent = true, nowait = true, expr = true }
--- keyset(
--- 	"n",
--- 	"<C-f>",
--- 	'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"',
--- 	opts,
--- 	"Coc",
--- 	"[n]scroll_forward",
--- 	"Scroll forward"
--- )
--- keyset(
--- 	"i",
--- 	"<C-f>",
--- 	'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"',
--- 	opts,
--- 	"Coc",
--- 	"[i]scroll_forward",
--- 	"Scroll forward"
--- )
--- keyset(
--- 	"v",
--- 	"<C-f>",
--- 	'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"',
--- 	opts,
--- 	"Coc",
--- 	"[v]scroll_forward",
--- 	"Scroll forward"
--- )
---
--- keyset(
--- 	"n",
--- 	"<C-b>",
--- 	'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"',
--- 	opts,
--- 	"Coc",
--- 	"[n]scroll_back",
--- 	"Scroll back"
--- )
--- keyset(
--- 	"i",
--- 	"<C-b>",
--- 	'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"',
--- 	opts,
--- 	"Coc",
--- 	"[i]scroll_back",
--- 	"Scroll back"
--- )
--- keyset(
--- 	"v",
--- 	"<C-b>",
--- 	'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"',
--- 	opts,
--- 	"Coc",
--- 	"[v]scroll_back",
--- 	"Scroll back"
--- )
---
--- -- Use CTRL-S for selections ranges
--- -- Requires 'textDocument/selectionRange' support of language server
--- keyset({"n", "s"}, "<C-s>", "<Plug>(coc-range-select)", { silent = true }, "Coc", "[n]select_range", "Select range")
---
---
---
---
---
--- -- code actions and coc stuff
--- ---@diagnostic disable-next-line: redefined-local
--- local opts = { silent = true, nowait = true }
--- -- Manage extensions
--- keyset("n", "<space>e", ":<C-u>CocList extensions<cr>", opts, "Coc", "list_extensions", "List extension")
--- --
--- -- Find symbol of current document
--- keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts, "Coc", "list outline", "Show outline")
--- keyset("n", "<C-o>", ":CocOutline<CR>", { silent = true, nowait = true }, "Coc", "outline", "Show outline")
---
--- -- Do default action for next item
--- keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts, "Coc", "next", "Next item")
--- -- Do default action for previous item
--- keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts, "Coc", "prev", "Previous item")
--- --}
+wk.register({
+	name = "coc",
+
+	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
+	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
+}, { mode = "n", expr = true })
+
+wk.register({
+	name = "coc",
+
+	["<C-f>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', "Scroll forward" },
+
+	["<C-b>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', "Scroll back" },
+}, { mode = "i", expr = true })
+
+wk.register({
+	name = "coc",
+
+	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
+	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
+}, { mode = "v", expr = true })
+
+-- Use CTRL-S for selections ranges
+-- Requires 'textDocument/selectionRange' support of language server
+wk.register({
+	name = "coc",
+	["<C-m>"] = { "<Plug>(coc-range-select)", "Select range" },
+}, { mode = { "n", "s" } })
