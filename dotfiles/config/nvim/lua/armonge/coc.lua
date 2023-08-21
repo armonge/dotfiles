@@ -4,6 +4,7 @@ local wk = require("which-key")
 vim.g.coc_global_extensions = {
 	"coc-pyright",
 	"coc-git",
+	"coc-snippets",
 }
 vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
@@ -44,25 +45,6 @@ function _G.check_back_space()
 	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
 end
 
-wk.register({
-	name = "coc",
-	-- Use Tab for trigger completion with characters ahead and navigate
-	-- NOTE: There's always a completion item selected by default, you may want to enable
-	-- no select by setting `"suggest.noselect": true` in your configuration file
-	-- NOTE: Use command ':verbose imap <tab>' to make sure Tab is not mapped by
-	-- other plugins before putting this into your config
-	["<TAB>"] = {
-		'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
-		"Next tab completion",
-	},
-	["<S-TAB>"] = { [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], "Previous tab completion" },
-	-- Make <CR> to accept selected completion item or notify coc.nvim to format
-	["<CR>"] = {
-		[[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
-		"Accept tab completion",
-	},
-}, { silent = true, noremap = true, expr = true, replace_keycodes = false, mode = "i" })
-
 function _G.show_docs()
 	local cw = vim.fn.expand("<cword>")
 	if vim.fn.index({ "vim", "help" }, vim.bo.filetype) >= 0 then
@@ -98,6 +80,26 @@ vim.api.nvim_create_autocmd("User", {
 	command = "call CocActionAsync('showSignatureHelp')",
 	desc = "Update signature help on jump placeholder",
 })
+
+wk.register({
+	name = "coc",
+	-- Use Tab for trigger completion with characters ahead and navigate
+	-- NOTE: There's always a completion item selected by default, you may want to enable
+	-- no select by setting `"suggest.noselect": true` in your configuration file
+	-- NOTE: Use command ':verbose imap <tab>' to make sure Tab is not mapped by
+	-- other plugins before putting this into your config
+	["<TAB>"] = {
+		'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
+		"Next",
+	},
+	["<S-TAB>"] = { [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], "Previous" },
+
+	-- Make <CR> to accept selected completion item or notify coc.nvim to format
+	-- <C-g>u breaks current undo, please make your own choice
+	["<cr>"] = { [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], "CR" },
+}, { silent = true, noremap = true, expr = true, replace_keycodes = false, mode = "i" })
+
+vim.g.coc_snippet_next = "<tab>"
 
 wk.register({
 	name = "coc",
@@ -179,6 +181,16 @@ wk.register({
 
 	["<C-b>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', "Scroll back" },
 }, { mode = "i", expr = true })
+
+wk.register({
+	name = "coc",
+
+	-- -- Use <c-j> to trigger snippets
+	["<c-j>"] = { "<Plug>(coc-snippets-expand-jump)", "Use <c-j> to trigger snippets" },
+
+	-- Use <c-space> to trigger completion
+	["<c-space>"] = { "coc#refresh()", "Use <c-space> to trigger completion" },
+}, { mode = "i", expr = true, silent = true, remap = true })
 
 wk.register({
 	name = "coc",

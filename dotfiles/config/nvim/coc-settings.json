@@ -11,6 +11,7 @@
   "html.filetypes": ["html"],
 
   "prettier.formatterPriority": 1000,
+
   "snippets.ultisnips.enable": false,
 
   // Fix on save

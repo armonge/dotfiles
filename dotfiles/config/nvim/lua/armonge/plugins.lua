@@ -17,6 +17,10 @@ vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappin
 require("lazy").setup({
 	"folke/which-key.nvim",
 	"folke/neodev.nvim",
+	"folke/zen-mode.nvim",
+	"folke/twilight.nvim",
+	"honza/vim-snippets",
+	-- "SirVer/ultisnips",
 	"tpope/vim-sensible",
 	{ "nvim-treesitter/nvim-treesitter", ["build"] = "TSUpdate" },
 	{
@@ -33,13 +37,10 @@ require("lazy").setup({
 	"antoyo/vim-licenses",
 	"numToStr/Comment.nvim",
 	{ "neoclide/coc.nvim", branch = "release" },
-	-- "honza/vim-snippets",
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",
 	"tpope/vim-surround",
 	"vim-scripts/LargeFile",
-	"junegunn/goyo.vim",
-	"junegunn/limelight.vim",
 	"lukas-reineke/indent-blankline.nvim",
 	{
 		"folke/which-key.nvim",
