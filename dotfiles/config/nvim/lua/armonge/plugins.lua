@@ -22,7 +22,12 @@ require("lazy").setup({
 	"honza/vim-snippets",
 	-- "SirVer/ultisnips",
 	"tpope/vim-sensible",
-	{ "nvim-treesitter/nvim-treesitter", ["build"] = "TSUpdate" },
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		build = ":TSUpdate",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
@@ -39,7 +44,16 @@ require("lazy").setup({
 	{ "neoclide/coc.nvim", branch = "release" },
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",
-	"tpope/vim-surround",
+	{
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
 	"vim-scripts/LargeFile",
 	"lukas-reineke/indent-blankline.nvim",
 	{

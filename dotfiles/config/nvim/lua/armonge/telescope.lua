@@ -23,7 +23,7 @@ telescope.load_extension("coc")
 telescope.load_extension("notify")
 telescope.load_extension("fzf")
 local find_files = function()
-	return ts_builtin.find_files({ follow = true })
+	return ts_builtin.find_files({ follow = true, hidden = true })
 end
 
 wk.register({
