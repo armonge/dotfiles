@@ -15,7 +15,19 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup({
-	"folke/which-key.nvim",
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+	},
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
 	"folke/twilight.nvim",
@@ -54,21 +66,8 @@ require("lazy").setup({
 			})
 		end,
 	},
-	"vim-scripts/LargeFile",
+	"LunarVim/bigfile.nvim",
 	"lukas-reineke/indent-blankline.nvim",
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-	},
 
 	{
 		"nvim-telescope/telescope.nvim",
