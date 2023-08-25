@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-set -x
+# set -x
 if command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
@@ -44,7 +44,7 @@ if command dnf &>/dev/null; then
 		bat \
 		exa \
 		ShellCheck \
-		fzf ripgrep \
+		fzf ripgrep fd-find \
 		cmake
 fi
 
@@ -88,7 +88,7 @@ python -m pip install -qq --upgrade pynvim ranger-fm pillow ueberzug pygments no
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
 	unset NVM_DIR
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
 fi
 
 NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -97,14 +97,12 @@ export NVM_DIR
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
-nvm install --lts
-nvm alias default lts/*
-nvm use lts/*
+nvm install lts/*
+nvm alias default stable
+nvm use stable
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
 
-if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMono-Regular.ttf" ]; then
-	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
-fi
+bash $HOME/dotfiles/nerd-fonts/install.sh -C JetBrainsMono
 
 if ! [ -x "$(command -v starship)" ]; then
 	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
