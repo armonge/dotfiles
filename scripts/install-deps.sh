@@ -44,7 +44,8 @@ if command dnf &>/dev/null; then
 		bat \
 		exa \
 		ShellCheck \
-		fzf ripgrep
+		fzf ripgrep \
+		cmake
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
