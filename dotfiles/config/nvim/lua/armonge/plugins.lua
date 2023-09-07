@@ -48,11 +48,41 @@ require("lazy").setup({
 	},
 	"wakatime/vim-wakatime",
 
+	"winston0410/range-highlight.nvim",
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		opts = { restrictionmode = "hint" },
+	},
+	{
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	{
+		"m4xshen/smartcolumn.nvim",
+		opts = {},
+	},
 	"andersevenrud/nordic.nvim",
 	"jamessan/vim-gnupg",
 	"kevinhwang91/rnvimr",
 	"antoyo/vim-licenses",
-	"numToStr/Comment.nvim",
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup({
+				-- add any options here
+				mappings = {
+					basic = true,
+					extra = true,
+				},
+			})
+		end,
+		lazy = false,
+	},
 	{ "neoclide/coc.nvim", branch = "release" },
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",

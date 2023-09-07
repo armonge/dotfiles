@@ -5,6 +5,12 @@ vim.g.coc_global_extensions = {
 	"coc-pyright",
 	"coc-git",
 	"coc-snippets",
+	"coc-diagnostic",
+	"coc-html",
+	"coc-json",
+	"coc-yaml",
+	"coc-sumneko-lua",
+	"coc-xml",
 }
 vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
@@ -166,22 +172,6 @@ wk.register({
 	mode = { "x", "o" },
 })
 
--- -- Remap <C-f> and <C-b> to scroll float windows/popups
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
-	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
-}, { mode = "n", expr = true })
-
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', "Scroll forward" },
-
-	["<C-b>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', "Scroll back" },
-}, { mode = "i", expr = true })
-
 wk.register({
 	name = "coc",
 
@@ -191,13 +181,6 @@ wk.register({
 	-- Use <c-space> to trigger completion
 	["<c-space>"] = { "coc#refresh()", "Use <c-space> to trigger completion" },
 }, { mode = "i", expr = true, silent = true, remap = true })
-
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
-	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
-}, { mode = "v", expr = true })
 
 -- Use CTRL-S for selections ranges
 -- Requires 'textDocument/selectionRange' support of language server
