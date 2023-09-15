@@ -49,11 +49,11 @@ require("lazy").setup({
 	"wakatime/vim-wakatime",
 
 	"winston0410/range-highlight.nvim",
-	{
-		"m4xshen/hardtime.nvim",
-		dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-		opts = { restrictionmode = "hint" },
-	},
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+	-- 	opts = { restrictionmode = "hint" },
+	-- },
 	{
 		"karb94/neoscroll.nvim",
 		config = function()

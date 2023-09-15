@@ -6,7 +6,6 @@ if command -v apt &>/dev/null; then
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-		exa \
 		libglib2.0-dev \
 		libcairo2-dev \
 		libpango1.0-dev \
@@ -43,7 +42,6 @@ if command dnf &>/dev/null; then
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
 		bat \
-		exa \
 		ShellCheck \
 		fzf ripgrep fd-find \
 		cmake
@@ -54,7 +52,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 rustup update
-cargo install git-delta difftastic tree-sitter-cli silicon jless
+cargo install git-delta difftastic tree-sitter-cli silicon jless eza
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
@@ -103,7 +101,7 @@ nvm alias default stable
 nvm use stable
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
 
-bash $HOME/dotfiles/nerd-fonts/install.sh -C JetBrainsMono
+bash "${HOME}/dotfiles/nerd-fonts/install.sh" -C JetBrainsMono
 
 if ! [ -x "$(command -v starship)" ]; then
 	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
