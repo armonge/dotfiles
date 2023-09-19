@@ -114,6 +114,9 @@ require("lazy").setup({
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
 	{
+		"rcarriga/nvim-notify",
+	},
+	{
 		"folke/noice.nvim",
 		config = function()
 			require("noice").setup({

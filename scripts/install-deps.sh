@@ -34,7 +34,8 @@ if command -v apt &>/dev/null; then
 		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
 		libsndio-dev freeglut3-dev libxmu-dev libxi-dev libfontconfig1-dev \
 		libxcursor-dev \
-		visidata
+		visidata \
+		watchman
 fi
 
 if command dnf &>/dev/null; then
