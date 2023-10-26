@@ -28,6 +28,16 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"nvim-telescope/telescope.nvim", -- optional
+			"sindrets/diffview.nvim", -- optional
+			"ibhagwan/fzf-lua", -- optional
+		},
+		config = true,
+	},
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
 	"folke/twilight.nvim",
