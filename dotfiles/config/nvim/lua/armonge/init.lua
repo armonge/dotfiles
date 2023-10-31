@@ -13,8 +13,3 @@ wk.register({
 vim.g.licenses_authors_name = "Andrés Reyes Monge <armonge@gmail.com>"
 vim.g.licenses_copyright_holders_name = "Andrés Reyes Monge <armonge@gmail.com>"
 -- }
-
--- numToStr/Comment.nvim {
--- Add spaces after comment delimiters by default
-require("Comment").setup()
--- }

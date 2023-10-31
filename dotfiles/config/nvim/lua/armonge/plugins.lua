@@ -15,7 +15,29 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
 
 require("lazy").setup({
-	"folke/which-key.nvim",
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"nvim-telescope/telescope.nvim", -- optional
+			"sindrets/diffview.nvim", -- optional
+			"ibhagwan/fzf-lua", -- optional
+		},
+		config = true,
+	},
 	"folke/neodev.nvim",
 	"folke/zen-mode.nvim",
 	"folke/twilight.nvim",
@@ -36,11 +58,41 @@ require("lazy").setup({
 	},
 	"wakatime/vim-wakatime",
 
+	"winston0410/range-highlight.nvim",
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+	-- 	opts = { restrictionmode = "hint" },
+	-- },
+	{
+		"karb94/neoscroll.nvim",
+		config = function()
+			require("neoscroll").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
+	{
+		"m4xshen/smartcolumn.nvim",
+		opts = {},
+	},
 	"andersevenrud/nordic.nvim",
 	"jamessan/vim-gnupg",
 	"kevinhwang91/rnvimr",
 	"antoyo/vim-licenses",
-	"numToStr/Comment.nvim",
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup({
+				-- add any options here
+				mappings = {
+					basic = true,
+					extra = true,
+				},
+			})
+		end,
+		lazy = false,
+	},
 	{ "neoclide/coc.nvim", branch = "release" },
 	"vim-scripts/sessionman.vim",
 	"jiangmiao/auto-pairs",
@@ -54,21 +106,8 @@ require("lazy").setup({
 			})
 		end,
 	},
-	"vim-scripts/LargeFile",
+	"LunarVim/bigfile.nvim",
 	"lukas-reineke/indent-blankline.nvim",
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-	},
 
 	{
 		"nvim-telescope/telescope.nvim",
@@ -83,6 +122,9 @@ require("lazy").setup({
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		dependencies = { "nvim-telescope/telescope.nvim" },
+	},
+	{
+		"rcarriga/nvim-notify",
 	},
 	{
 		"folke/noice.nvim",

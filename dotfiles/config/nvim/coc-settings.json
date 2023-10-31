@@ -4,22 +4,47 @@
     "/usr/share/nvim/runtime/lua/vim",
     "/usr/share/nvim/runtime/lua/vim/lsp"
   ],
-  "Lua.diagnostics.globals": ["vim"],
+  "Lua.diagnostics.globals": [
+    "vim"
+  ],
   "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
   "xml.server.vmargs": "-Xmx2048m",
   "html.format.enable": true,
-  "html.filetypes": ["html"],
-
-  "prettier.formatterPriority": 1000,
-
+  "html.filetypes": [
+    "html"
+  ],
+  "suggest.completionItemKindLabels": {
+    "keyword": "\uf1de",
+    "variable": "\ue79b",
+    "value": "\uf89f",
+    "operator": "\u03a8",
+    "function": "\u0192",
+    "reference": "\ufa46",
+    "constant": "\uf8fe",
+    "method": "\uf09a",
+    "struct": "\ufb44",
+    "class": "\uf0e8",
+    "interface": "\uf417",
+    "text": "\ue612",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "module": "\uf40d",
+    "color": "\ue22b",
+    "property": "\ue624",
+    "field": "\uf9be",
+    "unit": "\uf475",
+    "event": "\ufacd",
+    "file": "\uf723",
+    "folder": "\uf114",
+    "snippet": "\ue60b",
+    "typeParameter": "\uf728",
+    "default": "\uf29c"
+  },
   "snippets.ultisnips.enable": false,
-
   // Fix on save
   "eslint.codeActionsOnSave.mode": "all",
   "eslint.autoFixOnSave": true,
-
   "coc.preferences.formatOnSave": true,
-
   "[markdown]": {
     "coc.preferences.formatOnSave": false
   },
@@ -32,26 +57,39 @@
   "yaml.schemas": {
     "https://json.schemastore.org/circleciconfig.json": "**/.circleci/config.yml.*"
   },
-
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
+      "args": [
+        "start"
+      ],
+      "filetypes": [
+        "sh"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
     },
     "elmLS": {
       "trace.server": "verbose",
       "trace.server.format": "text",
       "trace.server.verbosity": "verbose",
       "command": "elm-language-server",
-      "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"]
+      "filetypes": [
+        "elm"
+      ],
+      "rootPatterns": [
+        "elm.json"
+      ]
     },
     "intelephense": {
       "command": "intelephense",
-      "args": ["--stdio"],
-      "filetypes": ["php"],
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "php"
+      ],
       "initializationOptions": {
         "storagePath": "/tmp/intelephense"
       }
@@ -59,22 +97,24 @@
   },
   // If you use neovim you can enable codelenses with this
   // "codeLens.enable": true,
-
   "pyright.organizeimports.provider": "isort",
-
   "python.sortImports.path": "~/.pyenv/versions/nvim3/bin/isort",
-  "python.sortImports.args": ["--profile", "black", "--line-length", "78"],
-
+  "python.sortImports.args": [
+    "--profile",
+    "black",
+    "--line-length",
+    "78"
+  ],
   "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
-  "python.formatting.blackArgs": ["--line-length", "78"],
-
+  "python.formatting.blackArgs": [
+    "--line-length",
+    "78"
+  ],
   "python.formatting.blackdPath": "~/.pyenv/versions/nvim3/bin/blackd",
   "python.formatting.blackdHTTPHeaders": {
     "X-Line-Length": "78"
   },
-
   "python.formatting.darkerPath": "~/.pyenv/versions/nvim3/bin/darker",
-
   "python.formatting.autopep8Path": "~/.pyenv/versions/nvim3/bin/autopep8",
   "python.formatting.autopep8Args": [
     "--max-line-length",
@@ -82,19 +122,14 @@
     "--aggresive",
     "--experimental"
   ],
-
   "python.formatting.yapfPath": "~/.pyenv/versions/nvim3/bin/yapf",
   "python.formatting.provider": "blackd",
-
   "python.linting.ruffEnabled": true,
   "python.linting.ruffArgs": [],
-
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
-
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": false,
-
   "diagnostic.virtualText": true,
   "diagnostic-languageserver.enable": true,
   "diagnostic-languageserver.filetypes": {
@@ -102,25 +137,26 @@
   },
   "diagnostic-languageserver.linters": {
     "shellcheck": {
-      "args": ["-x", "-"]
+      "args": [
+        "-x",
+        "-"
+      ]
     }
   },
   "diagnostic-languageserver.debug": true,
-
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt"
   },
-
   "diagnostic-languageserver.trace.server": "verbose",
   "diagnostic-languageserver.formatters": {
     "shfmt": {
       "command": "shfmt",
-      "args": ["-s"]
+      "args": [
+        "-s"
+      ]
     }
   },
-
   "tsserver.implicitProjectConfig.checkJs": true,
-
   "sql.formatOptions": {
     "keywordCase": "upper",
     "tabWidth": "4",

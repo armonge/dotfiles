@@ -5,6 +5,12 @@ vim.g.coc_global_extensions = {
 	"coc-pyright",
 	"coc-git",
 	"coc-snippets",
+	"coc-diagnostic",
+	"coc-html",
+	"coc-json",
+	"coc-yaml",
+	"coc-sumneko-lua",
+	"coc-xml",
 }
 vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 
@@ -96,8 +102,8 @@ wk.register({
 
 	-- Make <CR> to accept selected completion item or notify coc.nvim to format
 	-- <C-g>u breaks current undo, please make your own choice
-	["<cr>"] = { [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], "CR" },
-}, { silent = true, noremap = true, expr = true, replace_keycodes = false, mode = "i" })
+	["<cr>"] = { 'coc#pum#visible() ? coc#_select_confirm() : "<C-g>u<CR>"', "Confirm selection" },
+}, { silent = true, noremap = true, expr = true, replace_keycodes = true, mode = "i" })
 
 vim.g.coc_snippet_next = "<tab>"
 
@@ -166,22 +172,6 @@ wk.register({
 	mode = { "x", "o" },
 })
 
--- -- Remap <C-f> and <C-b> to scroll float windows/popups
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
-	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
-}, { mode = "n", expr = true })
-
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', "Scroll forward" },
-
-	["<C-b>"] = { 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', "Scroll back" },
-}, { mode = "i", expr = true })
-
 wk.register({
 	name = "coc",
 
@@ -192,16 +182,115 @@ wk.register({
 	["<c-space>"] = { "coc#refresh()", "Use <c-space> to trigger completion" },
 }, { mode = "i", expr = true, silent = true, remap = true })
 
-wk.register({
-	name = "coc",
-
-	["<C-f>"] = { 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', "Scroll forward" },
-	["<C-b>"] = { 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', "Scroll back" },
-}, { mode = "v", expr = true })
-
 -- Use CTRL-S for selections ranges
 -- Requires 'textDocument/selectionRange' support of language server
 wk.register({
 	name = "coc",
 	["<C-m>"] = { "<Plug>(coc-range-select)", "Select range" },
 }, { mode = { "n", "s" } })
+
+-- Integrating with vim-notifiy
+-- https://github.com/neoclide/coc.nvim/wiki/Nvim-notifications-integration#integration-with-nvim-notify
+local coc_status_record = {}
+
+function coc_status_notify(msg, level)
+	local notify_opts = {
+		title = "LSP Status",
+		timeout = 500,
+		hide_from_history = true,
+		on_close = reset_coc_status_record,
+	}
+	-- if coc_status_record is not {} then add it to notify_opts to key called "replace"
+	if coc_status_record ~= {} then
+		notify_opts["replace"] = coc_status_record.id
+	end
+	coc_status_record = vim.notify(msg, level, notify_opts)
+end
+
+function reset_coc_status_record(window)
+	coc_status_record = {}
+end
+
+local coc_diag_record = {}
+
+function coc_diag_notify(msg, level)
+	local notify_opts = { title = "LSP Diagnostics", timeout = 500, on_close = reset_coc_diag_record }
+	-- if coc_diag_record is not {} then add it to notify_opts to key called "replace"
+	if coc_diag_record ~= {} then
+		notify_opts["replace"] = coc_diag_record.id
+	end
+	coc_diag_record = vim.notify(msg, level, notify_opts)
+end
+
+function reset_coc_diag_record(window)
+	coc_diag_record = {}
+end
+
+function DiagnosticNotify()
+	local info = vim.b["coc_diagnostic_info"]
+	if info == nil then
+		return ""
+	end
+	local msgs = {}
+	local level = "info"
+
+	if info["warning"] then
+		level = "warning"
+	end
+
+	if info["error"] then
+		level = "error"
+	end
+
+	if info["error"] then
+		msgs.insert(" Errors: " .. info["error"])
+	end
+
+	if info["warning"] then
+		msgs.insert(" Warnings: " .. info["warning"])
+	end
+
+	if info["information"] then
+		msgs.insert(" Infos: " .. info["info"])
+	end
+
+	if info["hint"] then
+		msgs.insert(" Hints: " .. info["hint"])
+	end
+
+	local msg = table.concat(msgs, "\n")
+	if msg == "" then
+		msg = " All OK"
+	end
+
+	vim.v.coc_diag_notify(msg, level)
+end
+
+function StatusNotify()
+	local status = vim.g["coc_status"]
+	local level = "info"
+	if status == nil then
+		return
+	end
+
+	vim.v.coc_status_notify(status, level)
+end
+
+function InitCoc()
+	vim.notify("Initialized coc.nvim for LSP support", "info", { title = "LSP Status" })
+end
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CocNvimInit",
+	callback = InitCoc,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CocDiagnosticChange",
+	callback = DiagnosticNotify,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "CocStatusChange",
+	callback = StatusNotify,
+})

@@ -31,6 +31,10 @@ wk.register({
 	["<C-p>"] = { find_files, "Searches filenames with telescope" },
 	["<leader>fn"] = { ts_builtin.help_tags, "Searches on help_tags with Telescope" },
 	["<space>a"] = { "<cmd>Telescope coc diagnostics<CR>", "Searches coc diagnostics with Telescope" },
+	["<space>A"] = {
+		"<cmd>Telescope coc workspace_diagnostics<CR>",
+		"Searches coc workspace_diagnostics with Telescope",
+	},
 	["<space>c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
 	["<space>s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
 	["<space>b"] = { "<cmd>Telescope buffers<CR>", "Searches open buffers with Telescope" },

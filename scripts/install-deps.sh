@@ -6,7 +6,6 @@ if command -v apt &>/dev/null; then
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
 		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-		exa \
 		libglib2.0-dev \
 		libcairo2-dev \
 		libpango1.0-dev \
@@ -25,16 +24,18 @@ if command -v apt &>/dev/null; then
 		prettyping \
 		traceroute \
 		ldnsutils \
-		jq gojq \
 		miller \
 		shellcheck \
-		caca-utils libimage-exiftool-perl catdoc mediainfo calibre fontforge \
+		caca-utils libimage-exiftool-perl catdoc mediainfo calibre \
+		fontforge \
 		gnupg ca-certificates git \
-		gcc-multilib g++-multilib cmake pkg-config \
+		gcc-multilib g++-multilib cmake pkg-config meson guile-3.0-dev \
+		libcanberra-gtk-dev libcanberra-gtk3-dev librsvg2-dev \
 		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
 		libsndio-dev freeglut3-dev libxmu-dev libxi-dev libfontconfig1-dev \
 		libxcursor-dev \
-		visidata
+		visidata \
+		watchman
 fi
 
 if command dnf &>/dev/null; then
@@ -42,7 +43,6 @@ if command dnf &>/dev/null; then
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
 		bat \
-		exa \
 		ShellCheck \
 		fzf ripgrep fd-find \
 		cmake \
@@ -54,7 +54,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 rustup update
-cargo install git-delta difftastic tree-sitter-cli
+cargo install git-delta difftastic tree-sitter-cli silicon jless eza
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
@@ -94,8 +94,8 @@ fi
 
 NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 export NVM_DIR
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+[ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"                   # This loads nvm
+[ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion" # This loads nvm bash_completion
 
 nvm install lts/gallium lts/erbium lts/fermium lts/gallium
 nvm install lts/*
@@ -118,4 +118,9 @@ fi
 if ! [ -x "$(command -v nvim)" ]; then
 	curl --location https://github.com/neovim/neovim/releases/download/stable/nvim.appimage --output "${HOME}/.local/bin/nvim"
 	chmod +x "${HOME}/.local/bin/nvim"
+fi
+
+if ! [ -x "$(command -v jq)" ]; then
+	curl --location https://github.com/jqlang/jq/releases/latest/download/jq-linux64 --output "${HOME}/.local/bin/jq"
+	chmod +x "${HOME}/.local/bin/jq"
 fi

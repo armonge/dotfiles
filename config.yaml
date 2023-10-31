@@ -213,6 +213,10 @@ dotfiles:
     src: config/ranger/rc.conf
     dst: ~/.config/ranger/rc.conf
     link: absolute
+  f_rgignore:
+    src: rgignore
+    dst: ~/.rgignore
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -262,3 +266,4 @@ profiles:
     - f_01-nord.py
     - f_00-logging.py
     - f_rc.conf
+    - f_rgignore
