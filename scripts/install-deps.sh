@@ -45,7 +45,8 @@ if command dnf &>/dev/null; then
 		exa \
 		ShellCheck \
 		fzf ripgrep fd-find \
-		cmake
+		cmake \
+		tldr
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
@@ -102,7 +103,13 @@ nvm alias default stable
 nvm use stable
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
 
-bash $HOME/dotfiles/nerd-fonts/install.sh -C JetBrainsMono
+if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMonoNL-Regular.ttf" ]; then
+	wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
+	cd /tmp
+	unzip JetBrainsMono.zip
+	mkdir -p "${HOME}/.local/share/fonts/fonts/ttf/"
+	mv JetBrainsMono*.ttf "${HOME}/.local/share/fonts/fonts/ttf/"
+fi
 
 if ! [ -x "$(command -v starship)" ]; then
 	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh

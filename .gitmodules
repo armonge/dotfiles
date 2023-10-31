@@ -7,6 +7,3 @@
 [submodule "clojure-deps-edn"]
 	path = clojure-deps-edn
 	url = git@github.com:armonge/clojure-deps-edn.git
-[submodule "nerd-fonts"]
-	path = nerd-fonts
-	url = git@github.com:ryanoasis/nerd-fonts.git

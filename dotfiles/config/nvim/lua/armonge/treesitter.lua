@@ -8,7 +8,6 @@ require("nvim-treesitter.configs").setup({
 		"python",
 		"rust",
 		"typescript",
-		"help",
 		"cmake",
 		"vim",
 		"regex",
