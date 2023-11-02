@@ -1,7 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 # set -x
-if command -v apt &>/dev/null; then
+unameOut="$(uname -a)"
+if grep -q "Darwin" <<<"$unameOut"; then
+	# Pillow
+	export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
+	export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
+
+	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp pkg-config fontconfig
+
+	brew install --quiet make wget direnv cmake fzf xz shellcheck jq miller shfmt git-lfs bat nvim gpg
+elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
@@ -36,9 +45,8 @@ if command -v apt &>/dev/null; then
 		libxcursor-dev \
 		visidata \
 		watchman
-fi
 
-if command dnf &>/dev/null; then
+elif command dnf &>/dev/null; then
 	sudo dnf install --assumeyes make gcc zlib-devel bzip2 bzip2-devel \
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
@@ -52,9 +60,6 @@ fi
 if [ ! -d "$HOME/.cargo" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
-
-rustup update
-cargo install git-delta difftastic tree-sitter-cli silicon jless eza
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
@@ -84,7 +89,7 @@ pyenv install --skip-existing 3.10
 pyenv virtualenv --force 3.10 nvim3
 pyenv shell nvim3
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow ueberzug pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
+python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
@@ -103,12 +108,12 @@ nvm alias default stable
 nvm use stable
 npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
 
-if [ ! -f "${HOME}/.local/share/fonts/fonts/ttf/JetBrainsMonoNL-Regular.ttf" ]; then
+if [ ! -f "${HOME}/.local/share/fonts/ttf/JetBrainsMonoNLNerdFont-Regular.ttf" ]; then
 	wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
 	cd /tmp
 	unzip JetBrainsMono.zip
-	mkdir -p "${HOME}/.local/share/fonts/fonts/ttf/"
-	mv JetBrainsMono*.ttf "${HOME}/.local/share/fonts/fonts/ttf/"
+	mkdir -p "${HOME}/.local/share/fonts/ttf/"
+	mv JetBrainsMono*.ttf "${HOME}/.local/share/fonts/ttf/"
 fi
 
 if ! [ -x "$(command -v starship)" ]; then
@@ -124,3 +129,6 @@ if ! [ -x "$(command -v jq)" ]; then
 	curl --location https://github.com/jqlang/jq/releases/latest/download/jq-linux64 --output "${HOME}/.local/bin/jq"
 	chmod +x "${HOME}/.local/bin/jq"
 fi
+
+rustup update
+cargo install git-delta difftastic tree-sitter-cli jless eza

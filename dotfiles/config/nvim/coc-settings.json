@@ -152,7 +152,7 @@
     "shfmt": {
       "command": "shfmt",
       "args": [
-        "-s"
+        "--simplify"
       ]
     }
   },

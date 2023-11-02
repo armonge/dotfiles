@@ -6,7 +6,7 @@
 	enforce = push --force-with-lease
 
 [user]
-  email = andres.monge@stylight.com
+  email = andres.monge@parcellab.com
   name = Andres Reyes Monge
   signingkey = B6A45A727378564E
 
@@ -65,7 +65,7 @@
 [branch]
 	autoSetupMerge = true
 [committer]
-	email = andres.monge@stylight.com
+	email = andres.monge@parcellab.com
 	name = Andres Reyes Monge
 [blame]
 	ignoreRevsFile = .git-blame-ignore-revs
