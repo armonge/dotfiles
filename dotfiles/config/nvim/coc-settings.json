@@ -42,13 +42,8 @@
   },
   "snippets.ultisnips.enable": false,
   // Fix on save
-  "eslint.codeActionsOnSave.mode": "all",
-  "eslint.autoFixOnSave": true,
   "coc.preferences.formatOnSave": true,
   "[markdown]": {
-    "coc.preferences.formatOnSave": false
-  },
-  "[python]": {
     "coc.preferences.formatOnSave": false
   },
   "[yaml]": {
@@ -157,13 +152,7 @@
     }
   },
   "tsserver.implicitProjectConfig.checkJs": true,
-  "sql.formatOptions": {
-    "keywordCase": "upper",
-    "tabWidth": "4",
-    "indentStyle": "tabularLeft",
-    "tabulateAlias": true,
-    "linesBetweenQueries": 2
-  },
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/15.0.3/clangd_15.0.3/bin/clangd"
+  "typescript.format.enable": true,
+  "javascript.format.enable": true
   // "snippets.ultisnips.pythonPrompt": false
 }

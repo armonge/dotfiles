@@ -7,14 +7,20 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
 	export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 
-	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp pkg-config fontconfig
+	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp \
+		pkg-config fontconfig
 
-	brew install --quiet make wget direnv cmake fzf xz shellcheck jq miller shfmt git-lfs bat nvim gpg
+	brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
+		miller shfmt git git-lfs bat nvim gpg awscli \
+		aws-iam-authenticator the_silver_searcher fd exa
+
 elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
-	sudo apt-get install --yes --quiet --quiet make build-essential libssl-dev zlib1g-dev \
-		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
+	sudo apt-get install --yes --quiet --quiet make build-essential \
+		libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+		libsqlite3-dev \
+		wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev \
+		libxmlsec1-dev libffi-dev liblzma-dev \
 		libglib2.0-dev \
 		libcairo2-dev \
 		libpango1.0-dev \
@@ -40,8 +46,9 @@ elif command -v apt &>/dev/null; then
 		gnupg ca-certificates git \
 		gcc-multilib g++-multilib cmake pkg-config meson guile-3.0-dev \
 		libcanberra-gtk-dev libcanberra-gtk3-dev librsvg2-dev \
-		libfreetype6-dev libasound2-dev libexpat1-dev libxcb-composite0-dev \
-		libsndio-dev freeglut3-dev libxmu-dev libxi-dev libfontconfig1-dev \
+		libfreetype6-dev libasound2-dev libexpat1-dev \
+		libxcb-composite0-dev libsndio-dev freeglut3-dev libxmu-dev \
+		libxi-dev libfontconfig1-dev \
 		libxcursor-dev \
 		visidata \
 		watchman

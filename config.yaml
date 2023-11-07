@@ -217,6 +217,10 @@ dotfiles:
     src: rgignore
     dst: ~/.rgignore
     link: absolute
+  f_direnvrc:
+    src: direnvrc
+    dst: ~/.direnvrc
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -267,3 +271,4 @@ profiles:
     - f_00-logging.py
     - f_rc.conf
     - f_rgignore
+    - f_direnvrc

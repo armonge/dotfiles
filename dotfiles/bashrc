@@ -25,8 +25,18 @@ if ! [[ $PATH =~ "${HOME}/.local/bin:${HOME}/bin:" ]]; then
 fi
 export PATH
 
-# Clojure
 export XDG_CONFIG_HOME=$HOME/.config
+
+if [ -f "/opt/homebrew/bin/brew" ]; then
+	# We're on Mac :shrug:
+	export BASH_SILENCE_DEPRECATION_WARNING=1
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+
+	[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+	complete -C "$(command -v aws_completer)" aws
+fi
+
+# Clojure
 if [ -f /etc/profile.d/clojure.sh ]; then
 	source /etc/profile.d/clojure.sh
 	source /usr/share/bash-completion/completions/lein
@@ -71,9 +81,6 @@ if command -v go &>/dev/null; then
 	GOPATH=$(go env GOPATH)
 	export PATH=$PATH:$GOPATH/bin
 fi
-
-# Azure Functions Cli
-export PATH=$HOME/bin/azure-functions-cli:$PATH
 
 # Android
 export ANDROID_HOME=$HOME/Android/Sdk
@@ -280,10 +287,4 @@ fi
 
 if command -v kubectl &>/dev/null; then
 	source <(kubectl completion bash)
-fi
-
-
-export BASH_SILENCE_DEPRECATION_WARNING=1
-if [ -f "/opt/homebrew/bin/brew" ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi

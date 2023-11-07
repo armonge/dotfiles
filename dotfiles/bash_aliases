@@ -6,7 +6,11 @@ alias vi='nvim'
 alias vim='nvim'
 alias grep='grep --color=auto --ignore-case'
 alias serve='python3 -m http.server'
-alias open='xdg-open'
+if [ -f "/opt/homebrew/bin/brew" ]; then
+	true
+else
+	alias open='xdg-open'
+fi
 alias dotnet='TERM=xterm dotnet'
 alias func="TERM=xterm func"
 alias pwsh="TERM=xterm pwsh"
