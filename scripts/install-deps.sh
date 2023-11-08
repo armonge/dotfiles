@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euo pipefail
-# set -x
+set -x
 unameOut="$(uname -a)"
 if grep -q "Darwin" <<<"$unameOut"; then
 	# Pillow
@@ -8,7 +8,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 
 	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp \
-		pkg-config fontconfig
+		pkg-config fontconfig cairo
 
 	brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
 		miller shfmt git git-lfs bat nvim gpg awscli \
@@ -77,11 +77,11 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 pyenv install --skip-existing 2.7:latest
-pyenv install --skip-existing 3.10:latest
+pyenv install --skip-existing 3.12:latest
 
-pyenv shell 3.10
+pyenv shell 3.12
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade devtools[pygments] build black[d]
+python -m pip install -qq --upgrade devtools[pygments] build black
 
 pyenv shell 2.7
 python -m pip install -qq --upgrade pip wheel
@@ -92,8 +92,8 @@ pyenv shell nvim2
 python -m pip install -qq --upgrade pip wheel
 python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort rope
 
-pyenv install --skip-existing 3.10
-pyenv virtualenv --force 3.10 nvim3
+pyenv install --skip-existing 3.12
+pyenv virtualenv --force 3.12 nvim3
 pyenv shell nvim3
 python -m pip install -qq --upgrade pip wheel
 python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
