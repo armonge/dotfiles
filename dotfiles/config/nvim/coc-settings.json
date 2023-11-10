@@ -49,17 +49,9 @@
   // "codeLens.enable": true,
   "pyright.organizeimports.provider": "isort",
   "python.sortImports.path": "~/.pyenv/versions/nvim3/bin/isort",
-  "python.sortImports.args": ["--profile", "black", "--line-length", "78"],
   "python.formatting.blackPath": "~/.pyenv/versions/nvim3/bin/black",
-  "python.formatting.blackArgs": ["--line-length", "78"],
   "python.formatting.darkerPath": "~/.pyenv/versions/nvim3/bin/darker",
   "python.formatting.autopep8Path": "~/.pyenv/versions/nvim3/bin/autopep8",
-  "python.formatting.autopep8Args": [
-    "--max-line-length",
-    "78",
-    "--aggresive",
-    "--experimental"
-  ],
   "python.formatting.yapfPath": "~/.pyenv/versions/nvim3/bin/yapf",
   "python.formatting.provider": "black",
   "python.linting.ruffEnabled": true,
