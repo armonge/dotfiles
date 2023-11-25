@@ -11,7 +11,8 @@ vim.g.coc_global_extensions = {
   "coc-yaml",
   "coc-sumneko-lua",
   "coc-xml",
-  "coc-prettier"
+  "coc-prettier",
+  "coc-tsserver"
 }
 -- vim.g.coc_node_path = os.getenv("NVM_BIN") .. "/node"
 

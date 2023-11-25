@@ -58,11 +58,14 @@ elif command dnf &>/dev/null; then
 	sudo dnf install --assumeyes make gcc zlib-devel bzip2 bzip2-devel \
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
-		bat \
+		bat lua \
 		ShellCheck \
-		fzf ripgrep fd-find \
-		cmake \
-		tldr
+		fzf ripgrep fd-find shfmt \
+		cmake g++ \
+		tldr \
+		the_silver_searcher \
+		wl-clipboard \
+		git git-lfs
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
@@ -97,7 +100,7 @@ pyenv install --skip-existing 3.12
 pyenv virtualenv --force 3.12 nvim3
 pyenv shell nvim3
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
+python -m pip install -qq --upgrade "pynvim@git+https://github.com/neovim/pynvim" ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
@@ -114,7 +117,7 @@ nvm install lts/gallium lts/erbium lts/fermium lts/gallium
 nvm install lts/*
 nvm alias default stable
 nvm use stable
-npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs @elm-tooling/elm-language-server elm-format nodemon
+npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
 
 if [ ! -f "${HOME}/.local/share/fonts/ttf/JetBrainsMonoNLNerdFont-Regular.ttf" ]; then
 	wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
@@ -125,6 +128,7 @@ if [ ! -f "${HOME}/.local/share/fonts/ttf/JetBrainsMonoNLNerdFont-Regular.ttf" ]
 fi
 
 if ! [ -x "$(command -v starship)" ]; then
+	mkdir -p ~/.local/bin
 	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
 fi
 
