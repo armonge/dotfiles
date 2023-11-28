@@ -8,7 +8,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
 
 	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp \
-		pkg-config fontconfig cairo
+		pkg-config fontconfig cairo libmagic
 
 	brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
 		miller shfmt git git-lfs bat nvim gpg awscli \
