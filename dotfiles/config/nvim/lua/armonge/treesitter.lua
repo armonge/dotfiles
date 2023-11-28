@@ -17,5 +17,7 @@ require("nvim-treesitter.configs").setup({
     "yaml",
     "html",
     "javascript",
+    "terraform",
+    "jsonc"
   },
 })

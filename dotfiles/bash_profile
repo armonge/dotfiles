@@ -13,5 +13,8 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 export GPG_TTY=$(tty)
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
+if [ -f "/opt/homebrew/bin/brew" ]; then
+	test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	export MONGOMS_ARCH=x64
+fi
