@@ -100,11 +100,6 @@ dotfiles:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: absolute
-  f_shfmt:
-    src: local/bin/shfmt
-    dst: ~/.local/bin/shfmt
-    link: absolute
-    chmod: '755'
   f_clojure_deps.edn:
     src: config/clojure/deps.edn
     dst: ~/.config/clojure/deps.edn
@@ -242,7 +237,6 @@ profiles:
     - f_delta.sh
     - f_rifle.conf
     - f_version
-    - f_shfmt
     - f_clojure_deps.edn
     - f_rebel_readline.edn
     - f_practicalli-custom-dictionary.txt

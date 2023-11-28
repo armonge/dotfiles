@@ -1,14 +1,13 @@
 {
-  "Lua.workspace.library": [
-    "/usr/share/nvim/runtime/lua",
-    "/usr/share/nvim/runtime/lua/vim",
-    "/usr/share/nvim/runtime/lua/vim/lsp"
+  "Lua.diagnostics.globals": [
+    "vim"
   ],
-  "Lua.diagnostics.globals": ["vim"],
   "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
   "xml.server.vmargs": "-Xmx2048m",
   "html.format.enable": true,
-  "html.filetypes": ["html"],
+  "html.filetypes": [
+    "html"
+  ],
   "snippets.ultisnips.enable": false,
   // Fix on save
   "coc.preferences.formatOnSave": true,
@@ -24,22 +23,24 @@
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
-    "elmLS": {
-      "trace.server": "verbose",
-      "trace.server.format": "text",
-      "trace.server.verbosity": "verbose",
-      "command": "elm-language-server",
-      "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"]
+      "args": [
+        "start"
+      ],
+      "filetypes": [
+        "sh"
+      ],
+      "ignoredRootPaths": [
+        "~"
+      ]
     },
     "intelephense": {
       "command": "intelephense",
-      "args": ["--stdio"],
-      "filetypes": ["php"],
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "php"
+      ],
       "initializationOptions": {
         "storagePath": "/tmp/intelephense"
       }
@@ -62,7 +63,10 @@
   },
   "diagnostic-languageserver.linters": {
     "shellcheck": {
-      "args": ["-x", "-"]
+      "args": [
+        "-x",
+        "-"
+      ]
     }
   },
   "diagnostic-languageserver.debug": true,
@@ -73,7 +77,9 @@
   "diagnostic-languageserver.formatters": {
     "shfmt": {
       "command": "shfmt",
-      "args": ["--simplify"]
+      "args": [
+        "--simplify"
+      ]
     }
   },
   "tsserver.implicitProjectConfig.checkJs": true,
