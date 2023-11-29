@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.13.2
+  minversion: 1.14.0
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -212,9 +212,13 @@ dotfiles:
     src: rgignore
     dst: ~/.rgignore
     link: absolute
-  f_direnvrc:
-    src: direnvrc
-    dst: ~/.direnvrc
+  f_direnv_direnvrc:
+    src: config/direnv/direnvrc
+    dst: ~/.config/direnv/direnvrc
+    link: absolute
+  f_direnv.toml:
+    src: config/direnv/direnv.toml
+    dst: ~/.config/direnv/direnv.toml
     link: absolute
 profiles:
   armonge-laptop:
@@ -265,4 +269,5 @@ profiles:
     - f_00-logging.py
     - f_rc.conf
     - f_rgignore
-    - f_direnvrc
+    - f_direnv_direnvrc
+    - f_direnv.toml
