@@ -43,7 +43,7 @@ alias fclear='tput reset'
 alias minikubectl="minikube kubectl --"
 function jsonv() {
 	file=$1
-	jq --color-output '.' $1 | cat -p
+	jq --color-output '.' "$file" | cat -p
 }
 
 function man-http() {
