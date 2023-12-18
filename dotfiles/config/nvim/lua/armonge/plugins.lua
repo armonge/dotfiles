@@ -98,7 +98,11 @@ require("lazy").setup({
     end,
   },
   "LunarVim/bigfile.nvim",
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {}
+  },
 
   {
     "nvim-telescope/telescope.nvim",
@@ -116,12 +120,28 @@ require("lazy").setup({
     dependencies = { "nvim-telescope/telescope.nvim" },
   },
   {
+    "nvim-telescope/telescope-frecency.nvim",
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+  },
+  {
     "rcarriga/nvim-notify",
   },
   {
     "folke/noice.nvim",
     config = function()
-      require("noice").setup({
+      local noice = require('noice')
+      local wk = require("which-key")
+
+      wk.register({
+        name = "Noice",
+        ["<leader>nd"] = { function()
+          noice.cmd('dismiss')
+        end, "Noice dismiss" }
+      })
+
+      noice.setup({
         lsp = {
           -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
           override = {
@@ -143,7 +163,14 @@ require("lazy").setup({
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
+      "folke/which-key.nvim",
     },
   },
+  {
+    "lambdalisue/suda.vim",
+    config = function()
+      vim.g.suda_smart_edit = 1
+    end
+  }
 })
 -- }

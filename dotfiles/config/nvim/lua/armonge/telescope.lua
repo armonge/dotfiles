@@ -22,6 +22,7 @@ telescope.setup({
 telescope.load_extension("coc")
 telescope.load_extension("notify")
 telescope.load_extension("fzf")
+telescope.load_extension("noice")
 local find_files = function()
   return ts_builtin.find_files({ follow = true, hidden = true })
 end
@@ -44,6 +45,8 @@ wk.register({
   ["<C-s>"] = { ts_builtin.live_grep, "Searches file with grep and Telescope" },
   ["<C-f>"] = { ts_builtin.resume, "Continues last Telescope search" },
   ["<space>l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
+  ["<leader><leader>"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
+  ["<leader>h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
 }, { mode = "n" })
 
 -- Fixes a bug where files opened by Telescope don't work with folds
