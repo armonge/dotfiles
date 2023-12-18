@@ -72,6 +72,9 @@ if [ ! -d "$HOME/.cargo" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
+rustup update
+cargo install git-delta difftastic tree-sitter-cli jless eza
+
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash
 fi
@@ -85,7 +88,7 @@ pyenv install --skip-existing 3.12:latest
 
 pyenv shell 3.12
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade devtools[pygments] build black
+python -m pip install -qq --upgrade devtools[pygments] build ruff
 
 pyenv shell 2.7
 python -m pip install -qq --upgrade pip wheel
@@ -94,13 +97,13 @@ python -m pip install -qq --upgrade build
 pyenv virtualenv --force 2.7 nvim2
 pyenv shell nvim2
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build isort rope
+python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build rope
 
 pyenv install --skip-existing 3.12
 pyenv virtualenv --force 3.12 nvim3
 pyenv shell nvim3
 python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade "pynvim@git+https://github.com/neovim/pynvim" ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer isort darker rope
+python -m pip install -qq --upgrade "pynvim@git+https://github.com/neovim/pynvim" ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer rope djhtml ruff
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
@@ -141,6 +144,3 @@ if ! [ -x "$(command -v jq)" ]; then
 	curl --location https://github.com/jqlang/jq/releases/latest/download/jq-linux64 --output "${HOME}/.local/bin/jq"
 	chmod +x "${HOME}/.local/bin/jq"
 fi
-
-rustup update
-cargo install git-delta difftastic tree-sitter-cli jless eza

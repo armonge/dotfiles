@@ -1,13 +1,9 @@
 {
-  "Lua.diagnostics.globals": [
-    "vim"
-  ],
+  "Lua.diagnostics.globals": ["vim"],
   "xml.java.home": "/usr/lib/jvm/java-11-openjdk-amd64/",
   "xml.server.vmargs": "-Xmx2048m",
   "html.format.enable": true,
-  "html.filetypes": [
-    "html"
-  ],
+  "html.filetypes": ["html"],
   "snippets.ultisnips.enable": false,
   // Fix on save
   "coc.preferences.formatOnSave": true,
@@ -23,24 +19,14 @@
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
-      "args": [
-        "start"
-      ],
-      "filetypes": [
-        "sh"
-      ],
-      "ignoredRootPaths": [
-        "~"
-      ]
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     },
     "intelephense": {
       "command": "intelephense",
-      "args": [
-        "--stdio"
-      ],
-      "filetypes": [
-        "php"
-      ],
+      "args": ["--stdio"],
+      "filetypes": ["php"],
       "initializationOptions": {
         "storagePath": "/tmp/intelephense"
       }
@@ -48,13 +34,14 @@
   },
   // If you use neovim you can enable codelenses with this
   // "codeLens.enable": true,
-  "pyright.organizeimports.provider": "pyright",
+  "pyright.organizeimports.provider": "ruff",
   "python.formatting.provider": "black",
+  "python.formatting.ruffArgs": [],
   "python.linting.ruffEnabled": true,
   "python.linting.ruffArgs": [],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
-  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Enabled": false,
   "python.linting.mypyEnabled": true,
   "diagnostic.virtualText": true,
   "diagnostic-languageserver.enable": true,
@@ -63,10 +50,7 @@
   },
   "diagnostic-languageserver.linters": {
     "shellcheck": {
-      "args": [
-        "-x",
-        "-"
-      ]
+      "args": ["-x", "-"]
     }
   },
   "diagnostic-languageserver.debug": true,
@@ -77,9 +61,7 @@
   "diagnostic-languageserver.formatters": {
     "shfmt": {
       "command": "shfmt",
-      "args": [
-        "--simplify"
-      ]
+      "args": ["--simplify"]
     }
   },
   "tsserver.implicitProjectConfig.checkJs": true,

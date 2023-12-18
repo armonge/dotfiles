@@ -30,10 +30,6 @@ alias ftp='lftp'
 alias dmesg='dmesg -H'
 # Makes xclip work with vim
 alias xclip='xclip -selection c'
-alias cwt='cw tail --group-name --stream-name --start=1m --local --follow'
-
-# Your dotdrop git repository location
-export DOTREPO="$HOME/dotfiles"
 
 alias dotdrop='$DOTREPO/dotdrop.sh'
 alias dotgit='git -C $DOTREPO'

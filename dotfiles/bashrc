@@ -262,8 +262,12 @@ if [ -f "$HOME/.cargo/env" ]; then
 	source "$HOME/.cargo/env"
 fi
 
-if [ -f "${HOME}/dotfiles" ]; then
-	source "${HOME}/dotfiles/dotdrop/completion/dotdrop-completion.bash"
+if [ -d "${HOME}/dotfiles" ]; then
+	# Your dotdrop git repository location
+	export DOTREPO="$HOME/dotfiles"
+	source "${DOTREPO}/dotdrop/completion/dotdrop-completion.bash"
+else
+	echo "NO DOTFILES ${HOME}/dotfiles"
 fi
 
 # https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119
