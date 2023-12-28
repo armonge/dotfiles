@@ -28,25 +28,29 @@ local find_files = function()
 end
 
 wk.register({
-  name = "Telescope",
-  ["<C-p>"] = { find_files, "Searches filenames with telescope" },
-  ["<leader>fn"] = { ts_builtin.help_tags, "Searches on help_tags with Telescope" },
-  ["<space>a"] = { "<cmd>Telescope coc diagnostics<CR>", "Searches coc diagnostics with Telescope" },
-  ["<space>A"] = {
-    "<cmd>Telescope coc workspace_diagnostics<CR>",
-    "Searches coc workspace_diagnostics with Telescope",
+  ["<leader>t"] = {
+    name = "Telescope",
+    ["p"] = { find_files, "Searches filenames with telescope" },
+    ["n"] = { ts_builtin.help_tags, "Searches on help_tags with Telescope" },
+    ["a"] = { "<cmd>Telescope coc diagnostics<CR>", "Searches coc diagnostics with Telescope" },
+    ["q"] = { "<cmd>Telescope quickfix<CR>", "Searches quickfix list Telescope" },
+    ["A"] = {
+      "<cmd>Telescope coc workspace_diagnostics<CR>",
+      "Searches coc workspace_diagnostics with Telescope",
+    },
+    ["c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
+    ["s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
+    ["b"] = { "<cmd>Telescope buffers<CR>", "Searches open buffers with Telescope" },
+    ["r"] = { "<cmd>Telescope registers<CR>", "Searches registers with Telescope" },
+    ["o"] = { "<cmd>Telescope oldfiles<CR>", "Searches previously opened files" },
+    ["l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
+    ["f"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
+    ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
+
   },
-  ["<space>c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
-  ["<space>s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
-  ["<space>b"] = { "<cmd>Telescope buffers<CR>", "Searches open buffers with Telescope" },
-  ["<space>r"] = { "<cmd>Telescope registers<CR>", "Searches registers with Telescope" },
-  ["<space>o"] = { "<cmd>Telescope oldfiles<CR>", "Searches previously opened files" },
   ["gr"] = { "<cmd>Telescope coc references<CR>", "Show references" },
   ["<C-s>"] = { ts_builtin.live_grep, "Searches file with grep and Telescope" },
   ["<C-f>"] = { ts_builtin.resume, "Continues last Telescope search" },
-  ["<space>l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
-  ["<leader><leader>"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
-  ["<leader>h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
 }, { mode = "n" })
 
 -- Fixes a bug where files opened by Telescope don't work with folds

@@ -40,8 +40,8 @@ require("lazy").setup({
     config = true,
   },
   "folke/neodev.nvim",
-  "folke/zen-mode.nvim",
-  "folke/twilight.nvim",
+  -- "folke/zen-mode.nvim",
+  -- "folke/twilight.nvim",
   "honza/vim-snippets",
   -- "SirVer/ultisnips",
   "tpope/vim-sensible",
@@ -66,11 +66,28 @@ require("lazy").setup({
         -- Configuration here, or leave empty to use defaults
       })
     end,
+    event = 'VeryLazy'
   },
-  "andersevenrud/nordic.nvim",
-  "jamessan/vim-gnupg",
-  "kevinhwang91/rnvimr",
-  "antoyo/vim-licenses",
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+  {
+
+    "jamessan/vim-gnupg",
+    event = 'VeryLazy'
+  },
+  {
+    "kevinhwang91/rnvimr",
+    event = 'VeryLazy'
+  },
+  {
+
+    "antoyo/vim-licenses",
+    event = 'VeryLazy'
+  },
   {
     "numToStr/Comment.nvim",
     config = function()
@@ -82,11 +99,21 @@ require("lazy").setup({
         },
       })
     end,
-    lazy = false,
+    event = 'VeryLazy'
   },
-  { "neoclide/coc.nvim",               branch = "release" },
-  "vim-scripts/sessionman.vim",
-  "jiangmiao/auto-pairs",
+  {
+    "neoclide/coc.nvim",
+    branch = "release",
+    -- event = 'VeryLazy',
+  },
+  {
+    "vim-scripts/sessionman.vim",
+    event = 'VeryLazy'
+  },
+  {
+    "jiangmiao/auto-pairs",
+    event = 'VeryLazy'
+  },
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -97,7 +124,10 @@ require("lazy").setup({
       })
     end,
   },
-  "LunarVim/bigfile.nvim",
+  {
+    "LunarVim/bigfile.nvim",
+    event = 'VeryLazy',
+  },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
@@ -106,30 +136,36 @@ require("lazy").setup({
 
   {
     "nvim-telescope/telescope.nvim",
+    event = 'VeryLazy',
     branch = "0.1.x",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
     "fannheyward/telescope-coc.nvim",
+    event = 'VeryLazy',
     dependencies = { "nvim-telescope/telescope.nvim" },
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
+    event = 'VeryLazy',
     build =
     "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
     dependencies = { "nvim-telescope/telescope.nvim" },
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
+    event = 'VeryLazy',
     config = function()
       require("telescope").load_extension("frecency")
     end,
   },
   {
     "rcarriga/nvim-notify",
+    event = 'VeryLazy',
   },
   {
     "folke/noice.nvim",
+    event = 'VeryLazy',
     config = function()
       local noice = require('noice')
       local wk = require("which-key")
@@ -168,9 +204,47 @@ require("lazy").setup({
   },
   {
     "lambdalisue/suda.vim",
+    event = 'VeryLazy',
     config = function()
       vim.g.suda_smart_edit = 1
     end
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    config = function()
+      local wk = require("which-key")
+
+      -- flash
+      wk.register({
+        -- flash search
+        l = {
+          name = "flash",
+          ["s"] = { function() require("flash").jump() end, "Flash Jump" },
+          ["t"] = { function() require("flash").treesitter() end, "Flash Treesitter" },
+          ["r"] = { function() require("flash").treesitter_search() end, "Flash Treesitter Search" },
+        },
+      }, { prefix = "<leader>" })
+    end
+  },
+  {
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    event = 'VeryLazy',
+    config = function()
+      local treesj = require('treesj')
+      local wk = require("which-key")
+
+      treesj.setup({ use_default_keymaps = false, })
+      wk.register({
+        t = {
+          name = "Treesj",
+          ["m"] = { function() require('treesj').toggle() end, "Toggle node under cursor" },
+          ["j"] = { function() require('treesj').join() end, "Join node under cursor" },
+          ["s"] = { function() require('treesj').split() end, "Split node under cursor" },
+        }
+      }, { prefix = '<space>' })
+    end,
   }
 })
 -- }
