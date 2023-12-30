@@ -150,17 +150,17 @@ wk.register({
 
 wk.register({
   name = "coc",
-  ["<leader>f"] = { "<Plug>(coc-format-selected)", "Formatting selected code" },
-  ["<leader>F"] = { "<Plug>(coc-format)", "Format the buffer" },
+  ["f"] = { "<Plug>(coc-format-selected)", "Formatting selected code" },
+  ["F"] = { "<Plug>(coc-format)", "Format the buffer" },
 
   -- -- Apply codeAction to the selected region
   -- -- Example: `<leader>aap` for current paragraph
-  ["<leader>a"] = { "<Plug>(coc-codeaction-selected)", "Apply the codeaction" },
+  ["a"] = { "<Plug>(coc-codeaction-selected)", "Apply the codeaction" },
 
   -- Remap keys for apply refactor code actions.
-  ["<leader>re"] = { "<Plug>(coc-codeaction-refactor)", "Refactor" },
-  ["<leader>r"] = { "<Plug>(coc-codeaction-refactor-selected)", "Refactor selected" },
-}, { mode = { "x", "n" }, silent = true })
+  ["re"] = { "<Plug>(coc-codeaction-refactor)", "Refactor" },
+  ["r"] = { "<Plug>(coc-codeaction-refactor-selected)", "Refactor selected" },
+}, { mode = { "x", "n" }, silent = true, prefix = "<leader>" })
 
 wk.register({
   name = "coc",

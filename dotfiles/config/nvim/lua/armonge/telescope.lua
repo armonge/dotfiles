@@ -1,9 +1,19 @@
 local wk = require("which-key")
 -- nvim-telescope/telescope.nvim {
 local ts_builtin = require("telescope.builtin")
+local ts_actions = require("telescope.actions")
 
 local telescope = require("telescope")
 telescope.setup({
+  pickers = {
+    buffers = {
+      mappings = {
+        i = {
+          ["<C-d>"] = ts_actions.delete_buffer
+        }
+      }
+    }
+  },
   extensions = {
     coc = {
       theme = "ivy",
@@ -33,16 +43,16 @@ wk.register({
     ["p"] = { find_files, "Searches filenames with telescope" },
     ["n"] = { ts_builtin.help_tags, "Searches on help_tags with Telescope" },
     ["a"] = { "<cmd>Telescope coc diagnostics<CR>", "Searches coc diagnostics with Telescope" },
-    ["q"] = { "<cmd>Telescope quickfix<CR>", "Searches quickfix list Telescope" },
+    ["q"] = { ts_builtin.quickfix, "Searches quickfix list Telescope" },
     ["A"] = {
       "<cmd>Telescope coc workspace_diagnostics<CR>",
       "Searches coc workspace_diagnostics with Telescope",
     },
     ["c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
     ["s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
-    ["b"] = { "<cmd>Telescope buffers<CR>", "Searches open buffers with Telescope" },
-    ["r"] = { "<cmd>Telescope registers<CR>", "Searches registers with Telescope" },
-    ["o"] = { "<cmd>Telescope oldfiles<CR>", "Searches previously opened files" },
+    ["b"] = { ts_builtin.buffers, "Searches open buffers with Telescope" },
+    ["r"] = { ts_builtin.registers, "Searches registers with Telescope" },
+    ["o"] = { ts_builtin.oldfiles, "Searches previously opened files" },
     ["l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
     ["f"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
     ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },

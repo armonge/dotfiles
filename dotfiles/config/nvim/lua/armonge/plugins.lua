@@ -60,15 +60,6 @@ require("lazy").setup({
   "wakatime/vim-wakatime",
 
   {
-    "karb94/neoscroll.nvim",
-    config = function()
-      require("neoscroll").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
-    event = 'VeryLazy'
-  },
-  {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
@@ -171,11 +162,13 @@ require("lazy").setup({
       local wk = require("which-key")
 
       wk.register({
-        name = "Noice",
-        ["<leader>nd"] = { function()
-          noice.cmd('dismiss')
-        end, "Noice dismiss" }
-      })
+        n = {
+          name = "Noice",
+          ["d"] = { function()
+            noice.cmd('dismiss')
+          end, "Noice dismiss" }
+        }
+      }, { prefix = "<leader>" })
 
       noice.setup({
         lsp = {
