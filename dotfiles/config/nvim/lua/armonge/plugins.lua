@@ -241,6 +241,14 @@ require("lazy").setup({
   },
   {
     "mechatroner/rainbow_csv"
+  },
+  {
+    'natecraddock/workspaces.nvim',
+    opts = {
+      hooks = {
+        open = { "Telescope find_files" },
+      }
+    }
   }
 })
 -- }

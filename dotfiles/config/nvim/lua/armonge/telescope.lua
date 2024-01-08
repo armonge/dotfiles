@@ -11,8 +11,8 @@ telescope.setup({
         i = {
           ["<C-d>"] = ts_actions.delete_buffer
         }
-      }
-    }
+      },
+    },
   },
   extensions = {
     coc = {
@@ -33,6 +33,7 @@ telescope.load_extension("coc")
 telescope.load_extension("notify")
 telescope.load_extension("fzf")
 telescope.load_extension("noice")
+telescope.load_extension("workspaces")
 local find_files = function()
   return ts_builtin.find_files({ follow = true, hidden = true })
 end
@@ -49,6 +50,7 @@ wk.register({
       "Searches coc workspace_diagnostics with Telescope",
     },
     ["c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
+    ["C"] = { ts_builtin.commands, "Searches vim commands with Telescope" },
     ["s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
     ["b"] = { ts_builtin.buffers, "Searches open buffers with Telescope" },
     ["r"] = { ts_builtin.registers, "Searches registers with Telescope" },
@@ -56,6 +58,7 @@ wk.register({
     ["l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
     ["f"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
     ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
+    ["w"] = { "<Cmd>Telescope workspaces<CR>", "Searches workspaces with telescope" },
 
   },
   ["gr"] = { "<cmd>Telescope coc references<CR>", "Show references" },
