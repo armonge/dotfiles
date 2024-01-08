@@ -238,6 +238,9 @@ require("lazy").setup({
         }
       }, { prefix = '<space>' })
     end,
+  },
+  {
+    "mechatroner/rainbow_csv"
   }
 })
 -- }
