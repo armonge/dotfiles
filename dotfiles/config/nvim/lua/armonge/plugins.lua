@@ -238,6 +238,14 @@ require("lazy").setup({
         }
       }, { prefix = '<space>' })
     end,
+  },
+  {
+    'natecraddock/workspaces.nvim',
+    opts = {
+      hooks = {
+        open = { "Telescope find_files" },
+      }
+    }
   }
 })
 -- }
