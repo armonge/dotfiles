@@ -37,7 +37,20 @@ require("lazy").setup({
       "sindrets/diffview.nvim",        -- optional
       "ibhagwan/fzf-lua",              -- optional
     },
-    config = true,
+    config = function()
+      local neogit = require('neogit')
+      local wk = require("which-key")
+      neogit.setup()
+
+      wk.register({
+        g = {
+          name = "Neogit",
+          ["o"] = { function()
+            neogit.open()
+          end, "Neogit Open" }
+        }
+      }, { prefix = "<leader>" })
+    end,
   },
   "folke/neodev.nvim",
   -- "folke/zen-mode.nvim",
