@@ -40,7 +40,7 @@ wk.register({
 vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = { '*.py', '*.lua' },
     callback = function ()
-        vim.lsp.buf.format({ async = false})
+        vim.lsp.buf.format({ async = false })
     end,
     desc = "Format on save"
 })
@@ -53,23 +53,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local opts = { buffer = ev.buf }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wl', function ()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<space>f', function ()
-            vim.lsp.buf.format { async = true }
-        end, opts)
+        wk.register({
+            name = "LSP",
+            ['g'] = {
+                name = 'Go to',
+                ['D'] = { vim.lsp.buf.declaration, 'Go to declaration' },
+                ['d'] = { vim.lsp.buf.definition, 'Go to definition' },
+                ['i'] = { vim.lsp.buf.implementation, "Go to implementation" },
+                ['t'] = { vim.lsp.buf.type_definition, "Go to type definition" },
+            },
+
+            ['<leader>w'] = {
+                name = 'Workspaces',
+                ['a'] = { vim.lsp.buf.add_workspace_folder, "Add folder to workspace " },
+                ['r'] = { vim.lsp.buf.remove_workspace_folder, "Remove folder from workspace" },
+                ['l'] = { function ()
+                    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+                end, "List workspace folders" },
+            },
+
+            ['K'] = { vim.lsp.buf.hover, 'More information on a popup' },
+            ['<C-k>'] = { vim.lsp.buf.signature_help, "Signature help" },
+
+            ['<leader>rn'] = { vim.lsp.buf.rename, "Rename" },
+        }, opts)
+
+        wk.register({
+            name = "LSP",
+            ['<leader>ca'] = { vim.lsp.buf.code_action, 'Apply code action' }
+        }, { mode = { 'n', 'v' } })
     end,
 })
 

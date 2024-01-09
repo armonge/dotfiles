@@ -363,5 +363,22 @@ require("lazy").setup({
             })
         end
     },
-})
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function ()
+            local trouble = require('trouble')
+            local wk = require("which-key")
+            trouble.setup({})
+            wk.register({
+                ["<leader>T"] = {
+                    name = "Trouble",
+                    ['T'] = { trouble.toggle, "Toggles trouble window" }
+
+                }
+            })
+        end
+    }
+}
+)
 -- }
