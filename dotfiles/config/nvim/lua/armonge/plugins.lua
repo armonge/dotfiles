@@ -253,6 +253,9 @@ require("lazy").setup({
     end,
   },
   {
+    "mechatroner/rainbow_csv"
+  },
+  {
     'natecraddock/workspaces.nvim',
     opts = {
       hooks = {
