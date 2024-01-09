@@ -66,7 +66,7 @@ shopt -s checkwinsize
 export LANG=en_US.UTF-8
 
 # bat cat replacement
-export BAT_THEME="Nord"
+export BAT_THEME="tokyonight_night"
 export BAT_PAGER="less -i --RAW-CONTROL-CHARS --quit-if-one-screen"
 
 export PYGMENTIZE_STYLE='nord'

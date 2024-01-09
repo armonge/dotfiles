@@ -15,10 +15,10 @@ telescope.setup({
     },
   },
   extensions = {
-    coc = {
-      theme = "ivy",
-      prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
-    },
+    -- coc = {
+    --   theme = "ivy",
+    --   prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+    -- },
     fzf = {
       fuzzy = true,                   -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
@@ -29,7 +29,7 @@ telescope.setup({
   },
 })
 
-telescope.load_extension("coc")
+-- telescope.load_extension("coc")
 telescope.load_extension("notify")
 telescope.load_extension("fzf")
 telescope.load_extension("noice")
@@ -43,15 +43,11 @@ wk.register({
     name = "Telescope",
     ["p"] = { find_files, "Searches filenames with telescope" },
     ["n"] = { ts_builtin.help_tags, "Searches on help_tags with Telescope" },
-    ["a"] = { "<cmd>Telescope coc diagnostics<CR>", "Searches coc diagnostics with Telescope" },
+    ["a"] = { ts_builtin.diagnostics, "Searches coc diagnostics with Telescope" },
     ["q"] = { ts_builtin.quickfix, "Searches quickfix list Telescope" },
-    ["A"] = {
-      "<cmd>Telescope coc workspace_diagnostics<CR>",
-      "Searches coc workspace_diagnostics with Telescope",
-    },
-    ["c"] = { "<cmd>Telescope coc commands<CR>", "Searches coc commands with Telescope" },
+    ["A"] = { ts_builtin.lsp_workspace_symbols, "Searches coc workspace_diagnostics with Telescope", },
     ["C"] = { ts_builtin.commands, "Searches vim commands with Telescope" },
-    ["s"] = { "<cmd>Telescope coc workspace_symbols<CR>", "Searches coc workspace symbols with Telescope" },
+    ["s"] = { ts_builtin.lsp_workspace_symbols, "Searches coc workspace symbols with Telescope" },
     ["b"] = { ts_builtin.buffers, "Searches open buffers with Telescope" },
     ["r"] = { ts_builtin.registers, "Searches registers with Telescope" },
     ["o"] = { ts_builtin.oldfiles, "Searches previously opened files" },
@@ -59,9 +55,12 @@ wk.register({
     ["f"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
     ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
     ["w"] = { "<Cmd>Telescope workspaces<CR>", "Searches workspaces with telescope" },
+    -- Manage extensions
+    -- ["e"] = { ":<C-u>CocList extensions<cr>", "List extensions" },
 
   },
-  ["gr"] = { "<cmd>Telescope coc references<CR>", "Show references" },
+  -- ["gr"] = { "<cmd>Telescope coc references<CR>", "Show references" },
+  ["gr"] = { ts_builtin.lsp_references, "Show references" },
   ["<C-s>"] = { ts_builtin.live_grep, "Searches file with grep and Telescope" },
   ["<C-f>"] = { ts_builtin.resume, "Continues last Telescope search" },
 }, { mode = "n" })

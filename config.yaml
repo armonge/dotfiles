@@ -220,6 +220,14 @@ dotfiles:
     src: config/direnv/direnv.toml
     dst: ~/.config/direnv/direnv.toml
     link: absolute
+  f_tokyonight_night.tmtheme:
+    src: config/bat/themes/tokyonight_night.tmTheme
+    dst: ~/.config/bat/themes/tokyonight_night.tmTheme
+    link: absolute
+  f_lsp.lua:
+    src: config/nvim/lua/armonge/lsp.lua
+    dst: ~/.config/nvim/lua/armonge/lsp.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -271,3 +279,5 @@ profiles:
     - f_rgignore
     - f_direnv_direnvrc
     - f_direnv.toml
+    - f_tokyonight_night.tmtheme
+    - f_lsp.lua
