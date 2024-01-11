@@ -66,6 +66,11 @@ end
 
 -- }
 
+-- Spell {
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_us' }
+-- }
+
 -- Encoding {
 vim.g.scriptencoding = "utf-8"
 vim.opt.bomb = false
