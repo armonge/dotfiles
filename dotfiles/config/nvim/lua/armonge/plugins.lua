@@ -52,7 +52,12 @@ require("lazy").setup({
       }, { prefix = "<leader>" })
     end,
   },
-  { "folke/neodev.nvim",               opts = {} },
+  {
+    "folke/neodev.nvim",
+    opts = {
+      library = { plugins = { "nvim-dap-ui" }, types = true },
+    }
+  },
   -- "folke/zen-mode.nvim",
   -- "folke/twilight.nvim",
   "honza/vim-snippets",
@@ -171,11 +176,14 @@ require("lazy").setup({
     branch = "0.1.x",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
-  -- {
-  --   "fannheyward/telescope-coc.nvim",
-  --   event = 'VeryLazy',
-  --   dependencies = { "nvim-telescope/telescope.nvim" },
-  -- },
+  {
+    "nvim-telescope/telescope-dap.nvim",
+    event = 'VeryLazy',
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require('telescope').load_extension('dap')
+    end
+  },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     event = 'VeryLazy',
@@ -293,9 +301,7 @@ require("lazy").setup({
 
   {
     'williamboman/mason.nvim',
-    config = function()
-      require('mason').setup()
-    end
+    opts = {}
   },
   {
     'williamboman/mason-lspconfig.nvim',
@@ -320,11 +326,31 @@ require("lazy").setup({
       "f3fora/cmp-spell"
     }
   },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   dependencies = {
+  --     "zbirenbaum/copilot.lua"
+  --   },
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- },
+  -- {
+  --   event = "InsertEnter",
+  --   "zbirenbaum/copilot.lua",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
   {
     'petertriho/cmp-git',
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
   },
+  { "onsails/lspkind.nvim" },
   {
     "Dynge/gitmoji.nvim",
     dependencies = {
@@ -504,5 +530,42 @@ require("lazy").setup({
   {
     "tpope/vim-abolish"
   },
+  {
+    "mfussenegger/nvim-dap",
+    config = function()
+      local wk = require("which-key")
+      local dap = require('dap')
+      wk.register({
+        ['d'] = {
+          name = 'dap',
+          ['t'] = { dap.toggle_breakpoint, 'Toggle dap breakpoint', },
+          ['c'] = { dap.continue, 'Start DAP', },
+        }
+      }, { prefix = '<leader>' })
+
+      dap.configurations.python = {
+        {
+          type = 'python',
+          request = 'launch',
+          name = "Launch file",
+          command = 'python',
+          program = "${file}",
+        },
+      }
+
+      dap.adapters.python = {
+        type = 'executable',
+        command = 'python',
+        args = { '-m', 'debugpy.adapter' },
+      }
+    end
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap"
+    },
+    opts = {}
+  }
 })
 -- }

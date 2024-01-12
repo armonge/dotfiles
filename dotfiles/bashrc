@@ -31,10 +31,13 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
   # We're on Mac :shrug:
   export BASH_SILENCE_DEPRECATION_WARNING=1
   eval "$(/opt/homebrew/bin/brew shellenv)"
+
   export LDFLAGS="-L/opt/homebrew/opt/mysql-client/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/mysql-client/include"
   export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
   export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+  export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
   [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
   complete -C "$(command -v aws_completer)" aws

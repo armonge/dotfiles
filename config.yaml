@@ -228,6 +228,10 @@ dotfiles:
     src: config/nvim/lua/armonge/lsp.lua
     dst: ~/.config/nvim/lua/armonge/lsp.lua
     link: absolute
+  f_completion.lua:
+    src: config/nvim/lua/armonge/completion.lua
+    dst: ~/.config/nvim/lua/armonge/completion.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -281,3 +285,4 @@ profiles:
     - f_direnv.toml
     - f_tokyonight_night.tmtheme
     - f_lsp.lua
+    - f_completion.lua
