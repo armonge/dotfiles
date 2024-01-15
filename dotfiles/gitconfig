@@ -51,11 +51,11 @@
 	templatedir = ~/.git-templates
 
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [rebase]
 	autoStash = true
@@ -69,5 +69,3 @@
 [committer]
 	email = andres.monge@parcellab.com
 	name = Andres Reyes Monge
-[blame]
-	ignoreRevsFile = .git-blame-ignore-revs

@@ -48,7 +48,6 @@ telescope.load_extension("workspaces")
 local find_files = function()
   return ts_builtin.find_files({ follow = true, hidden = true })
 end
-local trouble = require("trouble.providers.telescope")
 
 wk.register({
   ["<leader>t"] = {
