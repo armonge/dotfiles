@@ -14,6 +14,9 @@ config:
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
+  post:
+    update_cache: bat cache --build
+
 dotfiles:
   f_bash_aliases:
     dst: ~/.bash_aliases
@@ -196,6 +199,8 @@ dotfiles:
     src: config/bat/themes/tokyonight_night.tmTheme
     dst: ~/.config/bat/themes/tokyonight_night.tmTheme
     link: absolute
+    actions:
+      - update_cache
   f_lsp.lua:
     src: config/nvim/lua/armonge/lsp.lua
     dst: ~/.config/nvim/lua/armonge/lsp.lua
