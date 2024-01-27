@@ -49,7 +49,7 @@ lspkind.init({
     Event = "",
     Operator = "󰆕",
     TypeParameter = "",
-    Copilot = "",
+    -- Copilot = "",
   },
 })
 local has_words_before = function()
@@ -117,7 +117,7 @@ cmp.setup({
   }),
   sorting = {
     comparators = {
-      require("copilot_cmp").priorotize,
+      -- require("copilot_cmp").prioritize,
       -- Below is the default comparitor list and order for nvim-cmp
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
@@ -134,7 +134,7 @@ cmp.setup({
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = "copilot", group_index = 2 },
+    -- { name = "copilot", group_index = 2 },
   },
 })
 

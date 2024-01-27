@@ -100,3 +100,23 @@ vim.g.loaded_ruby_provider = 0
 -- Perl {
 vim.g.loaded_perl_provider = 0
 -- }
+vim.api.nvim_create_user_command(
+  'Browse',
+  function(opts)
+    vim.fn.system { 'open', opts.fargs[1] }
+  end,
+  { nargs = 1 }
+)
+-- local augroup = vim.api.nvim_create_augroup('remember_folds', { clear =true})
+-- vim.api.nvim_create_autocmd('BufWinEnter', {
+--   pattern = {'*'},
+--   command = 'mkview',
+--   group = augroup
+-- })
+--
+-- vim.api.nvim_create_autocmd('BufWinLeave', {
+--   pattern = {'*'},
+--   command = 'loadview',
+--   group = augroup,
+--   silent=true
+-- })

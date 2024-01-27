@@ -19,7 +19,13 @@ telescope.setup({
 
         ["<C-h>"] = "which_key"
       }
-    }
+    },
+    preview = {
+      treesitter = false,
+      highlight_limit = 0.1,
+      filesize_limit = 0.01, -- MB
+      timeout = 50,
+    },
   },
   pickers = {
     buffers = {
@@ -45,6 +51,7 @@ telescope.load_extension("notify")
 telescope.load_extension("fzf")
 telescope.load_extension("noice")
 telescope.load_extension("workspaces")
+telescope.load_extension('luasnip')
 local find_files = function()
   return ts_builtin.find_files({ follow = true, hidden = true })
 end
@@ -64,11 +71,12 @@ wk.register({
     ["r"] = { ts_builtin.registers, "Searches registers with Telescope" },
     ["o"] = { ts_builtin.oldfiles, "Searches previously opened files" },
     ["l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
+    ["S"] = { "<cmd>Telescope luasnip<CR>", "Shows all luasnip snippets" },
     ["f"] = { "<Cmd>Telescope frecency workspace=CWD<CR>", "frecency" },
     ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
     ["w"] = { "<Cmd>Telescope workspaces<CR>", "Searches workspaces with telescope" },
-    ["dc"] = { "<Cmd>Telescope dap commands<CR>", "DAP Commands" },
-    ["db"] = { "<Cmd>Telescope dap commands<CR>", "DAP breakpoints" },
+    -- ["dc"] = { "<Cmd>Telescope dap commands<CR>", "DAP Commands" },
+    -- ["db"] = { "<Cmd>Telescope dap commands<CR>", "DAP breakpoints" },
 
   },
   ["gr"] = { ts_builtin.lsp_references, "Show references" },

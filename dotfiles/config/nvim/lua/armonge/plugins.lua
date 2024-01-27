@@ -54,14 +54,25 @@ require("lazy").setup({
   },
   {
     "folke/neodev.nvim",
-    opts = {
-      library = { plugins = { "nvim-dap-ui" }, types = true },
-    }
+    opts = {}
   },
   -- "folke/zen-mode.nvim",
   -- "folke/twilight.nvim",
-  "honza/vim-snippets",
-  -- "SirVer/ultisnips",
+  { "rafamadriz/friendly-snippets" },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    build = "make install_jsregexp",
+    config = function()
+      local ls = require('luasnip')
+      ls.filetype_extend("all", { "_" })
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end
+  },
+  {
+    "benfowler/telescope-luasnip.nvim",
+    dependencies = { "L3MON4D3/LuaSnip" },
+  },
   "tpope/vim-sensible",
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   {
@@ -88,10 +99,10 @@ require("lazy").setup({
     "jamessan/vim-gnupg",
     event = 'VeryLazy'
   },
-  {
-    "kevinhwang91/rnvimr",
-    event = 'VeryLazy'
-  },
+  -- {
+  --   "kevinhwang91/rnvimr",
+  --   event = 'VeryLazy'
+  -- },
   {
 
     "antoyo/vim-licenses",
@@ -175,14 +186,6 @@ require("lazy").setup({
     event = 'VeryLazy',
     branch = "0.1.x",
     dependencies = { "nvim-lua/plenary.nvim" },
-  },
-  {
-    "nvim-telescope/telescope-dap.nvim",
-    event = 'VeryLazy',
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function()
-      require('telescope').load_extension('dap')
-    end
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
@@ -327,22 +330,14 @@ require("lazy").setup({
     }
   },
   {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      "zbirenbaum/copilot.lua"
-    },
-    config = function()
-      require("copilot_cmp").setup()
-    end
+    'saadparwaiz1/cmp_luasnip', -- Snippets source for nvim-cmp
+    dependencies = { "L3MON4D3/LuaSnip" }
   },
   {
     event = "InsertEnter",
     "zbirenbaum/copilot.lua",
     config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
+      require("copilot").setup({})
     end,
   },
   {
@@ -378,55 +373,74 @@ require("lazy").setup({
     end
   },
   {
-    "elentok/format-on-save.nvim",
+    "mhartington/formatter.nvim",
     config = function()
-      local format_on_save = require("format-on-save")
-      local formatters = require("format-on-save.formatters")
-      format_on_save.setup({
-        stderr_loglevel = vim.log.levels.OFF,
-        exclude_path_patterns = {
-          "/node_modules/",
-          ".local/share/nvim/lazy",
-        },
-        formatter_by_ft = {
-          css = formatters.lsp,
-          html = formatters.lsp,
-          java = formatters.lsp,
-          javascript = formatters.lsp,
-          json = formatters.lsp,
-          lua = formatters.lsp,
-          markdown = formatters.prettierd,
-          openscad = formatters.lsp,
-          rust = formatters.lsp,
-          scad = formatters.lsp,
-          scss = formatters.lsp,
-          sh = formatters.shfmt,
-          terraform = formatters.lsp,
-          typescript = formatters.prettierd,
-          typescriptreact = formatters.prettierd,
-          yaml = formatters.lsp,
-          -- python = formatters.ruff,
-          toml = formatters.toml,
-
-          -- Concatenate formatters
-          python = {
-            formatters.remove_trailing_whitespace,
-            -- formatters.shell({ cmd = { "tidy-imports" } }),
-            formatters.black,
-            formatters.ruff,
-          },
-        },
-        -- Optional: fallback formatter to use when no formatters match the current filetype
-        fallback_formatter = {
-          formatters.remove_trailing_whitespace,
-          formatters.remove_trailing_newlines,
-          -- formatters.prettierd,
-        },
-
-        -- By default, all shell commands are prefixed with "sh -c" (see PR #3)
-        -- To prevent that set `run_with_sh` to `false`.
-        -- run_with_sh = false,
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+      augroup("__formatter__", { clear = true })
+      autocmd("BufWritePost", {
+        group = "__formatter__",
+        command = ":FormatWrite",
       })
+      -- Utilities for creating configurations
+      local util = require "formatter.util"
+
+      -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+      require("formatter").setup {
+        -- Enable or disable logging
+        logging = true,
+        -- Set the log level
+        log_level = vim.log.levels.WARN,
+        -- All formatter configurations are opt-in
+        filetype = {
+          -- Formatter configurations for filetype "lua" go here
+          -- and will be executed in order
+          lua = {
+            -- "formatter.filetypes.lua" defines default configurations for the
+            -- "lua" filetype
+            require("formatter.filetypes.lua").stylua,
+
+            -- You can also define your own configuration
+            function()
+              -- Supports conditional formatting
+              if util.get_current_buffer_file_name() == "special.lua" then
+                return nil
+              end
+
+              -- Full specification of configurations is down below and in Vim help
+              -- files
+              return {
+                exe = "stylua",
+                args = {
+                  "--search-parent-directories",
+                  "--stdin-filepath",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                  "--",
+                  "-",
+                },
+                stdin = true,
+              }
+            end
+          },
+          python = {
+            require('formatter.filetypes.python').ruff
+          },
+          json = {
+            require('formatter.filetypes.json').prettierd
+          },
+          jsonc = {
+            require('formatter.filetypes.json').prettierd
+          },
+
+          -- Use the special "*" filetype for defining formatter configurations on
+          -- any filetype
+          ["*"] = {
+            -- "formatter.filetypes.any" defines default configurations for any
+            -- filetype
+            require("formatter.filetypes.any").remove_trailing_whitespace
+          }
+        }
+      }
     end
   },
   {
@@ -533,41 +547,19 @@ require("lazy").setup({
     "tpope/vim-abolish"
   },
   {
-    "mfussenegger/nvim-dap",
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      require("oil").setup()
+
       local wk = require("which-key")
-      local dap = require('dap')
       wk.register({
-        ['d'] = {
-          name = 'dap',
-          ['t'] = { dap.toggle_breakpoint, 'Toggle dap breakpoint', },
-          ['c'] = { dap.continue, 'Start DAP', },
-        }
-      }, { prefix = '<leader>' })
-
-      dap.configurations.python = {
-        {
-          type = 'python',
-          request = 'launch',
-          name = "Launch file",
-          command = 'python',
-          program = "${file}",
-        },
-      }
-
-      dap.adapters.python = {
-        type = 'executable',
-        command = 'python',
-        args = { '-m', 'debugpy.adapter' },
-      }
+        name = "Oil",
+        ["<C-e>"] = { "<CMD>Oil<CR>", "Open parent directory" }
+      })
     end
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "mfussenegger/nvim-dap"
-    },
-    opts = {}
   }
 })
 -- }

@@ -46,10 +46,6 @@ dotfiles:
     src: config/nvim/init.lua
     actions:
     - install_deps
-  f_typescript.snippets:
-    dst: ~/.config/nvim/UltiSnips/typescript.snippets
-    link: absolute
-    src: config/nvim/UltiSnips/typescript.snippets
   f_attributes:
     src: config/git/attributes
     dst: ~/.config/git/attributes
@@ -58,10 +54,6 @@ dotfiles:
     src: clojure/deps.edn
     dst: ~/.clojure/deps.edn
     link: absolute
-  f_coc-settings.json:
-    src: config/nvim/coc-settings.json
-    dst: ~/.config/nvim/coc-settings.json
-    link: absolute
   f_config.toml:
     src: config/pypoetry/config.toml
     dst: ~/.config/pypoetry/config.toml
@@ -69,22 +61,6 @@ dotfiles:
   f_ideavimrc:
     src: ideavimrc
     dst: ~/.ideavimrc
-    link: absolute
-  f_audio.vim:
-    src: config/nvim/ftdetect/audio.vim
-    dst: ~/.config/nvim/ftdetect/audio.vim
-    link: absolute
-  f_video.vim:
-    src: config/nvim/ftdetect/video.vim
-    dst: ~/.config/nvim/ftdetect/video.vim
-    link: absolute
-  f_ftplugin_audio.vim:
-    src: config/nvim/after/ftplugin/audio.vim
-    dst: ~/.config/nvim/after/ftplugin/audio.vim
-    link: absolute
-  f_ftplugin_video.vim:
-    src: config/nvim/after/ftplugin/video.vim
-    dst: ~/.config/nvim/after/ftplugin/video.vim
     link: absolute
   f_delta.sh:
     src: bin/delta.sh
@@ -147,10 +123,6 @@ dotfiles:
   f_armonge_init.lua:
     src: config/nvim/lua/armonge/init.lua
     dst: ~/.config/nvim/lua/armonge/init.lua
-    link: absolute
-  f_coc.lua:
-    src: config/nvim/lua/armonge/coc.lua
-    dst: ~/.config/nvim/lua/armonge/coc.lua
     link: absolute
   f_defaults.lua:
     src: config/nvim/lua/armonge/defaults.lua
@@ -232,6 +204,10 @@ dotfiles:
     src: config/nvim/lua/armonge/completion.lua
     dst: ~/.config/nvim/lua/armonge/completion.lua
     link: absolute
+  f_wezterm.lua:
+    src: config/wezterm/wezterm.lua
+    dst: ~/.config/wezterm/wezterm.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -240,16 +216,11 @@ profiles:
     - f_ctags
     - f_bash_profile
     - f_chromium-flags.conf
-    - f_typescript.snippets
     - f_bash_aliases
     - f_attributes
     - f_deps.edn
-    - f_coc-settings.json
     - f_config.toml
     - f_ideavimrc
-    - f_ftplugin_audio.vim
-    - f_video.vim
-    - f_audio.vim
     - f_delta.sh
     - f_rifle.conf
     - f_version
@@ -265,7 +236,6 @@ profiles:
     - f_init.lua
     - f_ignore
     - f_armonge_init.lua
-    - f_coc.lua
     - f_defaults.lua
     - f_environment.lua
     - f_filebrowser.lua
@@ -286,3 +256,4 @@ profiles:
     - f_tokyonight_night.tmtheme
     - f_lsp.lua
     - f_completion.lua
+    - f_wezterm.lua
