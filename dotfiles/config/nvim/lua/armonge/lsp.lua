@@ -52,7 +52,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				},
 			},
 
-			["K"] = { vim.lsp.buf.hover, "More information on a popup" },
+			-- ["K"] = { vim.lsp.buf.hover, "More information on a popup" },
 			["<C-k>"] = { vim.lsp.buf.signature_help, "Signature help" },
 			["<leader>r"] = {
 				name = "Refactor",

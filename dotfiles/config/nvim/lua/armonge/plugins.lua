@@ -288,7 +288,7 @@ require("lazy").setup({
 						"Flash Treesitter Search",
 					},
 				},
-			}, { prefix = "<leader>" })
+			}, { prefix = "<leader>", mode = { "n", "v" } })
 		end,
 	},
 	{
@@ -450,6 +450,21 @@ require("lazy").setup({
 							}
 						end,
 					},
+					htmldjango = {
+						require("formatter.filetypes.html").prettierd,
+						{
+							exe = "djlint",
+							args = {
+								"--profile=django",
+								"--quiet",
+								"--format-css",
+								"--format-js",
+								"--reformat",
+								"-",
+							},
+							stdin = true,
+						},
+					},
 					python = {
 						require("formatter.filetypes.python").ruff,
 					},
@@ -459,8 +474,17 @@ require("lazy").setup({
 					jsonc = {
 						require("formatter.filetypes.json").prettierd,
 					},
+					javascriptreact = {
+						require("formatter.filetypes.javascript").prettierd,
+					},
+					javascript = {
+						require("formatter.filetypes.javascript").prettierd,
+					},
 					yaml = {
 						require("formatter.filetypes.yaml").prettierd,
+					},
+					html = {
+						require("formatter.filetypes.html").prettierd,
 					},
 
 					-- Use the special "*" filetype for defining formatter configurations on
@@ -601,6 +625,27 @@ require("lazy").setup({
 			})
 		end,
 	},
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = { "kevinhwang91/promise-async" },
+		config = function()
+			-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+			vim.keymap.set("n", "K", function()
+				local winid = require("ufo").peekFoldedLinesUnderCursor()
+				if not winid then
+					-- choose one of coc.nvim and nvim lsp
+					vim.lsp.buf.hover()
+				end
+			end)
+			require("ufo").setup({
+				provider_selector = function(bufnr, filetype, buftype)
+					return { "treesitter", "indent" }
+				end,
+			})
+		end,
+	},
 })
 -- }
 
@@ -639,7 +684,7 @@ beancount.check_current_buffer = function()
 				if filepath == buf_path then
 					table.insert(diagnostics, {
 
-						lnum = tonumber(linenumber) -1,
+						lnum = tonumber(linenumber) - 1,
 						col = 0,
 						message = error,
 					})
