@@ -462,6 +462,16 @@ require("lazy").setup({
 					yaml = {
 						require("formatter.filetypes.yaml").prettierd,
 					},
+					beancount = {
+						function()
+							return {
+								exe = "bean-format",
+								-- args = { util.quote_cmd_arg(util.get_current_buffer_file_path()) },
+								-- tempfile_prefix = "tmp",
+								stdin = true,
+							}
+						end,
+					},
 
 					-- Use the special "*" filetype for defining formatter configurations on
 					-- any filetype
@@ -639,7 +649,7 @@ beancount.check_current_buffer = function()
 				if filepath == buf_path then
 					table.insert(diagnostics, {
 
-						lnum = tonumber(linenumber) -1,
+						lnum = tonumber(linenumber) - 1,
 						col = 0,
 						message = error,
 					})
