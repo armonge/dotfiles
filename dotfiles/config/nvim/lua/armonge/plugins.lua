@@ -421,28 +421,6 @@ require("lazy").setup({
 						-- "formatter.filetypes.lua" defines default configurations for the
 						-- "lua" filetype
 						require("formatter.filetypes.lua").stylua,
-
-						-- You can also define your own configuration
-						function()
-							-- Supports conditional formatting
-							if util.get_current_buffer_file_name() == "special.lua" then
-								return nil
-							end
-
-							-- Full specification of configurations is down below and in Vim help
-							-- files
-							return {
-								exe = "stylua",
-								args = {
-									"--search-parent-directories",
-									"--stdin-filepath",
-									util.escape_path(util.get_current_buffer_file_path()),
-									"--",
-									"-",
-								},
-								stdin = true,
-							}
-						end,
 					},
 					sh = {
 						require("formatter.filetypes.sh").shfmt,
@@ -481,6 +459,16 @@ require("lazy").setup({
 					},
 					html = {
 						require("formatter.filetypes.html").prettierd,
+					},
+					beancount = {
+						function()
+							return {
+								exe = "bean-format",
+								-- args = { util.quote_cmd_arg(util.get_current_buffer_file_path()) },
+								-- tempfile_prefix = "tmp",
+								stdin = true,
+							}
+						end,
 					},
 
 					-- Use the special "*" filetype for defining formatter configurations on
