@@ -196,13 +196,7 @@ require("lazy").setup({
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
-	{
-		"nvim-telescope/telescope-frecency.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("telescope").load_extension("frecency")
-		end,
-	},
+	{ "nvim-telescope/telescope-media-files.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
 	{
 		"rcarriga/nvim-notify",
 		event = "VeryLazy",
@@ -450,8 +444,10 @@ require("lazy").setup({
 							}
 						end,
 					},
+					sh = {
+						require("formatter.filetypes.sh").shfmt,
+					},
 					htmldjango = {
-						require("formatter.filetypes.html").prettierd,
 						{
 							exe = "djlint",
 							args = {
@@ -519,77 +515,16 @@ require("lazy").setup({
 		opts = {},
 	},
 	{
-		"simrat39/symbols-outline.nvim",
-		opts = {
-			symbols = {
-				File = { icon = "", hl = "@text.uri" },
-				Module = { icon = "", hl = "@namespace" },
-				Namespace = { icon = "", hl = "@namespace" },
-				Package = { icon = "", hl = "@namespace" },
-				Class = { icon = "", hl = "@type" },
-				Method = { icon = "ƒ", hl = "@method" },
-				Property = { icon = "", hl = "@method" },
-				Field = { icon = "", hl = "@field" },
-				Constructor = { icon = "", hl = "@constructor" },
-				Enum = { icon = "", hl = "@type" },
-				Interface = { icon = "", hl = "@type" },
-				Function = { icon = "", hl = "@function" },
-				Variable = { icon = "", hl = "@constant" },
-				Constant = { icon = "", hl = "@constant" },
-				String = { icon = "", hl = "@string" },
-				Number = { icon = "#", hl = "@number" },
-				Boolean = { icon = "", hl = "@boolean" },
-				Array = { icon = "", hl = "@constant" },
-				Object = { icon = "", hl = "@type" },
-				Key = { icon = "", hl = "@type" },
-				Null = { icon = "", hl = "@type" },
-				EnumMember = { icon = "", hl = "@field" },
-				Struct = { icon = "", hl = "@type" },
-				Event = { icon = "", hl = "@type" },
-				Operator = { icon = "", hl = "@operator" },
-				TypeParameter = { icon = "", hl = "@parameter" },
-				Component = { icon = "", hl = "@function" },
-				Fragment = { icon = "", hl = "@constant" },
-			},
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = {
+			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
 		},
 		config = function()
 			local wk = require("which-key")
-			local so = require("symbols-outline")
-			so.setup({
-				symbols = {
-					File = { icon = "", hl = "@text.uri" },
-					Module = { icon = "", hl = "@namespace" },
-					Namespace = { icon = "", hl = "@namespace" },
-					Package = { icon = "", hl = "@namespace" },
-					Class = { icon = "", hl = "@type" },
-					Method = { icon = "ƒ", hl = "@method" },
-					Property = { icon = "", hl = "@method" },
-					Field = { icon = "", hl = "@field" },
-					Constructor = { icon = "", hl = "@constructor" },
-					Enum = { icon = "", hl = "@type" },
-					Interface = { icon = "", hl = "@type" },
-					Function = { icon = "", hl = "@function" },
-					Variable = { icon = "", hl = "@constant" },
-					Constant = { icon = "", hl = "@constant" },
-					String = { icon = "", hl = "@string" },
-					Number = { icon = "#", hl = "@number" },
-					Boolean = { icon = "", hl = "@boolean" },
-					Array = { icon = "", hl = "@constant" },
-					Object = { icon = "", hl = "@type" },
-					Key = { icon = "", hl = "@type" },
-					Null = { icon = "", hl = "@type" },
-					EnumMember = { icon = "", hl = "@field" },
-					Struct = { icon = "", hl = "@type" },
-					Event = { icon = "", hl = "@type" },
-					Operator = { icon = "", hl = "@operator" },
-					TypeParameter = { icon = "", hl = "@parameter" },
-					Component = { icon = "", hl = "@function" },
-					Fragment = { icon = "", hl = "@constant" },
-				},
-			})
-			wk.register({
-				["<C-o>"] = { so.toggle_outline, "Toggle Symbols Outline" },
-			})
+			local so = require("outline")
+			so.setup()
 		end,
 	},
 	{
@@ -646,6 +581,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+	{ "windwp/nvim-ts-autotag" },
 })
 -- }
 

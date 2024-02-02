@@ -80,7 +80,7 @@ vim.opt.fileencoding = "utf-8"
 
 -- Folding {
 vim.opt.foldenable = true -- Auto fold code
-vim.opt.foldlevel = 9
+vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldcolumn = "1"
