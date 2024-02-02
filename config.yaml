@@ -16,7 +16,6 @@ actions:
     install_deps: ./scripts/install-deps.sh
   post:
     update_cache: bat cache --build
-
 dotfiles:
   f_bash_aliases:
     dst: ~/.bash_aliases
@@ -200,7 +199,7 @@ dotfiles:
     dst: ~/.config/bat/themes/tokyonight_night.tmTheme
     link: absolute
     actions:
-      - update_cache
+    - update_cache
   f_lsp.lua:
     src: config/nvim/lua/armonge/lsp.lua
     dst: ~/.config/nvim/lua/armonge/lsp.lua
@@ -212,6 +211,10 @@ dotfiles:
   f_wezterm.lua:
     src: config/wezterm/wezterm.lua
     dst: ~/.config/wezterm/wezterm.lua
+    link: absolute
+  f_editorconfig:
+    src: config/nvim/.editorconfig
+    dst: ~/.config/nvim/.editorconfig
     link: absolute
 profiles:
   armonge-laptop:
@@ -262,3 +265,4 @@ profiles:
     - f_lsp.lua
     - f_completion.lua
     - f_wezterm.lua
+    - f_editorconfig

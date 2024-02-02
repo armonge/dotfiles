@@ -2,7 +2,7 @@
 set -euo pipefail
 set -x
 unameOut="$(uname -a)"
-if grep -q "Darwin" <<< "$unameOut"; then
+if grep -q "Darwin" <<<"$unameOut"; then
   # Pillow
   export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
@@ -13,11 +13,11 @@ if grep -q "Darwin" <<< "$unameOut"; then
   brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
     miller shfmt git git-lfs bat nvim gpg awscli \
     aws-iam-authenticator the_silver_searcher fd \
-    django-completion podman httpie
+    django-completion podman httpie chafa
 
   brew install --cask rio
 
-elif command -v apt &> /dev/null; then
+elif command -v apt &>/dev/null; then
   sudo apt-get update --quiet --quiet
   sudo apt-get install --yes --quiet --quiet make build-essential \
     libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
@@ -56,7 +56,7 @@ elif command -v apt &> /dev/null; then
     visidata \
     watchman
 
-elif command dnf &> /dev/null; then
+elif command dnf &>/dev/null; then
   sudo dnf install --assumeyes make gcc zlib-devel bzip2 bzip2-devel \
     readline-devel sqlite sqlite-devel openssl-devel tk-devel \
     libffi-devel xz-devel patch libX11-devel libXi-devel \
@@ -67,7 +67,8 @@ elif command dnf &> /dev/null; then
     tldr \
     the_silver_searcher \
     wl-clipboard \
-    git git-lfs
+    git git-lfs \
+    chafa
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
@@ -75,14 +76,14 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 rustup update
-cargo install git-delta difftastic tree-sitter-cli jless eza
+cargo install git-delta difftastic tree-sitter-cli jless eza viu
 
 if [ ! -d "$HOME/.pyenv" ]; then
   curl https://pyenv.run | bash
 fi
 
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv > /dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 pyenv install --skip-existing 2.7:latest
