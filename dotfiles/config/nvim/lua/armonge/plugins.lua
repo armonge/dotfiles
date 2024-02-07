@@ -95,7 +95,17 @@ require("lazy").setup({
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {},
+		opts = {
+			style = "storm",
+			on_highlights = function(hl, colors)
+				hl.LineNr = {
+					fg = colors.green,
+				}
+				hl.CursorLineNr = {
+					fg = colors.orange,
+				}
+			end,
+		},
 	},
 	{
 
@@ -441,6 +451,7 @@ require("lazy").setup({
 					},
 					python = {
 						require("formatter.filetypes.python").ruff,
+						require("formatter.filetypes.python").black,
 					},
 					json = {
 						require("formatter.filetypes.json").prettierd,
@@ -460,15 +471,14 @@ require("lazy").setup({
 					html = {
 						require("formatter.filetypes.html").prettierd,
 					},
+					sql = {
+						require("formatter.filetypes.sql").pgformat,
+					},
 					beancount = {
-						function()
-							return {
-								exe = "bean-format",
-								-- args = { util.quote_cmd_arg(util.get_current_buffer_file_path()) },
-								-- tempfile_prefix = "tmp",
-								stdin = true,
-							}
-						end,
+						{
+							exe = "bean-format",
+							stdin = true,
+						},
 					},
 
 					-- Use the special "*" filetype for defining formatter configurations on
@@ -536,16 +546,16 @@ require("lazy").setup({
 				["<C-e>"] = { "<CMD>Oil<CR>", "Open parent directory" },
 			})
 
-			vim.api.nvim_create_autocmd("TextChanged", {
-				desc = "Set cwd to follow directory shown in oil buffers.",
-				group = vim.api.nvim_create_augroup("OilAutoCwd", {}),
-				pattern = "oil:///*",
-				callback = function()
-					if vim.bo.filetype == "oil" then
-						vim.cmd.lcd(require("oil").get_current_dir())
-					end
-				end,
-			})
+			-- vim.api.nvim_create_autocmd("TextChanged", {
+			-- 	desc = "Set cwd to follow directory shown in oil buffers.",
+			-- 	group = vim.api.nvim_create_augroup("OilAutoCwd", {}),
+			-- 	pattern = "oil:///*",
+			-- 	callback = function()
+			-- 		if vim.bo.filetype == "oil" then
+			-- 			vim.cmd.lcd(require("oil").get_current_dir())
+			-- 		end
+			-- 	end,
+			-- })
 		end,
 	},
 	{

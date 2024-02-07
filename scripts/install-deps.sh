@@ -13,7 +13,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
   brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
     miller shfmt git git-lfs bat nvim gpg awscli \
     aws-iam-authenticator the_silver_searcher fd \
-    django-completion podman httpie chafa
+    django-completion podman httpie chafa pgformatter
 
   brew install --cask rio
 

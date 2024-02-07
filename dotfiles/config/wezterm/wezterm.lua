@@ -14,7 +14,7 @@ end
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
-config.color_scheme = "tokyonight_night"
+config.color_scheme = "tokyonight_storm"
 config.font = wezterm.font("JetBrains Mono")
 
 config.keys = {}
