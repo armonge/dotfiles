@@ -18,16 +18,7 @@ vim.g.mapleader = ","
 require("lazy").setup({
 	{
 		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		lazy = true,
 	},
 	{
 		"NeogitOrg/neogit",
@@ -40,7 +31,15 @@ require("lazy").setup({
 		config = function()
 			local neogit = require("neogit")
 			local wk = require("which-key")
-			neogit.setup({})
+			neogit.setup({
+				ignored_settings = {
+					"NeogitPushPopup--force-with-lease",
+					"NeogitPushPopup--force",
+					-- "NeogitPullPopup--rebase",
+					"NeogitCommitPopup--allow-empty",
+					"NeogitRevertPopup--no-edit",
+				},
+			})
 
 			wk.register({
 				g = {
@@ -57,7 +56,7 @@ require("lazy").setup({
 	},
 	{
 		"folke/neodev.nvim",
-		opts = {},
+		config = true,
 	},
 	-- "folke/zen-mode.nvim",
 	-- "folke/twilight.nvim",
@@ -146,7 +145,7 @@ require("lazy").setup({
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		opts = {}, -- this is equalent to setup({}) function
+		config = true,
 	},
 	{
 		"kylechui/nvim-surround",
@@ -191,7 +190,7 @@ require("lazy").setup({
 
 			require("ibl").setup({ indent = { highlight = highlight } })
 		end,
-		opts = {},
+		config = true,
 	},
 
 	{
@@ -343,7 +342,7 @@ require("lazy").setup({
 
 	{
 		"williamboman/mason.nvim",
-		opts = {},
+		config = true,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -375,7 +374,7 @@ require("lazy").setup({
 	{
 		"petertriho/cmp-git",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {},
+		config = true,
 	},
 	{ "onsails/lspkind.nvim" },
 	{
@@ -383,26 +382,33 @@ require("lazy").setup({
 		dependencies = {
 			"hrsh7th/nvim-cmp",
 		},
-		opts = {},
+		config = true,
 		ft = "gitcommit",
 	},
 	{
-		"f3fora/cmp-spell",
-		config = function()
-			require("cmp").setup({
-				sources = {
-					{
-						name = "spell",
-						option = {
-							keep_all_entries = false,
-							enable_in_context = function()
-								return true
-							end,
-						},
-					},
-				},
-			})
-		end,
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+			filetypes = {
+				python = true,
+				lua = true,
+				javascript = true,
+				javascriptreact = true,
+				typescript = true,
+			},
+		},
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		config = true,
+	},
+	{
+		"kawre/neotab.nvim",
+		event = "InsertEnter",
+		config = true,
 	},
 	{
 		"mhartington/formatter.nvim",
@@ -495,38 +501,28 @@ require("lazy").setup({
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			local trouble = require("trouble")
-			local wk = require("which-key")
-			trouble.setup({})
-			wk.register({
-				["<leader>T"] = {
-					name = "Trouble",
-					["T"] = { trouble.toggle, "Toggles trouble window" },
-				},
-			})
-		end,
+		keys = {
+			{ "<leader>TT", "<cmd>TroubleToggle<cr>", desc = "Toggles trouble window" },
+		},
 	},
 	{
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		opts = {},
+		config = true,
 	},
 	{
 		"hedyhli/outline.nvim",
 		lazy = true,
 		cmd = { "Outline", "OutlineOpen" },
+		config = true,
 		keys = {
 			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
 		},
-		config = function()
-			local wk = require("which-key")
-			local so = require("outline")
-			so.setup()
-		end,
 	},
 	{
 		"tpope/vim-fugitive",
+		lazy = true,
+		cmd = { "Git", "GBrowse" },
 		dependencies = { "tpope/vim-rhubarb" },
 	},
 	{
@@ -534,29 +530,14 @@ require("lazy").setup({
 	},
 	{
 		"stevearc/oil.nvim",
-		opts = {},
+		config = true,
+		lazy = true,
+		cmd = { "Oil" },
 		-- Optional dependencies
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("oil").setup()
-
-			local wk = require("which-key")
-			wk.register({
-				name = "Oil",
-				["<C-e>"] = { "<CMD>Oil<CR>", "Open parent directory" },
-			})
-
-			-- vim.api.nvim_create_autocmd("TextChanged", {
-			-- 	desc = "Set cwd to follow directory shown in oil buffers.",
-			-- 	group = vim.api.nvim_create_augroup("OilAutoCwd", {}),
-			-- 	pattern = "oil:///*",
-			-- 	callback = function()
-			-- 		if vim.bo.filetype == "oil" then
-			-- 			vim.cmd.lcd(require("oil").get_current_dir())
-			-- 		end
-			-- 	end,
-			-- })
-		end,
+		keys = {
+			{ "<C-e>", "<CMD>Oil<CR>", desc = "Open parent directory" },
+		},
 	},
 	{
 		"kevinhwang91/nvim-ufo",

@@ -3,7 +3,10 @@
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
   dft = difftool
-	enforce = push --force-with-lease
+  enforce = push --force-with-lease
+  br = "!git branch --sort=creatordate --format=\"%(creatordate:short) %(refname:short)\" #"
+  quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
+  quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"
 
 [user]
   email = andres.monge@parcellab.com

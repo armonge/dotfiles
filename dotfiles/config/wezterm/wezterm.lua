@@ -17,7 +17,15 @@ end
 config.color_scheme = "tokyonight_storm"
 config.font = wezterm.font("JetBrains Mono")
 
-config.keys = {}
+config.keys = {
+
+	{
+
+		key = "UpArrow",
+		mods = "ALT",
+		action = act.ToggleFullScreen,
+	},
+}
 for i = 1, 8 do
 	-- ALT + number to activate that tab
 	table.insert(config.keys, {
@@ -29,3 +37,4 @@ end
 
 -- and finally, return the configuration to wezterm
 return config
+

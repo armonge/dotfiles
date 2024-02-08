@@ -84,7 +84,7 @@ if [ -f "$HOME/.gvm/scripts/gvm" ]; then
   source "$HOME/.gvm/scripts/gvm"
 fi
 
-if command -v go &> /dev/null; then
+if command -v go &>/dev/null; then
   GOPATH=$(go env GOPATH)
   export PATH=$PATH:$GOPATH/bin
 fi
@@ -147,7 +147,7 @@ if [ -d "$NVM_DIR" ]; then
 
     elif [[ -s $nvm_path/.nvmrc && -r $nvm_path/.nvmrc ]]; then
       declare nvm_version
-      nvm_version=$(< "$nvm_path"/.nvmrc)
+      nvm_version=$(<"$nvm_path"/.nvmrc)
 
       declare locally_resolved_nvm_version
       # `nvm ls` will check all locally-available versions
@@ -181,19 +181,19 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_VIRTUALENV_VERBOSE_ACTIVATE=true
 export PYTHON_CONFIGURE_OPTS="--enable-shared --with-tcltk-includes --with-tcltk-libs"
 export PATH="$HOME/.pyenv/bin:$PATH"
-if command -v pyenv 1> /dev/null 2>&1; then
+if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
   eval "$(pyenv init --path)"
   eval "$(pyenv virtualenv-init -)"
 
-  if pyenv which inv &> /dev/null; then
+  if pyenv which inv &>/dev/null; then
     source <(inv --print-completion-script bash)
   fi
 
 fi
 
 # AWS
-if command -v aws &> /dev/null; then
+if command -v aws &>/dev/null; then
   complete -C "$(which aws_completer)" aws
 fi
 
@@ -227,7 +227,7 @@ export FZF_DEFAULT_OPTS="--ansi --layout reverse --margin=1,4 "
 export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden --ignore ".git/*" --ignore ".direnv/*" --depth=-1'
 export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 
-if command -v batcat &> /dev/null; then
+if command -v batcat &>/dev/null; then
   export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'batcat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
 else
   export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
@@ -245,11 +245,11 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export NODE_OPTIONS="--max_old_space_size=16384 "
 export NODE_NO_WARNINGS=1
 
-if command -v npm &> /dev/null; then
+if command -v npm &>/dev/null; then
   source <(npm completion)
 fi
 
-if command -v direnv &> /dev/null; then
+if command -v direnv &>/dev/null; then
   eval "$(direnv hook bash)"
 fi
 
@@ -281,7 +281,7 @@ fi
 # Intel Graphics - Best practices and settings for hardware acceleration?
 export LIBVA_DRIVER_NAME=iHD
 
-if command -v helm &> /dev/null; then
+if command -v helm &>/dev/null; then
   source <(helm completion bash)
 fi
 
@@ -297,10 +297,12 @@ if [ -f "$HOME/bin/google-cloud-sdk/completion.bash.inc" ]; then
   source "$HOME/bin/google-cloud-sdk/completion.bash.inc"
 fi
 
-if command -v kubectl &> /dev/null; then
+if command -v kubectl &>/dev/null; then
   source <(kubectl completion bash)
 fi
 
-if command -v k9s &> /dev/null; then
+if command -v k9s &>/dev/null; then
   source <(k9s completion bash)
 fi
+
+export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"

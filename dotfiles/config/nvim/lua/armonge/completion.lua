@@ -23,87 +23,74 @@ require("mason-lspconfig").setup_handlers({
 local lspkind = require("lspkind")
 lspkind.init({
 	symbol_map = {
-		Text = "󰉿",
-		Method = "󰆧",
-		Function = "󰊕",
-		Constructor = "",
-		Field = "󰜢",
-		Variable = "󰀫",
-		Class = "󰠱",
-		Interface = "",
-		Module = "",
-		Property = "󰜢",
-		Unit = "󰑭",
-		Value = "󰎠",
-		Enum = "",
-		Keyword = "󰌋",
-		Snippet = "",
-		Color = "󰏘",
-		File = "󰈙",
-		Reference = "󰈇",
-		Folder = "󰉋",
-		EnumMember = "",
-		Constant = "󰏿",
-		Struct = "󰙅",
-		Event = "",
-		Operator = "󰆕",
-		TypeParameter = "",
+		Copilot = "",
 	},
 })
-local has_words_before = function()
-	if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
-		return false
-	end
-	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-end
 
+vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 -- luasnip setup
 local luasnip = require("luasnip") -- nvim-cmp setup
 
+local check_backspace = function()
+	local col = vim.fn.col(".") - 1
+	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+end
+
+local types = require("cmp.types")
+
 -- nvim-cmp setup
 local cmp = require("cmp")
-cmp.setup({
-	formatting = {
-		format = lspkind.cmp_format({
-			mode = "symbol", -- show only symbol annotations
-			maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-			-- can also be a function to dynamically calculate max width such as
-			-- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-			ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-			show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
-			-- The function below will be called before any actual modifications from lspkind
-			-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-			before = function(entry, vim_item)
-				-- ...
-				return vim_item
-			end,
-		}),
-	},
+cmp.setup({
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			luasnip.lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
-		["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Up
-		["<C-d>"] = cmp.mapping.scroll_docs(4), -- Down
-		-- C-b (back) C-f (forward) for snippet placeholder navigation.
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
+		["<C-k>"] = cmp.mapping(
+			cmp.mapping.select_prev_item({ behavior = types.cmp.SelectBehavior.Select }),
+			{ "i", "c" }
+		),
+		["<C-j>"] = cmp.mapping(
+			cmp.mapping.select_next_item({ behavior = types.cmp.SelectBehavior.Select }),
+			{ "i", "c" }
+		),
+		["<C-h>"] = function()
+			if cmp.visible_docs() then
+				cmp.close_docs()
+			else
+				cmp.open_docs()
+			end
+		end,
+		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<C-e>"] = cmp.mapping({
+			i = cmp.mapping.abort(),
+			c = cmp.mapping.close(),
 		}),
+		-- Accept currently selected item. If none selected, `select` first item.
+		-- Set `select` to `false` to only confirm explicitly selected items.
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
 		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() and has_words_before() then
-				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expandable() then
+				luasnip.expand()
 			elseif luasnip.expand_or_jumpable() then
 				luasnip.expand_or_jump()
+			elseif check_backspace() then
+				-- fallback()
+				require("neotab").tabout()
 			else
-				fallback()
+				require("neotab").tabout()
+				-- fallback()
 			end
-		end, { "i", "s" }),
+		end, {
+			"i",
+			"s",
+		}),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
@@ -112,26 +99,67 @@ cmp.setup({
 			else
 				fallback()
 			end
-		end, { "i", "s" }),
+		end, {
+			"i",
+			"s",
+		}),
 	}),
-	sorting = {
-		comparators = {
-			-- Below is the default comparitor list and order for nvim-cmp
-			cmp.config.compare.offset,
-			-- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-			cmp.config.compare.exact,
-			cmp.config.compare.score,
-			cmp.config.compare.kind,
-			cmp.config.compare.sort_text,
-			cmp.config.compare.length,
-			cmp.config.compare.order,
-		},
-	},
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "copilot" },
+		{
+			name = "nvim_lsp",
+			entry_filter = function(entry, ctx)
+				local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
+				if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+					return false
+				end
+
+				if ctx.prev_context.filetype == "markdown" then
+					return true
+				end
+
+				if kind == "Text" then
+					return false
+				end
+
+				return true
+			end,
+		},
 		{ name = "luasnip" },
+		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "path" },
+		-- { name = "treesitter" },
+	},
+	confirm_opts = {
+		behavior = cmp.ConfirmBehavior.Replace,
+		select = false,
+	},
+	view = {
+		entries = {
+			name = "custom",
+			selection_order = "top_down",
+		},
+		docs = {
+			auto_open = true,
+		},
+	},
+	window = {
+		completion = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder,Search:None",
+			col_offset = -3,
+			side_padding = 1,
+			scrollbar = false,
+			scrolloff = 8,
+		},
+		documentation = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,FloatBorder:FloatBorder,Search:None",
+		},
+	},
+	experimental = {
+		ghost_text = false,
 	},
 })
 
@@ -160,3 +188,23 @@ cmp.setup.cmdline(":", {
 		{ name = "cmdline" },
 	}),
 })
+
+-- {
+--
+-- 		{ name = "luasnip" },
+-- 		{ name = "path" },
+-- 		{ name = "buffer" },
+-- 		{ name = "nvim_lsp" },
+-- 		-- Copilot Source
+-- 		{ name = "copilot" },
+-- 	}, {
+-- 		{
+-- 			name = "spell",
+-- 			option = {
+-- 				keep_all_entries = false,
+-- 				enable_in_context = function()
+-- 					return true
+-- 				end,
+-- 			},
+-- 		},
+-- 	}

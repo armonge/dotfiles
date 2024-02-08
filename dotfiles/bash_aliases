@@ -7,9 +7,9 @@ alias vim='nvim'
 alias grep='grep --color=auto --ignore-case'
 alias serve='python3 -m http.server'
 if [ -f "/opt/homebrew/bin/brew" ]; then
-	true
+  true
 else
-	alias open='xdg-open'
+  alias open='xdg-open'
 fi
 alias dotnet='TERM=xterm dotnet'
 alias func="TERM=xterm func"
@@ -17,7 +17,7 @@ alias pwsh="TERM=xterm pwsh"
 alias cat='bat'
 
 if command -v batcat &>/dev/null; then
-	alias bat='batcat'
+  alias bat='batcat'
 fi
 
 alias ping='prettyping --nolegend'
@@ -38,18 +38,16 @@ alias fclear='tput reset'
 
 alias minikubectl="minikube kubectl --"
 function jsonv() {
-	file=$1
-	jq --color-output '.' "$file" | cat -p
+  file=$1
+  jq --color-output '.' "$file" | cat -p
 }
 
 function man-http() {
-	code="$1"
-	if [[ -z $code ]]; then
-		echo "Usage: man-http <status code>"
-		exit 0
-	fi
+  code="$1"
+  if [[ -z $code ]]; then
+    echo "Usage: man-http <status code>"
+    exit 0
+  fi
 
-	xdg-open "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/$code"
+  xdg-open "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/$code"
 }
-
-alias wezterm='flatpak run org.wezfurlong.wezterm'

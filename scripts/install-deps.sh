@@ -16,6 +16,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
     django-completion podman httpie chafa pgformatter
 
   brew install --cask rio
+  brew install --cask wezterm
 
 elif command -v apt &>/dev/null; then
   sudo apt-get update --quiet --quiet
@@ -69,6 +70,9 @@ elif command dnf &>/dev/null; then
     wl-clipboard \
     git git-lfs \
     chafa
+
+  sudo dnf copr enable wezfurlong/wezterm-nightly
+  sudo dnf install wezterm
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
