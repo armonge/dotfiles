@@ -19,77 +19,22 @@ require("lazy").setup({
 	{
 		"folke/which-key.nvim",
 		lazy = true,
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
 	},
 	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"nvim-telescope/telescope.nvim", -- optional
-			"sindrets/diffview.nvim", -- optional
-			"ibhagwan/fzf-lua", -- optional
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "<leader>TT", "<cmd>TroubleToggle<cr>", desc = "Toggles trouble window" },
 		},
-		config = function()
-			local neogit = require("neogit")
-			local wk = require("which-key")
-			neogit.setup({
-				ignored_settings = {
-					"NeogitPushPopup--force-with-lease",
-					"NeogitPushPopup--force",
-					-- "NeogitPullPopup--rebase",
-					"NeogitCommitPopup--allow-empty",
-					"NeogitRevertPopup--no-edit",
-				},
-			})
-
-			wk.register({
-				g = {
-					name = "Neogit",
-					["o"] = {
-						function()
-							neogit.open()
-						end,
-						"Neogit Open",
-					},
-				},
-			}, { prefix = "<leader>" })
-		end,
 	},
 	{
 		"folke/neodev.nvim",
 		config = true,
 	},
-	-- "folke/zen-mode.nvim",
-	-- "folke/twilight.nvim",
-	{ "rafamadriz/friendly-snippets" },
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = { "rafamadriz/friendly-snippets" },
-		build = "make install_jsregexp",
-		config = function()
-			local ls = require("luasnip")
-			ls.filetype_extend("all", { "_" })
-			require("luasnip.loaders.from_vscode").lazy_load()
-		end,
-	},
-	{
-		"benfowler/telescope-luasnip.nvim",
-		dependencies = { "L3MON4D3/LuaSnip" },
-	},
-	"tpope/vim-sensible",
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		build = ":TSUpdate",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-	},
-	"wakatime/vim-wakatime",
-
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -107,59 +52,202 @@ require("lazy").setup({
 		},
 	},
 	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		keys = {
+			{ "<leader>nd", "<cmd>lua require('noice').cmd('dismiss')<cr>", desc = "Noice dismiss" },
+		},
+		opts = {
+			lsp = {
+				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
+				},
+			},
+			-- you can enable a preset for easier configuration
+			presets = {
+				bottom_search = true, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
+		},
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+			"folke/which-key.nvim",
+		},
+	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+			"nvim-telescope/telescope.nvim", -- optional
+			"sindrets/diffview.nvim", -- optional
+			"ibhagwan/fzf-lua", -- optional
+		},
+		opts = {
+			ignored_settings = {
+				"NeogitPushPopup--force-with-lease",
+				"NeogitPushPopup--force",
+				-- "NeogitPullPopup--rebase",
+				"NeogitCommitPopup--allow-empty",
+				"NeogitRevertPopup--no-edit",
+			},
+		},
+		keys = {
+			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
+		},
+	},
+	{
+		"tpope/vim-sensible",
+	},
+	{
+		"tpope/vim-fugitive",
+		lazy = true,
+		cmd = { "Git", "GBrowse" },
+		dependencies = { "tpope/vim-rhubarb" },
+	},
+	{
+		"tpope/vim-abolish",
+	},
+	{
+		"tpope/vim-repeat",
+	},
+	{
+		"tpope/vim-speeddating",
+	},
+	{ "rafamadriz/friendly-snippets" },
+	{
+		"L3MON4D3/LuaSnip",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		build = "make install_jsregexp",
+		config = function()
+			local ls = require("luasnip")
+			ls.filetype_extend("all", { "_" })
+			require("luasnip.loaders.from_vscode").lazy_load()
+		end,
+	},
 
+	{
+		"nvim-telescope/telescope.nvim",
+		event = "VeryLazy",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{
+		"nvim-telescope/telescope-fzf-native.nvim",
+		event = "VeryLazy",
+		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+	},
+	{ "nvim-telescope/telescope-media-files.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
+	{
+		"benfowler/telescope-luasnip.nvim",
+		dependencies = { "L3MON4D3/LuaSnip" },
+	},
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		build = ":TSUpdate",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+	{
+		"wakatime/vim-wakatime",
+	},
+
+	{
 		"jamessan/vim-gnupg",
 		event = "VeryLazy",
 	},
-	-- {
-	--   "kevinhwang91/rnvimr",
-	--   event = 'VeryLazy'
-	-- },
 	{
-
 		"antoyo/vim-licenses",
-		event = "VeryLazy",
+		cmd = {
+			"Apache",
+			"Gpl",
+			"Gplv2",
+			"Mit",
+			"Bsd2",
+			"Bsd3",
+		},
 	},
 	{
 		"numToStr/Comment.nvim",
-		config = function()
-			require("Comment").setup({
-				-- add any options here
-				mappings = {
-					basic = true,
-					extra = true,
-				},
-			})
-		end,
-		event = "VeryLazy",
-	},
-	-- {
-	--   "neoclide/coc.nvim",
-	--   branch = "release",
-	--   -- event = 'VeryLazy',
-	-- },
-	{
-		"vim-scripts/sessionman.vim",
+		opts = {},
 		event = "VeryLazy",
 	},
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
-		config = true,
+		opts = {
+			disable_in_macro = false,
+		},
 	},
 	{
 		"kylechui/nvim-surround",
-		version = "*", -- Use for stability; omit to use `main` branch for the latest features
 		event = "VeryLazy",
-		config = function()
-			require("nvim-surround").setup({
-				-- Configuration here, or leave empty to use defaults
-			})
-		end,
+		opts = {},
 	},
 	{
 		"LunarVim/bigfile.nvim",
 		event = "VeryLazy",
+		opts = {},
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -190,69 +278,12 @@ require("lazy").setup({
 
 			require("ibl").setup({ indent = { highlight = highlight } })
 		end,
-		config = true,
 	},
 
-	{
-		"nvim-telescope/telescope.nvim",
-		event = "VeryLazy",
-		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		event = "VeryLazy",
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-		dependencies = { "nvim-telescope/telescope.nvim" },
-	},
-	{ "nvim-telescope/telescope-media-files.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
 	{
 		"rcarriga/nvim-notify",
 		event = "VeryLazy",
-	},
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		config = function()
-			local noice = require("noice")
-			local wk = require("which-key")
-
-			wk.register({
-				n = {
-					name = "Noice",
-					["d"] = {
-						function()
-							noice.cmd("dismiss")
-						end,
-						"Noice dismiss",
-					},
-				},
-			}, { prefix = "<leader>" })
-
-			noice.setup({
-				lsp = {
-					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true,
-					},
-				},
-				-- you can enable a preset for easier configuration
-				presets = {
-					bottom_search = true, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
-				},
-			})
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-			"folke/which-key.nvim",
-		},
+		opts = {},
 	},
 	{
 		"lambdalisue/suda.vim",
@@ -262,71 +293,10 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		config = function()
-			local wk = require("which-key")
-
-			-- flash
-			wk.register({
-				-- flash search
-				l = {
-					name = "flash",
-					["s"] = {
-						function()
-							require("flash").jump()
-						end,
-						"Flash Jump",
-					},
-					["t"] = {
-						function()
-							require("flash").treesitter()
-						end,
-						"Flash Treesitter",
-					},
-					["r"] = {
-						function()
-							require("flash").treesitter_search()
-						end,
-						"Flash Treesitter Search",
-					},
-				},
-			}, { prefix = "<leader>", mode = { "n", "v" } })
-		end,
-	},
-	{
 		"Wansmer/treesj",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		event = "VeryLazy",
-		config = function()
-			local treesj = require("treesj")
-			local wk = require("which-key")
-
-			treesj.setup({ use_default_keymaps = false })
-			wk.register({
-				t = {
-					name = "Treesj",
-					["m"] = {
-						function()
-							require("treesj").toggle()
-						end,
-						"Toggle node under cursor",
-					},
-					["j"] = {
-						function()
-							require("treesj").join()
-						end,
-						"Join node under cursor",
-					},
-					["s"] = {
-						function()
-							require("treesj").split()
-						end,
-						"Split node under cursor",
-					},
-				},
-			}, { prefix = "<space>" })
-		end,
+		opts = {},
 	},
 	{
 		"mechatroner/rainbow_csv",
@@ -342,7 +312,7 @@ require("lazy").setup({
 
 	{
 		"williamboman/mason.nvim",
-		config = true,
+		opts = {},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -374,7 +344,7 @@ require("lazy").setup({
 	{
 		"petertriho/cmp-git",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = true,
+		opts = {},
 	},
 	{ "onsails/lspkind.nvim" },
 	{
@@ -382,7 +352,7 @@ require("lazy").setup({
 		dependencies = {
 			"hrsh7th/nvim-cmp",
 		},
-		config = true,
+		opts = {},
 		ft = "gitcommit",
 	},
 	{
@@ -403,12 +373,12 @@ require("lazy").setup({
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		config = true,
+		opts = {},
 	},
 	{
 		"kawre/neotab.nvim",
 		event = "InsertEnter",
-		config = true,
+		opts = {},
 	},
 	{
 		"mhartington/formatter.nvim",
@@ -459,6 +429,9 @@ require("lazy").setup({
 						require("formatter.filetypes.python").ruff,
 						require("formatter.filetypes.python").black,
 					},
+					typescript = {
+						require("formatter.filetypes.typescript").prettierd,
+					},
 					json = {
 						require("formatter.filetypes.json").prettierd,
 					},
@@ -499,11 +472,18 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		keys = {
-			{ "<leader>TT", "<cmd>TroubleToggle<cr>", desc = "Toggles trouble window" },
-		},
+		"mfussenegger/nvim-lint",
+		config = function()
+			require("lint").linters_by_ft = {
+				htmldjango = { "djlint", "curlylint" },
+				sql = { "sqlfluff" },
+			}
+			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+				callback = function()
+					require("lint").try_lint()
+				end,
+			})
+		end,
 	},
 	{
 		"pmizio/typescript-tools.nvim",
@@ -520,15 +500,6 @@ require("lazy").setup({
 		},
 	},
 	{
-		"tpope/vim-fugitive",
-		lazy = true,
-		cmd = { "Git", "GBrowse" },
-		dependencies = { "tpope/vim-rhubarb" },
-	},
-	{
-		"tpope/vim-abolish",
-	},
-	{
 		"stevearc/oil.nvim",
 		config = true,
 		lazy = true,
@@ -537,6 +508,27 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = {
 			{ "<C-e>", "<CMD>Oil<CR>", desc = "Open parent directory" },
+		},
+		opts = {
+			use_default_keymaps = false,
+			keymaps = {
+				["g?"] = "actions.show_help",
+				["<CR>"] = "actions.select",
+				-- ["<C-s>"] = "actions.select_vsplit",
+				-- ["<C-h>"] = "actions.select_split",
+				["<C-t>"] = "actions.select_tab",
+				["<C-p>"] = "actions.preview",
+				["<C-c>"] = "actions.close",
+				["<C-l>"] = "actions.refresh",
+				["-"] = "actions.parent",
+				["_"] = "actions.open_cwd",
+				["`"] = "actions.cd",
+				["~"] = "actions.tcd",
+				["gs"] = "actions.change_sort",
+				["gx"] = "actions.open_external",
+				["g."] = "actions.toggle_hidden",
+				["g\\"] = "actions.toggle_trash",
+			},
 		},
 	},
 	{
@@ -561,6 +553,9 @@ require("lazy").setup({
 		end,
 	},
 	{ "windwp/nvim-ts-autotag" },
+	{
+		"direnv/direnv.vim",
+	},
 })
 -- }
 
@@ -607,6 +602,7 @@ beancount.check_current_buffer = function()
 			end
 		end
 		vim.schedule(function()
+			vim.diagnostic.reset(beancount.namespace, 0)
 			vim.diagnostic.set(beancount.namespace, 0, diagnostics)
 		end)
 	end

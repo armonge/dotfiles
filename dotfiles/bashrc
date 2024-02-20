@@ -302,7 +302,7 @@ if command -v kubectl &>/dev/null; then
 fi
 
 if command -v k9s &>/dev/null; then
-  source <(k9s completion bash)
+  eval "$(k9s completion bash)"
 fi
 
 export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
