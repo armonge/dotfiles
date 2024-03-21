@@ -16,6 +16,7 @@ end
 -- For example, changing the color scheme:
 config.color_scheme = "tokyonight_storm"
 config.font = wezterm.font("JetBrains Mono")
+config.native_macos_fullscreen_mode = true
 
 config.keys = {
 
@@ -35,6 +36,10 @@ for i = 1, 8 do
 	})
 end
 
+config.keys = {
+	{ key = "{", mods = "SHIFT|ALT", action = act.MoveTabRelative(-1) },
+	{ key = "}", mods = "SHIFT|ALT", action = act.MoveTabRelative(1) },
+}
+
 -- and finally, return the configuration to wezterm
 return config
-

@@ -44,6 +44,14 @@ telescope.setup({
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 			-- the default case_mode is "smart_case"
 		},
+		ast_grep = {
+			command = {
+				"sg",
+				"--json=stream",
+			}, -- must have --json=stream
+			grep_open_files = false, -- search in opened files
+			lang = nil, -- string value, specify language for ast-grep `nil` for default
+		},
 	},
 })
 
@@ -52,7 +60,6 @@ telescope.load_extension("fzf")
 telescope.load_extension("noice")
 telescope.load_extension("workspaces")
 telescope.load_extension("luasnip")
-telescope.load_extension("media_files")
 local find_files = function()
 	return ts_builtin.find_files({ follow = true, hidden = true })
 end
@@ -79,7 +86,12 @@ wk.register({
 		-- ["db"] = { "<Cmd>Telescope dap commands<CR>", "DAP breakpoints" },
 	},
 	["gr"] = { ts_builtin.lsp_references, "Show references" },
-	["<C-s>"] = { ts_builtin.live_grep, "Searches file with grep and Telescope" },
+	["<C-s>"] = {
+		function()
+			ts_builtin.live_grep({ additional_args = { "-j1" } })
+		end,
+		"Searches file with grep and Telescope",
+	},
 	["<C-f>"] = { ts_builtin.resume, "Continues last Telescope search" },
 }, { mode = "n" })
 

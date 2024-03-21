@@ -1,21 +1,79 @@
 local wk = require("which-key")
+local lspconfig = require("lspconfig")
 
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"lua_ls",
 		"rust_analyzer",
-		"pyright",
 		"lemminx",
 		"yamlls",
 		"emmet_language_server",
 		"bashls",
 		"jsonls",
+		-- "pyright",
+		"ruff_lsp",
+		"jedi_language_server",
+		"htmx",
+		"html",
+		-- "ast_grep",
+		-- "pylyzer",
 	},
 	automatic_installation = true,
 })
 
+-- require("lspconfig").ast_grep.setup({
+-- 	filetypes = { "typescript", "python" },
+-- 	single_file_support = true,
+-- 	-- root_dir = nvim_lsp.util.root_pattern(".git", "sgconfig.yml"),
+-- })
+lspconfig.htmx.setup{
+	filetypes={"html", "htmldjango"},
+}
+lspconfig.jedi_language_server.setup({})
+lspconfig.basedpyright.setup({
+	cmd = { "env", "PYENV_VERSION=nvim3", "basedpyright-langserver", "--stdio" },
+})
+lspconfig.emmet_language_server.setup({
+	filetypes = {
+		"css",
+		"eruby",
+		"html",
+		"javascript",
+		"javascriptreact",
+		"less",
+		"sass",
+		"scss",
+		"pug",
+		"typescriptreact",
+		"htmldjango",
+	},
+	-- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-lotconfiguration).
+	-- **Note:** only the options listed in the table are supported.
+	init_options = {
+		---@type table<string, string>
+		includeLanguages = { "htmldjango" },
+		--- @type string[]
+		excludeLanguages = {},
+		--- @type string[]
+		extensionsPath = {},
+		--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
+		preferences = {},
+		--- @type boolean Defaults to `true`
+		showAbbreviationSuggestions = true,
+		--- @type "always" | "never" Defaults to `"always"`
+		showExpandedAbbreviation = "always",
+		--- @type boolean Defaults to `false`
+		showSuggestionsAsSnippets = false,
+		--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
+		syntaxProfiles = {},
+		--- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
+		variables = {},
+	},
+})
+
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.diagnostic.config({ virtual_text = true })
 wk.register({
 	["<space>e"] = { vim.diagnostic.open_float, "Open diagnostics" },
 	["[d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },

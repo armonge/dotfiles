@@ -76,8 +76,8 @@ export PYGMENTIZE_STYLE='nord'
 
 # VIM
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
-export VISUAL="vim -u NONE"
-export EDITOR="vim -u NONE"
+export VISUAL="vim -u ~/.config/nvim/editor.lua"
+export EDITOR="vim -u ~/.config/nvim/editor.lua"
 
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then
@@ -287,6 +287,8 @@ fi
 
 . "$HOME/.cargo/env"
 
+export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]; then
   source "$HOME/bin/google-cloud-sdk/path.bash.inc"
@@ -305,4 +307,7 @@ if command -v k9s &>/dev/null; then
   eval "$(k9s completion bash)"
 fi
 
-export PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
+if command -v sg &>/dev/null; then
+  eval "$(sg completions bash)"
+fi
+

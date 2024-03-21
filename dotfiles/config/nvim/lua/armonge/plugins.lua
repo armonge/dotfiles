@@ -33,7 +33,9 @@ require("lazy").setup({
 	},
 	{
 		"folke/neodev.nvim",
-		config = true,
+		opts = {
+			library = { types = true },
+		},
 	},
 	{
 		"folke/tokyonight.nvim",
@@ -53,17 +55,17 @@ require("lazy").setup({
 	},
 	{
 		"folke/noice.nvim",
-		event = "VeryLazy",
 		keys = {
 			{ "<leader>nd", "<cmd>lua require('noice').cmd('dismiss')<cr>", desc = "Noice dismiss" },
 		},
+		event = "VeryLazy",
 		opts = {
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
+					["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 				},
 			},
 			-- you can enable a preset for easier configuration
@@ -76,9 +78,12 @@ require("lazy").setup({
 			},
 		},
 		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
-			"folke/which-key.nvim",
 		},
 	},
 	{
@@ -166,10 +171,16 @@ require("lazy").setup({
 	},
 	{
 		"tpope/vim-speeddating",
+		lazy = true,
+		keys = {
+			{ "<C-a>", mode = { "v", "n" } },
+			{ "<C-x>", mode = { "v", "n" } },
+		},
 	},
-	{ "rafamadriz/friendly-snippets" },
+	{ "rafamadriz/friendly-snippets", event = { "InsertEnter", "CmdlineEnter" } },
 	{
 		"L3MON4D3/LuaSnip",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = { "rafamadriz/friendly-snippets" },
 		build = "make install_jsregexp",
 		config = function()
@@ -178,7 +189,6 @@ require("lazy").setup({
 			require("luasnip.loaders.from_vscode").lazy_load()
 		end,
 	},
-
 	{
 		"nvim-telescope/telescope.nvim",
 		event = "VeryLazy",
@@ -191,9 +201,9 @@ require("lazy").setup({
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
-	{ "nvim-telescope/telescope-media-files.nvim", dependencies = { "nvim-telescope/telescope.nvim" } },
 	{
 		"benfowler/telescope-luasnip.nvim",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = { "L3MON4D3/LuaSnip" },
 	},
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -211,10 +221,10 @@ require("lazy").setup({
 	{
 		"wakatime/vim-wakatime",
 	},
-
 	{
 		"jamessan/vim-gnupg",
-		event = "VeryLazy",
+		-- event = "VeryLazy",
+		ft = { "gpg", "pgp" },
 	},
 	{
 		"antoyo/vim-licenses",
@@ -230,7 +240,7 @@ require("lazy").setup({
 	{
 		"numToStr/Comment.nvim",
 		opts = {},
-		event = "VeryLazy",
+		lazy = false,
 	},
 	{
 		"windwp/nvim-autopairs",
@@ -287,10 +297,7 @@ require("lazy").setup({
 	},
 	{
 		"lambdalisue/suda.vim",
-		event = "VeryLazy",
-		config = function()
-			vim.g.suda_smart_edit = 1
-		end,
+		cmd = { "SudaRead", "SudaWrite" },
 	},
 	{
 		"Wansmer/treesj",
@@ -300,9 +307,11 @@ require("lazy").setup({
 	},
 	{
 		"mechatroner/rainbow_csv",
+		ft = { "csv" },
 	},
 	{
 		"natecraddock/workspaces.nvim",
+		cmd = { "Telescope workspaces" },
 		opts = {
 			hooks = {
 				open = { "Telescope find_files" },
@@ -312,7 +321,21 @@ require("lazy").setup({
 
 	{
 		"williamboman/mason.nvim",
-		opts = {},
+		opts = {
+
+			pip = {
+				---@since 1.0.0
+				-- Whether to upgrade pip to the latest version in the virtual environment before installing packages.
+				upgrade_pip = true,
+
+				---@since 1.0.0
+				-- These args will be added to `pip install` calls. Note that setting extra args might impact intended behavior
+				-- and is not recommended.
+				--
+				-- Example: { "--proxy", "https://proxyserver" }
+				install_args = {},
+			},
+		},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -324,7 +347,6 @@ require("lazy").setup({
 	{ "neovim/nvim-lspconfig" },
 	{
 		"hrsh7th/nvim-cmp", -- Autocompletion plugin
-		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -343,6 +365,7 @@ require("lazy").setup({
 	},
 	{
 		"petertriho/cmp-git",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 	},
@@ -376,12 +399,27 @@ require("lazy").setup({
 		opts = {},
 	},
 	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		opts = {
+			debug = true, -- Enable debugging
+			-- See Configuration section for rest
+		},
+		cmd = "CopilotChat",
+		-- See Commands section for default commands if you want to lazy load on them
+	},
+	{
 		"kawre/neotab.nvim",
 		event = "InsertEnter",
 		opts = {},
 	},
 	{
 		"mhartington/formatter.nvim",
+		event = "BufWritePost",
 		config = function()
 			local augroup = vim.api.nvim_create_augroup
 			local autocmd = vim.api.nvim_create_autocmd
@@ -417,17 +455,27 @@ require("lazy").setup({
 							args = {
 								"--profile=django",
 								"--quiet",
-								"--format-css",
-								"--format-js",
 								"--reformat",
+								"--custom-html",
+								"json-schema-form",
+								"--custom-html",
+								"monaco-editor",
 								"-",
 							},
 							stdin = true,
 						},
 					},
 					python = {
-						require("formatter.filetypes.python").ruff,
-						require("formatter.filetypes.python").black,
+						require("formatter.filetypes.python").isort,
+
+						function()
+							return {
+								exe = "ruff",
+								cwd = vim.fn.getcwd(),
+								args = { "format", "-q", "-" },
+								stdin = true,
+							}
+						end,
 					},
 					typescript = {
 						require("formatter.filetypes.typescript").prettierd,
@@ -473,6 +521,7 @@ require("lazy").setup({
 	},
 	{
 		"mfussenegger/nvim-lint",
+		ft = { "htmldjango", "sql" },
 		config = function()
 			require("lint").linters_by_ft = {
 				htmldjango = { "djlint", "curlylint" },
@@ -489,6 +538,7 @@ require("lazy").setup({
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		config = true,
+		ft = { "typescript", "typescriptreact", "javascript", "javascriptreact", "javascript.jsx", "typescript.tsx" },
 	},
 	{
 		"hedyhli/outline.nvim",
@@ -510,6 +560,7 @@ require("lazy").setup({
 			{ "<C-e>", "<CMD>Oil<CR>", desc = "Open parent directory" },
 		},
 		opts = {
+			default_file_explorer = true,
 			use_default_keymaps = false,
 			keymaps = {
 				["g?"] = "actions.show_help",
@@ -556,6 +607,40 @@ require("lazy").setup({
 	{
 		"direnv/direnv.vim",
 	},
+	-- {
+	-- 	"RaafatTurki/corn.nvim",
+	-- 	opts = {},
+	-- },
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
+	{
+		"brenoprata10/nvim-highlight-colors",
+		opts = {
+			render = "background",
+		},
+	},
+	-- {
+	-- 	"nvim-neotest/neotest",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"antoinemadec/FixCursorHold.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-neotest/neotest-python",
+	-- 	},
+	-- 	config = function()
+	-- 		require("neotest").setup({
+	-- 			adapters = {
+	-- 				require("neotest-python"),
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 })
 -- }
 
