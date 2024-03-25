@@ -252,6 +252,7 @@ profiles:
       - f_environment.lua
       - f_filebrowser.lua
       - f_filetypes.lua
+      - f_beancount.lua
       - f_plugins.lua
       - f_theme.lua
       - f_python-version
