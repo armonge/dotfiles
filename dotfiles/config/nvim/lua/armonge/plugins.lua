@@ -16,74 +16,13 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 
 require("lazy").setup({
-	{
-		"folke/which-key.nvim",
-		lazy = true,
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-	},
-	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		keys = {
-			{ "<leader>TT", "<cmd>TroubleToggle<cr>", desc = "Toggles trouble window" },
-		},
-	},
+	{ import = "armonge.telescope" },
+	{ import = "armonge.theme" },
+	{ import = "armonge.treesitter" },
 	{
 		"folke/neodev.nvim",
 		opts = {
 			library = { types = true },
-		},
-	},
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			style = "storm",
-			on_highlights = function(hl, colors)
-				hl.LineNr = {
-					fg = colors.green,
-				}
-				hl.CursorLineNr = {
-					fg = colors.orange,
-				}
-			end,
-		},
-	},
-	{
-		"folke/noice.nvim",
-		keys = {
-			{ "<leader>nd", "<cmd>lua require('noice').cmd('dismiss')<cr>", desc = "Noice dismiss" },
-		},
-		event = "VeryLazy",
-		opts = {
-			lsp = {
-				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
-				},
-			},
-			-- you can enable a preset for easier configuration
-			presets = {
-				bottom_search = true, -- use a classic bottom cmdline for search
-				command_palette = true, -- position the cmdline and popupmenu together
-				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false, -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false, -- add a border to hover docs and signature help
-			},
-		},
-		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
 		},
 	},
 	{
@@ -134,27 +73,6 @@ require("lazy").setup({
 		},
 	},
 	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"nvim-telescope/telescope.nvim", -- optional
-			"sindrets/diffview.nvim", -- optional
-			"ibhagwan/fzf-lua", -- optional
-		},
-		opts = {
-			ignored_settings = {
-				"NeogitPushPopup--force-with-lease",
-				"NeogitPushPopup--force",
-				-- "NeogitPullPopup--rebase",
-				"NeogitCommitPopup--allow-empty",
-				"NeogitRevertPopup--no-edit",
-			},
-		},
-		keys = {
-			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
-		},
-	},
-	{
 		"tpope/vim-sensible",
 	},
 	{
@@ -188,35 +106,6 @@ require("lazy").setup({
 			ls.filetype_extend("all", { "_" })
 			require("luasnip.loaders.from_vscode").lazy_load()
 		end,
-	},
-	{
-		"nvim-telescope/telescope.nvim",
-		event = "VeryLazy",
-		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		event = "VeryLazy",
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-		dependencies = { "nvim-telescope/telescope.nvim" },
-	},
-	{
-		"benfowler/telescope-luasnip.nvim",
-		event = { "InsertEnter", "CmdlineEnter" },
-		dependencies = { "L3MON4D3/LuaSnip" },
-	},
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		build = ":TSUpdate",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
 	},
 	{
 		"wakatime/vim-wakatime",
@@ -259,36 +148,6 @@ require("lazy").setup({
 		event = "VeryLazy",
 		opts = {},
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		config = function()
-			local highlight = {
-				"RainbowRed",
-				"RainbowYellow",
-				"RainbowBlue",
-				"RainbowOrange",
-				"RainbowGreen",
-				"RainbowViolet",
-				"RainbowCyan",
-			}
-
-			local hooks = require("ibl.hooks")
-			-- create the highlight groups in the highlight setup hook, so they are reset
-			-- every time the colorscheme changes
-			hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-				vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-				vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-				vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-				vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-				vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-				vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-				vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-			end)
-
-			require("ibl").setup({ indent = { highlight = highlight } })
-		end,
-	},
 
 	{
 		"rcarriga/nvim-notify",
@@ -300,23 +159,8 @@ require("lazy").setup({
 		cmd = { "SudaRead", "SudaWrite" },
 	},
 	{
-		"Wansmer/treesj",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "VeryLazy",
-		opts = {},
-	},
-	{
 		"mechatroner/rainbow_csv",
 		ft = { "csv" },
-	},
-	{
-		"natecraddock/workspaces.nvim",
-		cmd = { "Telescope workspaces" },
-		opts = {
-			hooks = {
-				open = { "Telescope find_files" },
-			},
-		},
 	},
 
 	{
@@ -607,10 +451,6 @@ require("lazy").setup({
 	{
 		"direnv/direnv.vim",
 	},
-	-- {
-	-- 	"RaafatTurki/corn.nvim",
-	-- 	opts = {},
-	-- },
 	{
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -625,22 +465,6 @@ require("lazy").setup({
 			render = "background",
 		},
 	},
-	-- {
-	-- 	"nvim-neotest/neotest",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"antoinemadec/FixCursorHold.nvim",
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 		"nvim-neotest/neotest-python",
-	-- 	},
-	-- 	config = function()
-	-- 		require("neotest").setup({
-	-- 			adapters = {
-	-- 				require("neotest-python"),
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
 })
 -- }
 
