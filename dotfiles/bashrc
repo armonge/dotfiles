@@ -307,7 +307,3 @@ if command -v k9s &>/dev/null; then
   eval "$(k9s completion bash)"
 fi
 
-if command -v sg &>/dev/null; then
-  eval "$(sg completions bash)"
-fi
-
