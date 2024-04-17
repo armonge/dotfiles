@@ -16,7 +16,10 @@ end
 -- For example, changing the color scheme:
 config.color_scheme = "tokyonight_storm"
 config.font = wezterm.font("JetBrains Mono")
+config.allow_win32_input_mode = true
+config.use_dead_keys = false
 config.native_macos_fullscreen_mode = true
+config.integrated_title_button_style = "Gnome"
 
 config.keys = {
 
@@ -26,6 +29,7 @@ config.keys = {
 		mods = "ALT",
 		action = act.ToggleFullScreen,
 	},
+
 }
 for i = 1, 8 do
 	-- ALT + number to activate that tab
