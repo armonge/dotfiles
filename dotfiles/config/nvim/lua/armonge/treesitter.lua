@@ -26,6 +26,7 @@ return {
 					"javascript",
 					"terraform",
 					"jsonc",
+					"vimdoc",
 					"beancount",
 				},
 				highlight = {
@@ -58,6 +59,26 @@ return {
 		end,
 	},
 
+	{
+		"windwp/nvim-ts-autotag",
+		ft = {
+
+			"astro",
+			"glimmer",
+			"handlebars",
+			"html",
+			"javascript",
+			"jsx",
+			"markdown",
+			"php",
+			"rescript",
+			"svelte",
+			"tsx",
+			"typescript",
+			"vue",
+			"xml",
+		},
+	},
 	{
 		"Wansmer/treesj",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },

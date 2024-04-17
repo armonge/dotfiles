@@ -138,4 +138,18 @@ return {
 			require("ibl").setup({ indent = { highlight = highlight } })
 		end,
 	},
+	{
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		config = true,
+		keys = {
+			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
+		},
+	},
+	{
+		"rcarriga/nvim-notify",
+		event = "VeryLazy",
+		opts = {},
+	},
 }

@@ -1,3 +1,15 @@
+local beancount = {}
+beancount.setup = function()
+	beancount.namespace = vim.api.nvim_create_namespace("beancount")
+	vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
+		group = vim.api.nvim_create_augroup("beancount", { clear = true }),
+		-- apigen currently only parses annotations within *.api.go
+		-- files so those are the only files we want to check within
+		-- neovim as well.
+		pattern = "*.beancount",
+		callback = beancount.check_current_buffer,
+	})
+end
 beancount.check_current_buffer = function()
 	-- Reset all diagnostics for our custom namespace. The second
 	-- argument is the buffer number and passing in 0 will select

@@ -64,7 +64,7 @@ return {
 			})
 			telescope.load_extension("notify")
 			telescope.load_extension("fzf")
-			telescope.load_extension("noice")
+			-- telescope.load_extension("noice")
 			telescope.load_extension("workspaces")
 			telescope.load_extension("luasnip")
 			local find_files = function()
@@ -87,7 +87,7 @@ return {
 					["o"] = { ts_builtin.oldfiles, "Searches previously opened files" },
 					["l"] = { "<cmd>Telescope<CR>", "Shows all telescope lists" },
 					["S"] = { "<cmd>Telescope luasnip<CR>", "Shows all luasnip snippets" },
-					["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
+					-- ["h"] = { "<Cmd>Telescope noice<CR>", "Noice History" },
 					["w"] = { "<Cmd>Telescope workspaces<CR>", "Searches workspaces with telescope" },
 					-- ["dc"] = { "<Cmd>Telescope dap commands<CR>", "DAP Commands" },
 					-- ["db"] = { "<Cmd>Telescope dap commands<CR>", "DAP breakpoints" },
