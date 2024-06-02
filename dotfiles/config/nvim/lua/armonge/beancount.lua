@@ -25,7 +25,7 @@ beancount.check_current_buffer = function()
 	local cmd = { "bean-check", os.getenv("HOME") .. "/beancount/personal.beancount" }
 	local buf_path = vim.api.nvim_buf_get_name(0)
 
-	function on_exit(obj)
+	local function on_exit(obj)
 		local diagnostics = {}
 		for line in obj.stderr:gmatch("([^\n]*)\n?") do
 			local filepath, linenumber, error = string.match(line, "(.+):(%d+):%s+(.+)")

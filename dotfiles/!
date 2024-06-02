@@ -1,0 +1,93 @@
+[
+  {
+    "Channel": "Mail",
+    "DelayOfWorkingHours": 24,
+    "Filter": {
+      "$and": [
+        {
+          "delivery_info.return": {
+            "$ne": true
+          }
+        },
+        {
+          "destination_country_iso3": {
+            "$nin": [
+              "USA"
+            ]
+          }
+        },
+        {
+          "delivery_info.courierServiceLevel": "EXP"
+        }
+      ]
+    },
+    "FilterOnSend": {
+      "$and": [
+        {
+          "reporting.contactedWithMessages": {
+            "$not": {}
+          }
+        },
+        {
+          "$not": {}
+        },
+        {
+          "delivery_info.language_iso3": {
+            "$in": [
+              "fr",
+              "es",
+              "nl",
+              "de",
+              "en"
+            ]
+          }
+        }
+      ]
+    },
+    "FilterOnSendId": "jpg-warehouse-delay3",
+    "LocaleMessage": true,
+    "Message": "WarehouseDelay",
+    "OncePerOrder": true,
+    "Recipient": {
+      "courierContact": false,
+      "customer": true,
+      "plTest": false,
+      "support": false,
+      "test": false
+    },
+    "Source": "archive",
+    "Trigger": "*"
+  },
+  {
+    "Channel": "Mail",
+    "Delay": 0,
+    "Filter": {
+      "$and": [
+        {
+          "delivery_info.return": {
+            "$ne": true
+          }
+        },
+        {
+          "destination_country_iso3": {
+            "$nin": [
+              "USA"
+            ]
+          }
+        }
+      ]
+    },
+    "LocaleMessage": true,
+    "Message": "OrderConfirmation",
+    "Recipient": {
+      "courierContact": false,
+      "customer": false,
+      "plTest": true,
+      "support": false,
+      "test": false
+    },
+    "Source": "archive",
+    "Trigger": "*",
+    "deduplicationId": "7199c4b54f3e71e853b777cebc66902e3d724713"
+  }
+]

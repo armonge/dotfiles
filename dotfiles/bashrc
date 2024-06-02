@@ -40,7 +40,6 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
   export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
   [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
-  complete -C "$(command -v aws_completer)" aws
 fi
 
 # Clojure
@@ -306,4 +305,3 @@ fi
 if command -v k9s &>/dev/null; then
   eval "$(k9s completion bash)"
 fi
-

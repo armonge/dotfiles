@@ -12,10 +12,24 @@ return {
 	},
 	{
 		"tpope/vim-abolish",
+
+		cmd = {
+			"Abolish",
+			"Subvert",
+		},
+		keys = {
+
+			{ "crs", mode = { "n" , 'v'} },
+			{ "crm", mode = { "n" , 'v'} },
+			{ "crc", mode = { "n" , 'v'} },
+			{ "cru", mode = { "n" , 'v'} },
+			{ "cr-", mode = { "n" , 'v'} },
+			{ "cr.", mode = { "n" , 'v'} },
+		},
 	},
 	{
 		"folke/flash.nvim",
-		event = "VeryLazy",
+		-- event = "VeryLazy",
 		opts = {},
 		keys = {
 			{
@@ -64,7 +78,9 @@ return {
 	{
 		"numToStr/Comment.nvim",
 		opts = {},
-		lazy = false,
+		keys = {
+			{ "gcc", mode = { "v", "n" } },
+		},
 	},
 	{
 		"windwp/nvim-autopairs",

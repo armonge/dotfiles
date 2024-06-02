@@ -12,6 +12,7 @@ if wezterm.config_builder then
 end
 
 -- This is where you actually apply your config choices
+config.scrollback_lines = 105500
 
 -- For example, changing the color scheme:
 config.color_scheme = "tokyonight_storm"
@@ -29,7 +30,6 @@ config.keys = {
 		mods = "ALT",
 		action = act.ToggleFullScreen,
 	},
-
 }
 for i = 1, 8 do
 	-- ALT + number to activate that tab

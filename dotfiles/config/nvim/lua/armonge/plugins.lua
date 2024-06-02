@@ -16,6 +16,45 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ","
 
 require("lazy").setup({
+	{
+
+		"stevearc/profile.nvim",
+		lazy = true,
+		config = function()
+			local should_profile = os.getenv("NVIM_PROFILE")
+			if should_profile then
+				require("profile").instrument_autocmds()
+				if should_profile:lower():match("^start") then
+					vim.notify("Profiling started")
+					require("profile").start("*")
+				else
+					vim.notify("Profiling instrumented")
+					require("profile").instrument("*")
+				end
+			end
+
+			local function toggle_profile()
+				local prof = require("profile")
+				if prof.is_recording() then
+					prof.stop()
+					vim.notify("Profiling stopped")
+					vim.ui.input(
+						{ prompt = "Save profile to:", completion = "file", default = "profile.json" },
+						function(filename)
+							if filename then
+								prof.export(filename)
+								vim.notify(string.format("Wrote %s", filename))
+							end
+						end
+					)
+				else
+					vim.notify("Profiling started")
+					prof.start("*")
+				end
+			end
+			vim.keymap.set("", "<f1>", toggle_profile)
+		end,
+	},
 	-- Enable profiling of lazy.nvim. This will add some overhead,
 	-- so only enable this when you are debugging lazy.nvim
 	{
@@ -32,13 +71,26 @@ require("lazy").setup({
 	{ import = "armonge.treesitter" },
 	{ import = "armonge.lsp" },
 	{ import = "armonge.completion" },
-	{ import = "armonge.formatter" },
 	{ import = "armonge.motions" },
 	{
-		"folke/neodev.nvim",
-		opts = {
-			library = { types = true },
-		},
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- Library items can be absolute paths
+        -- "~/projects/my-awesome-lib",
+        -- Or relative, which means they will be resolved as a plugin
+        -- "LazyVim",
+        -- When relative, you can also provide a path to the library in the plugin dir
+        "luvit-meta/library", -- see below
+      },
+    },
+  },
+	{
+		"folke/neoconf.nvim",
+		config = function()
+			require("neoconf").setup()
+		end,
 	},
 	{
 		"tpope/vim-sensible",
@@ -84,8 +136,8 @@ require("lazy").setup({
 
 	{
 		"williamboman/mason.nvim",
+		cmd = { "Mason" },
 		opts = {
-
 			pip = {
 				---@since 1.0.0
 				-- Whether to upgrade pip to the latest version in the virtual environment before installing packages.
@@ -104,21 +156,6 @@ require("lazy").setup({
 		"kawre/neotab.nvim",
 		event = "InsertEnter",
 		opts = {},
-	},
-	{
-		"mfussenegger/nvim-lint",
-		ft = { "htmldjango", "sql" },
-		config = function()
-			require("lint").linters_by_ft = {
-				htmldjango = { "djlint", "curlylint" },
-				sql = { "sqlfluff" },
-			}
-			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-				callback = function()
-					require("lint").try_lint()
-				end,
-			})
-		end,
 	},
 	{
 		"stevearc/oil.nvim",
@@ -176,6 +213,50 @@ require("lazy").setup({
 	},
 	{
 		"direnv/direnv.vim",
+	},
+	{
+		"nvim-neotest/neotest",
+		lazy = true,
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-neotest/neotest-python",
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-python"),
+				},
+			})
+		end,
+		keys = {
+			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>',     desc = "Runs current test" },
+			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>',    desc = "Stops neotest" },
+			{ "<leader>mo", '<cmd>lua require("neotest").output.open()<CR>', desc = "Shows neotest" },
+			{
+				"<leader>mO",
+				'<cmd>lua require("neotest").output.open({ enter = true})<CR>',
+				desc = "Shows neotest and enter",
+			},
+			{
+				"<leader>mi",
+				'<cmd>lua require("neotest").summary.toggle()<CR>',
+				desc = "Toggle neotest summary",
+			},
+			{ "<leader>mf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', desc = "Runs current file" },
+			{
+				"[n",
+				'<cmd>lua require("neotest").jump.prev({status = "failed"})<CR>',
+				desc = "Go to previous failed test",
+			},
+			{
+				"]n",
+				'<cmd>lua require("neotest").jump.next({status = "failed"})<CR>',
+				desc = "Go to next failed test",
+			},
+		},
 	},
 })
 -- }

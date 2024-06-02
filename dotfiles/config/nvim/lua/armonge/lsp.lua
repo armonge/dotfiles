@@ -1,5 +1,41 @@
 return {
-
+{
+  "folke/trouble.nvim",
+  opts = {}, -- for default options, refer to the configuration section for custom setup.
+  cmd = "Trouble",
+  keys = {
+    {
+      "<leader>xx",
+      "<cmd>Trouble diagnostics toggle<cr>",
+      desc = "Diagnostics (Trouble)",
+    },
+    {
+      "<leader>xX",
+      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      desc = "Buffer Diagnostics (Trouble)",
+    },
+    {
+      "<leader>cs",
+      "<cmd>Trouble symbols toggle focus=false<cr>",
+      desc = "Symbols (Trouble)",
+    },
+    {
+      "<leader>cl",
+      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+      desc = "LSP Definitions / references / ... (Trouble)",
+    },
+    {
+      "<leader>xL",
+      "<cmd>Trouble loclist toggle<cr>",
+      desc = "Location List (Trouble)",
+    },
+    {
+      "<leader>xQ",
+      "<cmd>Trouble qflist toggle<cr>",
+      desc = "Quickfix List (Trouble)",
+    },
+  },
+},
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
@@ -11,17 +47,17 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"rust_analyzer",
-				"lemminx",
+				-- "lemminx",
 				"yamlls",
 				"emmet_language_server",
 				"bashls",
 				"jsonls",
 				"basedpyright",
-				"ruff_lsp",
-				"jedi_language_server",
+				-- "ruff_lsp",
+				-- "jedi_language_server",
 				"taplo",
-				"htmx",
-				"html",
+				-- "htmx",
+				"efm",
 				-- "ast_grep",
 				-- "pylyzer",
 			},
@@ -52,6 +88,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = { "folke/neoconf.nvim" },
 		config = function()
 			local wk = require("which-key")
 			local lspconfig = require("lspconfig")
@@ -68,22 +105,20 @@ return {
 			})
 			lspconfig.basedpyright.setup({
 				settings = {
-					pyright = {
-						-- Using Ruff's import organizer
-						disableOrganizeImports = true,
-					},
-					python = {
+					basedpyright = {
 						analysis = {
-							-- Ignore all files for analysis to exclusively use Ruff for linting
-							ignore = { "*" },
+
+							-- Using Ruff's import organizer
+							disableOrganizeImports = true,
+							diagnosticMode = "workspace",
 						},
 					},
 				},
 			})
-			lspconfig.htmx.setup({
-				filetypes = { "html", "htmldjango" },
-			})
-			lspconfig.jedi_language_server.setup({})
+			-- lspconfig.htmx.setup({
+			-- 	filetypes = { "html", "htmldjango" },
+			-- })
+			-- lspconfig.jedi_language_server.setup({})
 			-- lspconfig.basedpyright.setup({
 			-- 	cmd = { "env", "PYENV_VERSION=nvim3", "basedpyright-langserver", "--stdio" },
 			-- })
@@ -198,5 +233,95 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		config = true,
 		ft = { "typescript", "typescriptreact", "javascript", "javascriptreact", "javascript.jsx", "typescript.tsx" },
+	},
+	{
+		"creativenull/efmls-configs-nvim",
+		dependencies = { "neovim/nvim-lspconfig" },
+		config = function()
+			local languages = {
+				-- Custom languages, or override existing ones
+				python = {
+					require("efmls-configs.formatters.ruff"),
+					require("efmls-configs.formatters.ruff_sort"),
+				},
+				lua = {
+					require("efmls-configs.formatters.stylua"),
+				},
+				sh = {
+					require("efmls-configs.formatters.shfmt"),
+				},
+				json = {
+					require("efmls-configs.formatters.jq"),
+				},
+				javascript = {
+					require("efmls-configs.formatters.prettier"),
+				},
+				html = {
+					require("efmls-configs.formatters.prettier"),
+				},
+				htmldjango = {
+					require("efmls-configs.linters.djlint"),
+				},
+				javascriptreact = {
+					require("efmls-configs.formatters.prettier"),
+				},
+				typescript = {
+					require("efmls-configs.formatters.prettier"),
+				},
+				typescriptreact = {
+					require("efmls-configs.formatters.prettier"),
+				},
+			}
+
+			-- Or use the defaults provided by this plugin
+			-- check doc/SUPPORTED_LIST.md for the supported languages
+			--
+			-- local languages = require('efmls-configs.defaults').languages()
+
+			local efmls_config = {
+				filetypes = vim.tbl_keys(languages),
+				settings = {
+					rootMarkers = { ".git/" },
+					languages = languages,
+				},
+				init_options = {
+					documentFormatting = true,
+					documentRangeFormatting = true,
+					hover = true,
+					documentSymbol = true,
+					codeAction = true,
+					completion = true,
+				},
+			}
+			require("lspconfig").efm.setup(vim.tbl_extend("force", efmls_config, {
+				-- Pass your custom lsp config below like on_attach and capabilities
+				--
+				-- on_attach = on_attach,
+				-- capabilities = capabilities,
+			}))
+			local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
+			vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+				group = lsp_fmt_group,
+				callback = function()
+					if not vim.bo.modifiable or vim.b.skip_autoformat == true then
+						return
+					end
+
+					vim.lsp.buf.format({ name = "efm" })
+				end,
+			})
+			vim.api.nvim_create_autocmd("BufWritePost", {
+				group = lsp_fmt_group,
+				callback = function(ev)
+					local efm = vim.lsp.get_active_clients({ name = "efm", bufnr = ev.buf })
+
+					if vim.tbl_isempty(efm) then
+						return
+					end
+
+					vim.lsp.buf.format()
+				end,
+			})
+		end,
 	},
 }

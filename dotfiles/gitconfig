@@ -1,4 +1,5 @@
 [alias]
+	jdiff = difftool -t jsondiff -y
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
@@ -25,6 +26,7 @@
 [push]
   default = current
 
+
 [diff]
   tool = difftastic
 
@@ -33,6 +35,9 @@
 
 [difftool "difftastic"]
   cmd = difft "$LOCAL" "$REMOTE"
+
+[difftool "jsondiff"]
+	cmd = "json-diff $LOCAL $REMOTE"
 
 [pager]
   difftool = true
