@@ -23,13 +23,8 @@ config.native_macos_fullscreen_mode = true
 config.integrated_title_button_style = "Gnome"
 
 config.keys = {
-
-	{
-
-		key = "UpArrow",
-		mods = "ALT",
-		action = act.ToggleFullScreen,
-	},
+	{ key = "UpArrow", mods = "ALT", action = act.ToggleFullScreen },
+	{ key = "l", mods = "ALT", action = wezterm.action.ShowLauncher },
 }
 for i = 1, 8 do
 	-- ALT + number to activate that tab
@@ -39,11 +34,6 @@ for i = 1, 8 do
 		action = act.ActivateTab(i - 1),
 	})
 end
-
-config.keys = {
-	{ key = "{", mods = "SHIFT|ALT", action = act.MoveTabRelative(-1) },
-	{ key = "}", mods = "SHIFT|ALT", action = act.MoveTabRelative(1) },
-}
 
 -- and finally, return the configuration to wezterm
 return config
