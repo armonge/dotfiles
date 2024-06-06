@@ -1,4 +1,5 @@
 return {
+  { "stevearc/dressing.nvim", event = "VeryLazy" },
 	{
 		"folke/which-key.nvim",
 		lazy = true,

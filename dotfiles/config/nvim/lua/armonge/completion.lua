@@ -11,7 +11,6 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"petertriho/cmp-git",
-			"f3fora/cmp-spell",
 		},
 		config = function()
 			-- luasnip setup

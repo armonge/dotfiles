@@ -3,13 +3,18 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		branch = "0.1.x",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"princejoogie/dir-telescope.nvim",
+			"benfowler/telescope-luasnip.nvim",
+			"nvim-telescope/telescope-fzf-native.nvim",
+		},
 		cmd = {
 			"Telescope",
 			"Telescope luasnip",
 		},
 		keys = {
-			{ "<leader>tt", "<cmd>Telescope<CR>",             "Shows all telescopes" },
+			{ "<leader>tt", "<cmd>Telescope<CR>", "Shows all telescopes" },
 			{
 				"<leader>tp",
 				function()
@@ -18,9 +23,9 @@ return {
 				end,
 				desc = "Searches filenames with telescope",
 			},
-			{ "<leader>th", "<cmd>Telescope help_tags<CR>",   desc = "Searches on help_tags with Telescope" },
+			{ "<leader>th", "<cmd>Telescope help_tags<CR>", desc = "Searches on help_tags with Telescope" },
 			{ "<leader>td", "<cmd>Telescope diagnostics<CR>", desc = "Searches diagnostics with Telescope" },
-			{ "<leader>tq", "<cmd>Telescope quickfix<CR>",    desc = "Searches quickfix list Telescope" },
+			{ "<leader>tq", "<cmd>Telescope quickfix<CR>", desc = "Searches quickfix list Telescope" },
 			{
 				"<leader>ts",
 				"<cmd>Telescope lsp_dynamic_workspace_symbols<CR>",
@@ -31,26 +36,23 @@ return {
 				"<cmd>Telescope lsp_document_symbols<CR>",
 				desc = "Searches document symbols with Telescope",
 			},
-			{ "<leader>tC", "<cmd>Telescope commands<CR>",       desc = "Searches vim commands with Telescope" },
-			{ "<leader>tb", "<cmd>Telescope buffers<CR>",        desc = "Searches open buffers with Telescope" },
-			{ "<leader>tr", "<cmd>Telescope registers<CR>",      desc = "Searches registers with Telescope" },
-			{ "<leader>to", "<cmd>Telescope oldfiles<CR>",       desc = "Searches previously opened files" },
-			{ "<leader>tl", "<cmd>Telescope<CR>",                desc = "Shows all telescope lists" },
+			{ "<leader>tC", "<cmd>Telescope commands<CR>", desc = "Searches vim commands with Telescope" },
+			{ "<leader>tb", "<cmd>Telescope buffers<CR>", desc = "Searches open buffers with Telescope" },
+			{ "<leader>tr", "<cmd>Telescope registers<CR>", desc = "Searches registers with Telescope" },
+			{ "<leader>to", "<cmd>Telescope oldfiles<CR>", desc = "Searches previously opened files" },
+			{ "<leader>tl", "<cmd>Telescope<CR>", desc = "Shows all telescope lists" },
 			-- { "<leader>tS", "<cmd>Telescope luasnip<CR>",        desc = "Shows all luasnip snippets" },
-			{ "<leader>tw", "<cmd>Telescope workspaces<CR>",     desc = "Searches workspaces with telescope" },
-			{ "gr",         "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
+			{ "<leader>tw", "<cmd>Telescope workspaces<CR>", desc = "Searches workspaces with telescope" },
+			{ "gr", "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
+			{ "<C-s>", "<cmd>Telescope live_grep<CR>", desc = "Searches file with grep and Telescope" },
 			{
-				"<C-s>",
-				function()
-					local ts_builtin = require("telescope.builtin")
-					ts_builtin.live_grep({ additional_args = { "-j1" } })
-				end,
-				desc = "Searches file with grep and Telescope",
+				"<leader>fd",
+				"<cmd>Telescope dir live_grep<CR>",
+				desc = "Searches file with grep and Telescope inside a directory",
 			},
 			{ "<C-f>", "<cmd>Telescope resume<CR>", desc = "Continues last Telescope search" },
 		},
 		config = function()
-			local ts_builtin = require("telescope.builtin")
 			local ts_actions = require("telescope.actions")
 
 			local telescope = require("telescope")
@@ -94,11 +96,14 @@ return {
 						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 						-- the default case_mode is "smart_case"
 					},
+					dir = {
+						hidden = false,
+					},
 					ast_grep = {
 						command = {
 							"sg",
 							"--json=stream",
-						},     -- must have --json=stream
+						}, -- must have --json=stream
 						grep_open_files = false, -- search in opened files
 						lang = nil, -- string value, specify language for ast-grep `nil` for default
 					},
@@ -107,6 +112,7 @@ return {
 			telescope.load_extension("fzf")
 			telescope.load_extension("workspaces")
 			telescope.load_extension("luasnip")
+			telescope.load_extension("dir")
 
 			-- Fixes a bug where files opened by Telescope don't work with folds
 			vim.api.nvim_create_autocmd("BufEnter", {
@@ -123,8 +129,7 @@ return {
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		lazy = true,
-		build =
-		"cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
 	{

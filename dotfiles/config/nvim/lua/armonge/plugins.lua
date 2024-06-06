@@ -73,19 +73,19 @@ require("lazy").setup({
 	{ import = "armonge.completion" },
 	{ import = "armonge.motions" },
 	{
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- Library items can be absolute paths
-        -- "~/projects/my-awesome-lib",
-        -- Or relative, which means they will be resolved as a plugin
-        -- "LazyVim",
-        -- When relative, you can also provide a path to the library in the plugin dir
-        "luvit-meta/library", -- see below
-      },
-    },
-  },
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- Library items can be absolute paths
+				-- "~/projects/my-awesome-lib",
+				-- Or relative, which means they will be resolved as a plugin
+				-- "LazyVim",
+				-- When relative, you can also provide a path to the library in the plugin dir
+				"luvit-meta/library", -- see below
+			},
+		},
+	},
 	{
 		"folke/neoconf.nvim",
 		config = function()
@@ -232,8 +232,9 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>',     desc = "Runs current test" },
-			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>',    desc = "Stops neotest" },
+			{ "<leader>mw", '<cmd>lua require("neotest").watch()<CR>', desc = "Watches current test" },
+			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>', desc = "Runs current test" },
+			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>', desc = "Stops neotest" },
 			{ "<leader>mo", '<cmd>lua require("neotest").output.open()<CR>', desc = "Shows neotest" },
 			{
 				"<leader>mO",
