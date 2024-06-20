@@ -53,7 +53,6 @@ return {
 				"bashls",
 				"jsonls",
 				"basedpyright",
-				-- "ruff_lsp",
 				-- "jedi_language_server",
 				"taplo",
 				-- "htmx",
@@ -93,23 +92,11 @@ return {
 			local wk = require("which-key")
 			local lspconfig = require("lspconfig")
 
-			local on_attach = function(client, bufnr)
-				if client.name == "ruff_lsp" then
-					-- Disable hover in favor of Pyright
-					client.server_capabilities.hoverProvider = false
-				end
-			end
-
-			lspconfig.ruff_lsp.setup({
-				on_attach = on_attach,
-			})
 			lspconfig.basedpyright.setup({
 				settings = {
 					basedpyright = {
 						analysis = {
-
-							-- Using Ruff's import organizer
-							disableOrganizeImports = true,
+							disableOrganizeImports = false,
 							diagnosticMode = "workspace",
 						},
 					},
