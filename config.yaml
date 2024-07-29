@@ -170,10 +170,6 @@ dotfiles:
     src: config/nvim/lua/armonge/telescope.lua
     dst: ~/.config/nvim/lua/armonge/telescope.lua
     link: absolute
-  f_01-nord.py:
-    src: ipython/profile_default/startup/01-nord.py
-    dst: ~/.ipython/profile_default/startup/01-nord.py
-    link: absolute
   f_00-logging.py:
     src: ipython/profile_default/startup/00-logging.py
     dst: ~/.ipython/profile_default/startup/00-logging.py
@@ -259,7 +255,6 @@ profiles:
       - f_treesitter.lua
       - f_starship.toml
       - f_telescope.lua
-      - f_01-nord.py
       - f_00-logging.py
       - f_rc.conf
       - f_rgignore
