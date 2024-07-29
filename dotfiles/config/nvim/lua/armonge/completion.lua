@@ -1,7 +1,7 @@
 return {
 
 	{
-		"hrsh7th/nvim-cmp", -- Autocompletion plugin
+		"hrsh7th/nvim-cmp",    -- Autocompletion plugin
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -11,6 +11,7 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"petertriho/cmp-git",
+			"f3fora/cmp-spell",
 		},
 		config = function()
 			-- luasnip setup
@@ -22,68 +23,43 @@ return {
 			end
 
 			local types = require("cmp.types")
-
-			-- nvim-cmp setup
 			local cmp = require("cmp")
-			-- default sources for all buffers
+
 			local default_cmp_sources = cmp.config.sources({
-				{ name = "luasnip" },
+				{ name = "buffer" },
 				{ name = "path" },
+				{ name = "luasnip" },
 			})
+			local full_cmp_sources = cmp.config.sources({
+				{ name = "buffer" },
+				{ name = "path" },
+				{ name = "luasnip" },
+				{ name = "nvim_lua" },
+				{ name = "copilot" },
+				{ name = "treesitter" },
+				{
+					name = "nvim_lsp",
+					entry_filter = function(entry, ctx)
+						local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
 
-			local bufIsBig = function(bufnr)
-				local max_filesize = 100 * 1024 -- 100 KB
-				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-				if ok and stats and stats.size > max_filesize then
-					return true
-				else
-					return false
-				end
-			end
-
-			-- If a file is too large, I don't want to add to it's cmp sources treesitter, see:
-			-- https://github.com/hrsh7th/nvim-cmp/issues/1522
-			vim.api.nvim_create_autocmd("BufReadPre", {
-				callback = function(t)
-					local sources = default_cmp_sources
-
-					if not bufIsBig(t.buf) then
-						local filetype = vim.filetype.match({ buf = t.buf })
-						if filetype == "lua" then
-							sources[#sources + 1] = { name = "nvim_lua" }
+						if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+							return false
 						end
 
-						sources[#sources + 1] = { name = "copilot" }
-						sources[#sources + 1] = { name = "buffer" }
-						sources[#sources + 1] = { name = "treesitter" }
-						sources[#sources + 1] = {
-							name = "nvim_lsp",
-							entry_filter = function(entry, ctx)
-								local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
+						if ctx.prev_context.filetype == "markdown" then
+							return true
+						end
 
-								if kind == "Snippet" and ctx.prev_context.filetype == "java" then
-									return false
-								end
+						if kind == "Text" then
+							return false
+						end
 
-								if ctx.prev_context.filetype == "markdown" then
-									return true
-								end
-
-								if kind == "Text" then
-									return false
-								end
-
-								return true
-							end,
-						}
-
-						sources[#sources + 1] = { name = "nvim_lsp_signature_help" }
+						return true
 					end
-					cmp.setup.buffer({
-						sources = sources,
-					})
-				end,
+				},
+				{ name = "nvim_lsp_signature_help" }
 			})
+
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -177,6 +153,18 @@ return {
 				experimental = {
 					ghost_text = false,
 				},
+				sources = default_cmp_sources,
+			})
+
+
+			cmp.setup.filetype("python", {
+				sources = full_cmp_sources,
+			})
+			cmp.setup.filetype("yaml", {
+				sources = full_cmp_sources,
+			})
+			cmp.setup.filetype("beancount", {
+				sources = full_cmp_sources,
 			})
 
 			-- Set configuration for specific filetype.

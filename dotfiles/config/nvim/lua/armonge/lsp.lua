@@ -150,10 +150,10 @@ return {
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.diagnostic.config({ virtual_text = true })
-			wk.register({
-				["<space>e"] = { vim.diagnostic.open_float, "Open diagnostics" },
-				["[d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
-				["]d"] = { vim.diagnostic.goto_next, "Go to next diagnostic" },
+			wk.add({
+				{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
+				{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
+				{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
 			})
 			-- Use LspAttach autocommand to only map the following keys
 			-- after the language server attaches to the current buffer
@@ -163,7 +163,7 @@ return {
 					-- Buffer local mappings.
 					-- See `:help vim.lsp.*` for documentation on any of the below functions
 					local opts = { buffer = ev.buf }
-					wk.register({
+					wk.add({
 						name = "LSP",
 						["g"] = {
 							name = "Go to",
@@ -193,7 +193,7 @@ return {
 						},
 					}, opts)
 
-					wk.register({
+					wk.add({
 						name = "LSP",
 						["<leader>ca"] = { vim.lsp.buf.code_action, "Apply code action" },
 					}, { mode = { "n", "v" } })

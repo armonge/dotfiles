@@ -4,8 +4,8 @@ vim.g.sql_type_default = "sql.vim"
 
 --  Open files with gx {
 local wk = require("which-key")
-wk.register({
-	["gx"] = { "!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>", "Opens a <WORD> with the default browser" },
+wk.add({
+	{ "gx", "!xdg-open " .. vim.fn.shellescape("<WORD>") .. "<CR>", desc = "Opens a <WORD> with the default browser" },
 })
 --  }
 

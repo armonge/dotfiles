@@ -55,6 +55,15 @@ require("lazy").setup({
 			vim.keymap.set("", "<f1>", toggle_profile)
 		end,
 	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+	},
 	-- Enable profiling of lazy.nvim. This will add some overhead,
 	-- so only enable this when you are debugging lazy.nvim
 	{
@@ -91,6 +100,7 @@ require("lazy").setup({
 		config = function()
 			require("neoconf").setup()
 		end,
+		dependencies = { "folke/neodev.nvim" },
 	},
 	{
 		"tpope/vim-sensible",

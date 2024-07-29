@@ -1,5 +1,5 @@
 return {
-  { "stevearc/dressing.nvim", event = "VeryLazy" },
+	{ "stevearc/dressing.nvim", event = "VeryLazy" },
 	{
 		"folke/which-key.nvim",
 		lazy = true,
@@ -11,6 +11,9 @@ return {
 			defaults = {
 				["<leader>m"] = { name = "+group name" },
 			},
+		},
+		dependencies = {
+			{ "echasnovski/mini.icons", version = false },
 		},
 	},
 	{
@@ -64,7 +67,7 @@ return {
 			"nvim-lua/plenary.nvim", -- required
 			"nvim-telescope/telescope.nvim", -- optional
 			"sindrets/diffview.nvim", -- optional
-			"ibhagwan/fzf-lua",     -- optional
+			"ibhagwan/fzf-lua", -- optional
 		},
 		opts = {
 			ignored_settings = {

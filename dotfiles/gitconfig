@@ -1,5 +1,5 @@
 [alias]
-	jdiff = difftool -t jsondiff -y
+  jdiff = difftool --tool=jsondiff  -y
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
   git = !exec git
@@ -17,7 +17,20 @@
 [core]
   quotepath = false
   editor = nvim
+  pager = delta
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[interactive] 
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  syntax-theme = tokyonight_night
+
+
+[merge]
+  conflictstyle = diff3
+
 
 [commit]
 	gpgsign = true
@@ -29,6 +42,7 @@
 
 [diff]
   tool = difftastic
+  colorMoved = default
 
 [difftool]
   prompt = false
