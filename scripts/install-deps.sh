@@ -13,11 +13,11 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
 		miller shfmt git git-lfs bat nvim gpg awscli \
 		aws-iam-authenticator the_silver_searcher fd \
-		django-completion podman httpie chafa pgformatter jd
+		django-completion podman httpie chafa pgformatter jd \
+		composer
 
-	brew install --cask rio
 	brew install --cask wezterm
-
+	brew install jstkdng/programs/ueberzugpp
 elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential \

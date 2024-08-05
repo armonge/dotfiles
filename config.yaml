@@ -134,10 +134,6 @@ dotfiles:
     src: config/nvim/lua/armonge/environment.lua
     dst: ~/.config/nvim/lua/armonge/environment.lua
     link: absolute
-  f_beancount.lua:
-    src: config/nvim/lua/armonge/beancount.lua
-    dst: ~/.config/nvim/lua/armonge/beancount.lua
-    link: absolute
   f_filetypes.lua:
     src: config/nvim/lua/armonge/filetypes.lua
     dst: ~/.config/nvim/lua/armonge/filetypes.lua
@@ -247,7 +243,6 @@ profiles:
       - f_defaults.lua
       - f_environment.lua
       - f_filetypes.lua
-      - f_beancount.lua
       - f_plugins.lua
       - f_theme.lua
       - f_python-version

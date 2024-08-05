@@ -4,6 +4,7 @@ return {
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
 		keys = {
+			{ "<leader>x", group = "Trouble" },
 			{
 				"<leader>xx",
 				"<cmd>Trouble diagnostics toggle<cr>",
@@ -57,6 +58,7 @@ return {
 				"taplo",
 				-- "htmx",
 				"efm",
+				"beancount_language_server",
 				-- "ast_grep",
 				-- "pylyzer",
 			},
@@ -79,9 +81,14 @@ return {
 				end,
 				-- -- Next, you can provide a dedicated handler for specific servers.
 				-- -- For example, a handler override for the `rust_analyzer`:
-				-- ["rust_analyzer"] = function()
-				--   require("rust-tools").setup {}
-				-- end
+				["beancount"] = function()
+					lspconfig.beancount.setup({
+						capabilities = capabilities,
+						init_options = {
+							journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
+						},
+					})
+				end,
 			})
 		end,
 	},
@@ -164,38 +171,54 @@ return {
 					-- See `:help vim.lsp.*` for documentation on any of the below functions
 					local opts = { buffer = ev.buf }
 					wk.add({
-						name = "LSP",
-						["g"] = {
-							name = "Go to",
-							["D"] = { vim.lsp.buf.declaration, "Go to declaration" },
-							["d"] = { vim.lsp.buf.definition, "Go to definition" },
-							["i"] = { vim.lsp.buf.implementation, "Go to implementation" },
-							-- ['t'] = { vim.lsp.buf.type_definition, "Go to type definition" },
+						{
+							group = "Goto",
+							desc = "goto",
+							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
 						},
-
-						["<leader>w"] = {
-							name = "Workspaces",
-							["a"] = { vim.lsp.buf.add_workspace_folder, "Add folder to workspace " },
-							["r"] = { vim.lsp.buf.remove_workspace_folder, "Remove folder from workspace" },
-							["l"] = {
+						{
+							group = "workspaces",
+							desc = "workspaces",
+							{
+								"<leader>wa",
+								vim.lsp.buf.add_workspace_folder,
+								desc = "Add folder to workspace ",
+							},
+							{
+								"<leader>wr",
+								vim.lsp.buf.remove_workspace_folder,
+								desc = "Remove folder from workspace",
+							},
+							{
+								"<leader>wl",
 								function()
 									print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 								end,
-								"List workspace folders",
+								desc = "List workspace folders",
 							},
 						},
+						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
+						{
+							group = "Refactor",
+							{
 
-						["K"] = { vim.lsp.buf.hover, "More information on a popup" },
-						["<C-k>"] = { vim.lsp.buf.signature_help, "Signature help" },
-						["<leader>r"] = {
-							name = "Refactor",
-							["n"] = { vim.lsp.buf.rename, "Rename" },
+								"<leader>rn",
+								vim.lsp.buf.rename,
+								desc = "Rename",
+							},
 						},
 					}, opts)
 
 					wk.add({
-						name = "LSP",
-						["<leader>ca"] = { vim.lsp.buf.code_action, "Apply code action" },
+						{
+
+							"<leader>ca",
+							vim.lsp.buf.code_action,
+							desc = "Apply code action",
+						},
 					}, { mode = { "n", "v" } })
 				end,
 			})
