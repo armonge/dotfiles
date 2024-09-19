@@ -17,6 +17,20 @@ vim.g.mapleader = ","
 
 require("lazy").setup({
 	{
+		"OXY2DEV/markview.nvim",
+		lazy = false, -- Recommended
+		-- ft = "markdown", -- If you decide to lazy-load anyway
+
+		dependencies = {
+			-- You will not need this if you installed the
+			-- parsers manually
+			-- Or if the parsers are in your $RUNTIMEPATH
+			"nvim-treesitter/nvim-treesitter",
+
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+	{
 
 		"stevearc/profile.nvim",
 		lazy = true,
@@ -242,7 +256,6 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "<leader>m", group = "Neotest" },
 			{ "<leader>mw", '<cmd>lua require("neotest").watch()<CR>', desc = "Watches current test" },
 			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>', desc = "Runs current test" },
 			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>', desc = "Stops neotest" },

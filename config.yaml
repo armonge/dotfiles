@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.14.0
+  minversion: 1.14.2
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -29,7 +29,7 @@ dotfiles:
     dst: ~/.bashrc
     link: absolute
     src: bashrc
-    chmod: "644"
+    chmod: '644'
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
     link: absolute
@@ -47,7 +47,7 @@ dotfiles:
     link: absolute
     src: config/nvim/init.lua
     actions:
-      - install_deps
+    - install_deps
   f_attributes:
     src: config/git/attributes
     dst: ~/.config/git/attributes
@@ -68,12 +68,12 @@ dotfiles:
     src: bin/delta.sh
     dst: ~/bin/delta.sh
     link: absolute
-    chmod: "775"
+    chmod: '775'
   f_rifle.conf:
     src: config/ranger/rifle.conf
     dst: ~/.config/ranger/rifle.conf
     link: absolute
-    chmod: "644"
+    chmod: '644'
   f_version:
     src: pyenv/version
     dst: ~/.pyenv/version
@@ -98,12 +98,12 @@ dotfiles:
     src: local/bin/clojure-lsp
     dst: ~/.local/bin/clojure-lsp
     link: absolute
-    chmod: "755"
+    chmod: '755'
   f_scope.sh:
     src: config/ranger/scope.sh
     dst: ~/.config/ranger/scope.sh
     link: absolute
-    chmod: "755"
+    chmod: '755'
   f_inputrc:
     src: inputrc
     dst: ~/.inputrc
@@ -112,12 +112,12 @@ dotfiles:
     src: local/bin/mirror.sh
     dst: ~/.local/bin/mirror.sh
     link: absolute
-    chmod: "775"
+    chmod: '775'
   f_dsq:
     src: local/bin/dsq
     dst: ~/.local/bin/dsq
     link: absolute
-    chmod: "755"
+    chmod: '755'
   f_ignore:
     src: config/nvim/.ignore
     dst: ~/.config/nvim/.ignore
@@ -191,7 +191,7 @@ dotfiles:
     dst: ~/.config/bat/themes/tokyonight_night.tmTheme
     link: absolute
     actions:
-      - update_cache
+    - update_cache
   f_lsp.lua:
     src: config/nvim/lua/armonge/lsp.lua
     dst: ~/.config/nvim/lua/armonge/lsp.lua
@@ -212,52 +212,67 @@ dotfiles:
     src: config/nvim/lua/armonge/motions.lua
     dst: ~/.config/nvim/lua/armonge/motions.lua
     link: absolute
+  f_lazy-lock.json:
+    src: config/nvim/lazy-lock.json
+    dst: ~/.config/nvim/lazy-lock.json
+    link: absolute
+  f_editor.lua:
+    src: config/nvim/editor.lua
+    dst: ~/.config/nvim/editor.lua
+    link: absolute
+  f_mappings.lua:
+    src: config/nvim/lua/armonge/mappings.lua
+    dst: ~/.config/nvim/lua/armonge/mappings.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
-      - f_bashrc
-      - f_gitconfig
-      - f_ctags
-      - f_bash_profile
-      - f_chromium-flags.conf
-      - f_bash_aliases
-      - f_attributes
-      - f_deps.edn
-      - f_config.toml
-      - f_ideavimrc
-      - f_delta.sh
-      - f_rifle.conf
-      - f_version
-      - f_clojure_deps.edn
-      - f_rebel_readline.edn
-      - f_practicalli-custom-dictionary.txt
-      - f_cspell.json
-      - f_clojure-lsp
-      - f_scope.sh
-      - f_inputrc
-      - f_mirror.sh
-      - f_dsq
-      - f_init.lua
-      - f_ignore
-      - f_armonge_init.lua
-      - f_defaults.lua
-      - f_environment.lua
-      - f_filetypes.lua
-      - f_plugins.lua
-      - f_theme.lua
-      - f_python-version
-      - f_git_ignore
-      - f_treesitter.lua
-      - f_starship.toml
-      - f_telescope.lua
-      - f_00-logging.py
-      - f_rc.conf
-      - f_rgignore
-      - f_direnv_direnvrc
-      - f_direnv.toml
-      - f_tokyonight_night.tmtheme
-      - f_lsp.lua
-      - f_completion.lua
-      - f_wezterm.lua
-      - f_editorconfig
-      - f_motions.lua
+    - f_bashrc
+    - f_gitconfig
+    - f_ctags
+    - f_bash_profile
+    - f_chromium-flags.conf
+    - f_bash_aliases
+    - f_attributes
+    - f_deps.edn
+    - f_config.toml
+    - f_ideavimrc
+    - f_delta.sh
+    - f_rifle.conf
+    - f_version
+    - f_clojure_deps.edn
+    - f_rebel_readline.edn
+    - f_practicalli-custom-dictionary.txt
+    - f_cspell.json
+    - f_clojure-lsp
+    - f_scope.sh
+    - f_inputrc
+    - f_mirror.sh
+    - f_dsq
+    - f_init.lua
+    - f_ignore
+    - f_armonge_init.lua
+    - f_defaults.lua
+    - f_environment.lua
+    - f_filetypes.lua
+    - f_plugins.lua
+    - f_theme.lua
+    - f_python-version
+    - f_git_ignore
+    - f_treesitter.lua
+    - f_starship.toml
+    - f_telescope.lua
+    - f_00-logging.py
+    - f_rc.conf
+    - f_rgignore
+    - f_direnv_direnvrc
+    - f_direnv.toml
+    - f_tokyonight_night.tmtheme
+    - f_lsp.lua
+    - f_completion.lua
+    - f_wezterm.lua
+    - f_editorconfig
+    - f_motions.lua
+    - f_lazy-lock.json
+    - f_editor.lua
+    - f_mappings.lua

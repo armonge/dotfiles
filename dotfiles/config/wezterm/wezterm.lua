@@ -25,6 +25,8 @@ config.integrated_title_button_style = "Gnome"
 config.keys = {
 	{ key = "UpArrow", mods = "ALT", action = act.ToggleFullScreen },
 	{ key = "l", mods = "ALT", action = wezterm.action.ShowLauncher },
+	{ key = "UpArrow", mods = "CTRL|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
+	{ key = "DownArrow", mods = "CTRL|SHIFT", action = wezterm.action.MoveTabRelative(1) },
 }
 for i = 1, 8 do
 	-- ALT + number to activate that tab
