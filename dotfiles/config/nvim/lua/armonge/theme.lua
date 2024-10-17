@@ -79,7 +79,6 @@ return {
 			},
 		},
 		keys = {
-				{ "<leader>g", group = "Neogit" },
 			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
 		},
 

@@ -52,9 +52,7 @@ return {
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
-				autotag = {
-					enable = true,
-				},
+				autotag = { enable = true },
 			})
 		end,
 	},
@@ -88,5 +86,8 @@ return {
 			"TSJSplit",
 			"TSJJoin",
 		},
+  config = function()
+    require('treesj').setup({--[[ your config ]]})
+  end,
 	},
 }

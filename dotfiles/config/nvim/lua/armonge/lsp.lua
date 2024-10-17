@@ -16,12 +16,12 @@ return {
 				desc = "Buffer Diagnostics (Trouble)",
 			},
 			{
-				"<leader>cs",
+				"<leader>xs",
 				"<cmd>Trouble symbols toggle focus=false<cr>",
 				desc = "Symbols (Trouble)",
 			},
 			{
-				"<leader>cl",
+				"<leader>xl",
 				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
 				desc = "LSP Definitions / references / ... (Trouble)",
 			},
@@ -58,7 +58,7 @@ return {
 				"taplo",
 				-- "htmx",
 				"efm",
-				"beancount_language_server",
+				-- "beancount_language_server",
 				-- "ast_grep",
 				-- "pylyzer",
 			},
@@ -81,14 +81,14 @@ return {
 				end,
 				-- -- Next, you can provide a dedicated handler for specific servers.
 				-- -- For example, a handler override for the `rust_analyzer`:
-				["beancount"] = function()
-					lspconfig.beancount.setup({
-						capabilities = capabilities,
-						init_options = {
-							journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-						},
-					})
-				end,
+				-- ["beancount"] = function()
+				-- 	lspconfig.beancount.setup({
+				-- 		capabilities = capabilities,
+				-- 		init_options = {
+				-- 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
+				-- 		},
+				-- 	})
+				-- end,
 			})
 		end,
 	},
@@ -172,7 +172,6 @@ return {
 					local opts = { buffer = ev.buf }
 					wk.add({
 						{
-							group = "Goto",
 							desc = "goto",
 							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
 							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
@@ -248,6 +247,12 @@ return {
 		"creativenull/efmls-configs-nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
 		config = function()
+			local fs = require("efmls-configs.fs")
+
+			local formatter = "djlint"
+			local bin = fs.executable(formatter)
+			local args = [[--reformat]]
+			local command = string.format("%s %s", bin, args)
 			local languages = {
 				-- Custom languages, or override existing ones
 				python = {
@@ -271,6 +276,11 @@ return {
 				},
 				htmldjango = {
 					require("efmls-configs.linters.djlint"),
+					{
+
+						formatCommand = command,
+						formatStdin = true,
+					},
 				},
 				javascriptreact = {
 					require("efmls-configs.formatters.prettier"),
