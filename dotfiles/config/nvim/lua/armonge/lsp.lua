@@ -247,10 +247,6 @@ return {
 		config = function()
 			local fs = require("efmls-configs.fs")
 
-			local formatter = "djlint"
-			local bin = fs.executable(formatter)
-			local args = [[--reformat]]
-			local command = string.format("%s %s", bin, args)
 			local languages = {
 				-- Custom languages, or override existing ones
 				python = {
@@ -274,11 +270,7 @@ return {
 				},
 				htmldjango = {
 					require("efmls-configs.linters.djlint"),
-					{
-
-						formatCommand = command,
-						formatStdin = true,
-					},
+					require("efmls-configs.formatters.djlint"),
 				},
 				javascriptreact = {
 					require("efmls-configs.formatters.prettier"),

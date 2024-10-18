@@ -15,7 +15,6 @@ if grep -q "Darwin" <<<"$unameOut"; then
 		aws-iam-authenticator the_silver_searcher fd \
 		django-completion podman httpie chafa pgformatter jd \
 		composer
-
 	brew install --cask wezterm
 	brew install jstkdng/programs/ueberzugpp
 	brew install git-absorb duckdb
@@ -57,6 +56,7 @@ elif command -v apt &>/dev/null; then
 		libxi-dev libfontconfig1-dev \
 		libxcursor-dev \
 		visidata \
+		javac golang luarocks julia ruby composer \
 		watchman
 
 elif command dnf &>/dev/null; then
