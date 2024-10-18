@@ -81,14 +81,6 @@ return {
 				end,
 				-- -- Next, you can provide a dedicated handler for specific servers.
 				-- -- For example, a handler override for the `rust_analyzer`:
-				-- ["beancount"] = function()
-				-- 	lspconfig.beancount.setup({
-				-- 		capabilities = capabilities,
-				-- 		init_options = {
-				-- 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-				-- 		},
-				-- 	})
-				-- end,
 			})
 		end,
 	},
@@ -154,13 +146,19 @@ return {
 				},
 			})
 
+			lspconfig.beancount.setup({
+				init_options = {
+					journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
+				},
+			})
+
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.diagnostic.config({ virtual_text = true })
 			wk.add({
 				{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
-				{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
-				{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
+				{ "[d",       vim.diagnostic.goto_prev,  desc = "Go to previous diagnostic" },
+				{ "]d",       vim.diagnostic.goto_next,  desc = "Go to next diagnostic" },
 			})
 			-- Use LspAttach autocommand to only map the following keys
 			-- after the language server attaches to the current buffer
@@ -173,8 +171,8 @@ return {
 					wk.add({
 						{
 							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+							{ "gD", vim.lsp.buf.declaration,    desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition,     desc = "Go to definition" },
 							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
 						},
 						{
@@ -198,7 +196,7 @@ return {
 								desc = "List workspace folders",
 							},
 						},
-						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+						{ "K",     vim.lsp.buf.hover,          desc = "More information on a popup" },
 						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
 						{
 							group = "Refactor",

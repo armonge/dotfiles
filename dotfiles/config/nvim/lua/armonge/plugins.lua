@@ -283,5 +283,72 @@ require("lazy").setup({
 			},
 		},
 	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		keys = {
+			{
+				"<leader>rv",
+				function()
+					require("refactoring").debug.print_var()
+				end,
+				desc = "Add debug print statement",
+				mode = { "x", "n" },
+			},
+			{
+				"<leader>rr",
+				function()
+					require("refactoring").select_refactor()
+				end,
+				desc = "Refactor",
+				mode = { "n", "x" },
+			},
+		},
+		config = function()
+			require("refactoring").setup({
+				print_var_statements = {
+					python = {
+						"debug(%s)",
+					},
+				},
+			})
+		end,
+	},
+	{
+		"ramilito/kubectl.nvim",
+		config = function()
+			require("kubectl").setup()
+		end,
+		keys = {
+			{
+				"<leader>k",
+				'<cmd>lua require("kubectl").toggle()<cr>',
+				desc = "Opens kubectl",
+			},
+		},
+	},
+	{
+		"Olical/conjure",
+		ft = { "clojure", "fennel" }, -- etc
+		lazy = true,
+		init = function()
+			-- Set configuration options here
+			-- Uncomment this to get verbose logging to help diagnose internal Conjure issues
+			-- This is VERY helpful when reporting an issue with the project
+			-- vim.g["conjure#debug"] = true
+		end,
+	},
+	{
+		"PaterJason/cmp-conjure",
+		lazy = true,
+		ft = { "clojure", "fennel" },
+	},
+	{
+		"PaterJason/nvim-treesitter-sexp",
+		ft = { "clojure", "fennel" },
+	},
 })
 -- }

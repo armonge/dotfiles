@@ -18,6 +18,8 @@ if grep -q "Darwin" <<<"$unameOut"; then
 
 	brew install --cask wezterm
 	brew install jstkdng/programs/ueberzugpp
+	brew install git-absorb duckdb
+	brew install neilotoole/sq/sq
 elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential \

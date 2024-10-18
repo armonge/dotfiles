@@ -307,3 +307,5 @@ fi
 if command -v k9s &>/dev/null; then
 	eval "$(k9s completion bash)"
 fi
+
+export ERG_PATH="$HOME/.local/share/nvim/mason/packages/erg"

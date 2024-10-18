@@ -1,7 +1,7 @@
 return {
 
 	{
-		"hrsh7th/nvim-cmp",    -- Autocompletion plugin
+		"hrsh7th/nvim-cmp", -- Autocompletion plugin
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -37,6 +37,7 @@ return {
 				{ name = "nvim_lua" },
 				{ name = "copilot" },
 				{ name = "treesitter" },
+				{ name = "conjure" },
 				{
 					name = "nvim_lsp",
 					entry_filter = function(entry, ctx)
@@ -55,9 +56,9 @@ return {
 						end
 
 						return true
-					end
+					end,
 				},
-				{ name = "nvim_lsp_signature_help" }
+				{ name = "nvim_lsp_signature_help" },
 			})
 
 			cmp.setup({
@@ -156,7 +157,6 @@ return {
 				sources = default_cmp_sources,
 			})
 
-
 			cmp.setup.filetype("python", {
 				sources = full_cmp_sources,
 			})
@@ -164,6 +164,9 @@ return {
 				sources = full_cmp_sources,
 			})
 			cmp.setup.filetype("beancount", {
+				sources = full_cmp_sources,
+			})
+			cmp.setup.filetype("clojure", {
 				sources = full_cmp_sources,
 			})
 

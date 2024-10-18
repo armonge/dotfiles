@@ -14,6 +14,7 @@ return {
 			"Telescope luasnip",
 		},
 		keys = {
+
 			{ "<leader>tt", "<cmd>Telescope<CR>", "Shows all telescopes" },
 			{
 				"<leader>tp",
@@ -46,7 +47,7 @@ return {
 			{ "gr", "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
 			{ "<C-s>", "<cmd>Telescope live_grep<CR>", desc = "Searches file with grep and Telescope" },
 			{
-				"<leader>fd",
+				"<leader>tf",
 				"<cmd>Telescope dir live_grep<CR>",
 				desc = "Searches file with grep and Telescope inside a directory",
 			},
@@ -113,6 +114,7 @@ return {
 			telescope.load_extension("workspaces")
 			telescope.load_extension("luasnip")
 			telescope.load_extension("dir")
+			telescope.load_extension("refactoring")
 
 			-- Fixes a bug where files opened by Telescope don't work with folds
 			vim.api.nvim_create_autocmd("BufEnter", {

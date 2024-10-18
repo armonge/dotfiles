@@ -18,3 +18,6 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 	export MONGOMS_ARCH=x64
 fi
+
+# Codon compiler path (added by install script)
+export PATH=/Users/andres.monge/.codon/bin:$PATH

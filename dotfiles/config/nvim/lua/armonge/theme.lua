@@ -21,7 +21,7 @@ return {
 		lazy = false,
 		priority = 1000,
 		opts = {
-			style = "storm",
+			style = "moon",
 			on_highlights = function(hl, colors)
 				hl.LineNr = {
 					fg = colors.green,
@@ -45,10 +45,24 @@ return {
 		},
 		config = function()
 			local lualine = require("lualine")
+			local colors, config = require("tokyonight.colors").setup({
+				style = "moon",
+			})
 			lualine.setup({
-				theme = "tokyonight",
+				theme = "tokyonight-moon",
+				inactive_sections = {
+					lualine_c = {
+						{
+							"filename",
+							path = 1,
+							color = {
+								fg = colors.fg_sidebar,
+							},
+						},
+					},
+				},
 				sections = {
-
+					lualine_b = { "branch", "diagnostics" },
 					lualine_c = {
 						{
 
@@ -56,6 +70,9 @@ return {
 							path = 1,
 						},
 					},
+					lualine_x = { "filetype" },
+					lualine_y = {},
+					lualine_z = { "location" },
 				},
 			})
 		end,
@@ -81,7 +98,6 @@ return {
 		keys = {
 			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
 		},
-
 	},
 
 	{

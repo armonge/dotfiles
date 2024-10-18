@@ -79,15 +79,20 @@ return {
 	},
 	{
 		"Wansmer/treesj",
-		keys = { "<space>m", "<space>j", "<space>s" },
+		keys = {
+			{
+				"<space>m", desc = "Split or join code block with autodetect" }, { "<space>j", desc = "Join code block" }, {
+			"<space>s", desc="Split code block"
+		}
+		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		cmd = {
 			"TSJToggle",
 			"TSJSplit",
 			"TSJJoin",
 		},
-  config = function()
-    require('treesj').setup({--[[ your config ]]})
-  end,
+		config = function()
+			require('treesj').setup({ --[[ your config ]] })
+		end,
 	},
 }
