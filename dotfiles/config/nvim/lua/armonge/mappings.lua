@@ -7,4 +7,5 @@ wk.add({
 	{ "<leader>m", group = "Neotest", icon = "󱞊" },
 	{ "<leader>g", group = "Neogit", icon = "" },
 	{ "<leader>t", group = "Telescope" },
+	{ "<leader>l", group = "Conjure Log" },
 })

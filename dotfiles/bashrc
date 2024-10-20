@@ -42,14 +42,6 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
 	[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 fi
 
-# Clojure
-if [ -f /etc/profile.d/clojure.sh ]; then
-	source /etc/profile.d/clojure.sh
-	source /usr/share/bash-completion/completions/lein
-	export LEIN_FAST_TRAMPOLINE=true
-	export LEIN_JAVA_CMD="$HOME/bin/drip"
-fi
-
 # fuck
 # eval "$(thefuck --alias)"
 

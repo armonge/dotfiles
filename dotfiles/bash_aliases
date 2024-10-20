@@ -66,3 +66,6 @@ function iterate-dates() {
 	done
 
 }
+
+alias clj-repl="clojure -M:repl/rebel"
+alias cljs-repl="clojure -M:repl/cljs"

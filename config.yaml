@@ -52,10 +52,6 @@ dotfiles:
     src: config/git/attributes
     dst: ~/.config/git/attributes
     link: absolute
-  f_deps.edn:
-    src: clojure/deps.edn
-    dst: ~/.clojure/deps.edn
-    link: absolute
   f_config.toml:
     src: config/pypoetry/config.toml
     dst: ~/.config/pypoetry/config.toml
@@ -78,27 +74,6 @@ dotfiles:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: absolute
-  f_clojure_deps.edn:
-    src: config/clojure/deps.edn
-    dst: ~/.config/clojure/deps.edn
-    link: absolute
-  f_rebel_readline.edn:
-    src: config/clojure/rebel_readline.edn
-    dst: ~/.config/clojure/rebel_readline.edn
-    link: absolute
-  f_practicalli-custom-dictionary.txt:
-    src: config/clojure/.cspell/practicalli-custom-dictionary.txt
-    dst: ~/.config/clojure/.cspell/practicalli-custom-dictionary.txt
-    link: absolute
-  f_cspell.json:
-    src: config/clojure/.cspell.json
-    dst: ~/.config/clojure/.cspell.json
-    link: absolute
-  f_clojure-lsp:
-    src: local/bin/clojure-lsp
-    dst: ~/.local/bin/clojure-lsp
-    link: absolute
-    chmod: '755'
   f_scope.sh:
     src: config/ranger/scope.sh
     dst: ~/.config/ranger/scope.sh
@@ -240,11 +215,6 @@ profiles:
     - f_delta.sh
     - f_rifle.conf
     - f_version
-    - f_clojure_deps.edn
-    - f_rebel_readline.edn
-    - f_practicalli-custom-dictionary.txt
-    - f_cspell.json
-    - f_clojure-lsp
     - f_scope.sh
     - f_inputrc
     - f_mirror.sh
