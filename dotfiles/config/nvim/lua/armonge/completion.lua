@@ -1,7 +1,7 @@
 return {
 
 	{
-		"hrsh7th/nvim-cmp", -- Autocompletion plugin
+		"hrsh7th/nvim-cmp",    -- Autocompletion plugin
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -246,8 +246,52 @@ return {
 			debug = true, -- Enable debugging
 			-- See Configuration section for rest
 		},
-		cmd = "CopilotChat",
+		cmd = {
+			"CopilotChat",
+			"CopilotChatOpen",
+			"CopilotChatClose",
+			"CopilotChatToggle",
+			"CopilotChatStop",
+			"CopilotChatReset",
+			"CopilotChatSave",
+			"CopilotChatLoad",
+			"CopilotChatDebugInfo",
+			"CopilotChatModels",
+			"CopilotChatAgents"
+		},
 		-- See Commands section for default commands if you want to lazy load on them
+		keys = {
+
+			{
+				"<leader>cp",
+				function()
+					local actions = require("CopilotChat.actions")
+					require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+				end,
+				desc = "CopilotChat - Prompt actions",
+			},
+			{
+				"<leader>cq",
+				function()
+					local input = vim.fn.input("Quick Chat: ")
+					if input ~= "" then
+						require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+					end
+				end,
+				desc = "CopilotChat - Quick chat",
+			},
+			{
+				"<leader>cq",
+				function()
+					local input = vim.fn.input("Quick Chat: ")
+					if input ~= "" then
+						require("CopilotChat").ask(input, { selection = require("CopilotChat.select").visual })
+					end
+				end,
+				mode = "v",
+				desc = "CopilotChat - Quick chat",
+			}
+		},
 	},
 	{ "rafamadriz/friendly-snippets", event = { "InsertEnter", "CmdlineEnter" } },
 	{

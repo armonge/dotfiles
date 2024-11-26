@@ -256,9 +256,9 @@ require("lazy").setup({
 			})
 		end,
 		keys = {
-			{ "<leader>mw", '<cmd>lua require("neotest").watch()<CR>', desc = "Watches current test" },
-			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>', desc = "Runs current test" },
-			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>', desc = "Stops neotest" },
+			{ "<leader>mw", '<cmd>lua require("neotest").watch()<CR>',       desc = "Watches current test" },
+			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>',     desc = "Runs current test" },
+			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>',    desc = "Stops neotest" },
 			{ "<leader>mo", '<cmd>lua require("neotest").output.open()<CR>', desc = "Shows neotest" },
 			{
 				"<leader>mO",
@@ -318,19 +318,6 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"ramilito/kubectl.nvim",
-		config = function()
-			require("kubectl").setup()
-		end,
-		keys = {
-			{
-				"<leader>k",
-				'<cmd>lua require("kubectl").toggle()<cr>',
-				desc = "Opens kubectl",
-			},
-		},
-	},
-	{
 		"Olical/conjure",
 		ft = { "clojure", "fennel" }, -- etc
 		lazy = true,
@@ -350,5 +337,9 @@ require("lazy").setup({
 		"PaterJason/nvim-treesitter-sexp",
 		ft = { "clojure", "fennel" },
 	},
+	{
+		'willothy/wezterm.nvim',
+		config = true
+	}
 })
 -- }

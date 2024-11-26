@@ -1,43 +1,5 @@
 return {
 	{
-		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
-		cmd = "Trouble",
-		keys = {
-			{ "<leader>x", group = "Trouble" },
-			{
-				"<leader>xx",
-				"<cmd>Trouble diagnostics toggle<cr>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xX",
-				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xs",
-				"<cmd>Trouble symbols toggle focus=false<cr>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<leader>xl",
-				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<leader>xL",
-				"<cmd>Trouble loclist toggle<cr>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<leader>xQ",
-				"<cmd>Trouble qflist toggle<cr>",
-				desc = "Quickfix List (Trouble)",
-			},
-		},
-	},
-	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
 			"neovim/nvim-lspconfig",
@@ -157,8 +119,8 @@ return {
 			vim.diagnostic.config({ virtual_text = true })
 			wk.add({
 				{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
-				{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
-				{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
+				{ "[d",       vim.diagnostic.goto_prev,  desc = "Go to previous diagnostic" },
+				{ "]d",       vim.diagnostic.goto_next,  desc = "Go to next diagnostic" },
 			})
 			-- Use LspAttach autocommand to only map the following keys
 			-- after the language server attaches to the current buffer
@@ -171,8 +133,8 @@ return {
 					wk.add({
 						{
 							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+							{ "gD", vim.lsp.buf.declaration,    desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition,     desc = "Go to definition" },
 							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
 						},
 						{
@@ -196,7 +158,7 @@ return {
 								desc = "List workspace folders",
 							},
 						},
-						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+						{ "K",     vim.lsp.buf.hover,          desc = "More information on a popup" },
 						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
 						{
 							group = "Refactor",
@@ -212,7 +174,7 @@ return {
 					wk.add({
 						{
 
-							"<leader>ca",
+							"<leader>a",
 							vim.lsp.buf.code_action,
 							desc = "Apply code action",
 						},
@@ -250,6 +212,9 @@ return {
 				python = {
 					require("efmls-configs.formatters.ruff"),
 					require("efmls-configs.formatters.ruff_sort"),
+				},
+				yaml = {
+					require('efmls-configs.formatters.prettier')
 				},
 				clojure = {
 					require("efmls-configs.formatters.joker"),

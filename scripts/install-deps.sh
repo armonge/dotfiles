@@ -19,6 +19,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	brew install jstkdng/programs/ueberzugpp
 	brew install git-absorb duckdb
 	brew install neilotoole/sq/sq
+        brew install difftastic
 elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential \
@@ -71,7 +72,8 @@ elif command dnf &>/dev/null; then
 		the_silver_searcher \
 		wl-clipboard \
 		git git-lfs \
-		chafa
+		chafa \
+                difftastic
 
 	sudo dnf copr enable wezfurlong/wezterm-nightly
 	sudo dnf install wezterm
@@ -82,7 +84,7 @@ if [ ! -d "$HOME/.cargo" ]; then
 fi
 
 rustup update
-cargo install git-delta difftastic tree-sitter-cli jless eza viu
+cargo install git-delta  tree-sitter-cli jless eza viu
 
 if [ ! -d "$HOME/.pyenv" ]; then
 	curl https://pyenv.run | bash

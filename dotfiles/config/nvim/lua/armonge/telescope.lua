@@ -18,10 +18,7 @@ return {
 			{ "<leader>tt", "<cmd>Telescope<CR>", "Shows all telescopes" },
 			{
 				"<leader>tp",
-				function()
-					local ts_builtin = require("telescope.builtin")
-					return ts_builtin.find_files({ follow = true, hidden = true })
-				end,
+				"<cmd>Telescope smart_open<CR>",
 				desc = "Searches filenames with telescope",
 			},
 			{ "<leader>th", "<cmd>Telescope help_tags<CR>", desc = "Searches on help_tags with Telescope" },
@@ -115,6 +112,7 @@ return {
 			telescope.load_extension("luasnip")
 			telescope.load_extension("dir")
 			telescope.load_extension("refactoring")
+			telescope.load_extension("refactoring")
 
 			-- Fixes a bug where files opened by Telescope don't work with folds
 			vim.api.nvim_create_autocmd("BufEnter", {
@@ -127,6 +125,20 @@ return {
 				end,
 			})
 		end,
+	},
+	{
+		"danielfalk/smart-open.nvim",
+		branch = "0.2.x",
+		config = function()
+			require("telescope").load_extension("smart_open")
+		end,
+		dependencies = {
+			"kkharji/sqlite.lua",
+			-- Only required if using match_algorithm fzf
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			-- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+			{ "nvim-telescope/telescope-fzy-native.nvim" },
+		},
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",

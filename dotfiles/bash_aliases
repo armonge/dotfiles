@@ -69,3 +69,8 @@ function iterate-dates() {
 
 alias clj-repl="clojure -M:repl/rebel"
 alias cljs-repl="clojure -M:repl/cljs"
+
+function absorbpre() {
+	FS=$(git diff --cached --name-status | cut -f2 | tr '\n' ' ')
+	pre-commit run --files $FS && git absorb --and-rebase
+}
