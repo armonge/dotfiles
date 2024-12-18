@@ -10,7 +10,7 @@ config:
   longkey: false
   showdiff: false
   workdir: ~/.config/dotdrop
-  minversion: 1.14.2
+  minversion: 1.15.0
 actions:
   pre:
     install_deps: ./scripts/install-deps.sh
@@ -199,6 +199,10 @@ dotfiles:
     src: config/nvim/lua/armonge/mappings.lua
     dst: ~/.config/nvim/lua/armonge/mappings.lua
     link: absolute
+  f_clojure.lua:
+    src: config/nvim/lua/armonge/clojure.lua
+    dst: ~/.config/nvim/lua/armonge/clojure.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -245,3 +249,4 @@ profiles:
     - f_lazy-lock.json
     - f_editor.lua
     - f_mappings.lua
+    - f_clojure.lua

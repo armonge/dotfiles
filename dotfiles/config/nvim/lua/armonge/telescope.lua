@@ -7,7 +7,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"princejoogie/dir-telescope.nvim",
 			"benfowler/telescope-luasnip.nvim",
-			"nvim-telescope/telescope-fzf-native.nvim",
+			-- "nvim-telescope/telescope-fzf-native.nvim",
 		},
 		cmd = {
 			"Telescope",
@@ -15,15 +15,25 @@ return {
 		},
 		keys = {
 
-			{ "<leader>tt", "<cmd>Telescope<CR>", "Shows all telescopes" },
+			{ "<leader>tt", "<cmd>Telescope<CR>",             "Shows all telescopes" },
+			{
+				"<leader>tF",
+				function()
+					local builtin = require("telescope.builtin")
+					local utils = require("telescope.utils")
+
+					builtin.live_grep({ cwd = utils.buffer_dir() })
+				end,
+				desc = "Find files in buffer_dir",
+			},
 			{
 				"<leader>tp",
 				"<cmd>Telescope smart_open<CR>",
 				desc = "Searches filenames with telescope",
 			},
-			{ "<leader>th", "<cmd>Telescope help_tags<CR>", desc = "Searches on help_tags with Telescope" },
+			{ "<leader>th", "<cmd>Telescope help_tags<CR>",   desc = "Searches on help_tags with Telescope" },
 			{ "<leader>td", "<cmd>Telescope diagnostics<CR>", desc = "Searches diagnostics with Telescope" },
-			{ "<leader>tq", "<cmd>Telescope quickfix<CR>", desc = "Searches quickfix list Telescope" },
+			{ "<leader>tq", "<cmd>Telescope quickfix<CR>",    desc = "Searches quickfix list Telescope" },
 			{
 				"<leader>ts",
 				"<cmd>Telescope lsp_dynamic_workspace_symbols<CR>",
@@ -34,15 +44,15 @@ return {
 				"<cmd>Telescope lsp_document_symbols<CR>",
 				desc = "Searches document symbols with Telescope",
 			},
-			{ "<leader>tC", "<cmd>Telescope commands<CR>", desc = "Searches vim commands with Telescope" },
-			{ "<leader>tb", "<cmd>Telescope buffers<CR>", desc = "Searches open buffers with Telescope" },
-			{ "<leader>tr", "<cmd>Telescope registers<CR>", desc = "Searches registers with Telescope" },
-			{ "<leader>to", "<cmd>Telescope oldfiles<CR>", desc = "Searches previously opened files" },
-			{ "<leader>tl", "<cmd>Telescope<CR>", desc = "Shows all telescope lists" },
+			{ "<leader>tC", "<cmd>Telescope commands<CR>",       desc = "Searches vim commands with Telescope" },
+			{ "<leader>tb", "<cmd>Telescope buffers<CR>",        desc = "Searches open buffers with Telescope" },
+			{ "<leader>tr", "<cmd>Telescope registers<CR>",      desc = "Searches registers with Telescope" },
+			{ "<leader>to", "<cmd>Telescope oldfiles<CR>",       desc = "Searches previously opened files" },
+			{ "<leader>tl", "<cmd>Telescope<CR>",                desc = "Shows all telescope lists" },
 			-- { "<leader>tS", "<cmd>Telescope luasnip<CR>",        desc = "Shows all luasnip snippets" },
-			{ "<leader>tw", "<cmd>Telescope workspaces<CR>", desc = "Searches workspaces with telescope" },
-			{ "gr", "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
-			{ "<C-s>", "<cmd>Telescope live_grep<CR>", desc = "Searches file with grep and Telescope" },
+			{ "<leader>tw", "<cmd>Telescope workspaces<CR>",     desc = "Searches workspaces with telescope" },
+			{ "gr",         "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
+			{ "<C-s>",      "<cmd>Telescope live_grep<CR>",      desc = "Searches file with grep and Telescope" },
 			{
 				"<leader>tf",
 				"<cmd>Telescope dir live_grep<CR>",
@@ -87,13 +97,13 @@ return {
 					},
 				},
 				extensions = {
-					fzf = {
-						fuzzy = true, -- false will only do exact matching
-						override_generic_sorter = true, -- override the generic sorter
-						override_file_sorter = true, -- override the file sorter
-						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-						-- the default case_mode is "smart_case"
-					},
+					-- fzf = {
+					-- 	fuzzy = true, -- false will only do exact matching
+					-- 	override_generic_sorter = true, -- override the generic sorter
+					-- 	override_file_sorter = true, -- override the file sorter
+					-- 	case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+					-- 	-- the default case_mode is "smart_case"
+					-- },
 					dir = {
 						hidden = false,
 					},
@@ -101,18 +111,16 @@ return {
 						command = {
 							"sg",
 							"--json=stream",
-						}, -- must have --json=stream
+						},     -- must have --json=stream
 						grep_open_files = false, -- search in opened files
 						lang = nil, -- string value, specify language for ast-grep `nil` for default
 					},
 				},
 			})
-			telescope.load_extension("fzf")
+			telescope.load_extension("fzy_native")
 			telescope.load_extension("workspaces")
 			telescope.load_extension("luasnip")
 			telescope.load_extension("dir")
-			telescope.load_extension("refactoring")
-			telescope.load_extension("refactoring")
 
 			-- Fixes a bug where files opened by Telescope don't work with folds
 			vim.api.nvim_create_autocmd("BufEnter", {
@@ -135,16 +143,15 @@ return {
 		dependencies = {
 			"kkharji/sqlite.lua",
 			-- Only required if using match_algorithm fzf
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+			-- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			-- Optional.  If installed, native fzy will be used when match_algorithm is fzy
 			{ "nvim-telescope/telescope-fzy-native.nvim" },
 		},
 	},
 	{
-		"nvim-telescope/telescope-fzf-native.nvim",
+		"nvim-telescope/telescope-fzy-native.nvim",
 		lazy = true,
-		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-		dependencies = { "nvim-telescope/telescope.nvim" },
+		build = "make",
 	},
 	{
 		"benfowler/telescope-luasnip.nvim",
@@ -160,5 +167,5 @@ return {
 				open = { "Telescope find_files" },
 			},
 		},
-	},
+	}
 }

@@ -1,7 +1,7 @@
 return {
 
 	{
-		"hrsh7th/nvim-cmp",    -- Autocompletion plugin
+		"hrsh7th/nvim-cmp", -- Autocompletion plugin
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
 			"saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
@@ -237,11 +237,12 @@ return {
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
+		branch = 'main',
 		dependencies = {
 			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 		},
+		build = "make tiktoken", -- Only on MacOS or Linux
 		opts = {
 			debug = true, -- Enable debugging
 			-- See Configuration section for rest
@@ -257,7 +258,7 @@ return {
 			"CopilotChatLoad",
 			"CopilotChatDebugInfo",
 			"CopilotChatModels",
-			"CopilotChatAgents"
+			"CopilotChatAgents",
 		},
 		-- See Commands section for default commands if you want to lazy load on them
 		keys = {
@@ -275,7 +276,12 @@ return {
 				function()
 					local input = vim.fn.input("Quick Chat: ")
 					if input ~= "" then
-						require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+						require("CopilotChat").ask(input, {
+							selection = function(source)
+								select = require("CopilotChat.select")
+								return select.visual(source) or select.buffer(source)
+							end,
+						})
 					end
 				end,
 				desc = "CopilotChat - Quick chat",
@@ -290,7 +296,7 @@ return {
 				end,
 				mode = "v",
 				desc = "CopilotChat - Quick chat",
-			}
+			},
 		},
 	},
 	{ "rafamadriz/friendly-snippets", event = { "InsertEnter", "CmdlineEnter" } },

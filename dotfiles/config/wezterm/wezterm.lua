@@ -13,14 +13,13 @@ end
 
 -- This is where you actually apply your config choices
 config.scrollback_lines = 105500
-
--- For example, changing the color scheme:
 config.color_scheme = 'Tokyo Night Storm (Gogh)'
 config.font = wezterm.font("JetBrains Mono")
 config.allow_win32_input_mode = true
 config.use_dead_keys = false
 config.native_macos_fullscreen_mode = true
 config.integrated_title_button_style = "Gnome"
+config.enable_kitty_keyboard = true
 
 config.keys = {
   { key = "UpArrow",   mods = "ALT",        action = act.ToggleFullScreen },

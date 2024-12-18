@@ -28,6 +28,7 @@ return {
 					"jsonc",
 					"vimdoc",
 					"beancount",
+					"clojure",
 				},
 				highlight = {
 					enable = true,
@@ -82,7 +83,7 @@ return {
 		keys = {
 			{
 				"<space>m", desc = "Split or join code block with autodetect" }, { "<space>j", desc = "Join code block" }, {
-			"<space>s", desc="Split code block"
+			"<space>s", desc = "Split code block"
 		}
 		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },

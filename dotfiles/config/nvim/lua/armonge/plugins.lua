@@ -1,6 +1,6 @@
 -- folke/lazy.nvim {
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -78,6 +78,119 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			bigfile = { enabled = true },
+			dashboard = { enabled = true },
+			indent = { enabled = true },
+			input = { enabled = true, icon = " " },
+			notifier = {
+				enabled = true,
+				timeout = 3000,
+			},
+			quickfile = { enabled = true },
+			scroll = { enabled = true },
+			scope = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
+			styles = {
+				notification = {
+					wo = { wrap = true } -- Wrap notifications
+				},
+			},
+		},
+
+		keys = {
+			{
+				"<leader>n",
+				function()
+					Snacks.notifier.show_history()
+				end,
+				desc = "Notification History",
+			},
+			{
+				"<leader>bd",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "Delete Buffer",
+			},
+			{
+				"<leader>gB",
+				function()
+					Snacks.gitbrowse()
+				end,
+				desc = "Git Browse",
+			},
+			{
+				"<leader>gb",
+				function()
+					Snacks.git.blame_line()
+				end,
+				desc = "Git Blame Line",
+			},
+			{
+				"<leader>un",
+				function()
+					Snacks.notifier.hide()
+				end,
+				desc = "Dismiss All Notifications",
+			},
+			{
+				"]]",
+				function()
+					Snacks.words.jump(vim.v.count1)
+				end,
+				desc = "Next Reference",
+				mode = { "n", "t" },
+			},
+			{
+				"[[",
+				function()
+					Snacks.words.jump(-vim.v.count1)
+				end,
+				desc = "Prev Reference",
+				mode = { "n", "t" },
+			},
+		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					-- Setup some globals for debugging (lazy-loaded)
+					_G.dd = function(...)
+						Snacks.debug.inspect(...)
+					end
+					_G.bt = function()
+						Snacks.debug.backtrace()
+					end
+					vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+					Snacks.input.enable()
+					-- Create some toggle mappings
+					Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+					Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+					Snacks.toggle.diagnostics():map("<leader>ud")
+					Snacks.toggle.line_number():map("<leader>ul")
+					Snacks.toggle
+						.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+						:map("<leader>uc")
+					Snacks.toggle.treesitter():map("<leader>uT")
+					Snacks.toggle
+						.option("background", { off = "light", on = "dark", name = "Dark Background" })
+						:map("<leader>ub")
+					Snacks.toggle.inlay_hints():map("<leader>uh")
+					Snacks.toggle.indent():map("<leader>ug")
+					Snacks.toggle.dim():map("<leader>uD")
+				end,
+			})
+		end,
+	},
 	-- Enable profiling of lazy.nvim. This will add some overhead,
 	-- so only enable this when you are debugging lazy.nvim
 	{
@@ -114,39 +227,13 @@ require("lazy").setup({
 		config = function()
 			require("neoconf").setup()
 		end,
-		dependencies = { "folke/neodev.nvim" },
+		dependencies = { "folke/lazydev.nvim" },
 	},
 	{
 		"tpope/vim-sensible",
 	},
 	{
-		"tpope/vim-fugitive",
-		lazy = true,
-		cmd = { "Git", "GBrowse" },
-		dependencies = { "tpope/vim-rhubarb" },
-	},
-	{
 		"wakatime/vim-wakatime",
-	},
-	{
-		"jamessan/vim-gnupg",
-		-- event = "VeryLazy",
-		ft = { "gpg", "pgp" },
-	},
-	{
-		"antoyo/vim-licenses",
-		cmd = {
-			"Apache",
-			"Gpl",
-			"Gplv2",
-			"Mit",
-			"Bsd2",
-			"Bsd3",
-		},
-	},
-	{
-		"LunarVim/bigfile.nvim",
-		opts = {},
 	},
 
 	{
@@ -214,132 +301,33 @@ require("lazy").setup({
 			},
 		},
 	},
-	{
-		"kevinhwang91/nvim-ufo",
-		dependencies = { "kevinhwang91/promise-async" },
-		config = function()
-			-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
-			vim.keymap.set("n", "K", function()
-				local winid = require("ufo").peekFoldedLinesUnderCursor()
-				if not winid then
-					-- choose one of coc.nvim and nvim lsp
-					vim.lsp.buf.hover()
-				end
-			end)
-			require("ufo").setup({
-				provider_selector = function(bufnr, filetype, buftype)
-					return { "treesitter", "indent" }
-				end,
-			})
-		end,
-	},
+	-- {
+	-- 	"kevinhwang91/nvim-ufo",
+	-- 	dependencies = { "kevinhwang91/promise-async" },
+	-- 	config = function()
+	-- 		-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+	-- 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+	-- 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+	-- 		vim.keymap.set("n", "K", function()
+	-- 			local winid = require("ufo").peekFoldedLinesUnderCursor()
+	-- 			if not winid then
+	-- 				-- choose one of coc.nvim and nvim lsp
+	-- 				vim.lsp.buf.hover()
+	-- 			end
+	-- 		end)
+	-- 		require("ufo").setup({
+	-- 			provider_selector = function(bufnr, filetype, buftype)
+	-- 				return { "treesitter", "indent" }
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"direnv/direnv.vim",
 	},
 	{
-		"nvim-neotest/neotest",
-		lazy = true,
-		dependencies = {
-			"nvim-neotest/nvim-nio",
-			"nvim-lua/plenary.nvim",
-			"antoinemadec/FixCursorHold.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-neotest/neotest-python",
-		},
-		config = function()
-			require("neotest").setup({
-				adapters = {
-					require("neotest-python"),
-				},
-			})
-		end,
-		keys = {
-			{ "<leader>mw", '<cmd>lua require("neotest").watch()<CR>',       desc = "Watches current test" },
-			{ "<leader>mr", '<cmd>lua require("neotest").run.run()<CR>',     desc = "Runs current test" },
-			{ "<leader>ms", '<cmd>lua require("neotest").run.stop()<CR>',    desc = "Stops neotest" },
-			{ "<leader>mo", '<cmd>lua require("neotest").output.open()<CR>', desc = "Shows neotest" },
-			{
-				"<leader>mO",
-				'<cmd>lua require("neotest").output.open({ enter = true})<CR>',
-				desc = "Shows neotest and enter",
-			},
-			{
-				"<leader>mi",
-				'<cmd>lua require("neotest").summary.toggle()<CR>',
-				desc = "Toggle neotest summary",
-			},
-			{ "<leader>mf", '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', desc = "Runs current file" },
-			{
-				"[n",
-				'<cmd>lua require("neotest").jump.prev({status = "failed"})<CR>',
-				desc = "Go to previous failed test",
-			},
-			{
-				"]n",
-				'<cmd>lua require("neotest").jump.next({status = "failed"})<CR>',
-				desc = "Go to next failed test",
-			},
-		},
+		"willothy/wezterm.nvim",
+		config = true,
 	},
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		keys = {
-			{
-				"<leader>rv",
-				function()
-					require("refactoring").debug.print_var()
-				end,
-				desc = "Add debug print statement",
-				mode = { "x", "n" },
-			},
-			{
-				"<leader>rr",
-				function()
-					require("refactoring").select_refactor()
-				end,
-				desc = "Refactor",
-				mode = { "n", "x" },
-			},
-		},
-		config = function()
-			require("refactoring").setup({
-				print_var_statements = {
-					python = {
-						"debug(%s)",
-					},
-				},
-			})
-		end,
-	},
-	{
-		"Olical/conjure",
-		ft = { "clojure", "fennel" }, -- etc
-		lazy = true,
-		init = function()
-			-- Set configuration options here
-			-- Uncomment this to get verbose logging to help diagnose internal Conjure issues
-			-- This is VERY helpful when reporting an issue with the project
-			-- vim.g["conjure#debug"] = true
-		end,
-	},
-	{
-		"PaterJason/cmp-conjure",
-		lazy = true,
-		ft = { "clojure", "fennel" },
-	},
-	{
-		"PaterJason/nvim-treesitter-sexp",
-		ft = { "clojure", "fennel" },
-	},
-	{
-		'willothy/wezterm.nvim',
-		config = true
-	}
 })
 -- }

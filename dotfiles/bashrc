@@ -32,8 +32,8 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
 	export BASH_SILENCE_DEPRECATION_WARNING=1
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 
-	export LDFLAGS="-L/opt/homebrew/opt/mysql-client/lib"
-	export CPPFLAGS="-I/opt/homebrew/opt/mysql-client/include"
+        export LDFLAGS="-L/opt/homebrew/opt/mysql-client/lib:/opt/homebrew/opt/libssh2/lib/"
+        export CPPFLAGS="-I/opt/homebrew/opt/mysql-client/include:/opt/homebrew/opt/libssh2/include/"
 	export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
 	export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 

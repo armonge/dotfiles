@@ -56,9 +56,13 @@ return {
 			lspconfig.basedpyright.setup({
 				settings = {
 					basedpyright = {
+						disableLanguageServices = false,
+						disableOrganizeImports = false,
+						disableTaggedHints = false,
 						analysis = {
-							disableOrganizeImports = false,
 							diagnosticMode = "workspace",
+							autoImportCompletions = true,
+							autoSearchPaths = true,
 						},
 					},
 				},
@@ -119,8 +123,8 @@ return {
 			vim.diagnostic.config({ virtual_text = true })
 			wk.add({
 				{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
-				{ "[d",       vim.diagnostic.goto_prev,  desc = "Go to previous diagnostic" },
-				{ "]d",       vim.diagnostic.goto_next,  desc = "Go to next diagnostic" },
+				{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
+				{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
 			})
 			-- Use LspAttach autocommand to only map the following keys
 			-- after the language server attaches to the current buffer
@@ -133,8 +137,8 @@ return {
 					wk.add({
 						{
 							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration,    desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition,     desc = "Go to definition" },
+							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
 							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
 						},
 						{
@@ -158,7 +162,7 @@ return {
 								desc = "List workspace folders",
 							},
 						},
-						{ "K",     vim.lsp.buf.hover,          desc = "More information on a popup" },
+						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
 						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
 						{
 							group = "Refactor",
@@ -214,7 +218,7 @@ return {
 					require("efmls-configs.formatters.ruff_sort"),
 				},
 				yaml = {
-					require('efmls-configs.formatters.prettier')
+					require("efmls-configs.formatters.prettier"),
 				},
 				clojure = {
 					require("efmls-configs.formatters.joker"),
