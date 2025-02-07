@@ -12,7 +12,7 @@
 [user]
   email = andres.monge@parcellab.com
   name = Andres Reyes Monge
-	signingkey = B6A45A727378564E
+  signingkey = B6A45A727378564E
 
 [core]
   quotepath = false

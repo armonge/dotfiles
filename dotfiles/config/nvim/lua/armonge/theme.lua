@@ -20,18 +20,26 @@ return {
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {
-			style = "moon",
-			on_highlights = function(hl, colors)
-				hl.LineNr = {
-					fg = colors.green,
-				}
-				hl.CursorLineNr = {
-					fg = colors.orange,
-				}
-			end,
-		},
+		cache = false,
 		config = function()
+			require("tokyonight").setup({
+				style = "moon",
+				on_highlights = function(hl, colors)
+					hl.CursorLineNr = {
+						fg = colors.green, bold = true
+					}
+					hl.LineNr = {
+						fg = colors.orange, bold = true
+					}
+					hl.LineNrAbove = {
+						fg = colors.orange, bold = false
+					}
+					hl.LineNrBelow = {
+						fg = colors.orange, bold = false
+					}
+				end,
+			})
+
 			vim.opt.termguicolors = true
 			vim.opt.background = "dark"
 			vim.cmd([[colorscheme tokyonight-moon]])

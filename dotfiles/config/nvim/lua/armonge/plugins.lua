@@ -84,7 +84,10 @@ require("lazy").setup({
 		lazy = false,
 		---@type snacks.Config
 		opts = {
-			bigfile = { enabled = true },
+			bigfile = {
+				enabled = true,
+				notify = true, -- show notification when big file detected
+			},
 			dashboard = { enabled = true },
 			indent = { enabled = true },
 			input = { enabled = true, icon = " " },
@@ -93,13 +96,14 @@ require("lazy").setup({
 				timeout = 3000,
 			},
 			quickfile = { enabled = true },
+			words = { enabled = true },
 			scroll = { enabled = true },
 			scope = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
 			styles = {
 				notification = {
-					wo = { wrap = true } -- Wrap notifications
+					wo = { wrap = true }, -- Wrap notifications
 				},
 			},
 		},
@@ -140,22 +144,8 @@ require("lazy").setup({
 				end,
 				desc = "Dismiss All Notifications",
 			},
-			{
-				"]]",
-				function()
-					Snacks.words.jump(vim.v.count1)
-				end,
-				desc = "Next Reference",
-				mode = { "n", "t" },
-			},
-			{
-				"[[",
-				function()
-					Snacks.words.jump(-vim.v.count1)
-				end,
-				desc = "Prev Reference",
-				mode = { "n", "t" },
-			},
+    { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+    { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
@@ -328,6 +318,12 @@ require("lazy").setup({
 	{
 		"willothy/wezterm.nvim",
 		config = true,
+	},
+	-- { "glacambre/firenvim", build = ":call firenvim#install(0)" },
+	{
+		"m4xshen/hardtime.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {},
 	},
 })
 -- }

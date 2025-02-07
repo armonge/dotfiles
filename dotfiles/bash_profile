@@ -21,3 +21,4 @@ fi
 
 # Codon compiler path (added by install script)
 export PATH=/Users/andres.monge/.codon/bin:$PATH
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

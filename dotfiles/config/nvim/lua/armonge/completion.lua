@@ -233,11 +233,13 @@ return {
 	},
 	{
 		"zbirenbaum/copilot-cmp",
-		opts = {},
+		config = function()
+			require("copilot_cmp").setup()
+		end,
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = 'main',
+		branch = "main",
 		dependencies = {
 			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper

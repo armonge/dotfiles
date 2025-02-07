@@ -10,7 +10,6 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"rust_analyzer",
-				-- "lemminx",
 				"yamlls",
 				"emmet_language_server",
 				"bashls",
@@ -20,6 +19,7 @@ return {
 				"taplo",
 				-- "htmx",
 				"efm",
+				"lemminx",
 				-- "beancount_language_server",
 				-- "ast_grep",
 				-- "pylyzer",
@@ -116,6 +116,9 @@ return {
 				init_options = {
 					journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
 				},
+			})
+			lspconfig.lemminx.setup({
+
 			})
 
 			-- Global mappings.
