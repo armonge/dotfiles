@@ -1,5 +1,20 @@
 return {
-	{ import = "lazyvim.plugins.extras.ai.copilot" },
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+			filetypes = {
+				python = true,
+				lua = true,
+				javascript = true,
+				javascriptreact = true,
+				typescript = true,
+			},
+		},
+	},
 	{
 		"giuxtaposition/blink-cmp-copilot",
 		enabled = false,
@@ -23,7 +38,7 @@ return {
 			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
-			keymap = { preset = "super-tab" },
+			keymap = { preset = "default" },
 
 			appearance = {
 				-- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -33,6 +48,9 @@ return {
 				-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
 				-- Adjusts spacing to ensure icons are aligned
 				nerd_font_variant = "mono",
+				kind_icons = {
+					Copilot = "",
+				},
 			},
 
 			-- Default list of enabled providers defined so that you can extend it
@@ -47,7 +65,10 @@ return {
 						score_offset = 100,
 					},
 					copilot = {
+						name = "copilot",
 						module = "blink-copilot",
+						score_offset = 100,
+						async = true,
 						opts = {
 							max_completions = 3,
 							max_attempts = 4,

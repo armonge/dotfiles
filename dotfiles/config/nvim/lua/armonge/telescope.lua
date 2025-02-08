@@ -15,7 +15,7 @@ return {
 		},
 		keys = {
 
-			{ "<leader>tt", "<cmd>Telescope<CR>",             "Shows all telescopes" },
+			{ "<leader>tt", "<cmd>Telescope<CR>", "Shows all telescopes" },
 			{
 				"<leader>tF",
 				function()
@@ -31,9 +31,9 @@ return {
 				"<cmd>Telescope smart_open<CR>",
 				desc = "Searches filenames with telescope",
 			},
-			{ "<leader>th", "<cmd>Telescope help_tags<CR>",   desc = "Searches on help_tags with Telescope" },
+			{ "<leader>th", "<cmd>Telescope help_tags<CR>", desc = "Searches on help_tags with Telescope" },
 			{ "<leader>td", "<cmd>Telescope diagnostics<CR>", desc = "Searches diagnostics with Telescope" },
-			{ "<leader>tq", "<cmd>Telescope quickfix<CR>",    desc = "Searches quickfix list Telescope" },
+			{ "<leader>tq", "<cmd>Telescope quickfix<CR>", desc = "Searches quickfix list Telescope" },
 			{
 				"<leader>ts",
 				"<cmd>Telescope lsp_dynamic_workspace_symbols<CR>",
@@ -44,15 +44,15 @@ return {
 				"<cmd>Telescope lsp_document_symbols<CR>",
 				desc = "Searches document symbols with Telescope",
 			},
-			{ "<leader>tC", "<cmd>Telescope commands<CR>",       desc = "Searches vim commands with Telescope" },
-			{ "<leader>tb", "<cmd>Telescope buffers<CR>",        desc = "Searches open buffers with Telescope" },
-			{ "<leader>tr", "<cmd>Telescope registers<CR>",      desc = "Searches registers with Telescope" },
-			{ "<leader>to", "<cmd>Telescope oldfiles<CR>",       desc = "Searches previously opened files" },
-			{ "<leader>tl", "<cmd>Telescope<CR>",                desc = "Shows all telescope lists" },
+			{ "<leader>tC", "<cmd>Telescope commands<CR>", desc = "Searches vim commands with Telescope" },
+			{ "<leader>tb", "<cmd>Telescope buffers<CR>", desc = "Searches open buffers with Telescope" },
+			{ "<leader>tr", "<cmd>Telescope registers<CR>", desc = "Searches registers with Telescope" },
+			{ "<leader>to", "<cmd>Telescope oldfiles<CR>", desc = "Searches previously opened files" },
+			{ "<leader>tl", "<cmd>Telescope<CR>", desc = "Shows all telescope lists" },
 			-- { "<leader>tS", "<cmd>Telescope luasnip<CR>",        desc = "Shows all luasnip snippets" },
-			{ "<leader>tw", "<cmd>Telescope workspaces<CR>",     desc = "Searches workspaces with telescope" },
-			{ "gr",         "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
-			{ "<C-s>",      "<cmd>Telescope live_grep<CR>",      desc = "Searches file with grep and Telescope" },
+			{ "<leader>tw", "<cmd>Telescope workspaces<CR>", desc = "Searches workspaces with telescope" },
+			{ "gr", "<cmd>Telescope lsp_references<CR>", desc = "Show references" },
+			{ "<C-s>", "<cmd>Telescope live_grep<CR>", desc = "Searches file with grep and Telescope" },
 			{
 				"<leader>tf",
 				"<cmd>Telescope dir live_grep<CR>",
@@ -111,7 +111,7 @@ return {
 						command = {
 							"sg",
 							"--json=stream",
-						},     -- must have --json=stream
+						}, -- must have --json=stream
 						grep_open_files = false, -- search in opened files
 						lang = nil, -- string value, specify language for ast-grep `nil` for default
 					},
@@ -167,5 +167,5 @@ return {
 				open = { "Telescope find_files" },
 			},
 		},
-	}
+	},
 }
