@@ -203,6 +203,18 @@ dotfiles:
     src: config/nvim/lua/armonge/clojure.lua
     dst: ~/.config/nvim/lua/armonge/clojure.lua
     link: absolute
+  f_oil.lua:
+    src: config/nvim/lua/armonge/oil.lua
+    dst: ~/.config/nvim/lua/armonge/oil.lua
+    link: absolute
+  f_snacks.lua:
+    src: config/nvim/lua/armonge/snacks.lua
+    dst: ~/.config/nvim/lua/armonge/snacks.lua
+    link: absolute
+  f_blink.lua:
+    src: config/nvim/lua/armonge/blink.lua
+    dst: ~/.config/nvim/lua/armonge/blink.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -250,3 +262,6 @@ profiles:
     - f_editor.lua
     - f_mappings.lua
     - f_clojure.lua
+    - f_oil.lua
+    - f_snacks.lua
+    - f_blink.lua

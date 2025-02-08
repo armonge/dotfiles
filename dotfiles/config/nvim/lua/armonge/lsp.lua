@@ -1,125 +1,77 @@
 return {
 	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-			"williamboman/mason.nvim",
-		},
-		opts = {
-
-			ensure_installed = {
-				"lua_ls",
-				"rust_analyzer",
-				"yamlls",
-				"emmet_language_server",
-				"bashls",
-				"jsonls",
-				"basedpyright",
-				-- "jedi_language_server",
-				"taplo",
-				-- "htmx",
-				"efm",
-				"lemminx",
-				-- "beancount_language_server",
-				-- "ast_grep",
-				-- "pylyzer",
-			},
-			automatic_installation = true,
-		},
-		config = function()
-			local lspconfig = require("lspconfig")
-			-- Add additional capabilities supported by nvim-cmp
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-			require("mason-lspconfig").setup_handlers({
-				-- The first entry (without a key) will be the default handler
-				-- and will be called for each installed server that doesn't have
-				-- a dedicated handler.
-				function(server_name) -- default handler (optional)
-					lspconfig[server_name].setup({
-						-- on_attach = my_custom_on_attach,
-						capabilities = capabilities,
-					})
-				end,
-				-- -- Next, you can provide a dedicated handler for specific servers.
-				-- -- For example, a handler override for the `rust_analyzer`:
-			})
-		end,
-	},
-	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/neoconf.nvim" },
-		config = function()
-			local wk = require("which-key")
-			local lspconfig = require("lspconfig")
-
-			lspconfig.basedpyright.setup({
-				settings = {
-					basedpyright = {
-						disableLanguageServices = false,
-						disableOrganizeImports = false,
-						disableTaggedHints = false,
-						analysis = {
-							diagnosticMode = "workspace",
-							autoImportCompletions = true,
-							autoSearchPaths = true,
+		opts = {
+			servers = {
+				jsonls = {},
+				lua_ls = {},
+				beancount = {
+					init_options = {
+						journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
+					},
+				},
+				emmet_language_server = {
+					filetypes = {
+						"css",
+						"eruby",
+						"html",
+						"javascript",
+						"javascriptreact",
+						"less",
+						"sass",
+						"scss",
+						"pug",
+						"typescriptreact",
+						"htmldjango",
+					},
+					-- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-lotconfiguration).
+					-- **Note:** only the options listed in the table are supported.
+					init_options = {
+						---@type table<string, string>
+						includeLanguages = { "htmldjango" },
+						--- @type string[]
+						excludeLanguages = {},
+						--- @type string[]
+						extensionsPath = {},
+						--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
+						preferences = {},
+						--- @type boolean Defaults to `true`
+						showAbbreviationSuggestions = true,
+						--- @type "always" | "never" Defaults to `"always"`
+						showExpandedAbbreviation = "always",
+						--- @type boolean Defaults to `false`
+						showSuggestionsAsSnippets = false,
+						--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
+						syntaxProfiles = {},
+						--- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
+						variables = {},
+					},
+				},
+				basedpyright = {
+					settings = {
+						basedpyright = {
+							importStrategy = "fromEnvironment",
+							disableLanguageServices = false,
+							disableOrganizeImports = false,
+							disableTaggedHints = false,
+							analysis = {
+								diagnosticMode = "workspace",
+								autoImportCompletions = true,
+								autoSearchPaths = true,
+							},
 						},
 					},
 				},
-			})
-			-- lspconfig.htmx.setup({
-			-- 	filetypes = { "html", "htmldjango" },
-			-- })
-			-- lspconfig.jedi_language_server.setup({})
-			-- lspconfig.basedpyright.setup({
-			-- 	cmd = { "env", "PYENV_VERSION=nvim3", "basedpyright-langserver", "--stdio" },
-			-- })
-			lspconfig.emmet_language_server.setup({
-				filetypes = {
-					"css",
-					"eruby",
-					"html",
-					"javascript",
-					"javascriptreact",
-					"less",
-					"sass",
-					"scss",
-					"pug",
-					"typescriptreact",
-					"htmldjango",
-				},
-				-- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-lotconfiguration).
-				-- **Note:** only the options listed in the table are supported.
-				init_options = {
-					---@type table<string, string>
-					includeLanguages = { "htmldjango" },
-					--- @type string[]
-					excludeLanguages = {},
-					--- @type string[]
-					extensionsPath = {},
-					--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
-					preferences = {},
-					--- @type boolean Defaults to `true`
-					showAbbreviationSuggestions = true,
-					--- @type "always" | "never" Defaults to `"always"`
-					showExpandedAbbreviation = "always",
-					--- @type boolean Defaults to `false`
-					showSuggestionsAsSnippets = false,
-					--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
-					syntaxProfiles = {},
-					--- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
-					variables = {},
-				},
-			})
-
-			lspconfig.beancount.setup({
-				init_options = {
-					journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-				},
-			})
-			lspconfig.lemminx.setup({
-
-			})
+			},
+		},
+		config = function(_, opts)
+			local wk = require("which-key")
+			local lspconfig = require("lspconfig")
+			for server, config in pairs(opts.servers) do
+				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				lspconfig[server].setup(config)
+			end
 
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -306,5 +258,27 @@ return {
 				end,
 			})
 		end,
+	},
+
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- Library items can be absolute paths
+				-- "~/projects/my-awesome-lib",
+				-- Or relative, which means they will be resolved as a plugin
+				-- "LazyVim",
+				-- When relative, you can also provide a path to the library in the plugin dir
+				"luvit-meta/library", -- see below
+			},
+		},
+	},
+	{
+		"folke/neoconf.nvim",
+		config = function()
+			require("neoconf").setup()
+		end,
+		dependencies = { "folke/lazydev.nvim" },
 	},
 }

@@ -1,5 +1,4 @@
 return {
-	{ "stevearc/dressing.nvim", event = "VeryLazy" },
 	{
 		"folke/which-key.nvim",
 		lazy = true,
@@ -26,16 +25,20 @@ return {
 				style = "moon",
 				on_highlights = function(hl, colors)
 					hl.CursorLineNr = {
-						fg = colors.green, bold = true
+						fg = colors.green,
+						bold = true,
 					}
 					hl.LineNr = {
-						fg = colors.orange, bold = true
+						fg = colors.orange,
+						bold = true,
 					}
 					hl.LineNrAbove = {
-						fg = colors.orange, bold = false
+						fg = colors.orange,
+						bold = false,
 					}
 					hl.LineNrBelow = {
-						fg = colors.orange, bold = false
+						fg = colors.orange,
+						bold = false,
 					}
 				end,
 			})
@@ -109,12 +112,7 @@ return {
 	},
 
 	{
-		"hedyhli/outline.nvim",
-		lazy = true,
-		cmd = { "Outline", "OutlineOpen" },
-		config = true,
-		keys = {
-			{ "<leader>o", "<cmd>Outline<cr>", desc = "Toggle Outline" },
-		},
+		"mechatroner/rainbow_csv",
+		ft = { "csv" },
 	},
 }

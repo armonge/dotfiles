@@ -6,6 +6,10 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 			require("nvim-treesitter.configs").setup({
+				modules = {},
+				sync_install = false,
+				auto_install = false,
+				ignore_install = {},
 				-- Add languages to be installed here that you want installed for treesitter
 				ensure_installed = {
 					"c",
@@ -82,9 +86,14 @@ return {
 		"Wansmer/treesj",
 		keys = {
 			{
-				"<space>m", desc = "Split or join code block with autodetect" }, { "<space>j", desc = "Join code block" }, {
-			"<space>s", desc = "Split code block"
-		}
+				"<space>m",
+				desc = "Split or join code block with autodetect",
+			},
+			{ "<space>j", desc = "Join code block" },
+			{
+				"<space>s",
+				desc = "Split code block",
+			},
 		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		cmd = {
@@ -93,7 +102,8 @@ return {
 			"TSJJoin",
 		},
 		config = function()
-			require('treesj').setup({ --[[ your config ]] })
+			require("treesj").setup({ --[[ your config ]]
+			})
 		end,
 	},
 }

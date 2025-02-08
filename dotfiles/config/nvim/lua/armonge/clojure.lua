@@ -1,9 +1,6 @@
 
 return {
-	{
-		"Olical/conjure",
-		ft = { "clojure", "fennel" }, -- etc
-		lazy = true,
+	{ "Olical/conjure", ft = { "clojure", "fennel" }, -- etc lazy = true,
 		init = function()
 			-- Set configuration options here
 			-- Uncomment this to get verbose logging to help diagnose internal Conjure issues
