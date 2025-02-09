@@ -33,6 +33,7 @@ return {
 					"vimdoc",
 					"beancount",
 					"clojure",
+					"diff",
 				},
 				highlight = {
 					enable = true,

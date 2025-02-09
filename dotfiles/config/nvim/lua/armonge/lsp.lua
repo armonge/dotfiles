@@ -6,46 +6,10 @@ return {
 			servers = {
 				jsonls = {},
 				lua_ls = {},
+				vtsls = {},
 				beancount = {
 					init_options = {
 						journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-					},
-				},
-				emmet_language_server = {
-					filetypes = {
-						"css",
-						"eruby",
-						"html",
-						"javascript",
-						"javascriptreact",
-						"less",
-						"sass",
-						"scss",
-						"pug",
-						"typescriptreact",
-						"htmldjango",
-					},
-					-- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-lotconfiguration).
-					-- **Note:** only the options listed in the table are supported.
-					init_options = {
-						---@type table<string, string>
-						includeLanguages = { "htmldjango" },
-						--- @type string[]
-						excludeLanguages = {},
-						--- @type string[]
-						extensionsPath = {},
-						--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/preferences/)
-						preferences = {},
-						--- @type boolean Defaults to `true`
-						showAbbreviationSuggestions = true,
-						--- @type "always" | "never" Defaults to `"always"`
-						showExpandedAbbreviation = "always",
-						--- @type boolean Defaults to `false`
-						showSuggestionsAsSnippets = false,
-						--- @type table<string, any> [Emmet Docs](https://docs.emmet.io/customization/syntax-profiles/)
-						syntaxProfiles = {},
-						--- @type table<string, string> [Emmet Docs](https://docs.emmet.io/customization/snippets/#variables)
-						variables = {},
 					},
 				},
 				basedpyright = {
@@ -76,71 +40,27 @@ return {
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.diagnostic.config({ virtual_text = true })
-			wk.add({
-				{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
-				{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
-				{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
-			})
-			-- Use LspAttach autocommand to only map the following keys
-			-- after the language server attaches to the current buffer
-			vim.api.nvim_create_autocmd("LspAttach", {
-				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-				callback = function(ev)
-					-- Buffer local mappings.
-					-- See `:help vim.lsp.*` for documentation on any of the below functions
-					local opts = { buffer = ev.buf }
-					wk.add({
-						{
-							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
-							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
-						},
-						{
-							group = "workspaces",
-							desc = "workspaces",
-							{
-								"<leader>wa",
-								vim.lsp.buf.add_workspace_folder,
-								desc = "Add folder to workspace ",
-							},
-							{
-								"<leader>wr",
-								vim.lsp.buf.remove_workspace_folder,
-								desc = "Remove folder from workspace",
-							},
-							{
-								"<leader>wl",
-								function()
-									print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-								end,
-								desc = "List workspace folders",
-							},
-						},
-						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
-						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
-						{
-							group = "Refactor",
-							{
-
-								"<leader>rn",
-								vim.lsp.buf.rename,
-								desc = "Rename",
-							},
-						},
-					}, opts)
-
-					wk.add({
-						{
-
-							"<leader>a",
-							vim.lsp.buf.code_action,
-							desc = "Apply code action",
-						},
-					}, { mode = { "n", "v" } })
-				end,
-			})
 		end,
+		keys = {
+			{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
+			{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
+			{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
+			{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+			{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
+			{
+
+				"<leader>rn",
+				vim.lsp.buf.rename,
+				desc = "Rename",
+			},
+			{
+
+				"<leader>a",
+				vim.lsp.buf.code_action,
+				desc = "Apply code action",
+				mode = { "n", "v" },
+			},
+		},
 	},
 	{
 		"onsails/lspkind.nvim",
@@ -155,12 +75,6 @@ return {
 
 			vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 		end,
-	},
-	{
-		"pmizio/typescript-tools.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		config = true,
-		ft = { "typescript", "typescriptreact", "javascript", "javascriptreact", "javascript.jsx", "typescript.tsx" },
 	},
 	{
 		"creativenull/efmls-configs-nvim",

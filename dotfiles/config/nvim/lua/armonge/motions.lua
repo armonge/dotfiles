@@ -1,8 +1,5 @@
 return {
 	{
-		"tpope/vim-repeat",
-	},
-	{
 		"tpope/vim-speeddating",
 		lazy = true,
 		keys = {
@@ -113,20 +110,6 @@ return {
 		-- },
 	},
 
-	{
-		"numToStr/Comment.nvim",
-		opts = {},
-		keys = {
-			{ "gcc", mode = { "v", "n" } },
-		},
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {
-			disable_in_macro = false,
-		},
-	},
 	{
 		"kylechui/nvim-surround",
 		event = "VeryLazy",
