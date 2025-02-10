@@ -15,11 +15,13 @@ return {
 				basedpyright = {
 					settings = {
 						basedpyright = {
-							importStrategy = "fromEnvironment",
 							disableLanguageServices = false,
 							disableOrganizeImports = false,
 							disableTaggedHints = false,
 							analysis = {
+								diagnosticSeverityOverrides = {
+									reportMissingTypeStubs = false,
+								},
 								diagnosticMode = "workspace",
 								autoImportCompletions = true,
 								autoSearchPaths = true,
@@ -30,37 +32,86 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local wk = require("which-key")
+			local blink_cmp = require("blink.cmp")
 			local lspconfig = require("lspconfig")
 			for server, config in pairs(opts.servers) do
-				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				config.capabilities = blink_cmp.get_lsp_capabilities(config.capabilities)
 				lspconfig[server].setup(config)
 			end
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+				callback = function(ev)
+					local wk = require("which-key")
+					local opts = { buffer = ev.buf }
+					wk.add({
+						{
+							"<leader>a",
+							vim.lsp.buf.code_action,
+							desc = "Apply code action",
+						},
+					}, { mode = { "n", "v" } })
+					wk.add({
+						{
+							desc = "goto",
+							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
+						},
+						{
+							group = "workspaces",
+							desc = "workspaces",
+							{
+								"<leader>wa",
+								vim.lsp.buf.add_workspace_folder,
+								desc = "Add folder to workspace ",
+							},
+							{
+								"<leader>wr",
+								vim.lsp.buf.remove_workspace_folder,
+								desc = "Remove folder from workspace",
+							},
+							{
+								"<leader>wl",
+								function()
+									print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+								end,
+								desc = "List workspace folders",
+							},
+						},
+						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
+						{
+							group = "Refactor",
+							{
 
+								"<leader>rn",
+								vim.lsp.buf.rename,
+								desc = "Rename",
+							},
+						},
+					}, opts)
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "BlinkCmpMenuOpen",
+				callback = function()
+					require("copilot.suggestion").dismiss()
+					vim.b.copilot_suggestion_hidden = true
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "BlinkCmpMenuClose",
+				callback = function()
+					vim.b.copilot_suggestion_hidden = false
+				end,
+			})
+			--
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.diagnostic.config({ virtual_text = true })
 		end,
-		keys = {
-			{ "<space>e", vim.diagnostic.open_float, desc = "Open diagnostics" },
-			{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
-			{ "]d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
-			{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
-			{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
-			{
-
-				"<leader>rn",
-				vim.lsp.buf.rename,
-				desc = "Rename",
-			},
-			{
-
-				"<leader>a",
-				vim.lsp.buf.code_action,
-				desc = "Apply code action",
-				mode = { "n", "v" },
-			},
-		},
 	},
 	{
 		"onsails/lspkind.nvim",

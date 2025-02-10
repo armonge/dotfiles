@@ -13,14 +13,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- { import = "armonge.telescope" },
 	{ import = "armonge.mini" },
 	{ import = "armonge.snacks" },
 	{ import = "armonge.oil" },
 	{ import = "armonge.theme" },
 	{ import = "armonge.treesitter" },
 	{ import = "armonge.lsp" },
-	-- { import = "armonge.completion" },
 	{ import = "armonge.blink" },
 	{ import = "armonge.motions" },
 	{
