@@ -79,6 +79,7 @@ return {
 			"svelte",
 			"tsx",
 			"typescript",
+			"latex",
 			"vue",
 			"xml",
 		},
