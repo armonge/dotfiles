@@ -19,10 +19,7 @@ return {
 							disableOrganizeImports = false,
 							disableTaggedHints = false,
 							analysis = {
-								diagnosticSeverityOverrides = {
-									reportMissingTypeStubs = false,
-								},
-								diagnosticMode = "workspace",
+								diagnosticMode = "openFilesOnly",
 								autoImportCompletions = true,
 								autoSearchPaths = true,
 							},

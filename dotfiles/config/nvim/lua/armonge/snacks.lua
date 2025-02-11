@@ -1,3 +1,4 @@
+-- folke/lazy.nvim {
 return {
 	{
 		"folke/snacks.nvim",
@@ -5,6 +6,7 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		opts = {
+			image = { enabled = true },
 			bigfile = { enabled = true },
 			dashboard = { enabled = true },
 			explorer = { enabled = false },
@@ -29,17 +31,28 @@ return {
 		-- stylua: ignore start
 		keys = {
 			-- Top Pickers & Explorer
-			{ "<leader>tp", function() Snacks.picker.smart() end,                 desc = "Smart Find Files" },
-			{ "<leader>tb", function() Snacks.picker.buffers() end,               desc = "Buffers" },
-			{ "<C-s>",      function() Snacks.picker.grep() end,                  desc = "Grep" },
+			{ "<leader>tT", function() Snacks.picker() end,               desc = "Show all pickers" },
+			{ "<leader>tp", function() Snacks.picker.smart() end,         desc = "Smart Find Files" },
+			{ "<leader>tb", function() Snacks.picker.buffers() end,       desc = "Buffers" },
+			{ "<C-s>",      function() Snacks.picker.grep() end,          desc = "Grep" },
 			-- { "<leader>:",       function() Snacks.picker.command_history() end,                         desc = "Command History" },
-			{ "<leader>tn", function() Snacks.picker.notifications() end,         desc = "Notification History" },
+			{ "<leader>tn", function() Snacks.picker.notifications() end, desc = "Notification History" },
 			-- find
 			-- { "<leader>fb",      function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
 			-- { "<leader>fc",      function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
 			-- { "<leader>ff",      function() Snacks.picker.files() end,                                   desc = "Find Files" },
-			{ "<leader>tg", function() Snacks.picker.git_files() end,             desc = "Find Git Files" },
-			{ "<leader>tw", function() Snacks.picker.projects() end,              desc = "Projects" },
+			{ "<leader>tg", function() Snacks.picker.git_files() end,     desc = "Find Git Files" },
+			{
+				"<leader>tw",
+				function()
+					Snacks.picker.projects(
+						{
+							dev = { "~/workspace" }
+						}
+					)
+				end,
+				desc = "Projects"
+			},
 			{ "<leader>to", function() Snacks.picker.recent() end,                desc = "Recent" },
 			-- git
 			{ "<leader>gb", function() Snacks.picker.git_branches() end,          desc = "Git Branches" },
@@ -104,7 +117,7 @@ return {
 				desc = "Messages",
 				function()
 					Snacks.win({
-						text = vim.split(vim.fn.execute("messages", "silent"), "\n") ,
+						text = vim.split(vim.fn.execute("messages", "silent"), "\n"),
 						width = 0.6,
 						height = 0.6,
 						wo = {
@@ -171,3 +184,4 @@ return {
 		end,
 	},
 }
+-- }

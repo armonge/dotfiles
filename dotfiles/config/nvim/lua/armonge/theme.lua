@@ -90,27 +90,6 @@ return {
 	},
 
 	{
-		"NeogitOrg/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim", -- required
-			"sindrets/diffview.nvim", -- optional
-			-- "ibhagwan/fzf-lua",     -- optional
-		},
-		opts = {
-			ignored_settings = {
-				"NeogitPushPopup--force-with-lease",
-				"NeogitPushPopup--force",
-				-- "NeogitPullPopup--rebase",
-				"NeogitCommitPopup--allow-empty",
-				"NeogitRevertPopup--no-edit",
-			},
-		},
-		keys = {
-			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
-		},
-	},
-
-	{
 		"mechatroner/rainbow_csv",
 		ft = { "csv" },
 	},

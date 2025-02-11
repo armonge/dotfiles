@@ -36,9 +36,6 @@ require("lazy").setup({
 		},
 	},
 	{
-		"tpope/vim-sensible",
-	},
-	{
 		"wakatime/vim-wakatime",
 	},
 
