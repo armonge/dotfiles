@@ -52,6 +52,8 @@ return {
 			-- See the full "keymap" documentation for information on defining your own keymap.
 			keymap = {
 				preset = "default",
+				["<C-y>"] = { "select_and_accept" },
+				["<C-Enter>"] = { "select_and_accept" },
 			},
 
 			appearance = {
