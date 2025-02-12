@@ -8,7 +8,49 @@ return {
 		opts = {
 			image = { enabled = true },
 			bigfile = { enabled = true },
-			dashboard = { enabled = true },
+			git = { enabled = true },
+			dashboard = {
+				enabled = true,
+				preset = {
+
+					keys = {
+						{
+							icon = " ",
+							key = "f",
+							desc = "Find File",
+							action = ":lua Snacks.dashboard.pick('files')",
+						},
+						{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+						{
+							icon = " ",
+							key = "g",
+							desc = "Find Text",
+							action = ":lua Snacks.dashboard.pick('live_grep')",
+						},
+						{
+							icon = " ",
+							key = "r",
+							desc = "Recent Files",
+							action = ":lua Snacks.dashboard.pick('oldfiles')",
+						},
+						{
+							icon = " ",
+							key = "c",
+							desc = "Config",
+							action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+						},
+						-- { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+						{
+							icon = "󰒲 ",
+							key = "L",
+							desc = "Lazy",
+							action = ":Lazy",
+							enabled = package.loaded.lazy ~= nil,
+						},
+						{ icon = " ", key = "q", desc = "Quit", action = ":qa" },
+					},
+				},
+			},
 			explorer = { enabled = false },
 			indent = { enabled = true },
 			input = { enabled = true },
@@ -55,6 +97,8 @@ return {
 			},
 			{ "<leader>to", function() Snacks.picker.recent() end,                desc = "Recent" },
 			-- git
+			{ "<leader>gB", function() Snacks.gitbrowse() end,                    desc = "Git Browse",               mode = { "n", "v" } },
+			{ "<leader>gb", function() Snacks.git.blame_line() end,                    desc = "Show git log for the current line.",               mode = { "n", "v" } },
 			{ "<leader>gb", function() Snacks.picker.git_branches() end,          desc = "Git Branches" },
 			{ "<leader>gl", function() Snacks.picker.git_log() end,               desc = "Git Log" },
 			{ "<leader>gL", function() Snacks.picker.git_log_line() end,          desc = "Git Log Line" },
@@ -105,7 +149,6 @@ return {
 			{ "<leader>n",  function() Snacks.notifier.show_history() end,        desc = "Notification History" },
 			{ "<leader>bd", function() Snacks.bufdelete() end,                    desc = "Delete Buffer" },
 			{ "<leader>rf", function() Snacks.rename.rename_file() end,           desc = "Rename File" },
-			{ "<leader>gB", function() Snacks.gitbrowse() end,                    desc = "Git Browse",               mode = { "n", "v" } },
 			-- { "<leader>gg",      function() Snacks.lazygit() end,                                        desc = "Lazygit" },
 			{ "<leader>un", function() Snacks.notifier.hide() end,                desc = "Dismiss All Notifications" },
 			-- { "<c-/>",           function() Snacks.terminal() end,                                       desc = "Toggle Terminal" },

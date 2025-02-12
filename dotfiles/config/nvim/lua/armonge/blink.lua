@@ -1,16 +1,16 @@
 return {
-	-- {
-	-- 	"CopilotC-Nvim/CopilotChat.nvim",
-	-- 	dependencies = {
-	-- 		{ "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua
-	-- 		{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
-	-- 	},
-	-- 	build = "make tiktoken", -- Only on MacOS or Linux
-	-- 	opts = {
-	-- 		-- See Configuration section for options
-	-- 	},
-	-- 	-- See Commands section for default commands if you want to lazy load on them
-	-- },
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua
+			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+		},
+		build = "make tiktoken", -- Only on MacOS or Linux
+		opts = {
+			-- See Configuration section for options
+		},
+		-- See Commands section for default commands if you want to lazy load on them
+	},
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
@@ -24,6 +24,8 @@ return {
 				javascript = true,
 				javascriptreact = true,
 				typescript = true,
+				gitcommit = true,
+				markdown = true,
 			},
 		},
 	},
@@ -54,6 +56,8 @@ return {
 				preset = "default",
 				["<C-y>"] = { "select_and_accept" },
 				["<C-Enter>"] = { "select_and_accept" },
+				["<Tab>"] = { "select_next" },
+				["<S-Tab>"] = { "select_prev" },
 			},
 
 			appearance = {
@@ -96,10 +100,10 @@ return {
 				default = { "lsp", "copilot" },
 				providers = {
 					-- lazydev = {
-						-- name = "LazyDev",
-						-- module = "lazydev.integrations.blink",
-						-- make lazydev completions top priority (see `:h blink.cmp`)
-						-- score_offset = 100,
+					-- name = "LazyDev",
+					-- module = "lazydev.integrations.blink",
+					-- make lazydev completions top priority (see `:h blink.cmp`)
+					-- score_offset = 100,
 					-- },
 					copilot = {
 						name = "copilot",
