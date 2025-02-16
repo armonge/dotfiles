@@ -4,6 +4,10 @@ return {
 		dependencies = { "folke/neoconf.nvim" },
 		opts = {
 			servers = {
+				yamlls = {},
+				dockerls = {},
+				docker_compose_language_service = {},
+				bashls = {},
 				jsonls = {},
 				lua_ls = {},
 				vtsls = {},
@@ -19,6 +23,7 @@ return {
 							disableOrganizeImports = false,
 							disableTaggedHints = false,
 							analysis = {
+								reportMissingTypeStubs = false,
 								diagnosticMode = "openFilesOnly",
 								autoImportCompletions = true,
 								autoSearchPaths = true,
