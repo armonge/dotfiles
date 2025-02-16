@@ -55,7 +55,7 @@ return {
 			keymap = {
 				preset = "default",
 				["<C-y>"] = { "select_and_accept" },
-				["<C-Enter>"] = { "select_and_accept" },
+				["<C-Enter>"] = { "select_and_accept", "show" },
 				["<Tab>"] = { "select_next" },
 				["<S-Tab>"] = { "select_prev" },
 			},
