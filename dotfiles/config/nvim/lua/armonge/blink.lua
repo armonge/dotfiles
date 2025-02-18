@@ -10,6 +10,20 @@ return {
 			-- See Configuration section for options
 		},
 		-- See Commands section for default commands if you want to lazy load on them
+		config = function(_, opts)
+			require("CopilotChat").setup(opts)
+			local whichkey = require("which-key")
+			whichkey.add({
+				{
+					"<leader>gc",
+					"<cmd>CopilotChatCommit<CR>",
+					desc = "Generate commit messaage with copilot",
+					cond = function()
+						return vim.bo.filetype == "gitcommit"
+					end,
+				},
+			})
+		end,
 	},
 	{
 		"zbirenbaum/copilot.lua",

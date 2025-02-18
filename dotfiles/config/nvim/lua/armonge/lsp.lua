@@ -16,11 +16,16 @@ local servers = {
 	jsonls = {},
 	lua_ls = {},
 	vtsls = {},
+	stylelint_lsp = {},
+	clojure_lsp = {},
+	sqls = {},
+	pylsp = {},
 	beancount = {
 		init_options = {
 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
 		},
 	},
+	powershell_es = {},
 	basedpyright = {
 		settings = {
 			basedpyright = {
