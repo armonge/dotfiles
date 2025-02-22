@@ -1,7 +1,7 @@
 local formatters = {
+	"biome",
 	"prettier",
 	"djlint",
-	"ruff",
 	"jq",
 	"shfmt",
 	"stylua",
@@ -9,26 +9,10 @@ local formatters = {
 }
 
 local servers = {
-	yamlls = {},
-	dockerls = {},
-	docker_compose_language_service = {},
-	bashls = {},
-	jsonls = {},
-	lua_ls = {},
-	vtsls = {},
-	stylelint_lsp = {},
-	clojure_lsp = {},
-	sqls = {},
-	pylsp = {},
-	beancount = {
-		init_options = {
-			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-		},
-	},
-	powershell_es = {},
 	basedpyright = {
 		settings = {
 			basedpyright = {
+				reportMissingTypeStubs = false,
 				disableLanguageServices = false,
 				disableOrganizeImports = false,
 				disableTaggedHints = false,
@@ -40,6 +24,41 @@ local servers = {
 			},
 		},
 	},
+	ruff = {
+		init_options = {
+			settings = {
+				configurationPreference = "filesystemFirst",
+			},
+		},
+	},
+	biome = {},
+	yamlls = {},
+	dockerls = {},
+	docker_compose_language_service = {},
+	bashls = {},
+	jsonls = {},
+	lua_ls = {},
+	vtsls = {},
+	stylelint_lsp = {},
+	clojure_lsp = {},
+	sqls = {},
+	-- pylsp = {
+	-- 	settings = {
+	-- 		pylsp = {
+	-- 			plugins = {
+	-- 				pycodestyle = {
+	-- 					enabled = false,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	beancount = {
+		init_options = {
+			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
+		},
+	},
+	powershell_es = {},
 }
 
 return {
@@ -103,10 +122,6 @@ return {
 				efm = function()
 					local languages = {
 						-- Custom languages, or override existing ones
-						python = {
-							require("efmls-configs.formatters.ruff"),
-							require("efmls-configs.formatters.ruff_sort"),
-						},
 						yaml = {
 							require("efmls-configs.formatters.prettier"),
 						},
@@ -120,26 +135,26 @@ return {
 							require("efmls-configs.formatters.shfmt"),
 						},
 						json = {
-							require("efmls-configs.formatters.jq"),
+							require("efmls-configs.formatters.biome"),
 						},
 						javascript = {
-							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.formatters.biome"),
 						},
 						html = {
-							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.formatters.biome"),
 						},
 						htmldjango = {
 							require("efmls-configs.linters.djlint"),
 							require("efmls-configs.formatters.djlint"),
 						},
 						javascriptreact = {
-							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.formatters.biome"),
 						},
 						typescript = {
-							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.formatters.biome"),
 						},
 						typescriptreact = {
-							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.formatters.biome"),
 						},
 					}
 
@@ -177,18 +192,6 @@ return {
 								return
 							end
 
-							vim.lsp.buf.format({ name = "efm" })
-						end,
-					})
-					vim.api.nvim_create_autocmd("BufWritePost", {
-						group = lsp_fmt_group,
-						callback = function(ev)
-							local efm = vim.lsp.get_clients({ name = "efm", bufnr = ev.buf })
-
-							if vim.tbl_isempty(efm) then
-								return
-							end
-
 							vim.lsp.buf.format()
 						end,
 					})
@@ -199,7 +202,6 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/neoconf.nvim" },
-		opts = {},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -278,14 +280,14 @@ return {
 	},
 	{
 		"onsails/lspkind.nvim",
-
-		config = function()
+		opts = {
+			symbol_map = {
+				Copilot = "",
+			},
+		},
+		config = function(_, opts)
 			local lspkind = require("lspkind")
-			lspkind.init({
-				symbol_map = {
-					Copilot = "",
-				},
-			})
+			lspkind.setup(opts)
 
 			vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 		end,
@@ -306,9 +308,6 @@ return {
 	},
 	{
 		"folke/neoconf.nvim",
-		config = function()
-			require("neoconf").setup()
-		end,
 		dependencies = { "folke/lazydev.nvim" },
 	},
 }

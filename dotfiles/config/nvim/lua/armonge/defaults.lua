@@ -1,26 +1,26 @@
 -- My Editing Defaults {
 vim.opt.formatoptions:remove({ "t" })
-vim.opt.hidden = true -- if hidden is not set, TextEdit might fail.
-vim.opt.cmdheight = 2 -- Better display for messages
+vim.opt.hidden = true                 -- if hidden is not set, TextEdit might fail.
+vim.opt.cmdheight = 2                 -- Better display for messages
 -- vim.opt.shortmess:append({ "c" }) -- don't give |ins-completion-menu| messages.
-vim.opt.linespace = 0 -- No extra spaces between rows
-vim.opt.number = true -- Line numbers on
-vim.opt.showmatch = true -- Show matching brackets/parenthesis
-vim.opt.hlsearch = true -- Highlight search terms
-vim.opt.winminheight = 0 -- Windows can be 0 line high
-vim.opt.ignorecase = true -- Case insensitive search
-vim.opt.smartcase = true -- Case sensitive when uc present
-vim.opt.wildmenu = true -- Show list instead of just completing
+vim.opt.linespace = 0                 -- No extra spaces between rows
+vim.opt.number = true                 -- Line numbers on
+vim.opt.showmatch = true              -- Show matching brackets/parenthesis
+vim.opt.hlsearch = true               -- Highlight search terms
+vim.opt.winminheight = 0              -- Windows can be 0 line high
+vim.opt.ignorecase = true             -- Case insensitive search
+vim.opt.smartcase = true              -- Case sensitive when uc present
+vim.opt.wildmenu = true               -- Show list instead of just completing
 vim.opt.whichwrap = "b,s,h,l,<,>,[,]" -- Backspace and cursor keys wrap too
-vim.opt.scrolljump = 5 -- Lines to scroll when cursor leaves screen
-vim.opt.scrolloff = 3 -- Minimum lines to keep above and below cursor
-vim.opt.wrap = false -- Do not wrap long lines
-vim.opt.shiftwidth = 2 -- Use indents of 4 spaces
-vim.opt.expandtab = true -- Tabs are spaces, not tabs
-vim.opt.joinspaces = false -- Prevents inserting two spaces after punctuation on a join (J)
-vim.opt.splitright = true -- Puts new vsplit windows to the right of the current
-vim.opt.cursorline = true -- Highlights current line
-vim.opt.splitbelow = true -- Puts new split windows to the bottom of the current
+vim.opt.scrolljump = 5                -- Lines to scroll when cursor leaves screen
+vim.opt.scrolloff = 3                 -- Minimum lines to keep above and below cursor
+vim.opt.wrap = false                  -- Do not wrap long lines
+vim.opt.shiftwidth = 2                -- Use indents of 4 spaces
+vim.opt.expandtab = true              -- Tabs are spaces, not tabs
+vim.opt.joinspaces = false            -- Prevents inserting two spaces after punctuation on a join (J)
+vim.opt.splitright = true             -- Puts new vsplit windows to the right of the current
+vim.opt.cursorline = true             -- Highlights current line
+vim.opt.splitbelow = true             -- Puts new split windows to the bottom of the current
 -- vim.opt.pastetoggle = "<F12>" -- pastetoggle (sane indentation on pastes)
 vim.opt.colorcolumn = "+1"
 -- }
@@ -79,7 +79,7 @@ vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldcolumn = "1"
-vim.opt.foldnestmax = 4
+vim.opt.foldnestmax = 10
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.o.foldlevelstart = 99
 -- }

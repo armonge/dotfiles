@@ -37,18 +37,18 @@ return {
 			{ "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
 		},
 		-- stylua: ignore end
-		config = function()
-			local flash = require("flash")
-			flash.jump({
-				action = function(match, state)
-					vim.api.nvim_win_call(match.win, function()
-						vim.api.nvim_win_set_cursor(match.win, match.pos)
-						vim.diagnostic.open_float()
-					end)
-					state:restore()
-				end,
-			})
-		end,
+		-- config = function()
+		-- 	local flash = require("flash")
+		-- 	flash.jump({
+		-- 		action = function(match, state)
+		-- 			vim.api.nvim_win_call(match.win, function()
+		-- 				vim.api.nvim_win_set_cursor(match.win, match.pos)
+		-- 				vim.diagnostic.open_float()
+		-- 			end)
+		-- 			state:restore()
+		-- 		end,
+		-- 	})
+		-- end,
 		opts = {
 			picker = {
 				win = {

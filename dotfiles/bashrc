@@ -303,3 +303,11 @@ fi
 export ERG_PATH="$HOME/.local/share/nvim/mason/packages/erg"
 export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.4.0/bin:$PATH"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.1/?.so;$HOME/.luarocks/lib/lua/5.1/loadall.so"
+
+# pnpm
+export PNPM_HOME="/Users/andres.monge/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

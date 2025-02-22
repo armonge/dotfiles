@@ -2,10 +2,10 @@ return {
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
 		dependencies = {
-			{ "zbirenbaum/copilot.lua" }, -- or zbirenbaum/copilot.lua
+			{ "zbirenbaum/copilot.lua" },          -- or zbirenbaum/copilot.lua
 			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
 		},
-		build = "make tiktoken", -- Only on MacOS or Linux
+		build = "make tiktoken",                   -- Only on MacOS or Linux
 		opts = {
 			-- See Configuration section for options
 		},
@@ -111,18 +111,18 @@ return {
 					end
 					return 0
 				end,
-				default = { "lsp", "copilot" },
+				default = { "lazydev", "lsp", "path", "copilot" },
 				providers = {
-					-- lazydev = {
-					-- name = "LazyDev",
-					-- module = "lazydev.integrations.blink",
-					-- make lazydev completions top priority (see `:h blink.cmp`)
-					-- score_offset = 100,
-					-- },
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority(see `:h blink.cmp`)
+						score_offset = 100,
+					},
 					copilot = {
 						name = "copilot",
 						module = "blink-copilot",
-						score_offset = 100,
+						score_offset = 50,
 						async = true,
 						opts = {
 							max_completions = 3,
@@ -132,6 +132,6 @@ return {
 				},
 			},
 		},
-		opts_extend = { "sources.default" },
+		-- opts_extend = { "sources.default" },
 	},
 }
