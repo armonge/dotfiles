@@ -63,8 +63,8 @@ end
 -- }
 
 -- Spell {
-vim.opt.spell = true
-vim.opt.spelllang = { "en_us" }
+vim.opt.spell = false
+-- vim.opt.spelllang = { "en_us" }
 -- }
 
 -- Encoding {

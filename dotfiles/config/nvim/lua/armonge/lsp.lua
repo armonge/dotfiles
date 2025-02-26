@@ -6,6 +6,7 @@ local formatters = {
 	"shfmt",
 	"stylua",
 	"joker",
+	"taplo",
 }
 
 local servers = {
@@ -31,6 +32,7 @@ local servers = {
 			},
 		},
 	},
+	htmx = {},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
@@ -59,6 +61,9 @@ local servers = {
 		},
 	},
 	powershell_es = {},
+	ast_grep = {},
+	harper_ls = {},
+	taplo = {},
 }
 
 return {
@@ -155,6 +160,9 @@ return {
 						},
 						typescriptreact = {
 							require("efmls-configs.formatters.biome"),
+						},
+						toml = {
+							require("efmls-configs.formatters.taplo"),
 						},
 					}
 

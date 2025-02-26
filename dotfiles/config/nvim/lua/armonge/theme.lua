@@ -50,58 +50,19 @@ return {
 	},
 
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			local lualine = require("lualine")
-			local colors, _ = require("tokyonight.colors").setup({
-				style = "moon",
-			})
-			lualine.setup({
-				theme = "tokyonight-moon",
-				inactive_sections = {
-					lualine_c = {
-						{
-							"filename",
-							path = 1,
-							color = {
-								fg = colors.fg_sidebar,
-							},
-						},
-					},
-				},
-				sections = {
-					lualine_b = { "branch", "diagnostics" },
-					lualine_c = {
-						{
-
-							"filename",
-							path = 1,
-						},
-					},
-					lualine_x = { "filetype" },
-					lualine_y = {},
-					lualine_z = { "location" },
-				},
-			})
-		end,
-	},
-
-	{
 		"mechatroner/rainbow_csv",
 		ft = { "csv" },
 	},
 	{
-		"hedyhli/outline.nvim",
-		lazy = true,
-		cmd = { "Outline", "OutlineOpen" },
-		keys = { -- Example mapping to toggle outline
-			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+		"stevearc/aerial.nvim",
+		opts = {},
+		-- Optional dependencies
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
 		},
-		opts = {
-			-- Your setup opts here
+		keys = { -- Example mapping to toggle outline
+			{ "<leader>o", "<cmd>AerialToggle!<CR>", desc = "Toggle outline" },
 		},
 	},
 }

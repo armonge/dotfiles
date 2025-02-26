@@ -34,6 +34,8 @@ return {
 					"beancount",
 					"clojure",
 					"diff",
+					"html",
+					"htmldjango",
 				},
 				highlight = {
 					enable = true,
