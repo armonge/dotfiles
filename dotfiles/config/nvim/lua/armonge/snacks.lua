@@ -11,6 +11,47 @@ return {
 			git = { enabled = true },
 			dashboard = {
 				enabled = true,
+				sections = {
+					{
+						{
+							section = "terminal",
+							cmd = "fortune -s | cowsay",
+						},
+						function()
+							local in_git = Snacks.git.get_root() ~= nil
+							local cmds = {
+								{
+									icon = " ",
+									title = "Open PRs",
+									cmd = "gh pr list -L 10",
+									key = "P",
+									action = function()
+										vim.fn.jobstart("gh pr list --web", { detach = true })
+									end,
+									height = 16,
+								},
+								{
+									icon = " ",
+									title = "Git Status",
+									cmd = "git --no-pager diff --stat -B -M -C",
+									height = 10,
+								},
+							}
+							return vim.tbl_map(function(cmd)
+								return vim.tbl_extend("force", {
+									pane = 2,
+									section = "terminal",
+									enabled = in_git,
+									padding = 1,
+									ttl = 5 * 60,
+									indent = 3,
+								}, cmd)
+							end, cmds)
+						end,
+						{ section = "keys", gap = 1, padding = 1 },
+						{ section = "startup" },
+					},
+				},
 				preset = {
 
 					keys = {
