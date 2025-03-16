@@ -20,6 +20,7 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	brew install git-absorb duckdb
 	brew install neilotoole/sq/sq
 	brew install difftastic
+	brew install tectonic
 elif command -v apt &>/dev/null; then
 	sudo apt-get update --quiet --quiet
 	sudo apt-get install --yes --quiet --quiet make build-essential \
@@ -132,7 +133,7 @@ nvm install lts/gallium lts/erbium lts/fermium lts/gallium
 nvm install lts/*
 nvm alias default stable
 nvm use stable
-npm install --global --upgrade npm neovim bash-language-server dockerfile-language-server-nodejs
+npm install --global --upgrade npm neovim @mermaid-js/mermaid-cli
 
 if [ ! -f "${HOME}/.local/share/fonts/ttf/JetBrainsMonoNLNerdFont-Regular.ttf" ]; then
 	wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip

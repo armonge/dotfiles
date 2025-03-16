@@ -1,4 +1,6 @@
 local formatters = {
+	"yamllint",
+	"erg",
 	"biome",
 	"prettier",
 	"djlint",
@@ -7,24 +9,26 @@ local formatters = {
 	"stylua",
 	"joker",
 	"taplo",
+	"actionlint",
 }
 
 local servers = {
-	basedpyright = {
-		settings = {
-			basedpyright = {
-				reportMissingTypeStubs = false,
-				disableLanguageServices = false,
-				disableOrganizeImports = false,
-				disableTaggedHints = false,
-				analysis = {
-					diagnosticMode = "openFilesOnly",
-					autoImportCompletions = true,
-					autoSearchPaths = true,
-				},
-			},
-		},
-	},
+	-- basedpyright = {
+	-- 	settings = {
+	-- 		basedpyright = {
+	-- 			reportMissingTypeStubs = false,
+	-- 			disableLanguageServices = false,
+	-- 			disableOrganizeImports = false,
+	-- 			disableTaggedHints = false,
+	-- 			analysis = {
+	-- 				diagnosticMode = "openFilesOnly",
+	-- 				autoImportCompletions = true,
+	-- 				autoSearchPaths = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	-- pylyzer = {},
 	ruff = {
 		init_options = {
 			settings = {
@@ -45,17 +49,33 @@ local servers = {
 	clojure_lsp = {},
 	sqls = {},
 	tailwindcss = {},
-	-- pylsp = {
-	-- 	settings = {
-	-- 		pylsp = {
-	-- 			plugins = {
-	-- 				pycodestyle = {
-	-- 					enabled = false,
-	-- 				},
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
+	pylsp = {
+		settings = {
+			pylsp = {
+				plugins = {
+					autopep8 = {
+						enabled = false,
+					},
+					flake8 = {
+						maxLineLength = 88,
+					},
+					pycodestyle = {
+						maxLineLength = 88,
+						enabled = false,
+					},
+					mccabe = {
+						enabled = false,
+					},
+					pyflakes = {
+						enabled = false,
+					},
+					yapf = {
+						enabled = false,
+					},
+				},
+			},
+		},
+	},
 	beancount = {
 		init_options = {
 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
@@ -65,6 +85,7 @@ local servers = {
 	ast_grep = {},
 	harper_ls = {},
 	taplo = {},
+	efm = {},
 }
 
 return {
@@ -130,6 +151,7 @@ return {
 						-- Custom languages, or override existing ones
 						yaml = {
 							require("efmls-configs.formatters.prettier"),
+							require("efmls-configs.linters.yamllint"),
 						},
 						clojure = {
 							require("efmls-configs.formatters.joker"),
@@ -318,5 +340,13 @@ return {
 	{
 		"folke/neoconf.nvim",
 		dependencies = { "folke/lazydev.nvim" },
+	},
+	{
+		"zeioth/garbage-day.nvim",
+		dependencies = "neovim/nvim-lspconfig",
+		event = "VeryLazy",
+		opts = {
+			-- your options here
+		},
 	},
 }

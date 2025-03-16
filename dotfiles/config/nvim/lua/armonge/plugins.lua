@@ -53,5 +53,10 @@ require("lazy").setup({
 	},
 	-- { "glacambre/firenvim", build = ":call firenvim#install(0)" },
 	{ "m4xshen/hardtime.nvim", dependencies = { "MunifTanjim/nui.nvim" }, opts = {} },
+	{
+		"gw31415/deepl-commands.nvim",
+		dependencies = { "gw31415/deepl.vim" },
+		opts = {},
+	},
 })
 -- }
