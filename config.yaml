@@ -11,11 +11,6 @@ config:
   showdiff: false
   workdir: ~/.config/dotdrop
   minversion: 1.15.0
-actions:
-  pre:
-    install_deps: ./scripts/install-deps.sh
-  post:
-    update_cache: bat cache --build
 dotfiles:
   f_bash_aliases:
     dst: ~/.bash_aliases
@@ -46,8 +41,6 @@ dotfiles:
     dst: ~/.config/nvim/init.lua
     link: absolute
     src: config/nvim/init.lua
-    actions:
-      - install_deps
   f_attributes:
     src: config/git/attributes
     dst: ~/.config/git/attributes
@@ -161,8 +154,6 @@ dotfiles:
     src: config/bat/themes/tokyonight_night.tmTheme
     dst: ~/.config/bat/themes/tokyonight_night.tmTheme
     link: absolute
-    actions:
-      - update_cache
   f_lsp.lua:
     src: config/nvim/lua/armonge/lsp.lua
     dst: ~/.config/nvim/lua/armonge/lsp.lua
