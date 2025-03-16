@@ -83,7 +83,13 @@ local servers = {
 	},
 	powershell_es = {},
 	ast_grep = {},
-	harper_ls = {},
+	harper_ls = {
+		settings = {
+			["harper-ls"] = {
+				userDictPath = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add",
+			},
+		},
+	},
 	taplo = {},
 	efm = {},
 }
@@ -249,8 +255,8 @@ return {
 					wk.add({
 						{
 							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration,    desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition,     desc = "Go to definition" },
+							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
 							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
 						},
 						{
@@ -274,7 +280,7 @@ return {
 								desc = "List workspace folders",
 							},
 						},
-						{ "K",     vim.lsp.buf.hover,          desc = "More information on a popup" },
+						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
 						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
 						{
 							group = "Refactor",
