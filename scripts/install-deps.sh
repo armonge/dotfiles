@@ -10,8 +10,8 @@ if grep -q "Darwin" <<<"$unameOut"; then
 	brew install --quiet libjpeg libtiff little-cms2 openjpeg webp \
 		pkg-config fontconfig cairo libmagic
 
-	brew install --quiet make wget direnv cmake fzf xz shellcheck jq \
-		miller shfmt git git-lfs bat nvim gpg awscli \
+	brew install --quiet make wget direnv cmake fzf xz jq \
+		miller git git-lfs bat nvim gpg awscli \
 		aws-iam-authenticator the_silver_searcher fd \
 		django-completion podman httpie chafa pgformatter jd \
 		composer
@@ -47,7 +47,6 @@ elif command -v apt &>/dev/null; then
 		traceroute \
 		ldnsutils \
 		miller \
-		shellcheck \
 		caca-utils libimage-exiftool-perl catdoc mediainfo calibre \
 		fontforge \
 		gnupg ca-certificates git \
@@ -60,14 +59,14 @@ elif command -v apt &>/dev/null; then
 		visidata \
 		javac golang luarocks julia ruby composer \
 		watchman
+elif grep -q "fedora" <<<"$unameOut"; then
 
-elif command dnf &>/dev/null; then
+	sudo dnf --assumeyes copr enable wezfurlong/wezterm-nightly
 	sudo dnf install --assumeyes make gcc zlib-devel bzip2 bzip2-devel \
 		readline-devel sqlite sqlite-devel openssl-devel tk-devel \
 		libffi-devel xz-devel patch libX11-devel libXi-devel \
 		bat lua \
-		ShellCheck \
-		fzf ripgrep fd-find shfmt \
+		fzf ripgrep fd-find \
 		cmake g++ \
 		tldr \
 		the_silver_searcher \
@@ -75,10 +74,13 @@ elif command dnf &>/dev/null; then
 		git git-lfs \
 		chafa \
 		difftastic \
-		lynx
-
-	sudo dnf copr enable wezfurlong/wezterm-nightly
-	sudo dnf install wezterm
+		lynx cowsay fortune-mod libxcb-devel \
+		wezterm \
+		direnv \
+		golang-bin \
+		luarocks \
+		texlive-latex \
+		lua5.1
 fi
 
 if [ ! -d "$HOME/.cargo" ]; then
@@ -88,35 +90,25 @@ fi
 rustup update
 cargo install git-delta tree-sitter-cli jless eza viu
 
-if [ ! -d "$HOME/.pyenv" ]; then
-	curl https://pyenv.run | bash
-fi
+sudo luarocks install --lua-version 5.1 tiktoken_core
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# Python
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv python install
+(
+	mkdir -p ~/.config/nvim
+	cd ~/.config/nvim
+	uv venv --seed --python 3.12
+	source .venv/bin/activate
+	python -m pip install neovim
+)
 
-pyenv install --skip-existing 2.7:latest
-pyenv install --skip-existing 3.12:latest
-
-pyenv shell 3.12
-python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade devtools[pygments] build ruff
-
-pyenv shell 2.7
-python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade build
-
-pyenv virtualenv --force 2.7 nvim2
-pyenv shell nvim2
-python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade pynvim ranger-fm pillow pygments nord-pygments build rope
-
-pyenv install --skip-existing 3.12
-pyenv virtualenv --force 3.12 nvim3
-pyenv shell nvim3
-python -m pip install -qq --upgrade pip wheel
-python -m pip install -qq --upgrade "pynvim@git+https://github.com/neovim/pynvim" ranger-fm pillow pygments nord-pygments devtools[pygments] build jsx-lexer rope djhtml ruff
+(
+	cd ~/dotfiles
+	uv venv --seed --python 3.12
+	source .venv/bin/activate
+	python -m pip install dotdrop
+)
 
 # Install and activate NVM
 if [ ! -d "$HOME/.config/nvm" ]; then
@@ -146,14 +138,4 @@ fi
 if ! [ -x "$(command -v starship)" ]; then
 	mkdir -p ~/.local/bin
 	curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh
-fi
-
-if ! [ -x "$(command -v nvim)" ]; then
-	curl --location https://github.com/neovim/neovim/releases/download/stable/nvim.appimage --output "${HOME}/.local/bin/nvim"
-	chmod +x "${HOME}/.local/bin/nvim"
-fi
-
-if ! [ -x "$(command -v jq)" ]; then
-	curl --location https://github.com/jqlang/jq/releases/latest/download/jq-linux64 --output "${HOME}/.local/bin/jq"
-	chmod +x "${HOME}/.local/bin/jq"
 fi
