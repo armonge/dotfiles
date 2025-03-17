@@ -120,3 +120,5 @@ function BackDrops:toggle_focus(window)
 
   self:_set_opt(window, background_opts)
 end
+
+return BackDrops:init()
