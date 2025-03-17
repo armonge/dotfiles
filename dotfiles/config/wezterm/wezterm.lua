@@ -40,11 +40,6 @@
 -- return config
 
 local Config = require("config")
-require("utils.backdrops")
--- :set_focus('#000000')
--- :set_images_dir(require('wezterm').home_dir .. '/Pictures/Wallpapers/')
-    :set_images()
-    :random()
 
 require("events.left-status").setup()
 require("events.right-status").setup({ date_format = "%a %H:%M:%S" })
