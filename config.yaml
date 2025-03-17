@@ -24,7 +24,7 @@ dotfiles:
     dst: ~/.bashrc
     link: absolute
     src: bashrc
-    chmod: "644"
+    chmod: '644'
   f_chromium-flags.conf:
     dst: ~/.config/chromium-flags.conf
     link: absolute
@@ -57,12 +57,12 @@ dotfiles:
     src: bin/delta.sh
     dst: ~/bin/delta.sh
     link: absolute
-    chmod: "775"
+    chmod: '775'
   f_rifle.conf:
     src: config/ranger/rifle.conf
     dst: ~/.config/ranger/rifle.conf
     link: absolute
-    chmod: "644"
+    chmod: '644'
   f_version:
     src: pyenv/version
     dst: ~/.pyenv/version
@@ -71,7 +71,7 @@ dotfiles:
     src: config/ranger/scope.sh
     dst: ~/.config/ranger/scope.sh
     link: absolute
-    chmod: "755"
+    chmod: '755'
   f_inputrc:
     src: inputrc
     dst: ~/.inputrc
@@ -80,12 +80,12 @@ dotfiles:
     src: local/bin/mirror.sh
     dst: ~/.local/bin/mirror.sh
     link: absolute
-    chmod: "775"
+    chmod: '775'
   f_dsq:
     src: local/bin/dsq
     dst: ~/.local/bin/dsq
     link: absolute
-    chmod: "755"
+    chmod: '755'
   f_ignore:
     src: config/nvim/.ignore
     dst: ~/.config/nvim/.ignore
@@ -202,54 +202,59 @@ dotfiles:
     src: config/nvim/lua/armonge/mini.lua
     dst: ~/.config/nvim/lua/armonge/mini.lua
     link: absolute
+  d_wezterm:
+    src: config/wezterm
+    dst: ~/.config/wezterm
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
-      - f_bashrc
-      - f_gitconfig
-      - f_ctags
-      - f_bash_profile
-      - f_chromium-flags.conf
-      - f_bash_aliases
-      - f_attributes
-      - f_config.toml
-      - f_ideavimrc
-      - f_delta.sh
-      - f_rifle.conf
-      - f_version
-      - f_scope.sh
-      - f_inputrc
-      - f_mirror.sh
-      - f_dsq
-      - f_init.lua
-      - f_ignore
-      - f_armonge_init.lua
-      - f_defaults.lua
-      - f_environment.lua
-      - f_filetypes.lua
-      - f_plugins.lua
-      - f_theme.lua
-      - f_python-version
-      - f_git_ignore
-      - f_treesitter.lua
-      - f_starship.toml
-      - f_00-logging.py
-      - f_rc.conf
-      - f_rgignore
-      - f_direnv_direnvrc
-      - f_direnv.toml
-      - f_tokyonight_night.tmtheme
-      - f_lsp.lua
-      - f_wezterm.lua
-      - f_editorconfig
-      - f_motions.lua
-      - f_lazy-lock.json
-      - f_editor.lua
-      - f_mappings.lua
-      - f_clojure.lua
-      - f_oil.lua
-      - f_snacks.lua
-      - f_blink.lua
+    - f_bashrc
+    - f_gitconfig
+    - f_ctags
+    - f_bash_profile
+    - f_chromium-flags.conf
+    - f_bash_aliases
+    - f_attributes
+    - f_config.toml
+    - f_ideavimrc
+    - f_delta.sh
+    - f_rifle.conf
+    - f_version
+    - f_scope.sh
+    - f_inputrc
+    - f_mirror.sh
+    - f_dsq
+    - f_init.lua
+    - f_ignore
+    - f_armonge_init.lua
+    - f_defaults.lua
+    - f_environment.lua
+    - f_filetypes.lua
+    - f_plugins.lua
+    - f_theme.lua
+    - f_python-version
+    - f_git_ignore
+    - f_treesitter.lua
+    - f_starship.toml
+    - f_00-logging.py
+    - f_rc.conf
+    - f_rgignore
+    - f_direnv_direnvrc
+    - f_direnv.toml
+    - f_tokyonight_night.tmtheme
+    - f_lsp.lua
+    - f_wezterm.lua
+    - f_editorconfig
+    - f_motions.lua
+    - f_lazy-lock.json
+    - f_editor.lua
+    - f_mappings.lua
+    - f_clojure.lua
+    - f_oil.lua
+    - f_snacks.lua
+    - f_blink.lua
 
-      - f_mini.lua
+    - f_mini.lua
 
+    - d_wezterm

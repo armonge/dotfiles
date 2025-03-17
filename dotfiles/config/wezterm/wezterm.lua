@@ -1,4 +1,5 @@
 -- Pull in the wezterm API
+local Config = require("config")
 local wezterm = require("wezterm")
 local act = wezterm.action
 
@@ -13,7 +14,7 @@ end
 
 -- This is where you actually apply your config choices
 config.scrollback_lines = 105500
-config.color_scheme = 'Tokyo Night Storm (Gogh)'
+config.color_scheme = "Tokyo Night Storm (Gogh)"
 config.font = wezterm.font("JetBrains Mono")
 config.allow_win32_input_mode = true
 config.use_dead_keys = false
