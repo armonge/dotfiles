@@ -5,11 +5,11 @@ local act = wezterm.action
 local mod = {}
 
 if platform.is_mac then
-  mod.SUPER = "SUPER"
-  mod.SUPER_REV = "SUPER|CTRL"
+	mod.SUPER = "SUPER"
+	mod.SUPER_REV = "SUPER|CTRL"
 elseif platform.is_linux then
-  mod.SUPER = "ALT"
-  mod.SUPER_REV = "ALT|CTRL"
+	mod.SUPER = "ALT"
+	mod.SUPER_REV = "ALT|CTRL"
 end
 
 -- stylua: ignore
@@ -184,28 +184,28 @@ local key_tables = {
 }
 
 local mouse_bindings = {
-  -- Ctrl-click will open the link under the mouse cursor
-  {
-    event = { Up = { streak = 1, button = "Left" } },
-    mods = "CTRL",
-    action = act.OpenLinkAtMouseCursor,
-  },
+	-- Ctrl-click will open the link under the mouse cursor
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "CTRL",
+		action = act.OpenLinkAtMouseCursor,
+	},
 }
 
 for i = 1, 8 do
-  -- ALT + number to activate that tab
-  table.insert(keys, {
-    key = tostring(i),
-    mods = mod.SUPER,
-    action = act.ActivateTab(i - 1),
-  })
+	-- ALT + number to activate that tab
+	table.insert(keys, {
+		key = tostring(i),
+		mods = mod.SUPER,
+		action = act.ActivateTab(i - 1),
+	})
 end
 
 return {
-  disable_default_key_bindings = true,
-  -- disable_default_mouse_bindings = true,
-  leader = { key = "Space", mods = mod.SUPER_REV },
-  keys = keys,
-  key_tables = key_tables,
-  mouse_bindings = mouse_bindings,
+	disable_default_key_bindings = true,
+	-- disable_default_mouse_bindings = true,
+	leader = { key = "Space", mods = mod.SUPER_REV },
+	keys = keys,
+	key_tables = key_tables,
+	mouse_bindings = mouse_bindings,
 }
