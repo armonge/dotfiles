@@ -1,6 +1,5 @@
 local wezterm = require("wezterm")
 local platform = require("utils.platform")
-local backdrops = require("utils.backdrops")
 local act = wezterm.action
 
 local mod = {}
@@ -8,8 +7,8 @@ local mod = {}
 if platform.is_mac then
   mod.SUPER = "SUPER"
   mod.SUPER_REV = "SUPER|CTRL"
-elseif platform.is_win or platform.is_linux then
-  mod.SUPER = "ALT" -- to not conflict with Windows key shortcuts
+elseif platform.is_linux then
+  mod.SUPER = "ALT"
   mod.SUPER_REV = "ALT|CTRL"
 end
 
@@ -60,7 +59,6 @@ local keys = {
   -- tabs --
   -- tabs: spawn+close
   { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-  { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
   { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
 
   -- tabs: navigation
@@ -193,6 +191,15 @@ local mouse_bindings = {
     action = act.OpenLinkAtMouseCursor,
   },
 }
+
+for i = 1, 8 do
+  -- ALT + number to activate that tab
+  table.insert(keys, {
+    key = tostring(i),
+    mods = mod.SUPER,
+    action = act.ActivateTab(i - 1),
+  })
+end
 
 return {
   disable_default_key_bindings = true,

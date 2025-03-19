@@ -17,6 +17,7 @@ layout_poetry() {
 
   if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
     log_status 'No virtual environment exists. Executing `poetry install` to create one.'
+    poetry env use $(uv python find)
     poetry install
     VIRTUAL_ENV=$(poetry env info --path)
   fi
