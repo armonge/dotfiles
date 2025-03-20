@@ -21,18 +21,19 @@ require("lazy").setup({
 	{ import = "armonge.lsp" },
 	{ import = "armonge.blink" },
 	{ import = "armonge.motions" },
+	{ import = "armonge.copilot" },
+	-- { import = "armonge.avante" },
+	-- { import = "armonge.codecompanion" },
 	{
 		"OXY2DEV/markview.nvim",
 		lazy = false, -- Recommended
-		-- ft = "markdown", -- If you decide to lazy-load anyway
-
 		dependencies = {
 			-- You will not need this if you installed the
 			-- parsers manually
 			-- Or if the parsers are in your $RUNTIMEPATH
 			"nvim-treesitter/nvim-treesitter",
-
 			"nvim-tree/nvim-web-devicons",
+			"saghen/blink.cmp",
 		},
 	},
 	{
@@ -52,7 +53,7 @@ require("lazy").setup({
 		config = true,
 	},
 	-- { "glacambre/firenvim", build = ":call firenvim#install(0)" },
-	{ "m4xshen/hardtime.nvim", dependencies = { "MunifTanjim/nui.nvim" }, opts = {} },
+	-- { "m4xshen/hardtime.nvim", dependencies = { "MunifTanjim/nui.nvim" }, opts = {} },
 	{
 		"gw31415/deepl-commands.nvim",
 		dependencies = { "gw31415/deepl.vim" },
@@ -70,6 +71,65 @@ require("lazy").setup({
 				-- be specified
 			})
 		end,
+	},
+	{ "vladdoster/remember.nvim", config = true, main = "remember" },
+	{
+
+		"stevearc/conform.nvim",
+		opts = {
+			format_on_save = {
+				-- These options will be passed to conform.format()
+				timeout_ms = 500,
+				lsp_format = "fallback",
+			},
+			formatters_by_ft = {
+				yaml = {
+					"yamlfmt",
+				},
+				clojure = {
+					"joker",
+				},
+				lua = {
+					"stylua",
+				},
+				sh = {
+					"shfmt",
+					"shellcheck",
+				},
+				json = {
+					"biome",
+				},
+				javascript = {
+					"biome",
+				},
+				html = {
+					"biome",
+				},
+				htmldjango = {
+					"djlint",
+				},
+				javascriptreact = {
+					"biome",
+					"biome-check",
+				},
+				typescript = {
+					"biome",
+					"biome-check",
+				},
+				typescriptreact = {
+					"biome",
+					"biome-check",
+				},
+				toml = {
+					"taplo",
+				},
+				python = {
+					"ruff_fix",
+					"ruff_format",
+					"ruff_organize_imports",
+				},
+			},
+		},
 	},
 })
 -- }

@@ -1,5 +1,6 @@
 local formatters = {
-	"yamllint",
+	"shellcheck",
+	"yamlfmt",
 	"erg",
 	"biome",
 	"prettier",
@@ -13,22 +14,6 @@ local formatters = {
 }
 
 local servers = {
-	-- basedpyright = {
-	-- 	settings = {
-	-- 		basedpyright = {
-	-- 			reportMissingTypeStubs = false,
-	-- 			disableLanguageServices = false,
-	-- 			disableOrganizeImports = false,
-	-- 			disableTaggedHints = false,
-	-- 			analysis = {
-	-- 				diagnosticMode = "openFilesOnly",
-	-- 				autoImportCompletions = true,
-	-- 				autoSearchPaths = true,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
-	-- pylyzer = {},
 	ruff = {
 		init_options = {
 			settings = {
@@ -53,6 +38,7 @@ local servers = {
 		settings = {
 			pylsp = {
 				plugins = {
+					rope_autoimport = { enabled = true },
 					autopep8 = {
 						enabled = false,
 					},
@@ -95,7 +81,6 @@ local servers = {
 }
 
 return {
-
 	{
 		"williamboman/mason.nvim",
 		cmd = { "Mason" },
@@ -113,27 +98,13 @@ return {
 				end
 			end)
 		end,
-		opts = {
-			pip = {
-				---@since 1.0.0
-				-- Whether to upgrade pip to the latest version in the virtual environment before installing packages.
-				upgrade_pip = true,
-
-				---@since 1.0.0
-				-- These args will be added to `pip install` calls. Note that setting extra args might impact intended behavior
-				-- and is not recommended.
-				--
-				-- Example: { "--proxy", "https://proxyserver" }
-				install_args = {},
-			},
-		},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"neovim/nvim-lspconfig",
-			"creativenull/efmls-configs-nvim",
+			"saghen/blink.cmp",
 		},
 		config = function()
 			local lspconfig = require("lspconfig")
@@ -151,87 +122,6 @@ return {
 					end
 					config.capabilities = blink_cmp.get_lsp_capabilities(config.capabilities)
 					lspconfig[server_name].setup(config)
-				end,
-				efm = function()
-					local languages = {
-						-- Custom languages, or override existing ones
-						yaml = {
-							require("efmls-configs.formatters.prettier"),
-							require("efmls-configs.linters.yamllint"),
-						},
-						clojure = {
-							require("efmls-configs.formatters.joker"),
-						},
-						lua = {
-							require("efmls-configs.formatters.stylua"),
-						},
-						sh = {
-							require("efmls-configs.formatters.shfmt"),
-						},
-						json = {
-							require("efmls-configs.formatters.biome"),
-						},
-						javascript = {
-							require("efmls-configs.formatters.biome"),
-						},
-						html = {
-							require("efmls-configs.formatters.biome"),
-						},
-						htmldjango = {
-							require("efmls-configs.linters.djlint"),
-							require("efmls-configs.formatters.djlint"),
-						},
-						javascriptreact = {
-							require("efmls-configs.formatters.biome"),
-						},
-						typescript = {
-							require("efmls-configs.formatters.biome"),
-						},
-						typescriptreact = {
-							require("efmls-configs.formatters.biome"),
-						},
-						toml = {
-							require("efmls-configs.formatters.taplo"),
-						},
-					}
-
-					-- Or use the defaults provided by this plugin
-					-- check doc/SUPPORTED_LIST.md for the supported languages
-					--
-					-- local languages = require('efmls-configs.defaults').languages()
-
-					local efmls_config = {
-						filetypes = vim.tbl_keys(languages),
-						settings = {
-							rootMarkers = { ".git/" },
-							languages = languages,
-						},
-						init_options = {
-							documentFormatting = true,
-							documentRangeFormatting = true,
-							hover = true,
-							documentSymbol = true,
-							codeAction = true,
-							completion = true,
-						},
-					}
-					require("lspconfig").efm.setup(vim.tbl_extend("force", efmls_config, {
-						-- Pass your custom lsp config below like on_attach and capabilities
-						--
-						-- on_attach = on_attach,
-						-- capabilities = capabilities,
-					}))
-					local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
-					vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-						group = lsp_fmt_group,
-						callback = function()
-							if not vim.bo.modifiable or vim.b.skip_autoformat == true then
-								return
-							end
-
-							vim.lsp.buf.format()
-						end,
-					})
 				end,
 			})
 		end,
@@ -313,20 +203,6 @@ return {
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 			vim.diagnostic.config({ virtual_text = true })
-		end,
-	},
-	{
-		"onsails/lspkind.nvim",
-		opts = {
-			symbol_map = {
-				Copilot = "",
-			},
-		},
-		config = function(_, opts)
-			local lspkind = require("lspkind")
-			lspkind.setup(opts)
-
-			vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 		end,
 	},
 	{

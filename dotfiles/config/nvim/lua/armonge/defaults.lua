@@ -101,3 +101,8 @@ vim.g.loaded_perl_provider = 0
 vim.api.nvim_create_user_command("Browse", function(opts)
 	vim.fn.system({ "open", opts.fargs[1] })
 end, { nargs = 1 })
+
+-- avante.nvim {
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+-- }

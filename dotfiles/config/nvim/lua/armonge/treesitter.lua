@@ -1,14 +1,25 @@
 return {
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
+		"nvim-treesitter/nvim-treesitter",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			"nvim-treesitter/nvim-treesitter-context",
+		},
+		keys = {
+			{
+				"[c",
+				function()
+					require("treesitter-context").go_to_context(vim.v.count1)
+				end,
+				desc = "Go to context start",
+			},
+		},
 		build = ":TSUpdate",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				modules = {},
 				sync_install = false,
-				auto_install = false,
+				auto_install = true,
 				ignore_install = {},
 				-- Add languages to be installed here that you want installed for treesitter
 				ensure_installed = {
@@ -67,53 +78,23 @@ return {
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
+				indent = { enable = true },
 				autotag = { enable = true },
-			})
-		end,
-	},
+				textobjects = {
+					select = {
+						enable = true,
+						keymaps = {
+							-- Your custom capture.
+							-- ["aF"] = "@custom_capture",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
 
-	{
-		"windwp/nvim-ts-autotag",
-		ft = {
-
-			"astro",
-			"glimmer",
-			"handlebars",
-			"html",
-			"javascript",
-			"jsx",
-			"markdown",
-			"php",
-			"rescript",
-			"svelte",
-			"tsx",
-			"typescript",
-			"latex",
-			"vue",
-			"xml",
-		},
-	},
-	{
-		"Wansmer/treesj",
-		keys = {
-			{
-				"<space>m",
-				desc = "Split or join code block with autodetect",
-			},
-			{ "<space>j", desc = "Join code block" },
-			{
-				"<space>s",
-				desc = "Split code block",
-			},
-		},
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		cmd = {
-			"TSJToggle",
-			"TSJSplit",
-			"TSJJoin",
-		},
-		config = function()
-			require("treesj").setup({ --[[ your config ]]
+							-- Built-in captures.
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+						},
+					},
+				},
 			})
 		end,
 	},

@@ -214,6 +214,18 @@ dotfiles:
     src: config/direnv
     dst: ~/.config/direnv
     link: absolute
+  f_avante.lua:
+    src: config/nvim/lua/armonge/avante.lua
+    dst: ~/.config/nvim/lua/armonge/avante.lua
+    link: absolute
+  f_codecompanion.lua:
+    src: config/nvim/lua/armonge/codecompanion.lua
+    dst: ~/.config/nvim/lua/armonge/codecompanion.lua
+    link: absolute
+  f_copilot.lua:
+    src: config/nvim/lua/armonge/copilot.lua
+    dst: ~/.config/nvim/lua/armonge/copilot.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -266,3 +278,6 @@ profiles:
     - f_en.utf-8.add
     - d_wezterm
     - d_direnv
+    - f_avante.lua
+    - f_codecompanion.lua
+    - f_copilot.lua

@@ -48,7 +48,7 @@ return {
 								}, cmd)
 							end, cmds)
 						end,
-						{ section = "keys",   gap = 1, padding = 1 },
+						{ section = "keys", gap = 1, padding = 1 },
 						{ section = "startup" },
 					},
 				},
@@ -99,7 +99,7 @@ return {
 				enabled = true,
 				timeout = 3000,
 			},
-			picker = { enabled = true },
+			picker = { enabled = true, ui_select = true },
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			scroll = { enabled = true },

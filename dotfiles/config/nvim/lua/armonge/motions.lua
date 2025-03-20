@@ -1,12 +1,12 @@
 return {
-	{
-		"tpope/vim-speeddating",
-		lazy = true,
-		keys = {
-			{ "<C-a>", mode = { "v", "n" } },
-			{ "<C-x>", mode = { "v", "n" } },
-		},
-	},
+	-- {
+	-- 	"tpope/vim-speeddating",
+	-- 	lazy = true,
+	-- 	keys = {
+	-- 		{ "<C-a>", mode = { "v", "n" } },
+	-- 		{ "<C-x>", mode = { "v", "n" } },
+	-- 	},
+	-- },
 	{
 		"johmsalas/text-case.nvim",
 		config = function()
