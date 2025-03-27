@@ -84,7 +84,7 @@ require("lazy").setup({
 			},
 			formatters_by_ft = {
 				yaml = {
-					"yamlfmt",
+					"prettier",
 				},
 				clojure = {
 					"joker",
@@ -130,6 +130,11 @@ require("lazy").setup({
 				},
 			},
 		},
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = true,
+		opts = {},
 	},
 })
 -- }

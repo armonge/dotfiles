@@ -81,6 +81,12 @@ return {
 				},
 			},
 
+			signature = {
+				enabled = true,
+				window = {
+					show_documentation = true,
+				},
+			},
 			completion = {
 				menu = {
 					auto_show = function(ctx)
@@ -119,13 +125,13 @@ return {
 					-- "codecompanion",
 				},
 				providers = {
-					avante = {
-						module = "blink-cmp-avante",
-						name = "Avante",
-						opts = {
-							-- options for blink-cmp-avante
-						},
-					},
+					-- avante = {
+					-- 	module = "blink-cmp-avante",
+					-- 	name = "Avante",
+					-- 	opts = {
+					-- 		-- options for blink-cmp-avante
+					-- 	},
+					-- },
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",

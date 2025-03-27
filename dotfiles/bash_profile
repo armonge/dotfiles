@@ -6,19 +6,12 @@
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+  . ~/.bashrc
 fi
-export PATH="$HOME/.poetry/bin:$PATH"
 . "$HOME/.cargo/env"
 
 export GPG_TTY=$(tty)
 
-if [ -f "/opt/homebrew/bin/brew" ]; then
-	test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	export MONGOMS_ARCH=x64
-fi
-
 # Codon compiler path (added by install script)
-export PATH=/Users/andres.monge/.codon/bin:$PATH
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="$HOME/.codon/bin:$PATH"
+export PATH="$PATH:$HOMEBREW_PREFIX/opt/ruby/bin:"

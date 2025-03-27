@@ -77,7 +77,6 @@ local servers = {
 		},
 	},
 	taplo = {},
-	efm = {},
 }
 
 return {

@@ -226,6 +226,14 @@ dotfiles:
     src: config/nvim/lua/armonge/copilot.lua
     dst: ~/.config/nvim/lua/armonge/copilot.lua
     link: absolute
+  d_ftplugin:
+    src: config/nvim/ftplugin
+    dst: ~/.config/nvim/ftplugin
+    link: absolute
+  d_lua:
+    src: config/nvim/lua
+    dst: ~/.config/nvim/lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -281,3 +289,5 @@ profiles:
     - f_avante.lua
     - f_codecompanion.lua
     - f_copilot.lua
+    - d_ftplugin
+    - d_lua

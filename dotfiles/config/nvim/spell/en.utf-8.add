@@ -1,4 +1,5 @@
 S3
+JS
 ast
 SES
 url
@@ -7,6 +8,7 @@ aws
 env
 ec2
 fmt
+api
 noqa
 mypy
 C901
@@ -19,14 +21,21 @@ OAUTH2
 barcode
 gettext
 MONGODB
+Select2
+pyright
 terminal
 Prefetch
 Hashsets
 Autoload
 keycloak
+Webhooks
 docstring
 UNHANDLED
+camelCase
+treesitter
+ForeignKey
 basedpyright
 superclasses
 Returnability
+denormalizing
 AttributeError

@@ -19,12 +19,6 @@ fi
 
 unset rc
 
-# User specific environment
-if ! [[ $PATH =~ ${HOME}/.local/bin:${HOME}/bin: ]]; then
-  PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
-
 export XDG_CONFIG_HOME=$HOME/.config
 
 if [ -f "/opt/homebrew/bin/brew" ]; then
@@ -32,15 +26,20 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
   export BASH_SILENCE_DEPRECATION_WARNING=1
   eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  export LDFLAGS="-L/opt/homebrew/opt/mysql-client/lib:/opt/homebrew/opt/libssh2/lib/"
-  export CPPFLAGS="-I/opt/homebrew/opt/mysql-client/include -I/opt/homebrew/opt/libssh2/include/ -I/opt/homebrew/Cellar/libssh2/1.11.1/include/"
-  export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
-  export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/mysql-client/lib"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/libssh2/lib/"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/Cellar/suite-sparse/7.10.1/lib/"
+  export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/mysql-client/include -I$HOMEBREW_PREFIX/opt/libssh2/include/ -I$HOMEBREW_PREFIX/Cellar/libssh2/1.11.1/include/"
+  export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql-client/lib/pkgconfig"
+  export PATH="$PATH:$HOMEBREW_PREFIX/opt/mysql-client/bin"
+  export PATH="$PATH:$HOMEBREW_PREFIX/opt/openjdk/bin"
+  export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.4.0/bin:$PATH"
 
-  export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-
-  [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+  [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
 fi
+
+# User specific environment
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # fuck
 # eval "$(thefuck --alias)"
@@ -82,10 +81,10 @@ fi
 
 # Android
 export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
+export PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools
 
 # Rust
-export PATH=$HOME/.cargo/bin:$PATH
+export PATH=$PATH:$HOME/.cargo/bin
 
 # git
 if [ -f /usr/share/git/completion/git-completion.bash ]; then
@@ -117,7 +116,7 @@ if [ -d "$NVM_DIR" ]; then
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
   cdnvm() {
-    command cd "$@"
+    command cd "$@" || exit
     nvm_path=$(nvm_find_up .nvmrc | tr -d '\n')
 
     # If there are no .nvmrc file, use the default nvm version
@@ -159,13 +158,11 @@ if [ -d "$NVM_DIR" ]; then
     fi
   }
   alias cd='cdnvm'
-  cd "$PWD"
+  cd "$PWD" || exit
   export PATH="$PATH:$NVM_DIR/current/bin"
 fi
 
 # python {
-export PATH=$PATH:$HOME/.local/bin
-export PATH="$HOME/.poetry/bin:$PATH"
 # export PIPENV_VENV_IN_PROJECT=1
 export PYTHONDONTWRITEBYTECODE=1
 
@@ -301,7 +298,6 @@ if command -v k9s &>/dev/null; then
 fi
 
 export ERG_PATH="$HOME/.local/share/nvim/mason/packages/erg"
-export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.4.0/bin:$PATH"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.1/?.so;$HOME/.luarocks/lib/lua/5.1/loadall.so"
 
 # pnpm
@@ -310,8 +306,5 @@ case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
-#
-#
-#
+
 export DOTDROP_VIRTUALENV="${HOME}/dotfiles/.venv"
