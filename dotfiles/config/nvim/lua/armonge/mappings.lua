@@ -2,6 +2,7 @@ local wk = require("which-key")
 wk.add({
 	{ "g", group = "Goto" },
 	{ "<leader>r", group = "Refactor", mode = { "x", "n" } },
+	{ "<leader>c", group = "Copilot" },
 	{ "<leader>w", group = "Workspaces" },
 	{ "<leader>u", group = "UI" },
 	{ "<leader>t", group = "Pickers" },

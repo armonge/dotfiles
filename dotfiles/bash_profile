@@ -15,3 +15,4 @@ export GPG_TTY=$(tty)
 # Codon compiler path (added by install script)
 export PATH="$HOME/.codon/bin:$PATH"
 export PATH="$PATH:$HOMEBREW_PREFIX/opt/ruby/bin:"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"

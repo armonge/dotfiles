@@ -10,3 +10,4 @@ venv/
 .direnv/*
 .envrc
 .ropeproject/
+.null-ls*

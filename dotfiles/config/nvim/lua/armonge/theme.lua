@@ -1,18 +1,20 @@
 return {
 	{
 		"folke/which-key.nvim",
-		lazy = true,
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
+		event = "VeryLazy",
 		opts = {
-			defaults = {
-				["<leader>m"] = { name = "+group name" },
-			},
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
 		},
-		dependencies = {
-			{ "echasnovski/mini.icons", version = false },
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
 		},
 	},
 	{
@@ -24,20 +26,16 @@ return {
 			require("tokyonight").setup({
 				style = "moon",
 				on_highlights = function(hl, colors)
-					hl.CursorLineNr = {
-						fg = colors.green,
-						bold = true,
-					}
 					hl.LineNr = {
 						fg = colors.orange,
 						bold = true,
 					}
 					hl.LineNrAbove = {
-						fg = colors.orange,
+						fg = colors.green,
 						bold = false,
 					}
 					hl.LineNrBelow = {
-						fg = colors.orange,
+						fg = colors.green,
 						bold = false,
 					}
 				end,
@@ -65,4 +63,30 @@ return {
 			{ "<leader>o", "<cmd>AerialToggle!<CR>", desc = "Toggle outline" },
 		},
 	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = true,
+		opts = {},
+	},
+	{
+		"sindrets/diffview.nvim",
+		lazy = false,
+		keys = {
+			{ "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview" },
+			{ "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Diffview Close" },
+		},
+	},
+	{
+		"OXY2DEV/markview.nvim",
+		lazy = false, -- Recommended
+		dependencies = {
+			-- You will not need this if you installed the
+			-- parsers manually
+			-- Or if the parsers are in your $RUNTIMEPATH
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+			"saghen/blink.cmp",
+		},
+	},
+	{ "vladdoster/remember.nvim", config = true, main = "remember" },
 }

@@ -25,18 +25,6 @@ require("lazy").setup({
 	-- { import = "armonge.avante" },
 	-- { import = "armonge.codecompanion" },
 	{
-		"OXY2DEV/markview.nvim",
-		lazy = false, -- Recommended
-		dependencies = {
-			-- You will not need this if you installed the
-			-- parsers manually
-			-- Or if the parsers are in your $RUNTIMEPATH
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-			"saghen/blink.cmp",
-		},
-	},
-	{
 		"wakatime/vim-wakatime",
 	},
 
@@ -55,11 +43,6 @@ require("lazy").setup({
 	-- { "glacambre/firenvim", build = ":call firenvim#install(0)" },
 	-- { "m4xshen/hardtime.nvim", dependencies = { "MunifTanjim/nui.nvim" }, opts = {} },
 	{
-		"gw31415/deepl-commands.nvim",
-		dependencies = { "gw31415/deepl.vim" },
-		opts = {},
-	},
-	{
 		"MagicDuck/grug-far.nvim",
 		config = function()
 			-- optional setup call to override plugin options
@@ -72,69 +55,32 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{ "vladdoster/remember.nvim", config = true, main = "remember" },
 	{
-
-		"stevearc/conform.nvim",
-		opts = {
-			format_on_save = {
-				-- These options will be passed to conform.format()
-				timeout_ms = 500,
-				lsp_format = "fallback",
-			},
-			formatters_by_ft = {
-				yaml = {
-					"prettier",
-				},
-				clojure = {
-					"joker",
-				},
-				lua = {
-					"stylua",
-				},
-				sh = {
-					"shfmt",
-					"shellcheck",
-				},
-				json = {
-					"biome",
-				},
-				javascript = {
-					"biome",
-				},
-				html = {
-					"biome",
-				},
-				htmldjango = {
-					"djlint",
-				},
-				javascriptreact = {
-					"biome",
-					"biome-check",
-				},
-				typescript = {
-					"biome",
-					"biome-check",
-				},
-				typescriptreact = {
-					"biome",
-					"biome-check",
-				},
-				toml = {
-					"taplo",
-				},
-				python = {
-					"ruff_fix",
-					"ruff_format",
-					"ruff_organize_imports",
-				},
-			},
-		},
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-		config = true,
+		"stevearc/overseer.nvim",
 		opts = {},
+		config = function()
+			require("overseer").setup()
+			vim.api.nvim_create_user_command("Make", function(params)
+				-- Insert args at the '$*' in the makeprg
+				local cmd, num_subs = vim.o.makeprg:gsub("%$%*", params.args)
+				if num_subs == 0 then
+					cmd = cmd .. " " .. params.args
+				end
+				local task = require("overseer").new_task({
+					cmd = vim.fn.expandcmd(cmd),
+					components = {
+						{ "on_output_quickfix", open = not params.bang, open_height = 8 },
+						"default",
+					},
+				})
+				task:start()
+			end, {
+				desc = "Run your makeprg as an Overseer task",
+				nargs = "*",
+				bang = true,
+			})
+		end,
 	},
 })
 -- }
+--

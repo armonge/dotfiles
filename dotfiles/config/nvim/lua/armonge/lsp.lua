@@ -1,27 +1,21 @@
 local formatters = {
+	"shellharden",
+	"textlint",
+	"sqruff",
+	"ruff",
 	"shellcheck",
 	"yamlfmt",
 	"erg",
-	"biome",
 	"prettier",
 	"djlint",
 	"jq",
 	"shfmt",
 	"stylua",
 	"joker",
-	"taplo",
 	"actionlint",
 }
 
 local servers = {
-	ruff = {
-		init_options = {
-			settings = {
-				configurationPreference = "filesystemFirst",
-			},
-		},
-	},
-	htmx = {},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
@@ -32,36 +26,14 @@ local servers = {
 	vtsls = {},
 	stylelint_lsp = {},
 	clojure_lsp = {},
-	sqls = {},
-	tailwindcss = {},
-	pylsp = {
-		settings = {
-			pylsp = {
-				plugins = {
-					rope_autoimport = { enabled = true },
-					autopep8 = {
-						enabled = false,
-					},
-					flake8 = {
-						maxLineLength = 88,
-					},
-					pycodestyle = {
-						maxLineLength = 88,
-						enabled = false,
-					},
-					mccabe = {
-						enabled = false,
-					},
-					pyflakes = {
-						enabled = false,
-					},
-					yapf = {
-						enabled = false,
-					},
-				},
+	ruff = {
+		init_options = {
+			settings = {
+				configurationPreference = "filesystemFirst",
 			},
 		},
 	},
+	-- jedi_language_server = {},
 	beancount = {
 		init_options = {
 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
@@ -76,10 +48,76 @@ local servers = {
 			},
 		},
 	},
+	pyright = {
+		settings = {
+			pyright = {
+				-- Using Ruff's import organizer
+				disableOrganizeImports = true,
+			},
+			python = {
+				analysis = {
+					-- Ignore all files for analysis to exclusively use Ruff for linting
+					ignore = { "*" },
+				},
+			},
+		},
+	},
 	taplo = {},
 }
 
 return {
+	{
+		"nvimtools/none-ls.nvim",
+		config = function()
+			local nullls = require("null-ls")
+			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+			nullls.setup({
+				debug = true,
+				sources = {
+					nullls.builtins.formatting.stylua,
+					nullls.builtins.formatting.sqruff,
+					nullls.builtins.formatting.djlint,
+					nullls.builtins.formatting.biome,
+					nullls.builtins.formatting.joker,
+					nullls.builtins.formatting.bean_format,
+					nullls.builtins.formatting.shfmt,
+					nullls.builtins.formatting.shellharden,
+					require("none-ls.formatting.ruff"),
+					require("none-ls.formatting.ruff_format"),
+
+					nullls.builtins.diagnostics.djlint,
+					nullls.builtins.diagnostics.mypy,
+					nullls.builtins.diagnostics.sqruff,
+					nullls.builtins.diagnostics.textlint,
+
+					nullls.builtins.hover.dictionary,
+					nullls.builtins.hover.printenv,
+
+					nullls.builtins.code_actions.gitrebase,
+					nullls.builtins.code_actions.textlint,
+					nullls.builtins.code_actions.gitsigns,
+				},
+				on_attach = function(client, bufnr)
+					if client.supports_method("textDocument/formatting") then
+						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							group = augroup,
+							buffer = bufnr,
+							callback = function()
+								vim.lsp.buf.format({
+									filter = function(lspClient)
+										-- Skip formatting with `beancount` LSP since it's broken and we can use `bean-format` directly
+										return lspClient.name ~= "beancount"
+									end,
+								})
+							end,
+						})
+					end
+				end,
+			})
+		end,
+		dependencies = { "nvim-lua/plenary.nvim", "nvimtools/none-ls-extras.nvim" },
+	},
 	{
 		"williamboman/mason.nvim",
 		cmd = { "Mason" },

@@ -11,7 +11,7 @@
 
 [user]
   email = andres.monge@parcellab.com
-  name = Andres Reyes Monge
+	name = Andrés Reyes Monge
   signingkey = B6A45A727378564E
 
 [core]
