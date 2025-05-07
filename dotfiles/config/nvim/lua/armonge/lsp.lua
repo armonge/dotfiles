@@ -96,6 +96,7 @@ return {
 					nullls.builtins.code_actions.gitrebase,
 					nullls.builtins.code_actions.textlint,
 					nullls.builtins.code_actions.gitsigns,
+					nullls.builtins.code_actions.refactoring,
 				},
 				on_attach = function(client, bufnr)
 					if client.supports_method("textDocument/formatting") then
@@ -106,7 +107,8 @@ return {
 							callback = function()
 								vim.lsp.buf.format({
 									filter = function(lspClient)
-										-- Skip formatting with `beancount` LSP since it's broken and we can use `bean-format` directly
+										-- Skip formatting with `beancount` LSP since it's broken and
+										-- we can use `bean-format` directly
 										return lspClient.name ~= "beancount"
 									end,
 								})
@@ -137,35 +139,24 @@ return {
 		end,
 	},
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		dependencies = {
-			"williamboman/mason.nvim",
+			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
 			"saghen/blink.cmp",
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local mason_lspconfig = require("mason-lspconfig")
-			local blink_cmp = require("blink.cmp")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
 				automatic_installation = true,
-			})
-			mason_lspconfig.setup_handlers({
-				function(server_name)
-					local config = servers[server_name]
-					if not config then
-						return
-					end
-					config.capabilities = blink_cmp.get_lsp_capabilities(config.capabilities)
-					lspconfig[server_name].setup(config)
-				end,
+				automatic_enable = true,
 			})
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "folke/neoconf.nvim" },
+		dependencies = { "folke/neoconf.nvim", "folke/snacks.nvim" },
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -174,50 +165,31 @@ return {
 					local opts = { buffer = ev.buf }
 					wk.add({
 						{
-							"<leader>a",
+							"<leader>ca",
 							vim.lsp.buf.code_action,
 							desc = "Apply code action",
-						},
-					}, { mode = { "n", "v" } })
-					wk.add({
-						{
-							desc = "goto",
-							{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
-							{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
-							{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
+							mode = { "n", "v" },
 						},
 						{
-							group = "workspaces",
-							desc = "workspaces",
-							{
-								"<leader>wa",
-								vim.lsp.buf.add_workspace_folder,
-								desc = "Add folder to workspace ",
-							},
-							{
-								"<leader>wr",
-								vim.lsp.buf.remove_workspace_folder,
-								desc = "Remove folder from workspace",
-							},
-							{
-								"<leader>wl",
-								function()
-									print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-								end,
-								desc = "List workspace folders",
-							},
+							"<leader>wa",
+							vim.lsp.buf.add_workspace_folder,
+							desc = "Add folder to workspace ",
 						},
-						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
-						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
 						{
-							group = "Refactor",
-							{
-
-								"<leader>rn",
-								vim.lsp.buf.rename,
-								desc = "Rename",
-							},
+							"<leader>wr",
+							vim.lsp.buf.remove_workspace_folder,
+							desc = "Remove folder from workspace",
 						},
+						{
+							"<leader>wl",
+							function()
+								vim.print(vim.lsp.buf.list_workspace_folders())
+							end,
+							desc = "List workspace folders",
+						},
+						{ "K",          vim.lsp.buf.hover,          desc = "More information on a popup" },
+						{ "<C-k>",      vim.lsp.buf.signature_help, desc = "Signature help" },
+						{ "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
 					}, opts)
 				end,
 			})
@@ -225,7 +197,7 @@ return {
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "BlinkCmpMenuOpen",
 				callback = function()
-					require("copilot.suggestion").dismiss()
+					-- require("copilot.suggestion").dismiss()
 					vim.b.copilot_suggestion_hidden = true
 				end,
 			})

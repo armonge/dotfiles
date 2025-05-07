@@ -58,20 +58,10 @@ dotfiles:
     dst: ~/bin/delta.sh
     link: absolute
     chmod: '775'
-  f_rifle.conf:
-    src: config/ranger/rifle.conf
-    dst: ~/.config/ranger/rifle.conf
-    link: absolute
-    chmod: '644'
   f_version:
     src: pyenv/version
     dst: ~/.pyenv/version
     link: absolute
-  f_scope.sh:
-    src: config/ranger/scope.sh
-    dst: ~/.config/ranger/scope.sh
-    link: absolute
-    chmod: '755'
   f_inputrc:
     src: inputrc
     dst: ~/.inputrc
@@ -133,10 +123,6 @@ dotfiles:
   f_00-logging.py:
     src: ipython/profile_default/startup/00-logging.py
     dst: ~/.ipython/profile_default/startup/00-logging.py
-    link: absolute
-  f_rc.conf:
-    src: config/ranger/rc.conf
-    dst: ~/.config/ranger/rc.conf
     link: absolute
   f_rgignore:
     src: rgignore
@@ -226,6 +212,14 @@ dotfiles:
     src: config/nvim/lua
     dst: ~/.config/nvim/lua
     link: absolute
+  f_avante.lua:
+    src: config/nvim/lua/armonge/avante.lua
+    dst: ~/.config/nvim/lua/armonge/avante.lua
+    link: absolute
+  f_windsurf.lua:
+    src: config/nvim/lua/armonge/windsurf.lua
+    dst: ~/.config/nvim/lua/armonge/windsurf.lua
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -239,9 +233,7 @@ profiles:
     - f_config.toml
     - f_ideavimrc
     - f_delta.sh
-    - f_rifle.conf
     - f_version
-    - f_scope.sh
     - f_inputrc
     - f_mirror.sh
     - f_dsq
@@ -258,7 +250,6 @@ profiles:
     - f_treesitter.lua
     - f_starship.toml
     - f_00-logging.py
-    - f_rc.conf
     - f_rgignore
     - f_direnv_direnvrc
     - f_direnv.toml
@@ -281,3 +272,5 @@ profiles:
     - f_copilot.lua
     - d_ftplugin
     - d_lua
+    - f_avante.lua
+    - f_windsurf.lua

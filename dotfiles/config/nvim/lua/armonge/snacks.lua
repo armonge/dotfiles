@@ -2,6 +2,9 @@
 return {
 	{
 		"folke/snacks.nvim",
+		dependencies = {
+			"folke/lazydev.nvim",
+		},
 		priority = 1000,
 		lazy = false,
 		---@type snacks.Config
@@ -48,7 +51,7 @@ return {
 								}, cmd)
 							end, cmds)
 						end,
-						{ section = "keys",   gap = 1, padding = 1 },
+						{ section = "keys", gap = 1, padding = 1 },
 						{ section = "startup" },
 					},
 				},
@@ -188,7 +191,7 @@ return {
 			{ "gr",         function() Snacks.picker.lsp_references() end,        nowait = true,                               desc = "References" },
 			{ "gI",         function() Snacks.picker.lsp_implementations() end,   desc = "Goto Implementation" },
 			{ "gy",         function() Snacks.picker.lsp_type_definitions() end,  desc = "Goto T[y]pe Definition" },
-			{ "<leader>ss", function() Snacks.picker.lsp_symbols() end,           desc = "LSP Symbols" },
+			{ "<leader>ss", function() Snacks.picker.treesitter() end,            desc = "Treesitter Symbols" },
 			{ "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 			-- Other
 			-- { "<leader>z",       function() Snacks.zen() end,                                            desc = "Toggle Zen Mode" },
@@ -246,6 +249,7 @@ return {
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "VeryLazy",
 				callback = function()
+					Snacks = require("snacks")
 					-- Setup some globals for debugging (lazy-loaded)
 					-- _G.dd = function(...)
 					-- 	Snacks.debug.inspect(...)

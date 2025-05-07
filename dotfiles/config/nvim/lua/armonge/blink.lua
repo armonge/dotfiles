@@ -3,10 +3,10 @@ return {
 		"saghen/blink.cmp",
 
 		dependencies = {
-			"fang2hou/blink-copilot",
+			-- "fang2hou/blink-copilot",
 			"rafamadriz/friendly-snippets",
 			"folke/lazydev.nvim",
-			-- "Kaiser-Yang/blink-cmp-avante",
+			"Kaiser-Yang/blink-cmp-avante",
 		},
 
 		-- use a release tag to download pre-built binaries
@@ -29,56 +29,6 @@ return {
 				["<C-Enter>"] = { "select_and_accept", "show" },
 				["<Tab>"] = { "select_next" },
 				["<S-Tab>"] = { "select_prev" },
-			},
-
-			appearance = {
-				-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-				nerd_font_variant = "mono",
-				kind_icons = {
-					Copilot = "",
-					Text = "󰉿",
-					Method = "󰊕",
-					Function = "󰊕",
-					Constructor = "󰒓",
-
-					Field = "󰜢",
-					Variable = "󰆦",
-					Property = "󰖷",
-
-					Class = "󱡠",
-					Interface = "󱡠",
-					Struct = "󱡠",
-					Module = "󰅩",
-
-					Unit = "󰪚",
-					Value = "󰦨",
-					Enum = "󰦨",
-					EnumMember = "󰦨",
-
-					Keyword = "󰻾",
-					Constant = "󰏿",
-
-					Snippet = "󱄽",
-					Color = "󰏘",
-					File = "󰈔",
-					Reference = "󰬲",
-					Folder = "󰉋",
-					Event = "󱐋",
-					Operator = "󰪚",
-					TypeParameter = "󰬛",
-
-					AvanteCmd = "",
-					AvanteMention = "",
-					claude = "󰋦",
-					openai = "󱢆",
-					codestral = "󱎥",
-					gemini = "",
-					Groq = "",
-					Openrouter = "󱂇",
-					Ollama = "󰳆",
-					["Llama.cpp"] = "󰳆",
-					Deepseek = "",
-				},
 			},
 
 			signature = {
@@ -104,9 +54,6 @@ return {
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				-- per_filetype = {
-				-- 	codecompanion = { "codecompanion" },
-				-- },
 				min_keyword_length = function(ctx)
 					-- only applies when typing a command, doesn't apply to arguments
 					if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
@@ -115,48 +62,45 @@ return {
 					return 0
 				end,
 				default = {
-					-- "avante",
-					"lazydev",
+					"avante",
 					"lsp",
 					"path",
-					"snippets",
 					"buffer",
-					"copilot",
-					-- "codecompanion",
+					--"copilot"
 				},
 				providers = {
-					-- avante = {
-					-- 	module = "blink-cmp-avante",
-					-- 	name = "Avante",
-					-- 	opts = {
-					-- 		-- options for blink-cmp-avante
-					-- 	},
-					-- },
+					avante = {
+						module = "blink-cmp-avante",
+						name = "Avante",
+						opts = {
+							-- options for blink-cmp-avante
+						},
+					},
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
 						-- make lazydev completions top priority(see `:h blink.cmp`)
 						score_offset = 100,
 					},
-					copilot = {
-						name = "copilot",
-						module = "blink-copilot",
-						score_offset = 100,
-						async = true,
-						opts = {
-							max_completions = 3,
-							max_attempts = 4,
-						},
-						transform_items = function(_, items)
-							local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-							local kind_idx = #CompletionItemKind + 1
-							CompletionItemKind[kind_idx] = "Copilot"
-							for _, item in ipairs(items) do
-								item.kind = kind_idx
-							end
-							return items
-						end,
-					},
+					-- copilot = {
+					-- 	name = "copilot",
+					-- 	module = "blink-copilot",
+					-- 	score_offset = 100,
+					-- 	async = true,
+					-- 	opts = {
+					-- 		max_completions = 3,
+					-- 		max_attempts = 4,
+					-- 	},
+					-- 	transform_items = function(_, items)
+					-- 		local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+					-- 		local kind_idx = #CompletionItemKind + 1
+					-- 		CompletionItemKind[kind_idx] = "Copilot"
+					-- 		for _, item in ipairs(items) do
+					-- 			item.kind = kind_idx
+					-- 		end
+					-- 		return items
+					-- 	end,
+					-- },
 				},
 			},
 		},

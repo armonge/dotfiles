@@ -72,21 +72,18 @@ return {
 		"sindrets/diffview.nvim",
 		lazy = false,
 		keys = {
-			{ "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Diffview" },
+			{ "<leader>gd",  "<cmd>DiffviewOpen<CR>",  desc = "Diffview" },
 			{ "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Diffview Close" },
 		},
 	},
+
 	{
-		"OXY2DEV/markview.nvim",
-		lazy = false, -- Recommended
-		dependencies = {
-			-- You will not need this if you installed the
-			-- parsers manually
-			-- Or if the parsers are in your $RUNTIMEPATH
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-			"saghen/blink.cmp",
+		-- Make sure to set this up properly if you have lazy=true
+		"MeanderingProgrammer/render-markdown.nvim",
+		opts = {
+			file_types = { "markdown", "Avante" },
 		},
+		ft = { "markdown", "Avante" },
 	},
 	{ "vladdoster/remember.nvim", config = true, main = "remember" },
 }
