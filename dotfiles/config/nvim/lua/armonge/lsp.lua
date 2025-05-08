@@ -146,12 +146,16 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
+			local lspconfig = require("lspconfig")
 			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
 				automatic_installation = true,
 				automatic_enable = true,
 			})
+			for name, config in pairs(servers) do
+				vim.lsp.config(name, config)
+			end
 		end,
 	},
 	{
