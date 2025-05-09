@@ -23,13 +23,18 @@ return {
 			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
-			keymap = {
-				preset = "default",
-				["<C-y>"] = { "select_and_accept" },
-				["<C-Enter>"] = { "select_and_accept", "show" },
-				["<Tab>"] = { "select_next" },
-				["<S-Tab>"] = { "select_prev" },
+			keymap = { -- See :h blink-cmp-config-keymap
+				preset = "enter",
+				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+				["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
 			},
+			-- keymap = {
+			-- 	preset = "default",
+			-- 	["<C-y>"] = { "select_and_accept" },
+			-- 	["<C-Enter>"] = { "select_and_accept", "show" },
+			-- 	["<Tab>"] = { "select_next" },
+			-- 	["<S-Tab>"] = { "select_prev" },
+			-- },
 
 			signature = {
 				enabled = true,

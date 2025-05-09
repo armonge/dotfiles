@@ -13,6 +13,8 @@ ForeignKey
 GBR
 Get's
 Hashsets
+ISO2
+ISO3
 JS
 MONGODB
 MessageType
@@ -51,6 +53,7 @@ browsable
 camelCase
 changelist
 datetime
+deduplicated
 denormalizing
 dicts
 django

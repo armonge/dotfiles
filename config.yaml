@@ -220,6 +220,10 @@ dotfiles:
     src: config/nvim/lua/armonge/windsurf.lua
     dst: ~/.config/nvim/lua/armonge/windsurf.lua
     link: absolute
+  d_nvim:
+    src: config/nvim
+    dst: ~/.config/nvim
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -274,3 +278,4 @@ profiles:
     - d_lua
     - f_avante.lua
     - f_windsurf.lua
+    - d_nvim

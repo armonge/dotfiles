@@ -43,27 +43,19 @@ return {
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 		opts = {
-			disabled_tools = { "git_commit" },
 			mappings = {
 				ask = "<leader>aa", -- ask
 				edit = "<leader>ae", -- edit
 				refresh = "<leader>ar", -- refresh
 			},
-			provider = "copilot", -- The provider used in Aider mode or in the planning phase of Cursor Planning Mode
+			-- The provider used in Aider mode or in the planning phase of Cursor Planning Mode
+			---@alias avante.ProviderName "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | "bedrock" | "ollama" | string
+			provider = "claude",
 			-- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
 			-- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
 			-- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
 			auto_suggestions_provider = "claude",
 			---@type AvanteSupportedProvider
-			copilot = {
-				endpoint = "https://api.githubcopilot.com",
-				model = "gpt-4o-2024-11-20",
-				proxy = nil, -- [protocol://]host[:port] Use this proxy
-				allow_insecure = false, -- Allow insecure server connections
-				timeout = 30000, -- Time out in milliseconds
-				temperature = 0,
-				max_tokens = 20480,
-			},
 			file_selector = {
 				provider = "snacks",
 			},
