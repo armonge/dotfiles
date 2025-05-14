@@ -146,7 +146,6 @@ return {
 			"saghen/blink.cmp",
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(servers),
@@ -156,6 +155,7 @@ return {
 			for name, config in pairs(servers) do
 				vim.lsp.config(name, config)
 			end
+			vim.lsp.enable({ "ty" })
 		end,
 	},
 	{
@@ -169,7 +169,7 @@ return {
 					local opts = { buffer = ev.buf }
 					wk.add({
 						{
-							"<leader>ca",
+							"<leader>a",
 							vim.lsp.buf.code_action,
 							desc = "Apply code action",
 							mode = { "n", "v" },

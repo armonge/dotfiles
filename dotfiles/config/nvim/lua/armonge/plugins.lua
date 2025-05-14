@@ -26,7 +26,7 @@ require("lazy").setup({
 	{ import = "armonge.blink" },
 	{ import = "armonge.motions" },
 	{ import = "armonge.codecompanion" },
-	-- { import = "armonge.copilot" },
+	{ import = "armonge.copilot" },
 	-- { import = "armonge.avante" },
 	-- { import = "armonge.windsurf" },
 	{

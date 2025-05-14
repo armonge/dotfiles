@@ -68,14 +68,6 @@ return {
 		config = true,
 		opts = {},
 	},
-	{
-		"sindrets/diffview.nvim",
-		lazy = false,
-		keys = {
-			{ "<leader>gd",  "<cmd>DiffviewOpen<CR>",  desc = "Diffview" },
-			{ "<leader>gdc", "<cmd>DiffviewClose<CR>", desc = "Diffview Close" },
-		},
-	},
 
 	{
 		-- Make sure to set this up properly if you have lazy=true
