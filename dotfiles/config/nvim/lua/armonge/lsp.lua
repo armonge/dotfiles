@@ -79,7 +79,18 @@ return {
 					nullls.builtins.formatting.djlint,
 					nullls.builtins.formatting.biome,
 					nullls.builtins.formatting.joker,
-					nullls.builtins.formatting.bean_format,
+					nullls.builtins.formatting.bean_format.with({
+						generator_opts = {
+							command = "uvx",
+							args = {
+								"--from",
+								"beancount",
+								"bean-format",
+								"$FILENAME",
+							},
+							to_stdin = true,
+						},
+					}),
 					nullls.builtins.formatting.shfmt,
 					nullls.builtins.formatting.shellharden,
 					require("none-ls.formatting.ruff"),
