@@ -116,6 +116,10 @@ dotfiles:
     src: config/nvim
     dst: ~/.config/nvim
     link: absolute
+  d_mcphub:
+    src: config/mcphub
+    dst: ~/.config/mcphub
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -144,3 +148,4 @@ profiles:
     - d_wezterm
     - d_direnv
     - d_nvim
+    - d_mcphub

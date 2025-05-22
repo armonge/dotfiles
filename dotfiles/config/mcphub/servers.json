@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "Sentry": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "source ~/.bashrc && nvm use 20 && npx -y @sentry/mcp-server --host=sentry.parcellab.com --access-token=$SENTRY_ACCESS_TOKEN_PL"
+      ],
+      "disabled": false
+    }
+  },
+  "nativeMCPServers": []
+}

@@ -1,5 +1,5 @@
 return {
-	cmd = { "pyrefly", "lsp", "--verbose" },
+	cmd = { "pyrefly", "lsp" },
 	filetypes = { "python" },
 	settings = {},
 	on_exit = function(code, _, _)

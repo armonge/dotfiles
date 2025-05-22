@@ -166,7 +166,8 @@ return {
 			for name, config in pairs(servers) do
 				vim.lsp.config(name, config)
 			end
-			vim.lsp.enable({ "ty" })
+			-- vim.lsp.enable({ "ty" })
+			vim.lsp.enable({ "pyrefly" })
 		end,
 	},
 	{
