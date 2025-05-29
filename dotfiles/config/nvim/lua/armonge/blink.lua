@@ -6,23 +6,16 @@ return {
 			"fang2hou/blink-copilot",
 			"rafamadriz/friendly-snippets",
 			"folke/lazydev.nvim",
-			-- "Kaiser-Yang/blink-cmp-avante",
 		},
 
-		-- use a release tag to download pre-built binaries
-		version = "*",
-		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-		-- build = 'cargo build --release',
-		-- If you use nix, you can build from source using latest nightly rust with:
-		-- build = 'nix run .#build-plugin',
+		-- Use a release tag to download pre-built binaries
+		version = "1.*",
 
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
-			-- 'default' for mappings similar to built-in completion
-			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
+			-- 'default' for mappings similar to built-in completion
 			keymap = {
 				preset = "default",
 				["<C-y>"] = { "select_and_accept", "show" },
@@ -38,11 +31,6 @@ return {
 				},
 			},
 			completion = {
-				menu = {
-					auto_show = function(ctx)
-						return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
-					end,
-				},
 				ghost_text = {
 					enabled = true,
 				},
@@ -54,33 +42,18 @@ return {
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				min_keyword_length = function(ctx)
-					-- only applies when typing a command, doesn't apply to arguments
-					if ctx.mode == "cmdline" and string.find(ctx.line, " ") == nil then
-						return 2
-					end
-					return 0
-				end,
 				default = {
-					-- "avante",
+					"copilot",
+					"lazydev",
+					"buffer",
 					"lsp",
 					"path",
-					"buffer",
-					"copilot",
+					"codecompanion",
 				},
 				providers = {
-					-- avante = {
-					-- 	module = "blink-cmp-avante",
-					-- 	name = "Avante",
-					-- 	opts = {
-					-- 		-- options for blink-cmp-avante
-					-- 	},
-					-- },
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
-						-- make lazydev completions top priority(see `:h blink.cmp`)
-						score_offset = 100,
 					},
 					copilot = {
 						name = "copilot",
@@ -91,6 +64,6 @@ return {
 				},
 			},
 		},
-		-- opts_extend = { "sources.default" },
+		opts_extend = { "sources.default" },
 	},
 }

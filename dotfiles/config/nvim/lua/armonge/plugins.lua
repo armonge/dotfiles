@@ -27,8 +27,6 @@ require("lazy").setup({
 	{ import = "armonge.motions" },
 	{ import = "armonge.codecompanion" },
 	{ import = "armonge.copilot" },
-	-- { import = "armonge.avante" },
-	-- { import = "armonge.windsurf" },
 	{
 		"wakatime/vim-wakatime",
 	},

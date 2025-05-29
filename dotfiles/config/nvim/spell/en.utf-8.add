@@ -9,6 +9,7 @@ DJ001
 Eg
 F403
 FEDEX
+Firehose
 ForeignKey
 GBR
 Get's
@@ -16,6 +17,8 @@ Hashsets
 ISO2
 ISO3
 JS
+Kinesis
+MB
 MONGODB
 MessageType
 OAuth2

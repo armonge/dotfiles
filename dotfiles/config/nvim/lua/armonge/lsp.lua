@@ -58,6 +58,7 @@ local servers = {
 				analysis = {
 					-- Ignore all files for analysis to exclusively use Ruff for linting
 					ignore = { "*" },
+					typeCheckingMode = "off", -- Using mypy
 				},
 			},
 		},
@@ -82,13 +83,16 @@ return {
 					nullls.builtins.formatting.bean_format.with({
 						generator_opts = {
 							command = "uvx",
+							to_temp_file = true,
+							from_temp_file = true,
 							args = {
 								"--from",
 								"beancount",
 								"bean-format",
+								"--output",
+								"$FILENAME",
 								"$FILENAME",
 							},
-							to_stdin = true,
 						},
 					}),
 					nullls.builtins.formatting.shfmt,
@@ -110,7 +114,7 @@ return {
 					nullls.builtins.code_actions.refactoring,
 				},
 				on_attach = function(client, bufnr)
-					if client.supports_method("textDocument/formatting") then
+					if vim.lsp.client.supports_method("textDocument/formatting") then
 						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 						vim.api.nvim_create_autocmd("BufWritePre", {
 							group = augroup,
@@ -166,7 +170,7 @@ return {
 			for name, config in pairs(servers) do
 				vim.lsp.config(name, config)
 			end
-			-- vim.lsp.enable({ "ty" })
+			vim.lsp.enable({ "ty" })
 			vim.lsp.enable({ "pyrefly" })
 		end,
 	},
@@ -203,9 +207,9 @@ return {
 							end,
 							desc = "List workspace folders",
 						},
-						{ "K",          vim.lsp.buf.hover,          desc = "More information on a popup" },
-						{ "<C-k>",      vim.lsp.buf.signature_help, desc = "Signature help" },
-						{ "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
+						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
+						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
+						{ "<leader>rn", vim.lsp.buf.rename, desc = "Rename" },
 					}, opts)
 				end,
 			})

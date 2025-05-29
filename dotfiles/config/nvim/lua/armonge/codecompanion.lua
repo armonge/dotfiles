@@ -15,11 +15,13 @@ return {
 				"<leader>cc",
 				"<cmd>CodeCompanionActions<cr>",
 				desc = "CodeCompanionActions",
+				mode = { "v", "n" },
 			},
 			{
 				"<leader>cC",
 				"<cmd>CodeCompanionChat<cr>",
 				desc = "Code Companion Chat",
+				mode = { "v", "n" },
 			},
 		},
 		"olimorris/codecompanion.nvim",

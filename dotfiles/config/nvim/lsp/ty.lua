@@ -1,6 +1,7 @@
 local util = require("lspconfig.util")
+
 return {
-	cmd = { "uvx", "ty", "server" },
+	cmd = { "ty", "server" },
 	filetypes = { "python" },
 	settings = {},
 	root_dir = util.root_pattern("pyproject.toml", ".git"),
