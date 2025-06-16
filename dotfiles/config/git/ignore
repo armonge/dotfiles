@@ -12,3 +12,5 @@ venv/
 .envrc
 .ropeproject/
 .null-ls*
+
+**/.claude/settings.local.json

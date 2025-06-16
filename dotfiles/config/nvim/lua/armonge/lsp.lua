@@ -16,6 +16,8 @@ local formatters = {
 }
 
 local servers = {
+	pyrefly = {},
+	ty = {},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
@@ -35,6 +37,7 @@ local servers = {
 	},
 	-- jedi_language_server = {},
 	beancount = {
+		cmd = { "beancount-language-server", "--stdio" },
 		init_options = {
 			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
 		},
@@ -48,21 +51,21 @@ local servers = {
 			},
 		},
 	},
-	pyright = {
-		settings = {
-			pyright = {
-				-- Using Ruff's import organizer
-				disableOrganizeImports = true,
-			},
-			python = {
-				analysis = {
-					-- Ignore all files for analysis to exclusively use Ruff for linting
-					ignore = { "*" },
-					typeCheckingMode = "off", -- Using mypy
-				},
-			},
-		},
-	},
+	-- pyright = {
+	-- 	settings = {
+	-- 		pyright = {
+	-- 			-- Using Ruff's import organizer
+	-- 			disableOrganizeImports = true,
+	-- 		},
+	-- 		python = {
+	-- 			analysis = {
+	-- 				-- Ignore all files for analysis to exclusively use Ruff for linting
+	-- 				ignore = { "*" },
+	-- 				typeCheckingMode = "off", -- Using mypy
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	taplo = {},
 }
 
@@ -114,7 +117,7 @@ return {
 					nullls.builtins.code_actions.refactoring,
 				},
 				on_attach = function(client, bufnr)
-					if vim.lsp.client.supports_method("textDocument/formatting") then
+					if vim.lsp.client.supports_method("textDocument/formatting", bufnr) then
 						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 						vim.api.nvim_create_autocmd("BufWritePre", {
 							group = augroup,
@@ -207,9 +210,9 @@ return {
 							end,
 							desc = "List workspace folders",
 						},
-						{ "K", vim.lsp.buf.hover, desc = "More information on a popup" },
-						{ "<C-k>", vim.lsp.buf.signature_help, desc = "Signature help" },
-						{ "<leader>rn", vim.lsp.buf.rename, desc = "Rename" },
+						{ "K",          vim.lsp.buf.hover,          desc = "More information on a popup" },
+						{ "<C-k>",      vim.lsp.buf.signature_help, desc = "Signature help" },
+						{ "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
 					}, opts)
 				end,
 			})

@@ -48,7 +48,7 @@ return {
 					"buffer",
 					"lsp",
 					"path",
-					"codecompanion",
+					-- "codecompanion",
 				},
 				providers = {
 					lazydev = {
