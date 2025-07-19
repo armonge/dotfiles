@@ -16,16 +16,16 @@ local formatters = {
 }
 
 local servers = {
-	pyrefly = {},
-	ty = {},
+	-- pyrefly = {},
+	-- ty = {},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
 	docker_compose_language_service = {},
 	bashls = {},
+	vtsls = {},
 	jsonls = {},
 	lua_ls = {},
-	vtsls = {},
 	stylelint_lsp = {},
 	clojure_lsp = {},
 	ruff = {
@@ -35,7 +35,7 @@ local servers = {
 			},
 		},
 	},
-	-- jedi_language_server = {},
+	jedi_language_server = {},
 	beancount = {
 		cmd = { "beancount-language-server", "--stdio" },
 		init_options = {
@@ -74,6 +74,9 @@ return {
 		"nvimtools/none-ls.nvim",
 		config = function()
 			local nullls = require("null-ls")
+			local helpers = require("null-ls.helpers")
+			local methods = require("null-ls.methods")
+			local FORMATTING = methods.internal.FORMATTING
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 			nullls.setup({
 				debug = true,
@@ -83,28 +86,41 @@ return {
 					nullls.builtins.formatting.djlint,
 					nullls.builtins.formatting.biome,
 					nullls.builtins.formatting.joker,
-					nullls.builtins.formatting.bean_format.with({
-						generator_opts = {
-							command = "uvx",
-							to_temp_file = true,
+					{
+						name = "bean_format",
+						meta = {
+							url =
+							"https://beancount.github.io/docs/running_beancount_and_generating_reports.html#bean-format",
+							description =
+							"This pure text processing tool will reformat `beancount` input to right-align all the numbers at the same, minimal column.",
+							notes = {
+								"It left-aligns all the currencies.",
+								"It only modifies whitespace.",
+							},
+						},
+						method = FORMATTING,
+						filetypes = { "beancount" },
+						generator = helpers.formatter_factory({
 							from_temp_file = true,
+							from_stdin = false,
+							to_temp_file = true,
+							command = "uvx",
 							args = {
 								"--from",
 								"beancount",
 								"bean-format",
-								"--output",
 								"$FILENAME",
+								"-o",
 								"$FILENAME",
 							},
-						},
-					}),
+						}),
+					},
 					nullls.builtins.formatting.shfmt,
 					nullls.builtins.formatting.shellharden,
 					require("none-ls.formatting.ruff"),
 					require("none-ls.formatting.ruff_format"),
 
 					nullls.builtins.diagnostics.djlint,
-					nullls.builtins.diagnostics.mypy,
 					nullls.builtins.diagnostics.sqruff,
 					nullls.builtins.diagnostics.textlint,
 
@@ -175,6 +191,7 @@ return {
 			end
 			vim.lsp.enable({ "ty" })
 			vim.lsp.enable({ "pyrefly" })
+			-- vim.lsp.enable({ "zubanls" })
 		end,
 	},
 	{
@@ -253,7 +270,7 @@ return {
 	},
 	{
 		"folke/neoconf.nvim",
-		dependencies = { "folke/lazydev.nvim" },
+		dependencies = { "folke/lazydev.nvim", "neovim/nvim-lspconfig" },
 	},
 	{
 		"zeioth/garbage-day.nvim",
