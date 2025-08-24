@@ -16,8 +16,8 @@ local formatters = {
 }
 
 local servers = {
-	-- pyrefly = {},
 	-- ty = {},
+	pyrefly = {},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
@@ -35,7 +35,7 @@ local servers = {
 			},
 		},
 	},
-	jedi_language_server = {},
+	-- jedi_language_server = {},
 	beancount = {
 		cmd = { "beancount-language-server", "--stdio" },
 		init_options = {
@@ -82,9 +82,9 @@ return {
 				debug = true,
 				sources = {
 					nullls.builtins.formatting.stylua,
+					require("none-ls.formatting.ruff"),
 					nullls.builtins.formatting.sqruff,
 					nullls.builtins.formatting.djlint,
-					nullls.builtins.formatting.biome,
 					nullls.builtins.formatting.joker,
 					{
 						name = "bean_format",
@@ -117,8 +117,6 @@ return {
 					},
 					nullls.builtins.formatting.shfmt,
 					nullls.builtins.formatting.shellharden,
-					require("none-ls.formatting.ruff"),
-					require("none-ls.formatting.ruff_format"),
 
 					nullls.builtins.diagnostics.djlint,
 					nullls.builtins.diagnostics.sqruff,
@@ -189,9 +187,6 @@ return {
 			for name, config in pairs(servers) do
 				vim.lsp.config(name, config)
 			end
-			vim.lsp.enable({ "ty" })
-			vim.lsp.enable({ "pyrefly" })
-			-- vim.lsp.enable({ "zubanls" })
 		end,
 	},
 	{

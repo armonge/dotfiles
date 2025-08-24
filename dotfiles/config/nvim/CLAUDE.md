@@ -38,7 +38,7 @@ The configuration uses a modern plugin stack:
 
 The LSP configuration supports multiple tools per language:
 
-- **Python**: ruff (format/lint), mypy (types), pyrefly (fast checking)
+- **Python**: ruff (format/lint), mypy (types), ty (fast checking)
 - **JavaScript/TypeScript**: vtsls (LSP), biome (format/lint)
 - **Lua**: lua_ls (LSP), stylua (format)
 - **Shell**: bashls (LSP), shellcheck (lint)
