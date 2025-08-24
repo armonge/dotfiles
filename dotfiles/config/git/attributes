@@ -3,4 +3,3 @@
 *.jpeg diff=spaceman-diff
 *.gif  diff=spaceman-diff
 *.json diff=json
-

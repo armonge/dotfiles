@@ -9,7 +9,7 @@ This is a sophisticated personal dotfiles repository built around **dotdrop** - 
 ### Core Structure
 
 - **Entry Point**: `./dotdrop.sh` - Wrapper script for dotdrop execution with auto-updates
-- **Configuration**: `config.yaml` - Central dotdrop configuration defining dotfiles, profiles, and deployment rules  
+- **Configuration**: `config.yaml` - Central dotdrop configuration defining dotfiles, profiles, and deployment rules
 - **Installation**: `scripts/install-deps.sh` - Comprehensive dependency installation for development environment
 - **Dotfiles**: `dotfiles/` - All managed configuration files organized by category
 - **Dotdrop**: `dotdrop/` - Git submodule pointing to https://github.com/deadc0de6/dotdrop
@@ -97,7 +97,7 @@ The repository uses a **single profile architecture**:
 - Platform-specific configurations
 
 **Linux Support** (Fedora):
-- dnf package management  
+- dnf package management
 - Build essentials for compilation
 - Platform-specific tool alternatives
 

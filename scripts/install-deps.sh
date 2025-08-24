@@ -14,7 +14,7 @@
 # - Shell: Starship prompt
 # - Fonts: JetBrains Mono Nerd Font
 #
-# Usage: 
+# Usage:
 #   ./scripts/install-deps.sh [OPTIONS] [COMPONENTS...]
 #   ./scripts/install-deps.sh --help for more information
 
@@ -33,7 +33,6 @@ if [[ "${BASH_VERSION%%.*}" -lt 4 ]]; then
 fi
 
 # Configuration
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_FILE="${LOG_FILE:-/tmp/install-deps-$(date +%Y%m%d-%H%M%S).log}"
 VERBOSE="${VERBOSE:-false}"
 DRY_RUN="${DRY_RUN:-false}"
@@ -68,8 +67,9 @@ log() {
     local level="$1"
     shift
     local message="$*"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    
+    local timestamp
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
     case "$level" in
         ERROR)   color="$RED" ;;
         SUCCESS) color="$GREEN" ;;
@@ -77,7 +77,7 @@ log() {
         INFO)    color="$BLUE" ;;
         *)       color="$NC" ;;
     esac
-    
+
     echo -e "${color}[${level}]${NC} ${message}"
     echo "[${timestamp}] [${level}] ${message}" >> "$LOG_FILE"
 }
@@ -90,19 +90,19 @@ progress() {
 # Command execution wrapper
 execute() {
     local cmd="$*"
-    
+
     if [[ "$DRY_RUN" == "true" ]]; then
         log "INFO" "[DRY RUN] Would execute: $cmd"
         return 0
     fi
-    
+
     if [[ "$VERBOSE" == "true" ]]; then
         log "INFO" "Executing: $cmd"
         eval "$cmd" 2>&1 | tee -a "$LOG_FILE"
     else
         eval "$cmd" >> "$LOG_FILE" 2>&1
     fi
-    
+
     return ${PIPESTATUS[0]}
 }
 
@@ -113,8 +113,9 @@ command_exists() {
 
 # OS Detection
 detect_os() {
-    local uname_out="$(uname -a)"
-    
+    local uname_out
+    uname_out="$(uname -a)"
+
     if grep -q "Darwin" <<<"$uname_out"; then
         echo "macos"
     elif grep -q "fedora" <<<"$uname_out"; then
@@ -127,8 +128,9 @@ detect_os() {
 # Check if package is installed (platform-specific)
 package_installed() {
     local package="$1"
-    local os="$(detect_os)"
-    
+    local os
+    os="$(detect_os)"
+
     case "$os" in
         macos)
             brew list "$package" &> /dev/null || brew list --cask "$package" &> /dev/null
@@ -154,11 +156,11 @@ install_homebrew() {
 
 install_macos_packages() {
     progress "Installing macOS packages"
-    
+
     # Environment variables for Pillow image library compilation
     export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
     export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
-    
+
     # Install image processing libraries
     progress "Installing image processing libraries"
     for package in "${MACOS_IMAGE_LIBS[@]}"; do
@@ -166,7 +168,7 @@ install_macos_packages() {
             execute "brew install --quiet $package"
         fi
     done
-    
+
     # Install core development tools
     progress "Installing core development tools"
     for package in "${MACOS_CORE_TOOLS[@]}"; do
@@ -174,7 +176,7 @@ install_macos_packages() {
             execute "brew install --quiet $package"
         fi
     done
-    
+
     # Install additional dev tools
     progress "Installing additional development tools"
     for package in "${MACOS_DEV_TOOLS[@]}"; do
@@ -182,18 +184,18 @@ install_macos_packages() {
             execute "brew install --quiet $package"
         fi
     done
-    
+
     # Install WezTerm
     if ! package_installed "wezterm" || [[ "$FORCE" == "true" ]]; then
         progress "Installing WezTerm"
         execute "brew install --cask wezterm"
     fi
-    
+
     # Install extra tools
     progress "Installing extra tools"
     execute "brew install jstkdng/programs/ueberzugpp"  # Terminal image viewer
     execute "brew install neilotoole/sq/sq"             # Swiss-army knife for data
-    
+
     for package in "${MACOS_EXTRA_TOOLS[@]}"; do
         if ! package_installed "$package" || [[ "$FORCE" == "true" ]]; then
             # Handle git-spice and ghostscript conflict
@@ -211,7 +213,7 @@ install_macos_packages() {
             fi
         fi
     done
-    
+
     # Install fun tools
     progress "Installing fun tools"
     for package in "${MACOS_FUN_TOOLS[@]}"; do
@@ -223,10 +225,10 @@ install_macos_packages() {
 
 install_fedora_packages() {
     progress "Installing Fedora packages"
-    
+
     # Enable WezTerm repository
     execute "sudo dnf --assumeyes copr enable wezfurlong/wezterm-nightly"
-    
+
     # Install all package groups
     local all_packages=(
         "${FEDORA_BUILD_ESSENTIALS[@]}"
@@ -235,23 +237,23 @@ install_fedora_packages() {
         "${FEDORA_LANGUAGES[@]}"
         "wezterm"
     )
-    
+
     progress "Installing packages"
     execute "sudo dnf install --assumeyes ${all_packages[*]}"
 }
 
 install_rust() {
     progress "Setting up Rust"
-    
+
     if [[ ! -d "$HOME/.cargo" ]]; then
         execute 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y'
         source "$HOME/.cargo/env"
     else
         log "INFO" "Rust already installed"
     fi
-    
+
     execute "rustup update"
-    
+
     # Install Rust-based CLI tools
     progress "Installing Rust CLI tools"
     local rust_tools=(git-delta tree-sitter-cli jless eza viu)
@@ -269,16 +271,16 @@ install_lua_packages() {
 
 install_python() {
     progress "Setting up Python with uv"
-    
+
     if ! command_exists uv; then
         execute 'curl -LsSf https://astral.sh/uv/install.sh | sh'
         export PATH="$HOME/.cargo/bin:$PATH"
     else
         log "INFO" "uv already installed"
     fi
-    
+
     execute "uv python install"
-    
+
     # Set up Python environment for Neovim
     progress "Setting up Python environment for Neovim"
     (
@@ -289,7 +291,7 @@ install_python() {
         fi
         execute "source .venv/bin/activate && python -m pip install neovim"
     )
-    
+
     # Set up Python environment for dotfiles management
     progress "Setting up Python environment for dotfiles"
     (
@@ -303,7 +305,7 @@ install_python() {
 
 install_nodejs() {
     progress "Setting up Node.js with NVM"
-    
+
     # Node.js installation via NVM (Node Version Manager)
     if [[ ! -d "$HOME/.config/nvm" ]] && [[ ! -d "$HOME/.nvm" ]]; then
         execute "unset NVM_DIR"
@@ -311,20 +313,20 @@ install_nodejs() {
     else
         log "INFO" "NVM already installed"
     fi
-    
+
     # Load NVM
     NVM_DIR="$([ "${XDG_CONFIG_HOME-}" = "" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     export NVM_DIR
     [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"
     [ -s "${NVM_DIR}/bash_completion" ] && \. "${NVM_DIR}/bash_completion"
-    
+
     # Install multiple Node.js LTS versions
     progress "Installing Node.js LTS versions"
     execute "nvm install lts/gallium lts/erbium lts/fermium"
     execute "nvm install lts/*"
     execute "nvm alias default stable"
     execute "nvm use stable"
-    
+
     # Install global npm packages
     progress "Installing global npm packages"
     execute "npm install --global --upgrade npm neovim @mermaid-js/mermaid-cli"
@@ -332,13 +334,13 @@ install_nodejs() {
 
 install_fonts() {
     progress "Installing JetBrains Mono Nerd Font"
-    
+
     if [[ ! -f "${HOME}/.local/share/fonts/ttf/JetBrainsMonoNLNerdFont-Regular.ttf" ]] || [[ "$FORCE" == "true" ]]; then
         execute "wget -O /tmp/JetBrainsMono.zip https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
         execute "cd /tmp && unzip -o JetBrainsMono.zip"
         execute "mkdir -p ${HOME}/.local/share/fonts/ttf/"
         execute "mv /tmp/JetBrainsMono*.ttf ${HOME}/.local/share/fonts/ttf/"
-        
+
         # Update font cache on Linux
         if command_exists fc-cache; then
             execute "fc-cache -f"
@@ -350,7 +352,7 @@ install_fonts() {
 
 install_starship() {
     progress "Installing Starship prompt"
-    
+
     if ! command_exists starship || [[ "$FORCE" == "true" ]]; then
         execute "mkdir -p ~/.local/bin"
         execute 'curl -sS https://starship.rs/install.sh | BIN_DIR=~/.local/bin/ sh -s -- -y'
@@ -400,13 +402,13 @@ COMPONENTS:
 EXAMPLES:
     # Install everything
     $(basename "$0")
-    
+
     # Install only Rust and Python
     $(basename "$0") rust python
-    
+
     # Dry run to see what would be installed
     $(basename "$0") --dry-run
-    
+
     # Force reinstall with verbose output
     $(basename "$0") --force --verbose
 
@@ -423,7 +425,7 @@ EOF
 # Parse command line arguments
 parse_args() {
     local components=()
-    
+
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -h|--help)
@@ -464,7 +466,7 @@ parse_args() {
                 ;;
         esac
     done
-    
+
     # If no components specified, install all
     if [[ ${#components[@]} -eq 0 ]] || [[ " ${components[*]} " =~ " all " ]]; then
         SELECTED_COMPONENTS=(homebrew packages rust lua python nodejs fonts starship)
@@ -476,17 +478,18 @@ parse_args() {
 # Main installation function
 main() {
     parse_args "$@"
-    
+
     log "INFO" "Starting installation process"
     log "INFO" "Log file: $LOG_FILE"
-    
-    local os="$(detect_os)"
+
+    local os
+    os="$(detect_os)"
     log "INFO" "Detected OS: $os"
-    
+
     if [[ "$DRY_RUN" == "true" ]]; then
         log "WARN" "DRY RUN MODE - No changes will be made"
     fi
-    
+
     # Process selected components
     for component in "${SELECTED_COMPONENTS[@]}"; do
         case "$component" in
@@ -516,7 +519,7 @@ main() {
                 ;;
         esac
     done
-    
+
     log "SUCCESS" "Installation completed successfully!"
     log "INFO" "Check the log file for details: $LOG_FILE"
 }

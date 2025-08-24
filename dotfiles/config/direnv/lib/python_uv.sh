@@ -1,9 +1,10 @@
 #!/bin/bash -x
 layout_python_uv() {
-  local python=$(uv python find)
+  local python
+  python=$(uv python find)
   [[ $# -gt 0 ]] && shift
   unset PYTHONHOME
-  python_version=$($python -V | cut -w -f 2 | cut -d . -f 1-2)
+  python_version=$("$python" -V | cut -f 2 | cut -d . -f 1-2)
   local python_version="$python_version"
 
   if [[ -z $python_version ]]; then
