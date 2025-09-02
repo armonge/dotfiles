@@ -13,6 +13,7 @@ local formatters = {
 	"stylua",
 	"joker",
 	"actionlint",
+	"kulala-fmt",
 }
 
 local servers = {
@@ -86,6 +87,21 @@ return {
 					nullls.builtins.formatting.sqruff,
 					nullls.builtins.formatting.djlint,
 					nullls.builtins.formatting.joker,
+
+					{
+						name = "kulala_fmt",
+						method = FORMATTING,
+						filetypes = { "http" },
+						generator = helpers.formatter_factory({
+							from_stdin = false,
+							to_temp_file = true,
+							command = "kulala-fmt",
+							args = {
+								"format",
+								"$FILENAME",
+							},
+						}),
+					},
 					{
 						name = "bean_format",
 						meta = {

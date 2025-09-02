@@ -9,6 +9,7 @@ Cyclomatic
 DJ001
 DRF
 E2E
+EDEKA
 EUR
 Eg
 F403
@@ -26,6 +27,7 @@ JS
 JWT
 Jinja
 Kinesis
+Lidl
 MB
 MONGODB
 Makefile
@@ -54,6 +56,7 @@ SSO
 Select2
 TRY300
 Teardown
+Telefonnummer
 TinyMCE
 UNHANDLED
 UTM
@@ -84,6 +87,7 @@ django
 docstring
 docstrings
 ec2
+einloggen
 elemMatch
 env
 envs
@@ -123,6 +127,7 @@ pylint
 pyright
 pytest
 pyupgrade
+readonly
 schemas
 shitty
 superclasses
