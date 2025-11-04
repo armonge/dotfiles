@@ -5,25 +5,30 @@ local act = wezterm.action
 local mod = {}
 
 if platform.is_mac then
-	mod.SUPER = "SUPER"
-	mod.SUPER_REV = "SUPER|CTRL"
+  mod.SUPER = "SUPER"
+  mod.SUPER_REV = "SUPER|CTRL"
 elseif platform.is_linux then
-	mod.SUPER = "ALT"
-	mod.SUPER_REV = "ALT|CTRL"
+  mod.SUPER = "ALT"
+  mod.SUPER_REV = "ALT|CTRL"
 end
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
 
 -- stylua: ignore
 local keys = {
+  { key = "Enter", mods = "SHIFT", action = wezterm.action { SendString = "\x1b\r" } },
   -- misc/useful --
-  { key = 'F1', mods = 'NONE', action = 'ActivateCopyMode' },
-  { key = 'F2', mods = 'NONE', action = act.ActivateCommandPalette },
-  { key = 'F3', mods = 'NONE', action = act.ShowLauncher },
-  { key = 'F4', mods = 'NONE', action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
+  { key = 'F1',  mods = 'NONE', action = 'ActivateCopyMode' },
+  { key = 'F2',  mods = 'NONE', action = act.ActivateCommandPalette },
+  { key = 'F3',  mods = 'NONE', action = act.ShowLauncher },
+  { key = 'F4',  mods = 'NONE', action = act.ShowLauncherArgs({ flags = 'FUZZY|TABS' }) },
   {
     key = 'F5',
     mods = 'NONE',
     action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }),
   },
+  { key = 'F6',  mods = 'NONE',    action = act.EmitEvent('scrollback.open-in-editor') },
   { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
   { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
@@ -59,7 +64,7 @@ local keys = {
   -- tabs --
   -- tabs: spawn+close
   { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-  { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
+  { key = 'w',          mods = mod.SUPER_REV, action = act.EmitEvent('confirm-close.close-tab') },
 
   -- tabs: navigation
   { key = '[',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
@@ -122,7 +127,7 @@ local keys = {
 
   -- panes: zoom+close pane
   { key = 'Enter', mods = mod.SUPER,     action = act.TogglePaneZoomState },
-  { key = 'w',     mods = mod.SUPER,     action = act.CloseCurrentPane({ confirm = false }) },
+  { key = 'w',     mods = mod.SUPER,     action = act.EmitEvent('confirm-close.close-pane') },
 
   -- panes: navigation
   { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
@@ -184,28 +189,28 @@ local key_tables = {
 }
 
 local mouse_bindings = {
-	-- Ctrl-click will open the link under the mouse cursor
-	{
-		event = { Up = { streak = 1, button = "Left" } },
-		mods = "CTRL",
-		action = act.OpenLinkAtMouseCursor,
-	},
+  -- Ctrl-click will open the link under the mouse cursor
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "CTRL",
+    action = act.OpenLinkAtMouseCursor,
+  },
 }
 
 for i = 1, 8 do
-	-- ALT + number to activate that tab
-	table.insert(keys, {
-		key = tostring(i),
-		mods = mod.SUPER,
-		action = act.ActivateTab(i - 1),
-	})
+  -- ALT + number to activate that tab
+  table.insert(keys, {
+    key = tostring(i),
+    mods = mod.SUPER,
+    action = act.ActivateTab(i - 1),
+  })
 end
 
 return {
-	disable_default_key_bindings = true,
-	-- disable_default_mouse_bindings = true,
-	leader = { key = "Space", mods = mod.SUPER_REV },
-	keys = keys,
-	key_tables = key_tables,
-	mouse_bindings = mouse_bindings,
+  disable_default_key_bindings = true,
+  -- disable_default_mouse_bindings = true,
+  leader = { key = "Space", mods = mod.SUPER_REV },
+  keys = keys,
+  key_tables = key_tables,
+  mouse_bindings = mouse_bindings,
 }

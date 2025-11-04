@@ -1,6 +1,7 @@
-local formatters = {
+local masonPackages = {
+	"markdownlint",
+	"terraform",
 	"shellharden",
-	"textlint",
 	"sqruff",
 	"ruff",
 	"shellcheck",
@@ -14,17 +15,35 @@ local formatters = {
 	"joker",
 	"actionlint",
 	"kulala-fmt",
+	"hadolint",
+	"typescript-language-server",
 }
 
 local servers = {
 	-- ty = {},
-	pyrefly = {},
+	jinja_lsp = {},
+	-- pyrefly = {},
+	ty = {
+		lsp = {
+			document_color = {
+				enable = false,
+			},
+		},
+		settings = {
+			ty = {
+				experimental = {
+					autoImport = true,
+					rename = true,
+				},
+			},
+		},
+	},
 	biome = {},
 	yamlls = {},
 	dockerls = {},
 	docker_compose_language_service = {},
 	bashls = {},
-	vtsls = {},
+	-- vtsls = {},
 	jsonls = {},
 	lua_ls = {},
 	stylelint_lsp = {},
@@ -84,9 +103,13 @@ return {
 				sources = {
 					nullls.builtins.formatting.stylua,
 					require("none-ls.formatting.ruff"),
+					require("none-ls.formatting.mbake"),
+					require("none-ls.formatting.eslint"),
 					nullls.builtins.formatting.sqruff,
 					nullls.builtins.formatting.djlint,
 					nullls.builtins.formatting.joker,
+					nullls.builtins.formatting.terraform_fmt,
+					nullls.builtins.formatting.markdownlint,
 
 					{
 						name = "kulala_fmt",
@@ -136,15 +159,17 @@ return {
 
 					nullls.builtins.diagnostics.djlint,
 					nullls.builtins.diagnostics.sqruff,
-					nullls.builtins.diagnostics.textlint,
+					nullls.builtins.diagnostics.terraform_validate,
+					nullls.builtins.diagnostics.hadolint,
+					require("none-ls.diagnostics.eslint"),
 
 					nullls.builtins.hover.dictionary,
 					nullls.builtins.hover.printenv,
 
 					nullls.builtins.code_actions.gitrebase,
-					nullls.builtins.code_actions.textlint,
 					nullls.builtins.code_actions.gitsigns,
 					nullls.builtins.code_actions.refactoring,
+					require("none-ls.code_actions.eslint"),
 				},
 				on_attach = function(client, bufnr)
 					if vim.lsp.client.supports_method("textDocument/formatting", bufnr) then
@@ -177,7 +202,7 @@ return {
 
 			local registry = require("mason-registry")
 			registry.refresh(function()
-				for _, package_name in ipairs(formatters) do
+				for _, package_name in ipairs(masonPackages) do
 					local pkg = registry.get_package(package_name)
 					if not pkg:is_installed() then
 						pkg:install()
@@ -203,6 +228,8 @@ return {
 			for name, config in pairs(servers) do
 				vim.lsp.config(name, config)
 			end
+
+			vim.lsp.enable("djls")
 		end,
 	},
 	{
@@ -211,9 +238,12 @@ return {
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-				callback = function(ev)
+				callback = function(args)
 					local wk = require("which-key")
-					local opts = { buffer = ev.buf }
+					local opts = { buffer = args.buf }
+
+					-- vim.lsp.document_color.enable(false, args.buf)
+
 					wk.add({
 						{
 							"<leader>a",
@@ -290,5 +320,10 @@ return {
 		opts = {
 			-- your options here
 		},
+	},
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
 	},
 }

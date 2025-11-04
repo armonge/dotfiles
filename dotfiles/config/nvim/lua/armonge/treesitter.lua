@@ -6,6 +6,8 @@ return {
 			"nvim-treesitter/nvim-treesitter-context",
 			"nvim-treesitter/nvim-treesitter-refactor",
 		},
+		event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+		cmd = { "TSInstall", "TSUpdate", "TSUpdateSync", "TSUninstall" },
 		keys = {
 			{
 				"[c",
@@ -18,14 +20,19 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				modules = {},
 				refactor = {
 					enable = true,
 					clear_on_cursor_move = true,
 					highlight_current_scope = true,
+					highlight_definitions = {
+						enable = true,
+						clear_on_cursor_move = true,
+					},
 					smart_rename = {
 						enable = true,
-						smart_rename = "<leader>rn",
+						keymaps = {
+							smart_rename = "<leader>rn",
+						},
 					},
 					navigation = {
 						enable = true,

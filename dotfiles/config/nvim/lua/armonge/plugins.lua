@@ -29,21 +29,17 @@ require("lazy").setup({
 	{
 		"wakatime/vim-wakatime",
 	},
-
 	{
 		"lambdalisue/suda.vim",
 		cmd = { "SudaRead", "SudaWrite" },
 	},
-
 	{
 		"direnv/direnv.vim",
 	},
-	{
-		"willothy/wezterm.nvim",
-		config = true,
-	},
-	-- { "glacambre/firenvim", build = ":call firenvim#install(0)" },
-	-- { "m4xshen/hardtime.nvim", dependencies = { "MunifTanjim/nui.nvim" }, opts = {} },
+	-- {
+	-- 	"willothy/wezterm.nvim",
+	-- 	config = true,
+	-- },
 	{
 		"MagicDuck/grug-far.nvim",
 		config = function()
@@ -58,42 +54,8 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"stevearc/overseer.nvim",
-		opts = {},
-		config = function()
-			require("overseer").setup()
-			vim.api.nvim_create_user_command("Make", function(params)
-				-- Insert args at the '$*' in the makeprg
-				local cmd, num_subs = vim.o.makeprg:gsub("%$%*", params.args)
-				if num_subs == 0 then
-					cmd = cmd .. " " .. params.args
-				end
-				local task = require("overseer").new_task({
-					cmd = vim.fn.expandcmd(cmd),
-					components = {
-						{ "on_output_quickfix", open = not params.bang, open_height = 8 },
-						"default",
-					},
-				})
-				task:start()
-			end, {
-				desc = "Run your makeprg as an Overseer task",
-				nargs = "*",
-				bang = true,
-			})
-		end,
-	},
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		lazy = false,
-		opts = {},
-	},
-	{
 		"rest-nvim/rest.nvim",
+		ft = { "http" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			opts = function(_, opts)
@@ -102,12 +64,8 @@ require("lazy").setup({
 			end,
 		},
 	},
-	{
-		"greggh/claude-code.nvim",
-		config = function()
-			require("claude-code").setup()
-		end,
-	},
+
+	{ "akinsho/git-conflict.nvim", version = "*", config = true },
 })
 -- }
 --

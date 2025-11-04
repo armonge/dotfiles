@@ -8,8 +8,11 @@
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc
 fi
+
+# Rust/Cargo environment (sourced once here, not in bashrc)
 . "$HOME/.cargo/env"
 
+# GPG TTY - necessary for GPG to work properly
 export GPG_TTY=$(tty)
 
 # Codon compiler path (added by install script)
@@ -19,3 +22,4 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # Added by Windsurf
 export PATH="/Users/andres.monge/.codeium/windsurf/bin:$PATH"
+export PATH="/opt/homebrew/opt/bison/bin:$PATH"

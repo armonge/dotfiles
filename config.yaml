@@ -120,6 +120,10 @@ dotfiles:
     src: config/mcphub
     dst: ~/.config/mcphub
     link: absolute
+  d_bashrc.d:
+    src: config/bashrc.d
+    dst: ~/.config/bashrc.d
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -149,3 +153,4 @@ profiles:
     - d_direnv
     - d_nvim
     - d_mcphub
+    - d_bashrc.d

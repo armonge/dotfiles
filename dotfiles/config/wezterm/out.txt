@@ -1,0 +1,19 @@
+parcelLab/product-api	cb7792101bae953e16fbc04adec4d0c9b505cc54	fix(journey): handle null action in JourneyTriggerChannel inheritance (#4554) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-23T11:08:03+02:00
+parcelLab/product-api	fe0f0a8acd40f69448a0aa88d1570f5aaec0dbfc	feat(admin): enable bulk editing of message active field (#4500)	armonge	2025-09-23T09:54:26+02:00
+parcelLab/product-api	6b8c7670ebf2d6084f303eccba940fd9ef8bfe69	fix(track): handle null XML text elements in inpost adapter (#4539) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-22T13:43:45+02:00
+parcelLab/product-api	d9c5e9c563375973b356384fb3e8ae5c0e4d2542	fix(journey): improve trigger event display UX for Lehmans (REQ-4270) (#4527) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-19T17:58:17+02:00
+parcelLab/product-api	e7cac5eb1ff3af8b9e578cfa47d5b195e905a302	fix(admin): make inheritance tabular inline template compatible (#4520)	armonge	2025-09-19T17:49:54+02:00
+parcelLab/product-api	8881c2d82044b74ba4251683a9adc3906109862b	chore: Updates sentry static assets (#4529)	armonge	2025-09-19T14:56:58+02:00
+parcelLab/product-api	7b9fdfae91675d9116acd863db1a67a02925cc05	fix: Sentry Static resources (#4519)	armonge	2025-09-19T11:51:19+02:00
+parcelLab/product-api	d380333eed9e5e669fc87446d776e2a9b21096eb	fix(admin): prevent AttributeError for non-inherited models (#4518)	armonge	2025-09-18T15:20:56+02:00
+parcelLab/product-api	5c7bcbde645947c8275eb6a695f4ecbbbb39ab71	chore(security): remove detect-secrets from pre-commit (#4516)	armonge	2025-09-18T10:52:05+02:00
+parcelLab/product-api	cc02b97f009b8a872e073b8ff9bab223793ed325	fix(config): fix client customisation admin interface (#4511) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-18T09:42:49+02:00
+parcelLab/product-api	94bfcea7d05ed41fa78660845c7cd82d3c22d1ee	fix: resolve inheritance-related AttributeError and KeyError in admin (#4501)	armonge	2025-09-17T13:55:53+02:00
+parcelLab/product-api	16bb42ca0a68841c2025991e8e32cb5c0538c56f	fix(journey): prevent unwanted revisions on global triggers (#4475) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-17T10:18:27+02:00
+parcelLab/product-api	f46275e84ca483b0504aa773ec43783d4d52ea56	feat(docs): add OAuth client applications overview (#4491) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-17T08:32:25+02:00
+parcelLab/product-api	dcdfa60706c46941543521842547fb1a6ece9130	fix(config): remove highlightColor as required property (#4494)	armonge	2025-09-17T08:09:23+02:00
+parcelLab/product-api	18e5e7c2c92559d1f6f4ba013b61601e2c44ba46	chore: add detect-secrets pre-commit hook (#4488) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-16T15:05:30+02:00
+parcelLab/product-api	99c515dd45436d047c9d279223f783fbc2b1fc2d	fix(admin): prevent data loss on client add with two-phase form (#4490)	armonge	2025-09-16T15:03:00+02:00
+parcelLab/product-api	41ff58a5713fd1fbb1b777df6b08a57328220ad5	fix(docker): configure graphviz plugins after install (#4489)	armonge	2025-09-16T13:54:34+02:00
+parcelLab/product-api	1ca241ba6ada58f6b09014d06fe22364852f56dc	feat(journey): implement comprehensive inheritance status indicators for journey admin (#4407) Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-15T14:13:25+02:00
+parcelLab/product-api	86405dff65e79026a00c1b194b912d6bddf08a19	feat(experiments): fallback to original message if variants deleted (#4422) Co-authored-by: Copilot <175728472+Copilot@users.noreply.github.com> Co-authored-by: Claude <noreply@anthropic.com>	armonge	2025-09-15T09:35:15+02:00
