@@ -1,3 +1,4 @@
+AJAX
 Aider
 Andrés
 Args
@@ -22,6 +23,7 @@ GBR
 Gesamtbeitrag
 Get's
 Gorgias
+Graylog
 HTMX
 Hashsets
 IANA
@@ -72,6 +74,7 @@ Unpublish
 ValueError
 WISMO
 Wahoo
+XLSX
 Zendesk
 api
 arg
@@ -154,10 +157,13 @@ querystring
 readonly
 reconnection
 redis
+redrive
 schemas
 shitty
 sms
+sql
 statusCode
+stdout
 subaccount
 subclasses
 submodels
@@ -177,5 +183,6 @@ v2
 webhook
 webhooks
 wether
+workgroup
 xdist
 xid

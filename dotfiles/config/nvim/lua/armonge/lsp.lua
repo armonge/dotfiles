@@ -21,14 +21,10 @@ local masonPackages = {
 
 local servers = {
 	-- ty = {},
+	copilot = {},
 	jinja_lsp = {},
 	-- pyrefly = {},
 	ty = {
-		lsp = {
-			document_color = {
-				enable = false,
-			},
-		},
 		settings = {
 			ty = {
 				experimental = {
@@ -218,14 +214,25 @@ return {
 			"neovim/nvim-lspconfig",
 			"saghen/blink.cmp",
 		},
+		opts = {
+			ensure_installed = vim.tbl_keys(servers),
+			automatic_installation = true,
+			automatic_enable = true,
+		},
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
-			mason_lspconfig.setup({
-				ensure_installed = vim.tbl_keys(servers),
-				automatic_installation = true,
-				automatic_enable = true,
-			})
+
+			-- Configure default capabilities without color provider support
+			local default_capabilities = vim.lsp.protocol.make_client_capabilities()
+			-- Remove color provider capabilities entirely (setting to false causes protocol errors)
+			default_capabilities.textDocument.colorProvider = vim.NIL
+			if default_capabilities.textDocument.documentColor then
+				default_capabilities.textDocument.documentColor = vim.NIL
+			end
+
 			for name, config in pairs(servers) do
+				-- Merge server config with disabled color capabilities
+				config.capabilities = vim.tbl_deep_extend("force", default_capabilities, config.capabilities or {})
 				vim.lsp.config(name, config)
 			end
 
@@ -242,7 +249,7 @@ return {
 					local wk = require("which-key")
 					local opts = { buffer = args.buf }
 
-					-- vim.lsp.document_color.enable(false, args.buf)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
 
 					wk.add({
 						{
