@@ -53,7 +53,7 @@ readonly NC='\033[0m' # No Color
 declare -a MACOS_IMAGE_LIBS=(libjpeg libtiff little-cms2 openjpeg webp pkg-config fontconfig cairo libmagic)
 declare -a MACOS_CORE_TOOLS=(make wget direnv cmake fzf xz jq miller git git-lfs bat nvim gpg)
 declare -a MACOS_DEV_TOOLS=(awscli aws-iam-authenticator the_silver_searcher fd django-completion podman httpie chafa pgformatter jd composer k3d tflint yq)
-declare -a MACOS_EXTRA_TOOLS=(git-absorb duckdb difftastic tectonic imagemagick ghostscript pngpaste git-spice tldr)
+declare -a MACOS_EXTRA_TOOLS=(git-absorb duckdb difftastic tectonic imagemagick pngpaste git-spice tldr taplo)
 declare -a MACOS_FUN_TOOLS=(tldr lynx cowsay fortune)
 
 # Package arrays for Fedora

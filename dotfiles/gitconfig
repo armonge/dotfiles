@@ -31,6 +31,9 @@
 [merge]
   conflictstyle = diff3
 
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
 
 [commit]
 	gpgsign = true
@@ -81,7 +84,6 @@
 [rebase]
 	autoStash = true
 	autosquash = true
-        instructionFormat = "%s%nexec GIT_COMMITTER_DATE=\"%cI\" GIT_COMMITTER_NAME=\"%cN\" GIT_COMMITTER_EMAIL=\"%cE\" git commit --amend --no-verify --no-edit%n"
 
 [fetch]
 	prune = true
@@ -92,3 +94,7 @@
 [committer]
 	email = andres.monge@parcellab.com
 	name = Andres Reyes Monge
+[merge "beads"]
+	driver = bd merge %A %O %L %R
+[spice "branchCreate"]
+	commit = false

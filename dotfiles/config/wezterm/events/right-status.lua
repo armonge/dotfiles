@@ -25,6 +25,7 @@ local M = {}
 
 local ICON_SEPARATOR = nf.oct_dash
 local ICON_DATE = nf.fa_calendar
+local ICON_KEY_TABLE = nf.md_keyboard
 
 ---@type string[]
 local discharging_icons = {
@@ -58,12 +59,16 @@ local charging_icons = {
 local colors = {
   date      = { fg = '#fab387', bg = 'rgba(0, 0, 0, 0.4)' },
   battery   = { fg = '#f9e2af', bg = 'rgba(0, 0, 0, 0.4)' },
-  separator = { fg = '#74c7ec', bg = 'rgba(0, 0, 0, 0.4)' }
+  separator = { fg = '#74c7ec', bg = 'rgba(0, 0, 0, 0.4)' },
+  key_table = { fg = '#a6e3a1', bg = 'rgba(0, 0, 0, 0.6)' },
 }
 
 local cells = Cells:new()
 
 cells
+    :add_segment("key_table_icon", ICON_KEY_TABLE .. "  ", colors.key_table, attr(attr.intensity("Bold")))
+    :add_segment("key_table_text", "", colors.key_table, attr(attr.intensity("Bold")))
+    :add_segment("key_table_separator", " " .. ICON_SEPARATOR .. "  ", colors.separator)
     :add_segment("date_icon", ICON_DATE .. "  ", colors.date, attr(attr.intensity("Bold")))
     :add_segment("date_text", "", colors.date, attr(attr.intensity("Bold")))
     :add_segment("separator", " " .. ICON_SEPARATOR .. "  ", colors.separator)
@@ -101,15 +106,28 @@ M.setup = function(opts)
 
   wezterm.on("update-right-status", function(window, _pane)
     local battery_text, battery_icon = battery_info()
+    local key_table = window:active_key_table()
 
     cells
         :update_segment_text("date_text", wezterm.strftime(valid_opts.date_format))
         :update_segment_text("battery_icon", battery_icon)
         :update_segment_text("battery_text", battery_text)
 
-    window:set_right_status(
-      wezterm.format(cells:render({ "date_icon", "date_text", "separator", "battery_icon", "battery_text" }))
-    )
+    -- Build segments list, conditionally including key table if active
+    local segments = {}
+    if key_table then
+      cells:update_segment_text("key_table_text", key_table)
+      table.insert(segments, "key_table_icon")
+      table.insert(segments, "key_table_text")
+      table.insert(segments, "key_table_separator")
+    end
+    table.insert(segments, "date_icon")
+    table.insert(segments, "date_text")
+    table.insert(segments, "separator")
+    table.insert(segments, "battery_icon")
+    table.insert(segments, "battery_text")
+
+    window:set_right_status(wezterm.format(cells:render(segments)))
   end)
 end
 

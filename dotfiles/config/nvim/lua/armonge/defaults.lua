@@ -70,6 +70,10 @@ vim.g.loaded_ruby_provider = 0
 -- Perl {
 vim.g.loaded_perl_provider = 0
 -- }
+
+-- Local Config {
+vim.opt.exrc = true -- Allow loading local .nvimrc/.exrc/.nvim.lua files
+-- }
 vim.api.nvim_create_user_command("Browse", function(opts)
 	vim.fn.system({ "open", opts.fargs[1] })
 end, { nargs = 1 })

@@ -3,12 +3,17 @@ local wk = require("which-key")
 wk.add({
 	{
 		"<leader>rr",
-		"<CMD>Rest run<CR>",
+		"<CMD>:NvimHttpYac<CR>",
 		desc = "Run request under the cursor",
 	},
 	{
-		"<leader>rl",
-		"<CMD>Rest  last<CR>",
-		desc = "Run last rest command",
+		"<leader>rq",
+		"<CMD>:NvimHttpYacAll<CR>",
+		desc = "Run all requests",
+	},
+	{
+		"<leader>rp",
+		"<CMD>:NvimHttpYacPicker<CR>",
+		desc = "Run named request",
 	},
 }, { buffer = 0 })

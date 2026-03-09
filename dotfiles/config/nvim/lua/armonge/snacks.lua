@@ -102,7 +102,7 @@ return {
 				enabled = true,
 				timeout = 3000,
 			},
-			picker = { enabled = true, ui_select = true },
+			picker = { enabled = true, ui_select = true, exclude = { "dist", "node_modules", ".git" } },
 			quickfile = { enabled = true },
 			scope = { enabled = true },
 			scroll = { enabled = true },
@@ -123,10 +123,16 @@ return {
 		-- stylua: ignore start
 		keys = {
 			-- Top Pickers & Explorer
-			{ "<leader>tT", function() Snacks.picker() end,               desc = "Show all pickers" },
-			{ "<leader>tp", function() Snacks.picker.smart() end,         desc = "Smart Find Files" },
-			{ "<leader>tb", function() Snacks.picker.buffers() end,       desc = "Buffers" },
-			{ "<C-s>",      function() Snacks.picker.grep() end,          desc = "Grep" },
+			{ "<leader>tT", function() Snacks.picker() end,         desc = "Show all pickers" },
+			{ "<leader>tp", function() Snacks.picker.smart() end,   desc = "Smart Find Files" },
+			{ "<leader>tb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+			{
+				"<C-s>",
+				function()
+					Snacks.picker.grep({ hidden = true })
+				end,
+				desc = "Grep"
+			},
 			-- { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
 			{ "<leader>tn", function() Snacks.picker.notifications() end, desc = "Notification History" },
 			-- find

@@ -2,8 +2,21 @@
 # Lazy-load completion scripts to improve bash startup time
 # Completions load on first tab-press for each command
 
-# Track which completions have been loaded
-declare -A __completion_loaded
+# Track which completions have been loaded (compatible with Bash 3.x)
+__completion_loaded=""
+
+# Check if a completion has been loaded
+__is_completion_loaded() {
+  case "$__completion_loaded" in
+    *":$1:"*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+# Mark a completion as loaded
+__mark_completion_loaded() {
+  __completion_loaded="${__completion_loaded}:$1:"
+}
 
 # Generic lazy completion loader
 __lazy_load_completion() {
@@ -11,7 +24,7 @@ __lazy_load_completion() {
   local load_function="$2"
 
   # Only load once
-  if [ "${__completion_loaded[$cmd]}" = "1" ]; then
+  if __is_completion_loaded "$cmd"; then
     return 0
   fi
 
@@ -19,7 +32,7 @@ __lazy_load_completion() {
   eval "$load_function"
 
   # Mark as loaded
-  __completion_loaded[$cmd]=1
+  __mark_completion_loaded "$cmd"
 
   # Return success to trigger completion retry
   return 124 # Special return code to tell bash to retry completion

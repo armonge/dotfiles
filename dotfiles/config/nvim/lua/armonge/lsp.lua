@@ -8,7 +8,6 @@ local masonPackages = {
 	"yamlfmt",
 	"erg",
 	"prettier",
-	"djlint",
 	"jq",
 	"shfmt",
 	"stylua",
@@ -16,30 +15,35 @@ local masonPackages = {
 	"actionlint",
 	"kulala-fmt",
 	"hadolint",
-	"typescript-language-server",
+	-- "typescript-language-server",
 }
 
 local servers = {
-	-- ty = {},
-	copilot = {},
+	ty = {},
+	-- copilot = {},
 	jinja_lsp = {},
 	-- pyrefly = {},
-	ty = {
-		settings = {
-			ty = {
-				experimental = {
-					autoImport = true,
-					rename = true,
-				},
-			},
-		},
-	},
+	-- zuban = {},
+	-- ty = {
+	-- 	settings = {
+	-- 		ty = {
+	-- 			-- disableLanguageServices = true,
+	-- 			completions = {
+	-- 				autoImport = true,
+	-- 			},
+	-- 			experimental = {
+	-- 				autoImport = true,
+	-- 				rename = true,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	biome = {},
 	yamlls = {},
 	dockerls = {},
 	docker_compose_language_service = {},
 	bashls = {},
-	-- vtsls = {},
+	vtsls = {},
 	jsonls = {},
 	lua_ls = {},
 	stylelint_lsp = {},
@@ -52,12 +56,7 @@ local servers = {
 		},
 	},
 	-- jedi_language_server = {},
-	beancount = {
-		cmd = { "beancount-language-server", "--stdio" },
-		init_options = {
-			journal_file = os.getenv("HOME") .. "/beancount/personal.beancount",
-		},
-	},
+	beancount = {},
 	powershell_es = {},
 	ast_grep = {},
 	harper_ls = {
@@ -82,7 +81,7 @@ local servers = {
 	-- 		},
 	-- 	},
 	-- },
-	taplo = {},
+	-- taplo = {},
 }
 
 return {
@@ -98,29 +97,19 @@ return {
 				debug = true,
 				sources = {
 					nullls.builtins.formatting.stylua,
+					nullls.builtins.formatting.djhtml,
 					require("none-ls.formatting.ruff"),
 					require("none-ls.formatting.mbake"),
-					require("none-ls.formatting.eslint"),
+					-- require("none-ls.formatting.eslint"),
 					nullls.builtins.formatting.sqruff,
-					nullls.builtins.formatting.djlint,
 					nullls.builtins.formatting.joker,
 					nullls.builtins.formatting.terraform_fmt,
 					nullls.builtins.formatting.markdownlint,
-
-					{
-						name = "kulala_fmt",
-						method = FORMATTING,
-						filetypes = { "http" },
-						generator = helpers.formatter_factory({
-							from_stdin = false,
-							to_temp_file = true,
-							command = "kulala-fmt",
-							args = {
-								"format",
-								"$FILENAME",
-							},
-						}),
-					},
+					require("none-ls.formatting.taplo").with({
+						extra_args = {
+							"--no-auto-config",
+						},
+					}),
 					{
 						name = "bean_format",
 						meta = {
@@ -153,11 +142,10 @@ return {
 					nullls.builtins.formatting.shfmt,
 					nullls.builtins.formatting.shellharden,
 
-					nullls.builtins.diagnostics.djlint,
 					nullls.builtins.diagnostics.sqruff,
 					nullls.builtins.diagnostics.terraform_validate,
 					nullls.builtins.diagnostics.hadolint,
-					require("none-ls.diagnostics.eslint"),
+					-- require("none-ls.diagnostics.eslint"),
 
 					nullls.builtins.hover.dictionary,
 					nullls.builtins.hover.printenv,
@@ -165,7 +153,7 @@ return {
 					nullls.builtins.code_actions.gitrebase,
 					nullls.builtins.code_actions.gitsigns,
 					nullls.builtins.code_actions.refactoring,
-					require("none-ls.code_actions.eslint"),
+					-- require("none-ls.code_actions.eslint"),
 				},
 				on_attach = function(client, bufnr)
 					if vim.lsp.client.supports_method("textDocument/formatting", bufnr) then
@@ -212,44 +200,33 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
-			"saghen/blink.cmp",
+			-- "saghen/blink.cmp",
 		},
 		opts = {
 			ensure_installed = vim.tbl_keys(servers),
 			automatic_installation = true,
 			automatic_enable = true,
 		},
-		config = function()
+		config = function(_, opts)
 			local mason_lspconfig = require("mason-lspconfig")
-
-			-- Configure default capabilities without color provider support
-			local default_capabilities = vim.lsp.protocol.make_client_capabilities()
-			-- Remove color provider capabilities entirely (setting to false causes protocol errors)
-			default_capabilities.textDocument.colorProvider = vim.NIL
-			if default_capabilities.textDocument.documentColor then
-				default_capabilities.textDocument.documentColor = vim.NIL
-			end
+			mason_lspconfig.setup(opts)
 
 			for name, config in pairs(servers) do
-				-- Merge server config with disabled color capabilities
-				config.capabilities = vim.tbl_deep_extend("force", default_capabilities, config.capabilities or {})
 				vim.lsp.config(name, config)
+				vim.lsp.enable(name)
 			end
-
-			vim.lsp.enable("djls")
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/neoconf.nvim", "folke/snacks.nvim" },
 		config = function()
+			vim.lsp.enable("djls")
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(args)
 					local wk = require("which-key")
 					local opts = { buffer = args.buf }
-
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
 
 					wk.add({
 						{
@@ -279,27 +256,18 @@ return {
 						{ "<C-k>",      vim.lsp.buf.signature_help, desc = "Signature help" },
 						{ "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
 					}, opts)
+
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client then
+						client.server_capabilities.semanticTokensProvider = nil
+					end
 				end,
 			})
 
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "BlinkCmpMenuOpen",
-				callback = function()
-					-- require("copilot.suggestion").dismiss()
-					vim.b.copilot_suggestion_hidden = true
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "BlinkCmpMenuClose",
-				callback = function()
-					vim.b.copilot_suggestion_hidden = false
-				end,
-			})
 			--
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-			vim.diagnostic.config({ virtual_text = true })
+			vim.diagnostic.config({ virtual_text = false })
 		end,
 	},
 	{
@@ -328,9 +296,9 @@ return {
 			-- your options here
 		},
 	},
-	{
-		"pmizio/typescript-tools.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		opts = {},
-	},
+	-- {
+	-- 	"pmizio/typescript-tools.nvim",
+	-- 	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	-- 	opts = {},
+	-- },
 }

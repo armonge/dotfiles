@@ -28,6 +28,12 @@ local keys = {
     mods = 'NONE',
     action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }),
   },
+  -- Show all key bindings (like which-key)
+  {
+    key = '?',
+    mods = 'LEADER',
+    action = act.ShowLauncherArgs({ flags = 'FUZZY|KEY_ASSIGNMENTS', title = '🔑 Key Bindings' }),
+  },
   { key = 'F6',  mods = 'NONE',    action = act.EmitEvent('scrollback.open-in-editor') },
   { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
   { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },

@@ -3,3 +3,5 @@
 *.jpeg diff=spaceman-diff
 *.gif  diff=spaceman-diff
 *.json diff=json
+*.beads/beads.jsonl merge=beads
+* merge=mergiraf

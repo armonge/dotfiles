@@ -17,3 +17,4 @@ venv/
 .textlintrc.json
 **/.claude/settings.local.json
 .mcp.json
+.beads

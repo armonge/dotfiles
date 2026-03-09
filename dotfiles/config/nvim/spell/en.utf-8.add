@@ -71,6 +71,7 @@ UAT
 UNHANDLED
 UTM
 Unpublish
+ValidationError
 ValueError
 WISMO
 Wahoo
@@ -114,6 +115,7 @@ failfast
 fieldset
 flake8
 fmt
+fullmatch
 getattr
 gettext
 html
@@ -121,6 +123,7 @@ http
 https
 i18n
 isort
+json
 jsonschema
 k8s
 keycloak
