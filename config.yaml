@@ -124,6 +124,10 @@ dotfiles:
     src: config/bashrc.d
     dst: ~/.config/bashrc.d
     link: absolute
+  d_ghostty:
+    src: config/ghostty
+    dst: ~/.config/ghostty
+    link: absolute
 profiles:
   armonge-laptop:
     dotfiles:
@@ -154,3 +158,4 @@ profiles:
     - d_nvim
     - d_mcphub
     - d_bashrc.d
+    - d_ghostty
