@@ -81,6 +81,21 @@ vim.api.nvim_create_user_command("Browse", function(opts)
 	vim.fn.system({ "open", opts.fargs[1] })
 end, { nargs = 1 })
 
+-- Override gx to resolve relative paths against the current buffer's directory
+vim.keymap.set("n", "gx", function()
+	local word = vim.fn.expand("<cfile>")
+	local ok, err = vim.ui.open(word)
+	if not ok or (ok.wait and ok:wait().code ~= 0) then
+		local buf_dir = vim.fn.expand("%:p:h")
+		local abs = buf_dir .. "/" .. word
+		if vim.fn.filereadable(abs) == 1 or vim.fn.isdirectory(abs) == 1 then
+			vim.ui.open(abs)
+		else
+			vim.notify("gx: cannot open " .. word, vim.log.levels.WARN)
+		end
+	end
+end, { desc = "Open file/URI under cursor (resolves relative paths)" })
+
 --
 --
 -- Folding {
