@@ -18,7 +18,7 @@ return {
 					{
 						{
 							section = "terminal",
-							cmd = "fortune -s | cowsay",
+							cmd = "if command -v fortune >/dev/null 2>&1 && command -v cowsay >/dev/null 2>&1; then fortune -s | cowsay; elif command -v fortune >/dev/null 2>&1; then fortune -s; else echo 'Welcome to Neovim'; fi",
 						},
 						function()
 							local in_git = Snacks.git.get_root() ~= nil

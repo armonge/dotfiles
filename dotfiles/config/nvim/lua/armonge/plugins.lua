@@ -23,7 +23,8 @@ require("lazy").setup({
 	{ import = "armonge.theme" },
 	{ import = "armonge.treesitter" },
 	{ import = "armonge.lsp" },
-	-- { import = "armonge.blink" },
+	{ import = "armonge.db" },
+	{ import = "armonge.blink" },
 	{ import = "armonge.motions" },
 	{ import = "armonge.copilot" },
 	{

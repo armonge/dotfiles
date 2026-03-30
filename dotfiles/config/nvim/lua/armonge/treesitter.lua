@@ -4,7 +4,6 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"nvim-treesitter/nvim-treesitter-context",
-			"nvim-treesitter/nvim-treesitter-refactor",
 		},
 		keys = {
 			{
@@ -20,32 +19,6 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				modules = {},
-				refactor = {
-					enable = true,
-					clear_on_cursor_move = true,
-					highlight_current_scope = true,
-					highlight_definitions = {
-						enable = true,
-						clear_on_cursor_move = true,
-					},
-					smart_rename = {
-						enable = true,
-						keymaps = {
-							smart_rename = "<leader>rn",
-						},
-					},
-					navigation = {
-						enable = true,
-						-- Assign keymaps to false to disable them, e.g. `goto_definition = false`
-						keymaps = {
-							goto_definition = "gnd",
-							list_definitions = "gnD",
-							list_definitions_toc = "gO",
-							goto_next_usage = "<a-*>",
-							goto_previous_usage = "<a-#>",
-						},
-					},
-				},
 				sync_install = false,
 				auto_install = true,
 				ignore_install = {},
@@ -107,7 +80,7 @@ return {
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
-				indent = { enable = true },
+				indent = { enable = true }, -- Controls `=` reindent operator (distinct from Snacks visual indent guides)
 				autotag = { enable = true },
 				textobjects = {
 					select = {

@@ -20,24 +20,7 @@ local masonPackages = {
 
 local servers = {
 	ty = {},
-	-- copilot = {},
 	jinja_lsp = {},
-	-- pyrefly = {},
-	-- zuban = {},
-	-- ty = {
-	-- 	settings = {
-	-- 		ty = {
-	-- 			-- disableLanguageServices = true,
-	-- 			completions = {
-	-- 				autoImport = true,
-	-- 			},
-	-- 			experimental = {
-	-- 				autoImport = true,
-	-- 				rename = true,
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
 	biome = {},
 	yamlls = {},
 	dockerls = {},
@@ -46,7 +29,7 @@ local servers = {
 	vtsls = {},
 	jsonls = {},
 	lua_ls = {},
-	stylelint_lsp = {},
+	-- stylelint_lsp = {},
 	clojure_lsp = {},
 	ruff = {
 		init_options = {
@@ -55,7 +38,6 @@ local servers = {
 			},
 		},
 	},
-	-- jedi_language_server = {},
 	beancount = {},
 	powershell_es = {},
 	ast_grep = {},
@@ -66,22 +48,6 @@ local servers = {
 			},
 		},
 	},
-	-- pyright = {
-	-- 	settings = {
-	-- 		pyright = {
-	-- 			-- Using Ruff's import organizer
-	-- 			disableOrganizeImports = true,
-	-- 		},
-	-- 		python = {
-	-- 			analysis = {
-	-- 				-- Ignore all files for analysis to exclusively use Ruff for linting
-	-- 				ignore = { "*" },
-	-- 				typeCheckingMode = "off", -- Using mypy
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
-	-- taplo = {},
 }
 
 return {
@@ -156,7 +122,7 @@ return {
 					-- require("none-ls.code_actions.eslint"),
 				},
 				on_attach = function(client, bufnr)
-					if vim.lsp.client.supports_method("textDocument/formatting", bufnr) then
+					if client:supports_method("textDocument/formatting", bufnr) then
 						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 						vim.api.nvim_create_autocmd("BufWritePre", {
 							group = augroup,
@@ -186,11 +152,16 @@ return {
 
 			local registry = require("mason-registry")
 			registry.refresh(function()
+				local missing = {}
 				for _, package_name in ipairs(masonPackages) do
-					local pkg = registry.get_package(package_name)
-					if not pkg:is_installed() then
+					local ok, pkg = pcall(registry.get_package, package_name)
+					if ok and not pkg:is_installed() then
+						table.insert(missing, package_name)
 						pkg:install()
 					end
+				end
+				if #missing > 0 then
+					vim.notify("Mason: installing " .. table.concat(missing, ", "), vim.log.levels.INFO)
 				end
 			end)
 		end,
@@ -200,7 +171,7 @@ return {
 		dependencies = {
 			"mason-org/mason.nvim",
 			"neovim/nvim-lspconfig",
-			-- "saghen/blink.cmp",
+			"saghen/blink.cmp",
 		},
 		opts = {
 			ensure_installed = vim.tbl_keys(servers),
@@ -225,6 +196,16 @@ return {
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(args)
+					-- Only register keymaps once per buffer
+					if vim.b[args.buf].lsp_keymaps_set then
+						local client = vim.lsp.get_client_by_id(args.data.client_id)
+						if client then
+							client.server_capabilities.semanticTokensProvider = nil
+						end
+						return
+					end
+					vim.b[args.buf].lsp_keymaps_set = true
+
 					local wk = require("which-key")
 					local opts = { buffer = args.buf }
 
@@ -267,7 +248,6 @@ return {
 			--
 			-- Global mappings.
 			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-			vim.diagnostic.config({ virtual_text = false })
 		end,
 	},
 	{
@@ -296,9 +276,4 @@ return {
 			-- your options here
 		},
 	},
-	-- {
-	-- 	"pmizio/typescript-tools.nvim",
-	-- 	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-	-- 	opts = {},
-	-- },
 }
