@@ -26,7 +26,18 @@ local servers = {
 	dockerls = {},
 	docker_compose_language_service = {},
 	bashls = {},
-	vtsls = {},
+	vtsls = {
+		settings = {
+			typescript = {
+				implementationsCodeLens = { enabled = true },
+				referencesCodeLens = { enabled = true, showOnAllFunctions = true },
+			},
+			javascript = {
+				implementationsCodeLens = { enabled = true },
+				referencesCodeLens = { enabled = true, showOnAllFunctions = true },
+			},
+		},
+	},
 	jsonls = {},
 	lua_ls = {},
 	-- stylelint_lsp = {},
@@ -197,15 +208,22 @@ return {
 			-- Neovim 0.12 built-in LSP features
 			vim.lsp.codelens.enable(true)
 
+			-- Handle vtsls "editor.action.showReferences" codelens command
+			vim.lsp.commands["editor.action.showReferences"] = function(command, ctx)
+				local locations = command.arguments[3]
+				local client = vim.lsp.get_client_by_id(ctx.client_id)
+				if locations and #locations > 0 then
+					local items = vim.lsp.util.locations_to_items(locations, client.offset_encoding)
+					vim.fn.setloclist(0, {}, " ", { title = "References", items = items, context = ctx })
+					vim.cmd.lopen()
+				end
+			end
+
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(args)
 					-- Only register keymaps once per buffer
 					if vim.b[args.buf].lsp_keymaps_set then
-						local client = vim.lsp.get_client_by_id(args.data.client_id)
-						if client then
-							client.server_capabilities.semanticTokensProvider = nil
-						end
 						return
 					end
 					vim.b[args.buf].lsp_keymaps_set = true
@@ -213,13 +231,9 @@ return {
 					local wk = require("which-key")
 					local opts = { buffer = args.buf }
 
+					-- K (hover), grn (rename), gra (code action), <C-S> (signature help)
+					-- are all built-in defaults since Neovim 0.11+
 					wk.add({
-						{
-							"<leader>a",
-							vim.lsp.buf.code_action,
-							desc = "Apply code action",
-							mode = { "n", "v" },
-						},
 						{
 							"<leader>wa",
 							vim.lsp.buf.add_workspace_folder,
@@ -237,15 +251,7 @@ return {
 							end,
 							desc = "List workspace folders",
 						},
-						{ "K",          vim.lsp.buf.hover,          desc = "More information on a popup" },
-						{ "<C-k>",      vim.lsp.buf.signature_help, desc = "Signature help" },
-						{ "<leader>rn", vim.lsp.buf.rename,         desc = "Rename" },
 					}, opts)
-
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-					if client then
-						client.server_capabilities.semanticTokensProvider = nil
-					end
 				end,
 			})
 		end,
