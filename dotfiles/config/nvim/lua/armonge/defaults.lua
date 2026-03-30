@@ -76,7 +76,7 @@ vim.opt.exrc = true -- Allow loading local .nvimrc/.exrc/.nvim.lua files
 -- }
 
 -- Neovim 0.12 popup menu border
-vim.opt.pumborder = true
+vim.opt.pumborder = "rounded"
 vim.api.nvim_create_user_command("Browse", function(opts)
 	vim.fn.system({ "open", opts.fargs[1] })
 end, { nargs = 1 })
