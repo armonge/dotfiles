@@ -193,6 +193,10 @@ return {
 		dependencies = { "folke/neoconf.nvim", "folke/snacks.nvim" },
 		config = function()
 			vim.lsp.enable("djls")
+
+			-- Neovim 0.12 built-in LSP features
+			vim.lsp.codelens.enable(true)
+
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(args)
@@ -244,10 +248,6 @@ return {
 					end
 				end,
 			})
-
-			--
-			-- Global mappings.
-			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 		end,
 	},
 	{
