@@ -1,5 +1,11 @@
 return {
 	{
+		"m4xshen/hardtime.nvim",
+		lazy = false,
+		dependencies = { "MunifTanjim/nui.nvim" },
+		opts = {},
+	},
+	{
 		"johmsalas/text-case.nvim",
 		config = function()
 			require("textcase").setup({})

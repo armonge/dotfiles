@@ -63,96 +63,41 @@ local servers = {
 
 return {
 	{
-		"nvimtools/none-ls.nvim",
-		config = function()
-			local nullls = require("null-ls")
-			local helpers = require("null-ls.helpers")
-			local methods = require("null-ls.methods")
-			local FORMATTING = methods.internal.FORMATTING
-			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-			nullls.setup({
-				debug = true,
-				sources = {
-					nullls.builtins.formatting.stylua,
-					nullls.builtins.formatting.djhtml,
-					require("none-ls.formatting.ruff"),
-					require("none-ls.formatting.mbake"),
-					-- require("none-ls.formatting.eslint"),
-					nullls.builtins.formatting.sqruff,
-					nullls.builtins.formatting.joker,
-					nullls.builtins.formatting.terraform_fmt,
-					nullls.builtins.formatting.markdownlint,
-					require("none-ls.formatting.taplo").with({
-						extra_args = {
-							"--no-auto-config",
-						},
-					}),
-					{
-						name = "bean_format",
-						meta = {
-							url =
-							"https://beancount.github.io/docs/running_beancount_and_generating_reports.html#bean-format",
-							description =
-							"This pure text processing tool will reformat `beancount` input to right-align all the numbers at the same, minimal column.",
-							notes = {
-								"It left-aligns all the currencies.",
-								"It only modifies whitespace.",
-							},
-						},
-						method = FORMATTING,
-						filetypes = { "beancount" },
-						generator = helpers.formatter_factory({
-							from_temp_file = true,
-							from_stdin = false,
-							to_temp_file = true,
-							command = "uvx",
-							args = {
-								"--from",
-								"beancount",
-								"bean-format",
-								"$FILENAME",
-								"-o",
-								"$FILENAME",
-							},
-						}),
-					},
-					nullls.builtins.formatting.shfmt,
-					nullls.builtins.formatting.shellharden,
-
-					nullls.builtins.diagnostics.sqruff,
-					nullls.builtins.diagnostics.terraform_validate,
-					nullls.builtins.diagnostics.hadolint,
-					-- require("none-ls.diagnostics.eslint"),
-
-					nullls.builtins.hover.dictionary,
-					nullls.builtins.hover.printenv,
-
-					nullls.builtins.code_actions.gitrebase,
-					nullls.builtins.code_actions.gitsigns,
-					nullls.builtins.code_actions.refactoring,
-					-- require("none-ls.code_actions.eslint"),
+		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				htmldjango = { "djlint" },
+				python = { "ruff_format" },
+				sql = { "sqruff" },
+				clojure = { "joker" },
+				terraform = { "terraform_fmt" },
+				markdown = { "markdownlint" },
+				toml = { "taplo" },
+				sh = { "shfmt", "shellharden" },
+				bash = { "shfmt", "shellharden" },
+			},
+			default_format_opts = {
+				lsp_format = "fallback",
+			},
+			format_on_save = function(bufnr)
+				-- Skip formatting with beancount LSP since it's broken
+				return {
+					timeout_ms = 500,
+					lsp_format = "fallback",
+					-- filter = function(client)
+					-- 	return client.name ~= "beancount"
+					-- end,
+				}
+			end,
+			formatters = {
+				taplo = {
+					append_args = { "--no-auto-config" },
 				},
-				on_attach = function(client, bufnr)
-					if client:supports_method("textDocument/formatting", bufnr) then
-						vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-						vim.api.nvim_create_autocmd("BufWritePre", {
-							group = augroup,
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.format({
-									filter = function(lspClient)
-										-- Skip formatting with `beancount` LSP since it's broken and
-										-- we can use `bean-format` directly
-										return lspClient.name ~= "beancount"
-									end,
-								})
-							end,
-						})
-					end
-				end,
-			})
-		end,
-		dependencies = { "nvim-lua/plenary.nvim", "nvimtools/none-ls-extras.nvim" },
+			},
+		},
 	},
 	{
 		"williamboman/mason.nvim",
@@ -187,7 +132,9 @@ return {
 		opts = {
 			ensure_installed = vim.tbl_keys(servers),
 			automatic_installation = true,
-			automatic_enable = true,
+			automatic_enable = {
+				exclude = { "ts_ls" },
+			},
 		},
 		config = function(_, opts)
 			local mason_lspconfig = require("mason-lspconfig")
@@ -201,12 +148,14 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "folke/neoconf.nvim", "folke/snacks.nvim" },
+		dependencies = { "folke/snacks.nvim" },
 		config = function()
 			vim.lsp.enable("djls")
 
 			-- Neovim 0.12 built-in LSP features
 			vim.lsp.codelens.enable(true)
+			vim.lsp.inlay_hint.enable(true)
+			vim.lsp.document_color.enable(true)
 
 			-- Handle vtsls "editor.action.showReferences" codelens command
 			vim.lsp.commands["editor.action.showReferences"] = function(command, ctx)
@@ -268,18 +217,6 @@ return {
 				-- When relative, you can also provide a path to the library in the plugin dir
 				"luvit-meta/library", -- see below
 			},
-		},
-	},
-	{
-		"folke/neoconf.nvim",
-		dependencies = { "folke/lazydev.nvim", "neovim/nvim-lspconfig" },
-	},
-	{
-		"zeioth/garbage-day.nvim",
-		dependencies = "neovim/nvim-lspconfig",
-		event = "VeryLazy",
-		opts = {
-			-- your options here
 		},
 	},
 }

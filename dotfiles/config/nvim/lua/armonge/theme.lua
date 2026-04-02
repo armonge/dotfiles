@@ -57,7 +57,7 @@ return {
 		-- Optional dependencies
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
+			"echasnovski/mini.nvim",
 		},
 		keys = { -- Example mapping to toggle outline
 			{ "<leader>o", "<cmd>AerialToggle!<CR>", desc = "Toggle outline" },
@@ -145,38 +145,14 @@ return {
 		},
 		ft = { "markdown" },
 	},
-	{ "vladdoster/remember.nvim", config = true, main = "remember" },
+	-- Use Neovim 0.12 built-in virtual_lines for inline diagnostics
 	{
-		"rachartier/tiny-inline-diagnostic.nvim",
-		event = "VeryLazy", -- Or `LspAttach`
-		priority = 1000, -- Needs to be loaded in first
-		opts = {
-			options = {
-				show_source = {
-					enabled = true,
-				},
-				-- Use icons defined in the diagnostic configuration
-				use_icons_from_diagnostic = true,
-				multilines = {
-					-- Enable multiline diagnostic messages
-					enabled = true,
-
-					-- Always show messages on all lines for multiline diagnostics
-					always_show = true,
-
-					-- Trim whitespaces from the start/end of each line
-					trim_whitespaces = false,
-
-					-- Replace tabs with spaces in multiline diagnostics
-					tabstop = 4,
-				},
-				-- Display all diagnostic messages on the cursor line
-				show_all_diags_on_cursorline = true,
-			},
-		},
-		config = function(_, opts)
-			require("tiny-inline-diagnostic").setup(opts)
-			vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
+		"neovim/nvim-lspconfig",
+		opts = function()
+			vim.diagnostic.config({
+				virtual_text = false,
+				virtual_lines = { current_line = true },
+			})
 		end,
 	},
 	{

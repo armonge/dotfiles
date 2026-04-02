@@ -1,8 +1,9 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			{ "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
 			"nvim-treesitter/nvim-treesitter-context",
 		},
 		keys = {
@@ -17,87 +18,47 @@ return {
 		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				modules = {},
-				sync_install = false,
-				auto_install = true,
-				ignore_install = {},
-				-- Add languages to be installed here that you want installed for treesitter
-				ensure_installed = {
-					"bash",
-					"beancount",
-					"c",
-					"clojure",
-					"cmake",
-					"cpp",
-					"css",
-					"diff",
-					"go",
-					"html",
-					"htmldjango",
-					"javascript",
-					"jsonc",
-					"latex",
-					"lua",
-					"markdown",
-					"markdown_inline",
-					"norg",
-					"python",
-					"regex",
-					"rust",
-					"scss",
-					"svelte",
-					"terraform",
-					"toml",
-					"tsx",
-					"typescript",
-					"typst",
-					"vim",
-					"vimdoc",
-					"vue",
-					"yaml",
-				},
-				highlight = {
-					enable = true,
-
-					-- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-					-- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-					-- the name of the parser)
-					-- list of language that will be disabled
-					disable = {},
-					-- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-					-- disable = function(lang, buf)
-					--     local max_filesize = 100 * 1024 -- 100 KB
-					--     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-					--     if ok and stats and stats.size > max_filesize then
-					--         return true
-					--     end
-					-- end,
-
-					-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-					-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-					-- Using this option may slow down your editor, and you may see some duplicate highlights.
-					-- Instead of true it can also be a list of languages
-					additional_vim_regex_highlighting = false,
-				},
-				indent = { enable = true }, -- Controls `=` reindent operator (distinct from Snacks visual indent guides)
-				autotag = { enable = true },
-				textobjects = {
-					select = {
-						enable = true,
-						keymaps = {
-							-- Your custom capture.
-							-- ["aF"] = "@custom_capture",
-							["ac"] = "@class.outer",
-							["ic"] = "@class.inner",
-
-							-- Built-in captures.
-							["af"] = "@function.outer",
-							["if"] = "@function.inner",
-						},
-					},
+			require("nvim-treesitter").install({
+				"bash",
+				"clojure",
+				"css",
+				"dockerfile",
+				"html",
+				"javascript",
+				"json",
+				"lua",
+				"markdown",
+				"python",
+				"sql",
+				"terraform",
+				"toml",
+				"typescript",
+				"yaml",
+			})
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = {
+					lookahead = true,
 				},
 			})
+
+			vim.keymap.set({ "x", "o" }, "ac", function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "ic", function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "af", function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+			end)
+			vim.keymap.set({ "x", "o" }, "if", function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+			end)
 		end,
 	},
 }
