@@ -11,9 +11,6 @@ elseif platform.is_linux then
   mod.SUPER = "ALT"
   mod.SUPER_REV = "ALT|CTRL"
 end
-local wezterm = require("wezterm")
-local config = wezterm.config_builder()
-
 
 -- stylua: ignore
 local keys = {
@@ -54,6 +51,33 @@ local keys = {
         local url = window:get_selection_text_for_pane(pane)
         wezterm.log_info('opening: ' .. url)
         wezterm.open_with(url)
+      end),
+    }),
+  },
+
+  -- quick select: git hash
+  {
+    key = 'g',
+    mods = mod.SUPER_REV,
+    action = wezterm.action.QuickSelectArgs({
+      label = 'copy git hash',
+      patterns = { '\\b[0-9a-f]{7,40}\\b' },
+      action = wezterm.action_callback(function(window, pane)
+        local hash = window:get_selection_text_for_pane(pane)
+        window:copy_to_clipboard(hash, 'Clipboard')
+      end),
+    }),
+  },
+  -- quick select: file path
+  {
+    key = 'e',
+    mods = mod.SUPER_REV,
+    action = wezterm.action.QuickSelectArgs({
+      label = 'copy file path',
+      patterns = { '[\\w\\-\\./]+/[\\w\\-\\./]+' },
+      action = wezterm.action_callback(function(window, pane)
+        local path = window:get_selection_text_for_pane(pane)
+        window:copy_to_clipboard(path, 'Clipboard')
       end),
     }),
   },
@@ -160,7 +184,7 @@ local keys = {
     action = act.ActivateKeyTable({
       name = 'resize_font',
       one_shot = false,
-      timemout_miliseconds = 1000,
+      timeout_milliseconds = 1000,
     }),
   },
   -- resize panes
@@ -170,9 +194,31 @@ local keys = {
     action = act.ActivateKeyTable({
       name = 'resize_pane',
       one_shot = false,
-      timemout_miliseconds = 1000,
+      timeout_milliseconds = 1000,
     }),
   },
+
+  -- workspaces --
+  {
+    key = 's',
+    mods = 'LEADER',
+    action = act.PromptInputLine({
+      description = wezterm.format({
+        { Attribute = { Intensity = "Bold" } },
+        { Text = "Enter name for new workspace" },
+      }),
+      action = wezterm.action_callback(function(window, pane, line)
+        if line then
+          window:perform_action(
+            act.SwitchToWorkspace({ name = line }),
+            pane
+          )
+        end
+      end),
+    }),
+  },
+  { key = 'n', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
+  { key = 'b', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
 }
 
 -- stylua: ignore
@@ -215,7 +261,7 @@ end
 return {
   disable_default_key_bindings = true,
   -- disable_default_mouse_bindings = true,
-  leader = { key = "Space", mods = mod.SUPER_REV },
+  leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 },
   keys = keys,
   key_tables = key_tables,
   mouse_bindings = mouse_bindings,

@@ -7,6 +7,13 @@ return {
 
   scrollback_lines = 20000,
 
+  term = "wezterm",
+  normalize_output_to_unicode_nfc = true,
+
+  -- Enhanced keyboard protocol — lets Neovim distinguish Ctrl+i from Tab, etc.
+  enable_kitty_keyboard = true,
+  enable_csi_u_key_encoding = false, -- kitty protocol supersedes this
+
   hyperlink_rules = {
     -- Matches: a URL in parens: (URL)
     {

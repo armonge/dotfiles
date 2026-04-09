@@ -1,9 +1,8 @@
 local gpu_adapters = require("utils.gpu-adapter")
-local backdrops = require("utils.backdrops")
 
 return {
 	max_fps = 120,
-	-- front_end = "OpenGL",
+	front_end = "WebGpu",
 	webgpu_power_preference = "HighPerformance",
 	webgpu_preferred_adapter = gpu_adapters:pick_best(),
 	-- webgpu_preferred_adapter = gpu_adapters:pick_manual('Dx12', 'IntegratedGpu'),
@@ -20,9 +19,6 @@ return {
 	-- color scheme
 	-- colors = colors,
 	color_scheme = "Tokyo Night Storm (Gogh)",
-
-	-- background
-	background = backdrops:initial_options(false), -- set to true if you want wezterm to start on focus mode
 
 	-- scrollbar
 	enable_scroll_bar = true,
@@ -45,7 +41,7 @@ return {
 	adjust_window_size_when_changing_font_size = false,
 	window_close_confirmation = "NeverPrompt",
 	window_frame = {
-		active_titlebar_bg = "#090909",
+		active_titlebar_bg = "rgba(9, 9, 9, 0.8)",
 		-- font = fonts.font,
 		-- font_size = fonts.font_size,
 	},
@@ -54,10 +50,11 @@ return {
 	--    brightness = 0.65,
 	-- },
 	inactive_pane_hsb = {
-		saturation = 1,
-		brightness = 1,
+		saturation = 0.9,
+		brightness = 0.8,
 	},
 
+	audible_bell = "SystemBeep",
 	visual_bell = {
 		fade_in_function = "EaseIn",
 		fade_in_duration_ms = 250,
