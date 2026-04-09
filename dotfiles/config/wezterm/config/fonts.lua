@@ -6,9 +6,10 @@ local font_family = "JetBrainsMono Nerd Font"
 local font_size = platform.is_mac and 12 or 9
 
 return {
-	font = wezterm.font({
-		family = font_family,
-		weight = "Medium",
+	font = wezterm.font_with_fallback({
+		{ family = font_family, weight = "Medium" },
+		{ family = "Apple Color Emoji" },
+		{ family = "Noto Color Emoji" },
 	}),
 	font_size = font_size,
 
