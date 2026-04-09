@@ -19,6 +19,7 @@ local masonPackages = {
 }
 
 local servers = {
+	djls = {},
 	ty = {},
 	jinja_lsp = {},
 	biome = {},
@@ -39,7 +40,18 @@ local servers = {
 		},
 	},
 	jsonls = {},
-	lua_ls = {},
+	lua_ls = {
+		settings = {
+			Lua = {
+				runtime = { version = "LuaJIT" },
+				workspace = {
+					library = { vim.env.VIMRUNTIME },
+					checkThirdParty = false,
+				},
+				diagnostics = { globals = { "vim", "Snacks" } },
+			},
+		},
+	},
 	-- stylelint_lsp = {},
 	clojure_lsp = {},
 	ruff = {
@@ -150,11 +162,18 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = { "folke/snacks.nvim" },
 		config = function()
-			vim.lsp.enable("djls")
+			vim.lsp.config("pytest_lsp", {
+				cmd = { "pytest-language-server" },
+				filetypes = { "python" },
+				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "pytest.ini", ".git" },
+			})
+
+			vim.lsp.enable("pytest_lsp")
 
 			-- Neovim 0.12 built-in LSP features
 			vim.lsp.codelens.enable(true)
-			vim.lsp.inlay_hint.enable(true)
+			-- Disabled: Neovim 0.12.1 bug causes "Invalid 'col': out of range" in inlay_hint.lua:362
+			-- vim.lsp.inlay_hint.enable(true)
 			vim.lsp.document_color.enable(true)
 
 			-- Handle vtsls "editor.action.showReferences" codelens command

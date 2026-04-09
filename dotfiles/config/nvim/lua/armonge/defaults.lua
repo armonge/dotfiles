@@ -77,6 +77,54 @@ vim.opt.exrc = true -- Allow loading local .nvimrc/.exrc/.nvim.lua files
 
 -- Neovim 0.12 popup menu border
 vim.opt.pumborder = "rounded"
+
+-- Enable experimental ui2 (cmdline, messages in Lua)
+require("vim._core.ui2").enable({
+	enable = true,
+	msg = {
+		targets = {
+			[""] = "msg",
+			empty = "cmd",
+			bufwrite = "msg",
+			confirm = "cmd",
+			emsg = "pager",
+			echo = "msg",
+			echomsg = "msg",
+			echoerr = "pager",
+			completion = "cmd",
+			list_cmd = "pager",
+			lua_error = "pager",
+			lua_print = "msg",
+			progress = "pager",
+			rpc_error = "pager",
+			quickfix = "msg",
+			search_cmd = "cmd",
+			search_count = "cmd",
+			shell_cmd = "pager",
+			shell_err = "pager",
+			shell_out = "pager",
+			shell_ret = "msg",
+			undo = "msg",
+			verbose = "pager",
+			wildlist = "cmd",
+			wmsg = "msg",
+			typed_cmd = "cmd",
+		},
+		cmd = {
+			height = 0.5,
+		},
+		dialog = {
+			height = 0.5,
+		},
+		msg = {
+			height = 0.3,
+			timeout = 5000,
+		},
+		pager = {
+			height = 0.5,
+		},
+	},
+})
 vim.api.nvim_create_user_command("Browse", function(opts)
 	vim.fn.system({ "open", opts.fargs[1] })
 end, { nargs = 1 })
@@ -96,18 +144,6 @@ vim.keymap.set("n", "gx", function()
 	end
 end, { desc = "Open file/URI under cursor (resolves relative paths)" })
 
---
---
--- Restore cursor position on file open (uses shada's '" mark)
-vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function()
-		local mark = vim.api.nvim_buf_get_mark(0, '"')
-		local line_count = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= line_count then
-			vim.api.nvim_win_set_cursor(0, mark)
-		end
-	end,
-})
 
 -- Folding {
 vim.opt.foldenable = true -- Auto fold code
@@ -118,14 +154,4 @@ vim.opt.foldcolumn = "1"
 vim.opt.foldnestmax = 10
 vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 vim.o.foldlevelstart = 99
--- Prefer LSP folding if client supports it
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client:supports_method("textDocument/foldingRange") then
-			local win = vim.api.nvim_get_current_win()
-			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
-		end
-	end,
-})
 -- }

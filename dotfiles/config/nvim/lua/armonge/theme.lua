@@ -38,6 +38,15 @@ return {
 						fg = colors.green,
 						bold = false,
 					}
+					hl.FlashMatch = {
+						bg = colors.bg_highlight,
+						fg = colors.fg,
+					}
+					hl.FlashLabel = {
+						bg = colors.yellow,
+						fg = colors.black,
+						bold = true,
+					}
 				end,
 			})
 

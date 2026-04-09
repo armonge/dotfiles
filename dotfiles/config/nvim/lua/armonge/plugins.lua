@@ -7,7 +7,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -57,6 +57,33 @@ require("lazy").setup({
 	},
 
 	{ "akinsho/git-conflict.nvim", version = "*", config = true },
+	{
+		"NeogitOrg/neogit",
+		lazy = true,
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- required
+
+			-- Only one of these is needed.
+			"sindrets/diffview.nvim", -- optional
+			"esmuellert/codediff.nvim", -- optional
+
+			-- For a custom log pager
+			"m00qek/baleia.nvim", -- optional
+
+			-- Only one of these is needed.
+			-- "nvim-telescope/telescope.nvim", -- optional
+			-- "ibhagwan/fzf-lua", -- optional
+			-- "nvim-mini/mini.pick", -- optional
+			"folke/snacks.nvim", -- optional
+		},
+		cmd = "Neogit",
+		keys = {
+			{ "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" },
+		},
+	},
+	-- { "tpope/vim-fugitive", dependencies = {
+	-- 	"tpope/vim-rhubarb",
+	-- } },
 })
 -- }
 --

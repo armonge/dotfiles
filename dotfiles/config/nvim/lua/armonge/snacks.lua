@@ -51,7 +51,7 @@ return {
 								}, cmd)
 							end, cmds)
 						end,
-						{ section = "keys",   gap = 1, padding = 1 },
+						{ section = "keys", gap = 1, padding = 1 },
 						{ section = "startup" },
 					},
 				},
@@ -207,7 +207,7 @@ return {
 			{ "<leader>n",   function() Snacks.notifier.show_history() end,        desc = "Notification History" },
 			{ "<leader>bd",  function() Snacks.bufdelete() end,                    desc = "Delete Buffer" },
 			{ "<leader>rf",  function() Snacks.rename.rename_file() end,           desc = "Rename File" },
-			{ "<leader>gg",  function() Snacks.lazygit() end,                      desc = "Lazygit" },
+			-- { "<leader>gg",  function() Snacks.lazygit() end,                      desc = "Lazygit" },
 			{ "<leader>un",  function() Snacks.notifier.hide() end,                desc = "Dismiss All Notifications" },
 			-- { "<c-/>",           function() Snacks.terminal() end,                                       desc = "Toggle Terminal" },
 			-- { "<c-_>",           function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
