@@ -4,6 +4,16 @@ return {
 		lazy = false,
 		dependencies = { "MunifTanjim/nui.nvim" },
 		opts = {},
+		keys = {
+			{
+				"<leader>ht",
+				mode = { "n", "x" },
+				function()
+					require("hardtime").toggle()
+				end,
+				desc = "Toggle Hardtime",
+			},
+		},
 	},
 	{
 		"johmsalas/text-case.nvim",

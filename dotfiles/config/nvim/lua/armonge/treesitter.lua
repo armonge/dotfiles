@@ -34,6 +34,7 @@ return {
 				"toml",
 				"typescript",
 				"yaml",
+				"beancount",
 			})
 		end,
 	},

@@ -146,14 +146,14 @@ return {
 		opts = {},
 	},
 
-	{
-		-- Make sure to set this up properly if you have lazy=true
-		"MeanderingProgrammer/render-markdown.nvim",
-		opts = {
-			file_types = { "markdown" },
-		},
-		ft = { "markdown" },
-	},
+	-- {
+	-- 	-- Make sure to set this up properly if you have lazy=true
+	-- 	"MeanderingProgrammer/render-markdown.nvim",
+	-- 	opts = {
+	-- 		file_types = { "markdown" },
+	-- 	},
+	-- 	ft = { "markdown" },
+	-- },
 	-- Use Neovim 0.12 built-in virtual_lines for inline diagnostics
 	{
 		"neovim/nvim-lspconfig",

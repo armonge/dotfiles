@@ -1,8 +1,6 @@
 local wk = require("which-key")
 wk.add({
 	{ "g", group = "Goto" },
-	{ "<leader>h", group = "gitsigns hunk", mode = { "v", "n" } },
-	{ "<leader>r", group = "Refactor", mode = { "x", "n" } },
 	{ "<leader>w", group = "Workspaces" },
 	{ "<leader>u", group = "UI" },
 	{ "<leader>t", group = "Pickers" },
