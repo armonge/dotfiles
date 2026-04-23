@@ -100,6 +100,10 @@ dotfiles:
     src: config/bat/themes/tokyonight_night.tmTheme
     dst: ~/.config/bat/themes/tokyonight_night.tmTheme
     link: absolute
+  f_beancount.sublime-syntax:
+    src: config/bat/syntaxes/beancount.sublime-syntax
+    dst: ~/.config/bat/syntaxes/beancount.sublime-syntax
+    link: absolute
   f_wezterm.lua:
     src: config/wezterm/wezterm.lua
     dst: ~/.config/wezterm/wezterm.lua
@@ -152,6 +156,7 @@ profiles:
     - f_direnv_direnvrc
     - f_direnv.toml
     - f_tokyonight_night.tmtheme
+    - f_beancount.sublime-syntax
     - f_wezterm.lua
     - d_wezterm
     - d_direnv

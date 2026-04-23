@@ -6,16 +6,7 @@
 # Source global definitions
 BASH_START_TIME=$EPOCHREALTIME
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-# User specific aliases and functions
-if [ -d ~/.bashrc.d ]; then
-	for rc in ~/.bashrc.d/*; do
-		if [ -f "$rc" ]; then
-			. "$rc"
-		fi
-	done
+  . /etc/bashrc
 fi
 
 unset rc
@@ -24,30 +15,36 @@ unset rc
 [ -f ~/.config/bashrc.d/lazy-nvm.sh ] && source ~/.config/bashrc.d/lazy-nvm.sh
 [ -f ~/.config/bashrc.d/lazy-completions.sh ] && source ~/.config/bashrc.d/lazy-completions.sh
 
-# Alias to load CVXOPT environment variables on demand (rarely used)
-alias load-cvxopt='source ~/.config/bashrc.d/cvxopt.sh'
-
 export XDG_CONFIG_HOME=$HOME/.config
 
 if [ -f "/opt/homebrew/bin/brew" ]; then
-	# We're on Mac :shrug:
-	export BASH_SILENCE_DEPRECATION_WARNING=1
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+  # We're on Mac :shrug:
+  export BASH_SILENCE_DEPRECATION_WARNING=1
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
-	export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/lib"
-	export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/mysql-client/lib"
-	export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/libssh2/lib/"
-	export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/Cellar/suite-sparse/7.10.1/lib/"
-	export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/mysql-client/include -I$HOMEBREW_PREFIX/opt/libssh2/include/ -I$HOMEBREW_PREFIX/Cellar/libssh2/1.11.1/include/"
-	export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql-client/lib/pkgconfig"
-	export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.4.0/bin:$PATH"
-	export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/lib"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/mysql-client/lib"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/opt/libssh2/lib/"
+  export LDFLAGS="$LDFLAGS -L$HOMEBREW_PREFIX/Cellar/suite-sparse/7.10.1/lib/"
+  export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/mysql-client/include -I$HOMEBREW_PREFIX/opt/libssh2/include/ -I$HOMEBREW_PREFIX/Cellar/libssh2/1.11.1/include/"
+  export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql-client/lib/pkgconfig"
+  export PATH="$HOMEBREW_PREFIX/lib/ruby/gems/3.4.0/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
-	# CVXOPT environment variables moved to ~/.config/bashrc.d/cvxopt.sh
-	# Load on demand with: load-cvxopt
-	# This saves 300-600ms on startup by avoiding 6 brew --prefix calls
+  # CVXOPT environment variables moved to ~/.config/bashrc.d/cvxopt.sh
+  # Load on demand with: load-cvxopt
+  # This saves 300-600ms on startup by avoiding 6 brew --prefix calls
 
-	[[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+  [[ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh"
+fi
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+  for rc in ~/.bashrc.d/*; do
+    if [ -f "$rc" ]; then
+      . "$rc"
+    fi
+  done
 fi
 
 # User specific environment
@@ -80,13 +77,13 @@ export EDITOR="vim -u ~/.config/nvim/editor.lua"
 
 # GO
 if [ -f "$HOME/.gvm/scripts/gvm" ]; then
-	source "$HOME/.gvm/scripts/gvm"
+  source "$HOME/.gvm/scripts/gvm"
 fi
 
 if command -v go &>/dev/null; then
-	# Use default GOPATH or existing value to avoid expensive go env call
-	GOPATH=${GOPATH:-$HOME/go}
-	export PATH=$PATH:$GOPATH/bin
+  # Use default GOPATH or existing value to avoid expensive go env call
+  GOPATH=${GOPATH:-$HOME/go}
+  export PATH=$PATH:$GOPATH/bin
 fi
 
 # Android
@@ -98,16 +95,16 @@ export PATH=$PATH:$HOME/.cargo/bin
 
 # git
 if [ -f /usr/share/git/completion/git-completion.bash ]; then
-	source /usr/share/git/completion/git-completion.bash
-	source /usr/share/git/completion/git-prompt.sh
+  source /usr/share/git/completion/git-completion.bash
+  source /usr/share/git/completion/git-prompt.sh
 fi
 
 if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
-	source /usr/share/git-core/contrib/completion/git-prompt.sh
+  source /usr/share/git-core/contrib/completion/git-prompt.sh
 fi
 
 if [ -f /etc/bash_completion.d/git-prompt ]; then
-	source /etc/bash_completion.d/git-prompt
+  source /etc/bash_completion.d/git-prompt
 fi
 
 # Only load starship in interactive shells, not from a script or from scp
@@ -133,16 +130,16 @@ export PYTHONDONTWRITEBYTECODE=1
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-	. ~/.bash_aliases
+  . ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /usr/share/bash-completion/bash_completion ]; then
-	source /usr/share/bash-completion/bash_completion
+  source /usr/share/bash-completion/bash_completion
 elif [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion
+  source /etc/bash_completion
 fi
 
 # FZF
@@ -158,14 +155,14 @@ export FZF_DEFAULT_COMMAND='ag --follow --nocolor --filename-pattern "" --hidden
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 if command -v batcat &>/dev/null; then
-	export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'batcat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+  export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'batcat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
 else
-	export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
+  export FZF_CTRL_T_OPTS="--preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme='Nord' --color=always --style=header,grid --line-range :300 {}'  "
 fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ "${debian_chroot:-}" = "" ] && [ -r /etc/debian_chroot ]; then
-	debian_chroot=$(cat /etc/debian_chroot)
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
@@ -178,24 +175,24 @@ export NODE_NO_WARNINGS=1
 # npm - completion lazy-loaded via ~/.config/bashrc.d/lazy-completions.sh
 
 if command -v direnv &>/dev/null; then
-	eval "$(direnv hook bash)"
+  eval "$(direnv hook bash)"
 fi
 
 # https://cloud.google.com/sdk/gcloud/reference/topic/startup
 export CLOUDSDK_PYTHON=python3
 
 if [ -f "${HOME}/.dir_colors" ]; then
-	eval "$(dircolors ~/.dir_colors)"
+  eval "$(dircolors ~/.dir_colors)"
 fi
 
 if [ -f "${HOME}/.config/broot/launcher/bash/br" ]; then
-	source "${HOME}/.config/broot/launcher/bash/br"
+  source "${HOME}/.config/broot/launcher/bash/br"
 fi
 
 if [ -d "${HOME}/dotfiles" ]; then
-	# Your dotdrop git repository location
-	export DOTREPO="$HOME/dotfiles"
-	source "${DOTREPO}/dotdrop/completion/dotdrop-completion.bash"
+  # Your dotdrop git repository location
+  export DOTREPO="$HOME/dotfiles"
+  source "${DOTREPO}/dotdrop/completion/dotdrop-completion.bash"
 fi
 
 # https://ask.fedoraproject.org/t/intel-graphics-best-practices-and-settings-for-hardware-acceleration/21119
@@ -208,12 +205,12 @@ export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/bin/google-cloud-sdk/path.bash.inc" ]; then
-	source "$HOME/bin/google-cloud-sdk/path.bash.inc"
+  source "$HOME/bin/google-cloud-sdk/path.bash.inc"
 fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/bin/google-cloud-sdk/completion.bash.inc" ]; then
-	source "$HOME/bin/google-cloud-sdk/completion.bash.inc"
+  source "$HOME/bin/google-cloud-sdk/completion.bash.inc"
 fi
 
 # kubectl & k9s - completions lazy-loaded via ~/.config/bashrc.d/lazy-completions.sh
@@ -252,5 +249,3 @@ eval "$(atuin init bash)"
 
 # opencode
 export PATH=/Users/andres.monge/.opencode/bin:$PATH
-
-alias gs="$HOMEBREW_PREFIX/opt/git-spice/bin/gs"

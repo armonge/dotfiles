@@ -42,8 +42,6 @@ return {
 	window_close_confirmation = "NeverPrompt",
 	window_frame = {
 		active_titlebar_bg = "rgba(9, 9, 9, 0.8)",
-		-- font = fonts.font,
-		-- font_size = fonts.font_size,
 	},
 	-- inactive_pane_hsb = {
 	--    saturation = 0.9,
