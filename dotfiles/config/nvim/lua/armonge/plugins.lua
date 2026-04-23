@@ -56,6 +56,10 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		"propilideno/buffer-preview.nvim",
+		dependencies = { { "3rd/image.nvim", opts = {} } },
+	},
 	{ "akinsho/git-conflict.nvim", version = "*", config = true },
 	{
 		"NeogitOrg/neogit",

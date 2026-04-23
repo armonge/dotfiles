@@ -9,7 +9,7 @@ return {
 		lazy = false,
 		---@type snacks.Config
 		opts = {
-			image = { enabled = true },
+			image = { enabled = false },
 			bigfile = { enabled = true },
 			git = { enabled = true },
 			dashboard = {
@@ -146,7 +146,7 @@ return {
 					Snacks.picker.projects(
 						{
 							dev = { "~/workspace", },
-							projects = { "~/dotfiles", "~/beancount" }
+							projects = { "~/dotfiles", "~/beancount" , "~/dotfiles/dotfiles/config/nvim/"}
 
 						}
 					)

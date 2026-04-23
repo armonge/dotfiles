@@ -1,3 +1,7 @@
+-- Override gs alias (git-spice) with real ghostscript for plugins that need it {
+vim.env.PATH = "/opt/homebrew/opt/ghostscript/bin:" .. vim.env.PATH
+-- }
+
 -- Python {
 vim.opt.pyx = 3
 
