@@ -1,6 +1,6 @@
 return {
 	{
-		"stevearc/oil.nvim",
+		"barrettruth/canola.nvim",
 		lazy = true,
 		cmd = { "Oil" },
 		-- Optional dependencies

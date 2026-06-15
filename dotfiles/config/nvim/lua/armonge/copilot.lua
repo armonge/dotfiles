@@ -16,7 +16,7 @@ return {
 		},
 		build = "make tiktoken",                   -- Only on MacOS or Linux
 		opts = {
-			-- See Configuration section for options
+			model = "gpt-5.5", -- only model_picker_enabled models are selectable; gpt-4.1/gpt-5-mini are filtered out
 		},
 		-- See Commands section for default commands if you want to lazy load on them
 	},

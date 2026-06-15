@@ -64,13 +64,13 @@ local servers = {
 	beancount = {},
 	powershell_es = {},
 	ast_grep = {},
-	harper_ls = {
-		settings = {
-			["harper-ls"] = {
-				userDictPath = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add",
-			},
-		},
-	},
+	-- harper_ls = {
+	-- 	settings = {
+	-- 		["harper-ls"] = {
+	-- 			userDictPath = os.getenv("HOME") .. "/.config/nvim/spell/en.utf-8.add",
+	-- 		},
+	-- 	},
+	-- },
 }
 
 return {
