@@ -7,6 +7,11 @@ return {
 
   scrollback_lines = 20000,
 
+  -- Treat ':' as a word boundary so double-clicking on
+  -- "tests/foo.py::test_name" selects each side of "::" separately.
+  selection_word_boundary = " \t\n{}[]()\"'`:",
+
+
   term = "wezterm",
   normalize_output_to_unicode_nfc = true,
 
