@@ -90,7 +90,7 @@
 	pruneTags = true
 	recurseSubmodules = true
 [branch]
-	autoSetupMerge = true
+	autoSetupMerge = false
 [committer]
 	email = andres.monge@parcellab.com
 	name = Andres Reyes Monge
