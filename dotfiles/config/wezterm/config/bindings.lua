@@ -68,6 +68,25 @@ local keys = {
       end),
     }),
   },
+  -- open current pane's repo PR in browser
+  {
+    key = 'o',
+    mods = mod.SUPER_REV,
+    action = wezterm.action_callback(function(window, pane)
+      local cwd = pane:get_current_working_dir()
+      if not cwd then
+        window:toast_notification('wezterm', 'No cwd known for this pane', nil, 3000)
+        return
+      end
+      -- ponytail: cwd is a Url userdata on modern wezterm; .file_path is the local path
+      local dir = cwd.file_path or cwd
+      -- login shell so gh is on PATH when wezterm is launched from the GUI
+      -- fall back to the repo page when there's no PR for the current branch
+      wezterm.run_child_process({ '/bin/bash', '-lc',
+        "cd '" .. dir .. "' && (gh pr view --web || gh repo view --web)" })
+    end),
+  },
+
   -- quick select: file path
   {
     key = 'e',

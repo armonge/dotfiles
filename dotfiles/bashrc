@@ -110,6 +110,12 @@ fi
 # Only load starship in interactive shells, not from a script or from scp
 [[ $- == *i* ]] && eval "$(starship init bash)"
 
+# Tell the terminal our cwd via OSC 7 (starship doesn't do this)
+if [[ $- == *i* ]]; then
+  __osc7_cwd() { printf '\033]7;file://%s%s\033\\' "$HOSTNAME" "$PWD"; }
+  PROMPT_COMMAND="__osc7_cwd${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+fi
+
 # gitignore.io
 function gi() { curl -fL -s "https://www.gitignore.io/api/${*}" || echo "Error: Failed to fetch gitignore template"; }
 
