@@ -224,7 +224,6 @@ fi
 export ERG_PATH="$HOME/.local/share/nvim/mason/packages/erg"
 export LUA_CPATH="$HOME/.luarocks/lib/lua/5.1/?.so;$HOME/.luarocks/lib/lua/5.1/loadall.so"
 
-
 export DOTDROP_VIRTUALENV="${HOME}/dotfiles/.venv"
 
 source "$HOME/.bash_completions/complexipy.sh"
@@ -250,14 +249,20 @@ eval "$(atuin init bash)"
 # opencode
 export PATH=/Users/andres.monge/.opencode/bin:$PATH
 
-
 # Added by Antigravity CLI installer
 export PATH="/Users/andres.monge/.local/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/andres.monge/Library/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+*":$PNPM_HOME/bin:"*) ;;
+*) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+# Added by `hoop versions` to expose the active hoop CLI version
+export PATH="$HOME/.hoop/bin:$PATH"
+
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init bash)"
+fi

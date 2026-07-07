@@ -2,7 +2,9 @@ local gpu_adapters = require("utils.gpu-adapter")
 
 return {
 	max_fps = 120,
-	front_end = "WebGpu",
+	-- Was "WebGpu"; switched to OpenGL because WebGpu's dirty-region tracking
+	-- can leave stale cells, ghosting old text through TUI redraws (Claude Code).
+	front_end = "OpenGL",
 	webgpu_power_preference = "HighPerformance",
 	webgpu_preferred_adapter = gpu_adapters:pick_best(),
 	-- webgpu_preferred_adapter = gpu_adapters:pick_manual('Dx12', 'IntegratedGpu'),

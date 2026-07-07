@@ -13,7 +13,10 @@ return {
 
 
   term = "wezterm",
-  normalize_output_to_unicode_nfc = true,
+  -- Disabled: NFC-normalizing the output stream rewrites bytes that Claude
+  -- Code (and other TUIs) already laid out, desyncing their cursor/width
+  -- math and causing garbled, overlapping redraws.
+  -- normalize_output_to_unicode_nfc = true,
 
   -- Enhanced keyboard protocol — lets Neovim distinguish Ctrl+i from Tab, etc.
   enable_kitty_keyboard = true,
