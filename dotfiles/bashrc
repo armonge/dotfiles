@@ -255,8 +255,8 @@ export PATH="/Users/andres.monge/.local/bin:$PATH"
 # pnpm
 export PNPM_HOME="/Users/andres.monge/Library/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME/bin:"*) ;;
-*) export PATH="$PNPM_HOME/bin:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 
@@ -264,5 +264,7 @@ esac
 export PATH="$HOME/.hoop/bin:$PATH"
 
 if command -v zoxide &>/dev/null; then
-  eval "$(zoxide init bash)"
+  eval "$(zoxide init bash --cmd cd)"
 fi
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
