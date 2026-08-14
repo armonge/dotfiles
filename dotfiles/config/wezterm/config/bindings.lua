@@ -236,6 +236,40 @@ local keys = {
       end),
     }),
   },
+  -- worktrees: pick one of the current repo's worktrees, open it in a new tab
+  {
+    key = 'w',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window, pane)
+      local cwd = pane:get_current_working_dir()
+      if not cwd then
+        window:toast_notification('wezterm', 'No cwd known for this pane', nil, 3000)
+        return
+      end
+      local dir = cwd.file_path or cwd
+      local ok, stdout = wezterm.run_child_process({ '/bin/bash', '-lc',
+        "cd '" .. dir .. "' && git worktree list" })
+      if not ok then
+        window:toast_notification('wezterm', 'Not a git repo: ' .. dir, nil, 3000)
+        return
+      end
+      local choices = {}
+      -- `git worktree list` lines look like: /path/to/wt  deadbee [branch]
+      for line in stdout:gmatch('[^\n]+') do
+        table.insert(choices, { label = line, id = line:match('^(%S+)') })
+      end
+      window:perform_action(act.InputSelector({
+        title = 'Git worktrees',
+        fuzzy = true,
+        choices = choices,
+        action = wezterm.action_callback(function(_win, p, id)
+          if id then
+            p:send_text("z '" .. id .. "'\n")
+          end
+        end),
+      }), pane)
+    end),
+  },
   { key = 'n', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
   { key = 'b', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
 }
