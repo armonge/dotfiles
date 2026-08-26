@@ -39,7 +39,7 @@ function M.setup(opts)
   opts = opts or {}
 
   -- Handle close pane with confirmation
-  wezterm.on('confirm-close.close-pane', function(window, pane)
+  wezterm.on('Panes: Close pane', function(window, pane)
     local process_info = pane:get_foreground_process_info()
     local process_name = process_info and process_info.name or nil
 
@@ -60,7 +60,7 @@ function M.setup(opts)
   end)
 
   -- Handle close tab with confirmation
-  wezterm.on('confirm-close.close-tab', function(window, pane)
+  wezterm.on('Tabs: Close tab', function(window, pane)
     local tab = window:active_tab()
     if not tab then
       return

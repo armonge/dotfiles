@@ -39,7 +39,11 @@
 -- -- and finally, return the configuration to wezterm
 -- return config
 
+local wezterm = require("wezterm")
 local Config = require("config")
+
+-- Refresh every repo under ~/workspace in the background, once per config load.
+wezterm.background_child_process({ wezterm.config_dir .. "/bin/workspace-fetch" })
 
 require("events.left-status").setup()
 require("events.right-status").setup({ date_format = "%a %H:%M:%S" })

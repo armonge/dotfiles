@@ -4,12 +4,24 @@ local act = wezterm.action
 
 local mod = {}
 
+local function shq(s)
+	return "'" .. (tostring(s):gsub("'", "'\\''")) .. "'"
+end
+
+-- Bind a Lua callback behind a self-describing event name, so `wezterm show-keys`,
+-- the KEY_ASSIGNMENTS launcher and gen-cheatsheet.py can all label it.
+-- Name format is "Category: Description" -- that string IS the documentation.
+local function cb(name, fn)
+	wezterm.on(name, fn)
+	return act.EmitEvent(name)
+end
+
 if platform.is_mac then
-  mod.SUPER = "SUPER"
-  mod.SUPER_REV = "SUPER|CTRL"
+	mod.SUPER = "SUPER"
+	mod.SUPER_REV = "SUPER|CTRL"
 elseif platform.is_linux then
-  mod.SUPER = "ALT"
-  mod.SUPER_REV = "ALT|CTRL"
+	mod.SUPER = "ALT"
+	mod.SUPER_REV = "ALT|CTRL"
 end
 
 -- stylua: ignore
@@ -31,7 +43,7 @@ local keys = {
     mods = 'LEADER',
     action = act.ShowLauncherArgs({ flags = 'FUZZY|KEY_ASSIGNMENTS', title = '🔑 Key Bindings' }),
   },
-  { key = 'F6',  mods = 'NONE',    action = act.EmitEvent('scrollback.open-in-editor') },
+  { key = 'F6',  mods = 'NONE',    action = act.EmitEvent('General: Scrollback in editor') },
   { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
   { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },
   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
@@ -72,7 +84,7 @@ local keys = {
   {
     key = 'o',
     mods = mod.SUPER_REV,
-    action = wezterm.action_callback(function(window, pane)
+    action = cb('Panes: Open repo PR in browser', function(window, pane)
       local cwd = pane:get_current_working_dir()
       if not cwd then
         window:toast_notification('wezterm', 'No cwd known for this pane', nil, 3000)
@@ -113,7 +125,7 @@ local keys = {
   -- tabs --
   -- tabs: spawn+close
   { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
-  { key = 'w',          mods = mod.SUPER_REV, action = act.EmitEvent('confirm-close.close-tab') },
+  { key = 'w',          mods = mod.SUPER_REV, action = act.EmitEvent('Tabs: Close tab') },
 
   -- tabs: navigation
   { key = '[',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
@@ -122,11 +134,11 @@ local keys = {
   { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
   -- tab: title
-  { key = '0',          mods = mod.SUPER,     action = act.EmitEvent('tabs.manual-update-tab-title') },
-  { key = '0',          mods = mod.SUPER_REV, action = act.EmitEvent('tabs.reset-tab-title') },
+  { key = '0',          mods = mod.SUPER,     action = act.EmitEvent('Tabs: Rename tab') },
+  { key = '0',          mods = mod.SUPER_REV, action = act.EmitEvent('Tabs: Reset tab title') },
 
   -- tab: hide tab-bar
-  { key = '9',          mods = mod.SUPER,     action = act.EmitEvent('tabs.toggle-tab-bar'), },
+  { key = '9',          mods = mod.SUPER,     action = act.EmitEvent('Tabs: Toggle tab bar'), },
 
   -- window --
   -- window: spawn windows
@@ -136,7 +148,7 @@ local keys = {
   {
     key = '-',
     mods = mod.SUPER,
-    action = wezterm.action_callback(function(window, _pane)
+    action = cb('Window: Shrink window', function(window, _pane)
       local dimensions = window:get_dimensions()
       if dimensions.is_full_screen then
         return
@@ -149,7 +161,7 @@ local keys = {
   {
     key = '=',
     mods = mod.SUPER,
-    action = wezterm.action_callback(function(window, _pane)
+    action = cb('Window: Grow window', function(window, _pane)
       local dimensions = window:get_dimensions()
       if dimensions.is_full_screen then
         return
@@ -176,7 +188,7 @@ local keys = {
 
   -- panes: zoom+close pane
   { key = 'Enter', mods = mod.SUPER,     action = act.TogglePaneZoomState },
-  { key = 'w',     mods = mod.SUPER,     action = act.EmitEvent('confirm-close.close-pane') },
+  { key = 'w',     mods = mod.SUPER,     action = act.EmitEvent('Panes: Close pane') },
 
   -- panes: navigation
   { key = 'k',     mods = mod.SUPER_REV, action = act.ActivatePaneDirection('Up') },
@@ -236,36 +248,49 @@ local keys = {
       end),
     }),
   },
-  -- worktrees: pick one of the current repo's worktrees, open it in a new tab
+  -- branches: pick any branch from any repo in ~/workspace and cd to a worktree
+  -- for it, creating the worktree (and sharing .envrc) if it doesn't exist yet
   {
     key = 'w',
     mods = 'LEADER',
-    action = wezterm.action_callback(function(window, pane)
-      local cwd = pane:get_current_working_dir()
-      if not cwd then
-        window:toast_notification('wezterm', 'No cwd known for this pane', nil, 3000)
-        return
-      end
-      local dir = cwd.file_path or cwd
-      local ok, stdout = wezterm.run_child_process({ '/bin/bash', '-lc',
-        "cd '" .. dir .. "' && git worktree list" })
+    action = cb('Workspaces: Branch picker', function(window, pane)
+      local script = wezterm.config_dir .. '/bin/worktree-pick'
+      local ok, stdout, stderr = wezterm.run_child_process({ script, 'list' })
       if not ok then
-        window:toast_notification('wezterm', 'Not a git repo: ' .. dir, nil, 3000)
+        window:toast_notification('wezterm', 'worktree-pick: ' .. stderr, nil, 5000)
         return
       end
       local choices = {}
-      -- `git worktree list` lines look like: /path/to/wt  deadbee [branch]
+      -- "<repo>\t<branch>\t<worktree path or ->"; branches only on the remote
+      -- are listed as origin/<branch>, so the name itself says where they live
       for line in stdout:gmatch('[^\n]+') do
-        table.insert(choices, { label = line, id = line:match('^(%S+)') })
+        local repo, branch, path = line:match('^([^\t]*)\t([^\t]*)\t(.*)$')
+        if repo then
+          table.insert(choices, {
+            label = (path == '-' and '   ' or ' * ') .. repo .. '  ' .. branch,
+            id = repo .. '\t' .. branch,
+          })
+        end
+      end
+      if #choices == 0 then
+        -- how the bash 3.2 breakage hid: exit 0, no output, empty picker
+        window:toast_notification('wezterm', 'worktree-pick listed no branches', nil, 5000)
+        return
       end
       window:perform_action(act.InputSelector({
-        title = 'Git worktrees',
+        title = 'Branches  (* = worktree exists)',
         fuzzy = true,
         choices = choices,
         action = wezterm.action_callback(function(_win, p, id)
-          if id then
-            p:send_text("z '" .. id .. "'\n")
+          if not id then
+            return
           end
+          local repo, branch = id:match('^([^\t]*)\t(.*)$')
+          -- run it in the pane, so a slow `git worktree add` can't block the GUI.
+          -- \x15 (readline kill-line) first: keys pressed before the selector
+          -- was up went to the shell, and would otherwise prefix the command.
+          p:send_text(('\x15cd "$(%s open %s %s)"\n'):format(
+            shq(script), shq(repo), shq(branch)))
         end),
       }), pane)
     end),
@@ -294,28 +319,28 @@ local key_tables = {
 }
 
 local mouse_bindings = {
-  -- Ctrl-click will open the link under the mouse cursor
-  {
-    event = { Up = { streak = 1, button = "Left" } },
-    mods = "CTRL",
-    action = act.OpenLinkAtMouseCursor,
-  },
+	-- Ctrl-click will open the link under the mouse cursor
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "CTRL",
+		action = act.OpenLinkAtMouseCursor,
+	},
 }
 
 for i = 1, 8 do
-  -- ALT + number to activate that tab
-  table.insert(keys, {
-    key = tostring(i),
-    mods = mod.SUPER,
-    action = act.ActivateTab(i - 1),
-  })
+	-- ALT + number to activate that tab
+	table.insert(keys, {
+		key = tostring(i),
+		mods = mod.SUPER,
+		action = act.ActivateTab(i - 1),
+	})
 end
 
 return {
-  disable_default_key_bindings = true,
-  -- disable_default_mouse_bindings = true,
-  leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 },
-  keys = keys,
-  key_tables = key_tables,
-  mouse_bindings = mouse_bindings,
+	disable_default_key_bindings = true,
+	-- disable_default_mouse_bindings = true,
+	leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 },
+	keys = keys,
+	key_tables = key_tables,
+	mouse_bindings = mouse_bindings,
 }

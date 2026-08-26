@@ -4,7 +4,7 @@ local M = {}
 
 function M.setup(opts)
   opts = opts or {}
-  local event_name = opts.event_name or 'scrollback.open-in-editor'
+  local event_name = opts.event_name or 'General: Scrollback in editor'
   local editor = opts.editor or os.getenv('EDITOR') or 'nvim'
   local shell = os.getenv('SHELL') or '/bin/zsh'
   local function shq(s)

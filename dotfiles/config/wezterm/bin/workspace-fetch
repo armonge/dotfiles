@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Keep the "Workspaces: Branch picker" binding current: fetch every repo under
+# $WORKSPACE, then rebuild the picker's branch cache.  Fired from wezterm.lua on
+# config load,
+# which also happens on every save in the config dir -- hence the staleness
+# stamp, so editing a lua file doesn't kick off 45 network fetches.
+set -uo pipefail
+
+WORKSPACE="${WORKSPACE:-$HOME/workspace}"
+STAMP="${XDG_CACHE_HOME:-$HOME/.cache}/workspace-fetch"
+MAX_AGE_MIN=${WORKSPACE_FETCH_MAX_AGE_MIN:-30}
+
+if [[ ${1:-} == --force ]] || ! find "$STAMP" -mmin "-$MAX_AGE_MIN" 2>/dev/null | grep -q .; then
+	mkdir -p "$(dirname "$STAMP")" && touch "$STAMP"
+	for dir in "$WORKSPACE"/*/; do
+		git -C "$dir" rev-parse --git-dir >/dev/null 2>&1 && printf '%s\0' "$dir"
+	done | xargs -0 -P 8 -I{} git -C {} fetch --all --prune --quiet 2>/dev/null
+fi
+
+# Always rebuild the branch cache, fetch or no fetch, so the picker opens
+# instantly.  This is the slow part the picker no longer has to do itself.
+exec "$(dirname "$0")/worktree-pick" refresh

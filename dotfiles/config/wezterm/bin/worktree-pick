@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+# Pick a branch from any repo under $WORKSPACE and get a worktree for it.
+#
+#   worktree-pick list                 -> "<repo>\t<branch>\t<path-or-->" per branch
+#   worktree-pick open <repo> <branch> -> prints the worktree path, creating it if needed
+#   worktree-pick refresh              -> rebuild the cache that `list` serves
+#
+# Meant to be driven by the wezterm "Workspaces: Branch picker" binding, but
+# usable on its own: cd "$(worktree-pick open Backend REQ-6185)"
+set -euo pipefail
+
+WORKSPACE="${WORKSPACE:-$HOME/workspace}"
+CACHE="${CACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/worktree-pick.tsv}"
+TAB=$(printf '\t')
+
+# Every main worktree under $WORKSPACE, so that existing worktree checkouts
+# don't show up as repos of their own.
+main_worktrees() {
+	local dir
+	for dir in "$WORKSPACE"/*/; do
+		# first porcelain entry is the main worktree, whichever sibling we hit
+		# first -- so Backend and Backend-REQ-6185 collapse to one repo.
+		# awk dedupes: macOS ships bash 3.2, which has no associative arrays.
+		git -C "$dir" worktree list --porcelain 2>/dev/null | sed -n '1s/^worktree //p' || true
+	done | awk 'NF && !seen[$0]++'
+}
+
+# Emits "<tier>\t<repo score>\t<date>\t<repo>\t<branch>\t<path-or-->", the first
+# three columns being sort keys that cmd_refresh strips:
+#   tier       0 = already has a worktree, 1 = local branch, 2 = only on a remote
+#   repo score how many local branches the repo has -- a decent proxy for how
+#              much you work in it, so the repos you actually use float up
+#              without anyone maintaining a list of favourites
+#   date       newest commit on the branch
+scan_branches() {
+	local root repo
+	while read -r root; do
+		repo=${root##*/}
+		{
+			# W: branch already checked out in a worktree, and where
+			git -C "$root" worktree list --porcelain |
+				awk '/^worktree /{p=substr($0,10)} /^branch /{sub("refs/heads/","",$2); print "W\t" $2 "\t" p}'
+			# L: local branch, R: remote branch.  refs/heads sorts before
+			# refs/remotes, so locals are always seen first.
+			git -C "$root" for-each-ref --format='%(refname)%09%(committerdate:unix)' \
+				refs/heads refs/remotes |
+				grep -v '/HEAD\t' |
+				sed -e 's|^refs/heads/|L\t|' -e 's|^refs/remotes/|R\t|' || true
+		} | awk -F'\t' -v repo="$repo" '
+			$1 == "W" { at[$2] = $3; next }
+			$1 == "L" {
+				local[$2] = 1
+				n++; tag[n] = "L"; br[n] = $2; key[n] = $2; dt[n] = $3
+				score++
+				next
+			}
+			{ short = $2; sub("^[^/]+/", "", short)               # origin/feat/x -> feat/x
+			  if (short in local || short in seen) next           # already listed as local
+			  seen[short] = 1
+			  n++; tag[n] = "R"; br[n] = $2; key[n] = short; dt[n] = $3 }
+			END {
+				for (i = 1; i <= n; i++) {
+					path = (key[i] in at) ? at[key[i]] : "-"
+					tier = (path != "-") ? 0 : (tag[i] == "L" ? 1 : 2)
+					print tier "\t" score "\t" dt[i] "\t" repo "\t" br[i] "\t" path
+				}
+			}'
+	done < <(main_worktrees)
+}
+
+# Scanning 45 repos takes ~1.5s, which would freeze wezterm's GUI thread for
+# that long, so serve the last scan and rebuild behind the picker.  The list is
+# therefore at most one invocation stale.
+cmd_list() {
+	if [[ -s $CACHE ]]; then
+		cat "$CACHE"
+		refresh_in_background
+	else
+		cmd_refresh
+		cat "$CACHE"
+	fi
+}
+
+cmd_refresh() {
+	mkdir -p "$(dirname "$CACHE")"
+	# ponytail: concurrent refreshes just redo the work; mv is atomic, so the
+	# cache is never half-written.  Add a lock if that ever shows up in a profile.
+	scan_branches |
+		sort -t"$TAB" -k1,1n -k2,2nr -k3,3nr |
+		cut -f4- >"$CACHE.$$" && mv "$CACHE.$$" "$CACHE"
+}
+
+refresh_in_background() {
+	# pass both through: the child is a fresh process, and selftest overrides them
+	(WORKSPACE="$WORKSPACE" CACHE="$CACHE" "$0" refresh >/dev/null 2>&1 &)
+}
+
+cmd_open() {
+	local repo=$1 branch=$2 root path local_branch remote=""
+	root="$WORKSPACE/$repo"
+	if git -C "$root" show-ref --quiet --verify "refs/heads/$branch"; then
+		local_branch=$branch
+	else
+		remote=$branch          # origin/feat/x -> feat/x
+		local_branch=${branch#*/}
+	fi
+
+	# already checked out? just print where
+	path=$(git -C "$root" worktree list --porcelain |
+		awk -v b="refs/heads/$local_branch" '/^worktree /{p=substr($0,10)} $0=="branch "b{print p; exit}')
+	if [[ -n $path ]]; then
+		echo "$path"
+		return
+	fi
+
+	path="$WORKSPACE/$repo-${local_branch//\//-}"
+	if [[ -z $remote ]]; then
+		git -C "$root" worktree add "$path" "$local_branch" >&2
+	else
+		git -C "$root" worktree add --track -b "$local_branch" "$path" "$remote" >&2
+	fi
+
+	# direnv config lives in the main worktree and is gitignored, so share it
+	if [[ -e $root/.envrc && ! -e $path/.envrc ]]; then
+		ln -s "$root/.envrc" "$path/.envrc"
+	fi
+
+	refresh_in_background   # the new worktree should show as existing next time
+	echo "$path"
+}
+
+# Guards the two things that broke silently while writing this: a non-repo or
+# ref-less directory aborting the whole listing, and slashed branch names.
+cmd_selftest() {
+	local tmp
+	tmp=$(cd "$(mktemp -d)" && pwd -P)   # git reports the resolved path
+	# expanding now is the point: $tmp is a local, gone by the time the trap fires
+	# shellcheck disable=SC2064
+	trap "rm -rf '$tmp'" EXIT
+	mkdir -p "$tmp/ws/loose-dir"
+	touch "$tmp/ws/loose-file"
+	git init -q "$tmp/ws/empty"                      # a repo with no refs at all
+	git init -q "$tmp/ws/demo"
+	git -C "$tmp/ws/demo" -c user.email=t@t -c user.name=t -c commit.gpgsign=false \
+		commit -q --allow-empty -m init
+	echo 'export FOO=bar' >"$tmp/ws/demo/.envrc"
+	git -C "$tmp/ws/demo" branch feat/local
+	git -C "$tmp/ws/demo" branch feat/remote-only
+	git clone -q --bare "$tmp/ws/demo" "$tmp/up.git"
+	git -C "$tmp/ws/demo" remote add origin "$tmp/up.git"
+	git -C "$tmp/ws/demo" fetch -q origin
+	git -C "$tmp/ws/demo" branch -q -D feat/remote-only
+
+	WORKSPACE="$tmp/ws"
+	CACHE="$tmp/cache.tsv"
+	local out head
+	head=$(git -C "$tmp/ws/demo" symbolic-ref --short HEAD)
+	cmd_refresh
+	out=$(cat "$CACHE")
+
+	# grep for an exact "<repo>\t<branch>\t<path>" row
+	check() {
+		local want
+		want=$(printf '%s\t%s\t%s' "$2" "$3" "$4")
+		grep -qxF "$want" <<<"$out" || {
+			echo "FAIL: $1"
+			echo "$out"
+			exit 1
+		}
+	}
+	check "slashed local branch listed, not truncated" demo feat/local -
+	check "remote-only branch listed" demo origin/feat/remote-only -
+	check "checked-out branch points at its worktree" demo "$head" "$tmp/ws/demo"
+	[[ $(grep -c . <<<"$out") == 3 ]] ||
+		{ echo "FAIL: local branch also listed as origin/..."; echo "$out"; exit 1; }
+
+	# list serves the cache verbatim
+	[[ $(cmd_list) == "$out" ]] || { echo "FAIL: cache round-trip"; exit 1; }
+
+	# tiering: worktree first, then plain local, then remote-only
+	[[ $(cut -f2 <<<"$out" | tr '\n' ' ') == "$head feat/local origin/feat/remote-only " ]] ||
+		{ echo "FAIL: wrong order"; echo "$out"; exit 1; }
+
+	# creating from a remote-only branch: tracks it, shares .envrc, is idempotent
+	local path
+	path=$(cmd_open demo origin/feat/remote-only 2>/dev/null)
+	[[ $path == "$tmp/ws/demo-feat-remote-only" ]] || { echo "FAIL: path $path"; exit 1; }
+	[[ -L $path/.envrc ]] || { echo "FAIL: .envrc not symlinked"; exit 1; }
+	[[ $(git -C "$path" rev-parse --abbrev-ref '@{upstream}') == origin/feat/remote-only ]] ||
+		{ echo "FAIL: not tracking the remote branch"; exit 1; }
+	[[ $(cmd_open demo feat/remote-only) == "$path" ]] ||
+		{ echo "FAIL: re-open did not resolve to the existing worktree"; exit 1; }
+
+	echo "selftest ok"
+}
+
+case "${1:-list}" in
+list) cmd_list ;;
+open) cmd_open "$2" "$3" ;;
+refresh) cmd_refresh ;;
+selftest) cmd_selftest ;;
+*)
+	echo "usage: worktree-pick [list | open <repo> <branch> | refresh | selftest]" >&2
+	exit 2
+	;;
+esac

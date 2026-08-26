@@ -93,16 +93,6 @@ COPY_MODE_NAMES = {
     "CopyMode(JumpReverse)": "Repeat last jump (reverse)",
 }
 
-EVENT_NAMES = {
-    "tabs.manual-update-tab-title": "Rename tab",
-    "tabs.reset-tab-title": "Reset tab title",
-    "tabs.toggle-tab-bar": "Toggle tab bar",
-    "confirm-close.close-pane": "Close pane",
-    "confirm-close.close-tab": "Close tab",
-    "scrollback.open-in-editor": "Scrollback in editor",
-}
-
-
 def parse_show_keys():
     result = subprocess.run(
         ["wezterm", "show-keys"], capture_output=True, text=True
@@ -154,6 +144,12 @@ def format_key(key):
     return renames.get(key, key)
 
 
+def event_label(event):
+    """Split an event name written as "Category: Description"."""
+    cat, _, label = event.partition(": ")
+    return (cat, label) if label else ("", event)
+
+
 def friendly_action(raw):
     raw = raw.strip()
 
@@ -164,13 +160,11 @@ def friendly_action(raw):
     if raw in COPY_MODE_NAMES:
         return COPY_MODE_NAMES[raw]
 
-    # EmitEvent
+    # EmitEvent: bindings.lua names every event "Category: Description",
+    # so the event name itself is the cheatsheet label.
     m = re.match(r'EmitEvent\("(.+?)"\)', raw)
     if m:
-        event = m.group(1)
-        if event in EVENT_NAMES:
-            return EVENT_NAMES[event]
-        return "Custom action"
+        return event_label(m.group(1))[1]
 
     # ActivateTab
     m = re.match(r"ActivateTab\((\d+)\)", raw)
@@ -376,16 +370,14 @@ ACTION_CATEGORIES = {
     "General": [
         "ActivateCopyMode", "ActivateCommandPalette", "ShowLauncher",
         "ToggleFullScreen", "ShowDebugOverlay", "Search(",
-        "scrollback.open-in-editor",
     ],
     "Tabs": [
         "SpawnTab", "ActivateTab(", "ActivateTabRelative",
-        "MoveTabRelative", "tabs.", "confirm-close.close-tab",
+        "MoveTabRelative",
     ],
     "Panes": [
         "Split", "ActivatePaneDirection", "PaneSelect",
-        "TogglePaneZoomState", "confirm-close.close-pane",
-        "AdjustPaneSize",
+        "TogglePaneZoomState", "AdjustPaneSize",
     ],
     "Scrolling": ["ScrollByLine", "ScrollByPage"],
     "Window": ["SpawnWindow"],
@@ -402,17 +394,13 @@ LAUNCHER_CATEGORIES = {
     "KEY_ASSIGNMENTS": "Leader Modes",
 }
 
-# Key-combo overrides for categorization (for opaque user-defined callbacks)
-KEY_COMBO_CATEGORIES = {
-    "Cmd+-": "Window",
-    "Cmd+=": "Window",
-}
-
-
 def categorize(action_raw, key_combo=""):
-    # Key-combo override takes precedence
-    if key_combo in KEY_COMBO_CATEGORIES:
-        return KEY_COMBO_CATEGORIES[key_combo]
+    # EmitEvent carries its own category
+    m = re.match(r'EmitEvent\("(.+?)"\)', action_raw)
+    if m:
+        cat, _ = event_label(m.group(1))
+        if cat:
+            return cat
 
     # ShowLauncherArgs: categorize by flags
     if "ShowLauncherArgs" in action_raw:
@@ -527,14 +515,6 @@ class CheatsheetPDF(FPDF):
         self.ln(2)
 
 
-# Key-combo overrides for opaque action_callback entries (user-defined-N).
-# WezTerm can't dump the Lua closure, so we label them by their key combo.
-KEY_COMBO_OVERRIDES = {
-    "Cmd+-": "Shrink window",
-    "Cmd+=": "Grow window",
-}
-
-
 def dedup_copy_mode(rows):
     """Remove duplicate Shift+X rows that do the same as the bare key (e.g. Shift+G = G)."""
     seen = {}
@@ -566,9 +546,6 @@ def main():
         parsed = parse_key_line(line)
         if parsed:
             key, action, ann = parsed
-            # Apply key-combo overrides for opaque callbacks
-            if key in KEY_COMBO_OVERRIDES:
-                action = KEY_COMBO_OVERRIDES[key]
             action_raw = line.split("->")[-1].strip() if "->" in line else ""
             cat = categorize(action_raw, key)
             categorized.setdefault(cat, []).append((key, action, ann))
