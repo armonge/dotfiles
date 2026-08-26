@@ -33,3 +33,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Added by Antigravity CLI installer
 export PATH="/Users/andres.monge/.local/bin:$PATH"
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
