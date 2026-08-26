@@ -27,6 +27,7 @@ require("lazy").setup({
 	{ import = "armonge.blink" },
 	{ import = "armonge.motions" },
 	{ import = "armonge.copilot" },
+	{ import = "armonge.clojure" },
 	{
 		"wakatime/vim-wakatime",
 	},

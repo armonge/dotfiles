@@ -1,4 +1,5 @@
 local masonPackages = {
+	"clj-kondo",
 	"markdownlint",
 	"terraform",
 	"shellharden",
@@ -11,7 +12,6 @@ local masonPackages = {
 	"jq",
 	"shfmt",
 	"stylua",
-	"joker",
 	"actionlint",
 	"kulala-fmt",
 	"hadolint",
@@ -80,11 +80,14 @@ return {
 		cmd = { "ConformInfo" },
 		opts = {
 			formatters_by_ft = {
+				javascript = { "biome" },
+				javascriptreact = { "biome" },
+				typescript = { "biome" },
+				typescriptreact = { "biome" },
 				lua = { "stylua" },
 				htmldjango = { "djlint" },
 				python = { "ruff_format" },
 				sql = { "sqruff" },
-				clojure = { "joker" },
 				terraform = { "terraform_fmt" },
 				markdown = { "markdownlint" },
 				toml = { "taplo" },
